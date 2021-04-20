@@ -1,24 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-void copiarCadena(FILE *fpEntrada, FILE *fpSalida);
-char nuevoEstado(char estado, char caracter);
-int estadoAFila(char estado);
-int caracterAColumna(char caracter);
-void estadoFinal(char estado, FILE *fpSalida);
-
-//char matrizTransicion[7][24] = {
-                    //           '0'  '1'  '2'  '3'  '4'  '5'  '6'  '7'  '8'  '9'  'A'  'B'  'C'  'D'  'E'  'F'  'a'  'b'  'c'  'd'  'e'  'f'  'x'  'X'
-                    //  R   */  {'S', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'},
-                    //  S   */  {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'U', 'U'},
-                    //  T   */  {'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'},
-                    //  U   */  {'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', '-', '-'},
-                    //  V   */  {'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', '-', '-'},
-                    //  W   */  {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'},
-                    //  -   */  {'-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'}
-//                                };
-
+void copiarCadena(FILE*, FILE*);
+void estadoFinal(char, FILE*);
+char nuevoEstado(char, char);
+int estadoAFila(char);
+int caracterAColumna(char);
 
 char matrizTransicion[7][17] = {
                     //           '0'  '1'  '2'  '3'  '4'  '5'  '6'  '7'  '8'  '9'  'A'  'B'  'C'  'D'  'E'  'F'  'X'
@@ -29,7 +16,7 @@ char matrizTransicion[7][17] = {
                     /*  V   */  {'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', 'V', '-'},
                     /*  W   */  {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', '-', '-', '-', '-', '-', '-', '-', '-', '-'},
                     /*  -   */  {'-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'}
-                                };
+};
 
 int main() {
     FILE *fpEntrada, *fpSalida;
@@ -44,7 +31,7 @@ int main() {
 
 
     if(!fpEntrada || !fpSalida){
-
+        perror("Error abriendo el archivo");
         return (-1);
     }
     else{
@@ -76,50 +63,6 @@ int main() {
     fclose(fpSalida);
 
     return 0;  
-}
-
-char nuevoEstado(char estado, char caracter){
-    int i = estadoAFila(estado);
-    int j = caracterAColumna(caracter);
-
-    return matrizTransicion[i][j];
-}
-
-int estadoAFila(char estado){
-    if(estado >= 82 && estado <=87){
-        return estado - 82;
-    }
-    else{
-        return 6;
-    }
-}
-
-int caracterAColumna(char nuevoCaracter){
-
-    //[0;9]
-    if(nuevoCaracter < 58) {
-        return nuevoCaracter - 48; 
-    }
-    
-    //[A;F] U [a;f]
-    else if (nuevoCaracter >= 65 && nuevoCaracter <= 70){
-        return nuevoCaracter - 55;
-    }
-    else if (nuevoCaracter >= 97 && nuevoCaracter <= 102) {
-        //Cambiando por 81 se corresponde con la matriz original, 87 con las mayusculas
-        return nuevoCaracter - 87;
-    }
-
-    //{x, X}
-    else if(nuevoCaracter = 120){
-        return nuevoCaracter - 104;
-    }
-    else if(nuevoCaracter = 88){
-        return nuevoCaracter - 72;
-    }
-    else{
-        printf("Algo salió mal :c");
-    }
 }
 
 void estadoFinal(char estado, FILE *fpSalida){
@@ -163,4 +106,47 @@ void copiarCadena(FILE *fpEntrada, FILE *fpSalida){
         fseek(fpEntrada, -len+1, SEEK_CUR);
     
     return;
+}
+
+char nuevoEstado(char estado, char caracter){
+    int i = estadoAFila(estado);
+    int j = caracterAColumna(caracter);
+
+    return matrizTransicion[i][j];
+}
+
+int estadoAFila(char estado){
+    if(estado >= 82 && estado <=87){
+        return estado - 82;
+    }
+    else{
+        return 6;
+    }
+}
+
+int caracterAColumna(char nuevoCaracter){
+
+    //[0;9]
+    if(nuevoCaracter < 58) {
+        return nuevoCaracter - 48; 
+    }
+    
+    //[A;F] U [a;f]
+    else if (nuevoCaracter >= 65 && nuevoCaracter <= 70){
+        return nuevoCaracter - 55;
+    }
+    else if (nuevoCaracter >= 97 && nuevoCaracter <= 102) {
+        return nuevoCaracter - 87;
+    }
+
+    //{x, X}
+    else if(nuevoCaracter = 120){
+        return nuevoCaracter - 104;
+    }
+    else if(nuevoCaracter = 88){
+        return nuevoCaracter - 72;
+    }
+    else{
+        printf("Algo salió mal :c");
+    }
 }
