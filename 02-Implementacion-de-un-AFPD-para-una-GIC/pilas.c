@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct nodo 
-{
-    char info;
-    struct nodo* sig;
-}Nodo;
+#include"tp2.h"
 
 void inicializarPila(Nodo** p) 
 {
@@ -14,7 +7,7 @@ void inicializarPila(Nodo** p)
     (*p)->sig = NULL;
 }
 
-void push(Nodo** p, char c) 
+void push(Nodo** p, char c)
 {
     Nodo* nuevo = (Nodo*) malloc(sizeof(Nodo));
     nuevo->info = c;
@@ -56,9 +49,7 @@ void mostrarPila(Nodo *p)
     printf("----");
 }
 
-int estaVacia(Nodo *p)
+int pilaVacia(Nodo *p)
 {
     return p==NULL? 1 : 0;
 }
-
-
