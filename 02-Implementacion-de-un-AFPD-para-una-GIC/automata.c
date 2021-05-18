@@ -36,7 +36,8 @@ int estadoCima_fila(int estado, char cima){
             break;
             default: fila = 6;
         };
-    };
+    }
+    else cima = '\0'; //todo revisar
     return fila;
 }
 
@@ -66,10 +67,26 @@ int caracter_columna(char leido){
     return columna;
 }
 
+//todo revisar
 void actualizarPila(ESTADO estado, Nodo* pila)
 {
-    for(int i=0; i < strlen(estado.simbolosAPila); i++)
+    pop(&pila);
+
+    for(int i = strlen(estado.simbolosAPila)-1 ; i >= 0 ; i--)
     {
-        push(&pila, estado.simbolosAPila[i]);
+        if(strlen(estado.simbolosAPila) == 2)
+        {
+            push(&pila, estado.simbolosAPila[1]);
+            //printf("Agregando %c a pila\n", estado.simbolosAPila[1]);
+            push(&pila, estado.simbolosAPila[0]);
+            //printf("Agregando %c a pila\n", estado.simbolosAPila[0]);
+        }
+        else{
+            if(estado.simbolosAPila[0] != 'e'){
+                //printf("Agregando %c a pila\n", estado.simbolosAPila[0]);
+                push(&pila, estado.simbolosAPila[0]);
+            }
+        }
+        //mostrarPila(pila);
     }
 }
