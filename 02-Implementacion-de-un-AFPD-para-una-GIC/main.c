@@ -9,7 +9,7 @@ int main(){
     inicializarPila(&pila);
 
     printf("Ingrese una expresion: ");
-    scanf("%s", &leido);
+    scanf("%s", leido);
     printf("La expresion es %s" , leido);
 
     for(int i = 0; i < strlen(leido); i++){
