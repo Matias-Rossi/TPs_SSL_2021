@@ -24,7 +24,7 @@ typedef struct{
     char simbolosAPila[3];
 }   ESTADO;
 
-ESTADO TABLA_DE_MOVIMIENTOS [7][5] = {
+static const ESTADO TABLA_DE_MOVIMIENTOS [7][5] = {
 //                      0               [1-9]        {+,-,*,/}          (                  )
 /* (q0 , $)   */    {{ERROR , ""},   {q1 , "$"},    {ERROR , ""},   {q0 , "R"},     {ERROR , ""}},
 /* (q1 , $)+  */    {{q1 , "$"},     {q1 ,"$"},     {q0 , "$"},     {ERROR , ""},   {ERROR , ""}},
