@@ -12,14 +12,17 @@ int main(){
     printf("Ingrese una expresion: ");
     scanf("%s", leido);
     fflush(stdin);
-    printf("La expresion es %s\n" , leido);
+    
+    char *expresionAnalizar = sacarEspacios(leido);
+
+    printf("La expresion es %s\n" , expresionAnalizar);
 
     for(int i = 0; i < strlen(leido); i++){
         estado = nuevoEstado(estado.proximoEstado, leido[i], pila);
         actualizarPila(estado, pila);
         //printf("%c,%c: %d\n",leido[i], cimaDePila(pila) ,estado.proximoEstado);
 
-        //todo pendiente
+        //TODO pendiente
         if(pilaVacia(pila))
         {
             error = 1;
@@ -48,6 +51,7 @@ int main(){
     printf("La cadena es sintacticamente INCORRECTA");
     //---
 
+    free(expresionAnalizar);
 
     return 0;
 }
