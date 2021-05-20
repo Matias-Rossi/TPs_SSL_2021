@@ -4,7 +4,6 @@ int main(){
 
     char *leido;
     ESTADO estado = {q0, "$"};
-    int error = 0;
 
     Nodo *pila = NULL;
     inicializarPila(&pila);
@@ -27,36 +26,26 @@ int main(){
         //printf(" %c,", expresionAnalizar[i]);
         //printf(" %c) -> ", cimaDePila(pila));
 
-        estado = nuevoEstado(estado.proximoEstado, expresionAnalizar[i], pila);
-        actualizarPila(estado, &pila);
+        estado = nuevoEstado(estado.proximoEstado, expresionAnalizar[i], pila, i);
+        actualizarPila(estado, &pila, i);
 
         //printf("(%d, ", estado.proximoEstado);
         //printf("%s)\n", estado.simbolosAPila);
         //printf("PILA: \n");
         //mostrarPila(pila);
 
+        if(estado.proximoEstado == _)
+            errorHandler(2, i);
         if(pilaVacia(pila))
-        {
-            error = 1;
-            printf("La expresion no es valida, error en pos. %d\n", i);
-        }
-        else if(estado.proximoEstado == _)
-        {
-            error = 1;
-            printf("La expresion no es valida, error en pos. %d\n", i);
-        }
+            errorHandler(1, i);
     }
 
     pop(&pila);
 
-    if(pilaVacia(pila)==0 && !error)
-    {
-        printf("Quedaron cosas en la pila y/o error\n");
-    }
-    else if (error == 0)
-    {
+    if(pilaVacia(pila)==0)
+        errorHandler(3, lenExpresion);
+    else
         printf("La cadena es sintacticamente correcta");
-    }
 
     free(expresionAnalizar);
     free(leido);

@@ -1,18 +1,13 @@
 #include "tp2.h"
 
-ESTADO nuevoEstado(int estado, char leido, Nodo* pila) {
+ESTADO nuevoEstado(int estado, char leido, Nodo* pila, int pos) {
    char cima = cimaDePila(pila);
    
    int columna = caracter_columna(leido);
    int fila    = estadoCima_fila(estado, cima);
 
     if(columna == 5){
-        printf("ERROR: no se reconoce el caracter ingresado");
-        exit(1);
-    }
-    if(fila == 6){
-        printf("ERROR");
-        exit(1);
+        errorHandler(4, pos);
     }
 
     return TABLA_DE_MOVIMIENTOS[fila][columna];
@@ -47,8 +42,7 @@ int estadoCima_fila(int estado, char cima){
             default: fila = 6;
         };
     }
-    else cima = '\0';
-    
+
     return fila;
 }
 
@@ -79,7 +73,7 @@ int caracter_columna(char leido){
     return columna;
 }
 
-void actualizarPila(ESTADO estado, Nodo** pila)
+void actualizarPila(ESTADO estado, Nodo** pila, int pos)
 {
     pop(pila);
 
