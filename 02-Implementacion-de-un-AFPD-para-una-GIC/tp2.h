@@ -52,5 +52,6 @@ void actualizarPila(ESTADO, Nodo**);
 
 //Definidas en utils.c
 char* sacarEspacios (char *);
+void errorHandler(int, int);
 
 #endif

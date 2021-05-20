@@ -47,7 +47,8 @@ int estadoCima_fila(int estado, char cima){
             default: fila = 6;
         };
     }
-    else cima = '\0'; //todo revisar
+    else cima = '\0';
+    
     return fila;
 }
 
@@ -78,38 +79,12 @@ int caracter_columna(char leido){
     return columna;
 }
 
-//todo revisar
 void actualizarPila(ESTADO estado, Nodo** pila)
 {
-    printf("\nsaco: %c\n", cimaDePila(*pila));
     pop(pila);
 
-    //printf("strlen(estado.simbolosAPila): %d\n", strlen(estado.simbolosAPila));
-
     for(int i = strlen(estado.simbolosAPila)-1 ; i >= 0 ; i--)
-    {
-        //printf("i (ap): %d\n", i);
-
         push(pila, estado.simbolosAPila[i]);
-        printf("Meto en la pila: %c\n", estado.simbolosAPila[i]);
 
-/*
-        if(strlen(estado.simbolosAPila) == 2)
-        {
-            push(pila, estado.simbolosAPila[1]);
-            //printf("Agregando %c a pila\n", estado.simbolosAPila[1]);
-            push(pila, estado.simbolosAPila[0]);
-            //printf("Agregando %c a pila\n", estado.simbolosAPila[0]);
-        }
-        else{
-            if(estado.simbolosAPila[0] != 'e'){
-                //printf("Agregando %c a pila\n", estado.simbolosAPila[0]);
-                push(pila, estado.simbolosAPila[0]);
-            }
-        }
-        //mostrarPila(pila);
-*/
-    }
-
-    mostrarPila(*pila);
+    return;
 }

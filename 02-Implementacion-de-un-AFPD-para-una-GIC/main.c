@@ -21,18 +21,19 @@ int main(){
     int i;
 
     for(i=0; i < lenExpresion ; i++){
-        printf("\ni: %d\n", i);
-
-        //mostrarPila(pila);
-        printf("T(%d,", estado.proximoEstado);
-        printf(" %c,", expresionAnalizar[i]);
-        printf(" %c) -> ", cimaDePila(pila));
+        
+        //printf("\nPOS: %d\n", i+1);
+        //printf("T(%d,", estado.proximoEstado);
+        //printf(" %c,", expresionAnalizar[i]);
+        //printf(" %c) -> ", cimaDePila(pila));
 
         estado = nuevoEstado(estado.proximoEstado, expresionAnalizar[i], pila);
         actualizarPila(estado, &pila);
 
-        printf("(%d, ", estado.proximoEstado);
-        printf("%s)\n", estado.simbolosAPila);
+        //printf("(%d, ", estado.proximoEstado);
+        //printf("%s)\n", estado.simbolosAPila);
+        //printf("PILA: \n");
+        //mostrarPila(pila);
 
         if(pilaVacia(pila))
         {
@@ -45,9 +46,6 @@ int main(){
             printf("La expresion no es valida, error en pos. %d\n", i);
         }
     }
-
-    printf("FIN DE EVALUACION, PILA: \n");
-    mostrarPila(pila);
 
     pop(&pila);
 

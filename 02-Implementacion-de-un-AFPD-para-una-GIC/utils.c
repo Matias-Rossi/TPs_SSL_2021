@@ -24,3 +24,10 @@ char* sacarEspacios (char *cadena){
 
     return cadenaSinEspacios;
 }
+
+void errorHandler(int errorType, int pos){
+
+    
+
+    exit(1);
+}
