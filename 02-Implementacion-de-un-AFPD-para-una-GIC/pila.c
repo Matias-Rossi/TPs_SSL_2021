@@ -39,18 +39,14 @@ void mostrarPila(Nodo *p)
 {
     int i;
     Nodo* aux = p;
-    int contador = 0;
 
-    for(int i=0; aux != NULL && contador < 100; i++)
+    for(int i=0; aux != NULL; i++)
     {
-        printf("\t\t\t\t|%c|\n", p->info);
+        printf("\t\t\t\t\t|%c|\n", aux->info);
         aux = aux->sig;
-        contador++;
     }
-    if(contador == 100)
-    printf("Loop infinito prevenido!\n");
 
-    printf("\t\t\t\t----\n");
+    printf("\t\t\t\t\t----\n");
 }
 
 int pilaVacia(Nodo *p)

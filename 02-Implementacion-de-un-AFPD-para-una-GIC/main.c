@@ -13,25 +13,26 @@ int main(){
     gets(leido);
     char *expresionAnalizar = sacarEspacios(leido);
 
-    printf("La expresion CON ESPACIOS es: %s\n" , leido);
-    printf("La expresion SIN ESPACIOS es: %s\n" , expresionAnalizar);
-    printf("strlen(expresionAnalizar): %d\n", strlen(expresionAnalizar));
+    //printf("La expresion CON ESPACIOS es: %s\n" , leido);
+    //printf("La expresion SIN ESPACIOS es: %s\n" , expresionAnalizar);
+    //printf("strlen(expresionAnalizar): %d\n", strlen(expresionAnalizar));
 
     int lenExpresion = strlen(expresionAnalizar);
+    int i;
 
-    for(int i=0; i < lenExpresion ; i++){
+    for(i=0; i < lenExpresion ; i++){
         printf("\ni: %d\n", i);
 
-        mostrarPila(pila);
-        printf("T(%c,", expresionAnalizar[i]);
-        printf(" %d,", estado.proximoEstado);
-        printf(" %c) = ", cimaDePila(pila));
+        //mostrarPila(pila);
+        printf("T(%d,", estado.proximoEstado);
+        printf(" %c,", expresionAnalizar[i]);
+        printf(" %c) -> ", cimaDePila(pila));
 
         estado = nuevoEstado(estado.proximoEstado, expresionAnalizar[i], pila);
         actualizarPila(estado, &pila);
 
         printf("(%d, ", estado.proximoEstado);
-        printf("%c)\n", cimaDePila(pila));
+        printf("%s)\n", estado.simbolosAPila);
 
         if(pilaVacia(pila))
         {
@@ -52,7 +53,7 @@ int main(){
 
     if(pilaVacia(pila)==0 && !error)
     {
-        printf("Quedaron cosas en la pila\n");
+        printf("Quedaron cosas en la pila y/o error\n");
     }
     else if (error == 0)
     {
