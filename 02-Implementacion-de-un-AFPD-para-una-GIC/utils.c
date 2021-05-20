@@ -13,11 +13,14 @@ char* sacarEspacios (char *cadena){
     cadenaSinEspacios = malloc(strlen(cadena) - cantEspacios + 1);
 
     for(int i=0; i < strlen(cadena); i++){
+
         if(cadena[i] != ' '){
             cadenaSinEspacios[contadorCadena] = cadena[i];
             contadorCadena++;
         }
     }
-    
+
+    cadenaSinEspacios[contadorCadena]='\0';
+
     return cadenaSinEspacios;
 }

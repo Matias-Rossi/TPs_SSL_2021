@@ -1,5 +1,9 @@
 {
-    "files.associations": {
-        "string.h": "c"
-    }
+  "files.associations": {
+    "string.h": "c"
+  },
+  "C_Cpp_Runner.cCompilerPath": "C:\\Program Files\\Haskell Platform\\8.6.5\\mingw\\bin\\gcc.exe",
+  "C_Cpp_Runner.cppCompilerPath": "C:\\Program Files\\Haskell Platform\\8.6.5\\mingw\\bin\\g++.exe",
+  "C_Cpp_Runner.debuggerPath": "C:\\MinGW\\bin\\gdb.exe",
+  "C_Cpp_Runner.makePath": "C:\\MinGW\\bin\\mingw32-make.exe"
 }

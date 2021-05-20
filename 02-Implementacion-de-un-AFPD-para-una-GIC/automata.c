@@ -6,11 +6,21 @@ ESTADO nuevoEstado(int estado, char leido, Nodo* pila) {
    int columna = caracter_columna(leido);
    int fila    = estadoCima_fila(estado, cima);
 
+    if(columna == 5){
+        printf("ERROR: no se reconoce el caracter ingresado");
+        exit(1);
+    }
+    if(fila == 6){
+        printf("ERROR");
+        exit(1);
+    }
+
     return TABLA_DE_MOVIMIENTOS[fila][columna];
 }
 
 int estadoCima_fila(int estado, char cima){
     int fila = 0;
+
     if(cima == '$')
     {
         switch(estado)
@@ -61,30 +71,31 @@ int caracter_columna(char leido){
         columna = 4;
     }
     else{
-        printf("El caracter %c no pertence al lenguaje\n", leido);
+        //ERROR: no se reconoce el caracter ingresado
+        columna = 5;
     }
 
     return columna;
 }
 
 //todo revisar
-void actualizarPila(ESTADO estado, Nodo* pila)
+void actualizarPila(ESTADO estado, Nodo** pila)
 {
-    pop(&pila);
+    pop(pila);
 
     for(int i = strlen(estado.simbolosAPila)-1 ; i >= 0 ; i--)
     {
         if(strlen(estado.simbolosAPila) == 2)
         {
-            push(&pila, estado.simbolosAPila[1]);
+            push(pila, estado.simbolosAPila[1]);
             //printf("Agregando %c a pila\n", estado.simbolosAPila[1]);
-            push(&pila, estado.simbolosAPila[0]);
+            push(pila, estado.simbolosAPila[0]);
             //printf("Agregando %c a pila\n", estado.simbolosAPila[0]);
         }
         else{
             if(estado.simbolosAPila[0] != 'e'){
                 //printf("Agregando %c a pila\n", estado.simbolosAPila[0]);
-                push(&pila, estado.simbolosAPila[0]);
+                push(pila, estado.simbolosAPila[0]);
             }
         }
         //mostrarPila(pila);

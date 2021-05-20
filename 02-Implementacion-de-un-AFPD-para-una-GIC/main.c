@@ -2,7 +2,7 @@
 
 int main(){
 
-    char leido[40];
+    char *leido;
     ESTADO estado = {q0, "$"};
     int error = 0;
 
@@ -10,19 +10,29 @@ int main(){
     inicializarPila(&pila);
 
     printf("Ingrese una expresion: ");
-    scanf("%s", leido);
-    fflush(stdin);
-    
+    gets(leido);
     char *expresionAnalizar = sacarEspacios(leido);
 
-    printf("La expresion es %s\n" , expresionAnalizar);
+    printf("La expresion CON ESPACIOS es: %s\n" , leido);
+    printf("La expresion SIN ESPACIOS es: %s\n" , expresionAnalizar);
+    printf("strlen(expresionAnalizar): %d\n", strlen(expresionAnalizar));
 
-    for(int i = 0; i < strlen(leido); i++){
-        estado = nuevoEstado(estado.proximoEstado, leido[i], pila);
-        actualizarPila(estado, pila);
-        //printf("%c,%c: %d\n",leido[i], cimaDePila(pila) ,estado.proximoEstado);
+    int lenExpresion = strlen(expresionAnalizar);
 
-        //TODO pendiente
+    for(int i=0; i < lenExpresion ; i++){
+        printf("\ni: %d\n", i);
+
+        mostrarPila(pila);
+        printf("T(%c,", expresionAnalizar[i]);
+        printf(" %d,", estado.proximoEstado);
+        printf(" %c) = ", cimaDePila(pila));
+
+        estado = nuevoEstado(estado.proximoEstado, expresionAnalizar[i], pila);
+        actualizarPila(estado, &pila);
+
+        printf("(%d, ", estado.proximoEstado);
+        printf("%c)\n", cimaDePila(pila));
+
         if(pilaVacia(pila))
         {
             error = 1;
@@ -33,25 +43,24 @@ int main(){
             error = 1;
             printf("La expresion no es valida, error en pos. %d\n", i);
         }
-        
     }
-    //mostrarPila(pila);
 
-    //todo pendiente
+    printf("FIN DE EVALUACION, PILA: \n");
+    mostrarPila(pila);
+
     pop(&pila);
-    if(pilaVacia(pila)==0)
+
+    if(pilaVacia(pila)==0 && !error)
     {
         printf("Quedaron cosas en la pila\n");
     }
-    if (error == 0)
+    else if (error == 0)
     {
         printf("La cadena es sintacticamente correcta");
     }
-    else if (error == 1)
-    printf("La cadena es sintacticamente INCORRECTA");
-    //---
 
     free(expresionAnalizar);
+    free(leido);
 
     return 0;
 }
