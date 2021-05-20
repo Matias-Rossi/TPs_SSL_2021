@@ -73,7 +73,7 @@ int caracter_columna(char leido){
     return columna;
 }
 
-void actualizarPila(ESTADO estado, Nodo** pila, int pos)
+void actualizarPila(ESTADO estado, Nodo** pila)
 {
     pop(pila);
 

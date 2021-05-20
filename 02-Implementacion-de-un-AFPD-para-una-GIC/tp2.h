@@ -18,9 +18,6 @@ typedef struct nodo
 } Nodo;
 
 typedef struct{
-    //int  estadoActual;
-    //char caracterLeido;
-    //char cimaDePila;
     int  proximoEstado;
     char simbolosAPila[3];
 }   ESTADO;
@@ -48,7 +45,7 @@ int  pilaVacia(Nodo*);
 ESTADO nuevoEstado(int, char, Nodo*, int);
 int estadoCima_fila(int, char);
 int caracter_columna(char);
-void actualizarPila(ESTADO, Nodo**, int);
+void actualizarPila(ESTADO, Nodo**);
 
 //Definidas en utils.c
 char* sacarEspacios (char *);

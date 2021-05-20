@@ -27,7 +27,7 @@ int main(){
         //printf(" %c) -> ", cimaDePila(pila));
 
         estado = nuevoEstado(estado.proximoEstado, expresionAnalizar[i], pila, i);
-        actualizarPila(estado, &pila, i);
+        actualizarPila(estado, &pila);
 
         //printf("(%d, ", estado.proximoEstado);
         //printf("%s)\n", estado.simbolosAPila);
