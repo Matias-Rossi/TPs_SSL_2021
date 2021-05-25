@@ -52,6 +52,9 @@ void errorHandler(int errorType, int pos){
     case 5:
         printf("estado desconocido\n");
         break;
+    case 6:
+        printf("falta una constante\n");
+        break;
     default:
         printf("error desconocido\n");
         break;

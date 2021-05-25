@@ -44,6 +44,8 @@ int main(){
 
     if(pilaVacia(pila)==0)
         errorHandler(3, lenExpresion);
+    else if(estado.proximoEstado == q0)
+        errorHandler(6, lenExpresion);
     else
         printf("La cadena es sintacticamente correcta");
 
