@@ -59,7 +59,4 @@ void errorHandler(int errorType, int pos){
         printf("error desconocido\n");
         break;
     }
-
-
-    exit(1);
 }
