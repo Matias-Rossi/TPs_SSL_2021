@@ -9,6 +9,9 @@ int main(){
 
     Nodo *pila = NULL;
 
+    int error = 0;
+    int lenExpresion;
+
     printf("Ingrese una expresion: ");
     scanf("%[^\n]", leido);
     fflush(stdin);

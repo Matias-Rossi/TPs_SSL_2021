@@ -61,9 +61,3 @@ int errorHandler(int errorType, int pos){
     }
     return 1;
 }
-
-int limpiarInputBuffer(void) {
-    int ch;
-    while (((ch = getchar()) != EOF) && (ch != '\n')) /* void */;
-    return ch;
-}
