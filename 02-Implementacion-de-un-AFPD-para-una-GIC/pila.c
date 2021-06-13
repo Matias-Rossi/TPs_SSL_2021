@@ -27,6 +27,16 @@ char pop(Nodo** p)
     }
 }
 
+void vaciarPila(Nodo** p)
+{
+    while((*p) != NULL)
+    {
+        Nodo* aux = *p;
+        (*p) = (*p)->sig;
+        free(aux);
+    }
+}
+
 char cimaDePila(Nodo* p)
 {
     if(p != NULL)

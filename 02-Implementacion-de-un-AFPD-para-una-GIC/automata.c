@@ -68,6 +68,7 @@ int caracter_columna(char leido){
     else{
         //ERROR: no se reconoce el caracter ingresado
         columna = 5;
+        printf("[DEBUG]: Caracter no reconocido \'%c\'\n", leido);
     }
 
     return columna;
@@ -81,4 +82,10 @@ void actualizarPila(ESTADO estado, Nodo** pila)
         push(pila, estado.simbolosAPila[i]);
 
     return;
+}
+
+ESTADO volverAEstadoInicial()
+{
+    ESTADO estado = {0, "$"};
+    return estado;
 }

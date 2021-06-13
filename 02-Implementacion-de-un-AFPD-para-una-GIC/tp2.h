@@ -37,6 +37,7 @@ static const ESTADO TABLA_DE_MOVIMIENTOS [7][5] = {
 void inicializarPila(Nodo**);
 void push(Nodo**, char);
 char pop(Nodo**);
+void vaciarPila(Nodo**);
 char cimaDePila(Nodo*);
 void mostrarPila(Nodo*);
 int  pilaVacia(Nodo*);
@@ -46,9 +47,10 @@ ESTADO nuevoEstado(int, char, Nodo*, int);
 int estadoCima_fila(int, char);
 int caracter_columna(char);
 void actualizarPila(ESTADO, Nodo**);
+ESTADO volverAEstadoInicial();
 
 //Definidas en utils.c
 char* sacarEspacios (char *);
-void errorHandler(int, int);
+int errorHandler(int, int);
 
 #endif
