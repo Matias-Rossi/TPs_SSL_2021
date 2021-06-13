@@ -2,7 +2,7 @@
 
 int main(){
 
-    char leido[40];
+    char *leido;
     ESTADO estadoInicial = {q0, "$"};
     ESTADO estado = estadoInicial;
     int error = 0;
@@ -99,7 +99,7 @@ int main(){
             continuar = 0;
     }
 
-    //free(leido);
+    free(leido);
 
     return 0;
 }
