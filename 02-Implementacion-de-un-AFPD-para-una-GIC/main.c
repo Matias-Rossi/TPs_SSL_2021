@@ -5,11 +5,10 @@ int main(){
     char leido[40];
     ESTADO estadoInicial = {q0, "$"};
     ESTADO estado = estadoInicial;
-    int error;
+    int error = 0;
 
     Nodo *pila = NULL;
 
-    int error = 0;
     int lenExpresion;
 
     printf("Ingrese una expresion: ");
@@ -48,20 +47,30 @@ int main(){
             //printf("PILA: \n");
             //mostrarPila(pila);
 
-            if(estado.proximoEstado == _)
-                //error = errorHandler(2, i);
-            if(pilaVacia(pila))
-                error = errorHandler(1, i);
+            if(estado.proximoEstado == _){
+                errorHandler(2, i);             //todo: revisar estos dos errores (1 y 2). Ver comentario al final del programa
+                error = 2;
+            }
+
+            if(pilaVacia(pila) && error == 0){
+                errorHandler(1, i);
+                error = 1;
+            }
             }
         }
 
         pop(&pila);
 
+
         if(error == 0){
-            if(pilaVacia(pila)==0)
-                error = errorHandler(3, lenExpresion);
-            else if(estado.proximoEstado == q0)
-                error = errorHandler(6, lenExpresion);
+            if(pilaVacia(pila)==0){
+                errorHandler(3, lenExpresion);
+                error = 3;
+            }
+            else if(estado.proximoEstado == q0) {
+                errorHandler(6, lenExpresion);
+                error = 6;
+            }
         }
         
         if(error == 0)
@@ -100,16 +109,13 @@ int main(){
     return 0;
 }
 
-/* 
-Que se hizo en el commit:
- - Se revirtió 1 versión
- - Se implementó un bucle para poder ingresar una cadena tras otra, confirmación por medio (como en el video tutorial)
- - errorHandler ahora devuelve un valor, para así evitar mostrar múltiples errores (ver implementación).
-*/
-
 
 /*
 Entradas que causan errores y lo que retornan: 
-"(1 + 8)("      ->  ERROR 1: tenes que abrir el parentesis antes de cerrarlo
-"(1++4)*5+3"    ->  ERROR 1: tenes que abrir el parentesis antes de cerrarlo
+"4 + 3)"        ->  ERROR 2: Expresión inválida
+"(1 + 8)("      ->  ERROR 2: Expresion invalida
+"( + 8)("       ->  ERROR 2: expresion invalida (En realidad falta una constante)
+
+Claramente hay un problema entre el error 1 y 2, dependen mucho del orden en que se ejecuta cada evaluación.
+Hay que encontrar una manera de hacer que solo se muestre uno, y cuando corresponda.
 */

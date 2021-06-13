@@ -25,7 +25,7 @@ char* sacarEspacios (char *cadena){
     return cadenaSinEspacios;
 }
 
-int errorHandler(int errorType, int pos){
+void errorHandler(int errorType, int pos){
 
     if(errorType!=0){
         for (int i = 0; i < pos + strlen("Ingrese una expresion: "); i++)
@@ -59,5 +59,4 @@ int errorHandler(int errorType, int pos){
         printf("error desconocido\n");
         break;
     }
-    return 1;
 }

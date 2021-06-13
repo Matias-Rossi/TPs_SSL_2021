@@ -51,6 +51,6 @@ ESTADO volverAEstadoInicial();
 
 //Definidas en utils.c
 char* sacarEspacios (char *);
-int errorHandler(int, int);
+void errorHandler(int, int);
 
 #endif
