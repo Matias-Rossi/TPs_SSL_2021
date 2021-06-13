@@ -43,14 +43,13 @@ void mostrarPila(Nodo*);
 int  pilaVacia(Nodo*);
 
 //Definidas en automata.c
-ESTADO nuevoEstado(int, char, Nodo*, int);
+ESTADO nuevoEstado(int, char, Nodo*, int, int*);
 int estadoCima_fila(int, char);
 int caracter_columna(char);
 void actualizarPila(ESTADO, Nodo**);
 ESTADO volverAEstadoInicial();
 
 //Definidas en utils.c
-char* sacarEspacios (char *);
 void errorHandler(int, int);
 
 #endif
