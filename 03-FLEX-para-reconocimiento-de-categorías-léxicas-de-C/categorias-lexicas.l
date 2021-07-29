@@ -77,7 +77,7 @@ COMENTARIOS_LINEAL      "//" .
 COMENTARIOS_MULTILINEAL "/*" . "*/"
 
 %%
-IDENTIFICADOR  acumulador_identificador = acumulador_identificador + 1
+IDENTIFICADOR  {acumulador_identificador = acumulador_identificador + 1;}
 
 
 
