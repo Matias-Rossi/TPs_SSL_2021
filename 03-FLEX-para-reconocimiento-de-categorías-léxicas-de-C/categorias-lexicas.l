@@ -1,11 +1,27 @@
 %opction noyywrap
 
 %{
+#include "categorias-lexicas.h"
+Identificador **identificadores;
+NodoString *cadenas;
+NodoString *palabrasReservadas;
 
-// DEFINICIONES 
+int *octales;
+int *hexadecimales;
+int *decimales;
+int acumuladorDecimal = 0;
 
+
+double *reales;
+char *caracteres;
+
+//PEND Operadores / caracteres de puntuación
+
+char *comentarios[];
 %}
 
+
+// DEFINICIONES 
                                                         /**************** PALABRAS RESERVADAS ****************/
 
 PALABRAS_RESERVADAS {PALABRAS_RESERVADAS_TIPOS_DE_DATOS} | {PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL} | {PALABRAS_RESERVADAS_OTHERS}
@@ -77,7 +93,14 @@ COMENTARIOS_LINEAL      "//" .
 COMENTARIOS_MULTILINEAL "/*" . "*/"
 
 %%
-IDENTIFICADOR  {acumulador_identificador = acumulador_identificador + 1;}
+IDENTIFICADOR  {agregarIdentificador(identificadores, yytext);}
+LITERAL_CADENA {agregarString(cadenas, yytext, strlen);}
+PALABRAS_RESERVADAS {agregarString(palabrasReservadas, yytext);}
+CONST_OCTAL {;}
+
+
+
+
 
 
 
@@ -85,6 +108,6 @@ IDENTIFICADOR  {acumulador_identificador = acumulador_identificador + 1;}
 
 int main()
 {
-
+    yylex();
     return 0;
 }
