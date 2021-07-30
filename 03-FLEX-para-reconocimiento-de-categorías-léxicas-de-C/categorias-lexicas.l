@@ -2,22 +2,25 @@
 
 %{
 #include "categorias-lexicas.h"
-Identificador **identificadores;
-NodoString *cadenas;
-NodoString *palabrasReservadas;
+ListaIdentifcadores *identificadores = inicializarListaIdentificadores(identificadores);
+ListaStrings *cadenas = inicializarListaStrings(cadenas);
+ListaStrings *palabrasReservadas = inicializarListaStrings(palabrasReservadas);
 
-int *octales;
-int *hexadecimales;
-int *decimales;
+ListaInt *octales = inicializarListaInt(octales);
+ListaInt *hexadecimales = inicializarListaInt(hexadecimales);
+ListaInt *decimales = inicializarListaInt(decimales);
 int acumuladorDecimal = 0;
 
-
-double *reales;
-char *caracteres;
+//TODO: me canse de hacer estructuras que seguramente estén mal, por queda de manera provisoria un arreglo con memoria estática
+//double *reales; 
+double reales[100];
+int realesEncontrados = 0;
+char caracteres[100];
+int caracteresEncontrados = 0;
 
 //PEND Operadores / caracteres de puntuación
 
-char *comentarios[];
+ListaStrings *comentarios = inicializarListaStrings(comentarios);
 %}
 
 
@@ -93,21 +96,46 @@ COMENTARIOS_LINEAL      "//" .
 COMENTARIOS_MULTILINEAL "/*" . "*/"
 
 %%
-IDENTIFICADOR  {agregarIdentificador(identificadores, yytext);}
-LITERAL_CADENA {agregarString(cadenas, yytext, strlen);}
-PALABRAS_RESERVADAS {agregarString(palabrasReservadas, yytext);}
-CONST_OCTAL {;}
+{IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext);}
+{LITERAL_CADENA}        {agregarString(cadenas, yytext, strlenMenosDos);}
+{PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);}
 
+{CONST_OCTAL}           {agregarInt(octales, atoi(yytext));}
+{CONST_HEXADECIMAL}     {agregarInt(hexadecimales, atoi(yytext));}
+{CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
 
+{CONST_REAL}            {reales[realesEncontrados] = strtod(yytext); realesEncontrados++;}
+{CONST_CARACTER}        { if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){
+                        caracteres[caracteresEncontrados] = yytext[0];
+                        caracteresEncontrados++;
+                        }}
 
-
-
-
-
+{COMENTARIOS_LINEAL}    {agregarString(comentarios, yytext, 0);}
+{COMENTARIOS_MULTILINEAL} {agregarString(comentarios, yytext, 1);}
 %%
 
 int main()
 {
+    yyin = fopen("input.c", "r+");
     yylex();
+
+    FILE* reporte = fopen("reporte.txt", "w+");
+
+
+    crearListadoIdentificadores(reporte, identificadores);
+    crearListadoLiteralesCadena(reporte, cadenas);
+    crearListadoPalabrasReservadas(reporte, palabrasReservadas);
+    crearListadoCtesOctales(reporte, octales);
+    crearListadoCtesHexadecimales(reporte, hexadecimales);
+    crearListadoCtesDecimales(reporte, decimales, acumuladorDecimal);
+    crearListadoCtesReales(reporte, reales, realesEncontrados);
+    crearListadoCtesCaracter(reporte, caracteres, caracteresEncontrados);
+    //crearListadoOperadoresCtesPuntuacion(); PEND
+    crearListadoComentarios(reporte, comentarios);
+    //crearListadoNoReconocidos(); PEND
+
+    fclose(yyin);
+    fclose(reporte);
+
     return 0;
 }
