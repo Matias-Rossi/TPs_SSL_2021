@@ -7,15 +7,15 @@
 
 // LISTA ENLAZADA IDENTIFICADORES
 typedef struct {
-    Identificador* pri;
-    int cantElementos;
-} ListaIdentificadores;
-
-typedef struct {
     char* nombre;
     int ocurrencias;
-    Identificador* sig;
+    struct Identificador* sig;
 } Identificador;
+
+typedef struct {
+    struct Identificador* pri;
+    int cantElementos;
+} ListaIdentificadores;
 
 ListaIdentificadores* inicializarListaIdentificadores(ListaIdentificadores*);
 
@@ -30,31 +30,24 @@ void ordernarIdentificadores(Identificador**);
 
 // LISTA ENLAZADA STRINGS
 typedef struct {
-    NodoString* pri;
+    struct NodoString* pri;
     int cantElementos;
 }ListaStrings;
-typedef struct {
+typedef struct nodoString {
     char* str;
     int valor;
-    NodoString* sig;
+    struct NodoString* sig;
 }NodoString;
 
-ListaStrings* inicializarListaStrings(ListaStrings* lista) {
-    lista = (ListaStrings*)malloc(sizeof(ListaStrings));
-    lista->cantElementos = (int)malloc(sizeof(int));
-    lista->pri = NULL;
-    lista->cantElementos = 0;
-
-    return lista;
-}
+ListaStrings* inicializarListaStrings(ListaStrings* lista);
 
 //todo: Estas tres funciones a continuación seguramente puedan anidarse de alguna manera para no repetir lógica, queda pendiente
 
 void agregarString(ListaStrings*, char*);
 
-void agregarString(ListaStrings*, char*, int valorAuxiliar(char*));
+void agregarStringAuxFuncion(ListaStrings*, char*, int valorAuxiliar(char*));
 
-void agregarString(ListaStrings*, char*, int );
+void agregarStringAux(ListaStrings*, char*, int );
 
 void ordenarStrings(ListaStrings*, int criterio(char*, char*));
   
@@ -65,12 +58,12 @@ int ordenarPorLongitud(char*, char* );
 // LISTA ENLAZADA INTs       Falta agregar chequeo de NULL para cuando lsita esta vacia, etc
 
 typedef struct {
-    NodoInt* pri;
+    struct NodoInt* pri;
     int cantElementos;
 }ListaInt;
 typedef struct {
     int* valor;
-    NodoInt* sig;
+    struct NodoInt* sig;
 }NodoInt;
 
 ListaInt* inicializarListaInt(ListaInt* );

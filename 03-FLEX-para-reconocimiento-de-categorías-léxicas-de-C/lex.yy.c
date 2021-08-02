@@ -838,7 +838,7 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 78 "categorias-lexicas.l"
-{agregarString(cadenas, yytext, strlenMenosDos);}
+{agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
@@ -873,12 +873,12 @@ YY_RULE_SETUP
 case 9:
 YY_RULE_SETUP
 #line 85 "categorias-lexicas.l"
-{agregarString(comentarios, yytext, 0);}
+{agregarStringAux(comentarios, yytext, 0);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 86 "categorias-lexicas.l"
-{agregarString(comentarios, yytext, 1);}
+{agregarStringAux(comentarios, yytext, 1);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP

@@ -75,15 +75,15 @@ COMENTARIOS_LINEAL      "//".
 COMENTARIOS_MULTILINEAL "/*"."*/"
 %%
 {IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext);}
-{LITERAL_CADENA}        {agregarString(cadenas, yytext, strlenMenosDos);}
+{LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
 {PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);}
 {CONST_OCTAL}           {agregarInt(octales, atoi(yytext));}
 {CONST_HEXADECIMAL}     {agregarInt(hexadecimales, atoi(yytext));}
 {CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
 {CONST_REAL}            {reales[realesEncontrados] = strtod(yytext); realesEncontrados++;}
 {CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}}
-{COMENTARIOS_LINEAL}    {agregarString(comentarios, yytext, 0);}
-{COMENTARIOS_MULTILINEAL} {agregarString(comentarios, yytext, 1);}
+{COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);}
+{COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);}
 .                       {; //todo}
 %%
 int main()

@@ -63,6 +63,12 @@ void ordernarIdentificadores(Identificador** lista) {
 
 /* --- Lista enlazada STRINGS --- */
 
+struct NodoString {
+    char* str;
+    int valor;
+    struct NodoString* sig;
+};
+
 ListaStrings* inicializarListaStrings(ListaStrings* lista) {
     lista = (ListaStrings*)malloc(sizeof(ListaStrings));
     lista->cantElementos = (int)malloc(sizeof(int));
@@ -91,7 +97,7 @@ void agregarString(ListaStrings* lista, char* str){
     lista->pri = nuevo;
 }
 
-void agregarString(ListaStrings* lista, char* str, int valorAuxiliar(char*)){
+void agregarStringAuxFuncion(ListaStrings* lista, char* str, int valorAuxiliar(char*)){
     NodoString* nuevo = (NodoString*)malloc(sizeof(NodoString));
     nuevo->str = strdup(str);
     nuevo->valor = valorAuxiliar(str);
@@ -108,7 +114,7 @@ void agregarString(ListaStrings* lista, char* str, int valorAuxiliar(char*)){
     lista->pri = nuevo;
 }
 
-void agregarString(ListaStrings* lista, char* str, int valorAuxiliar){
+void agregarStringAux(ListaStrings* lista, char* str, int valorAuxiliar){
     NodoString* nuevo = (NodoString*)malloc(sizeof(NodoString));
     nuevo->str = strdup(str);
     nuevo->valor = valorAuxiliar;
@@ -130,7 +136,7 @@ void ordenarStrings(ListaStrings* lista, int criterio(char*, char*))
 {
     NodoString* inicio = lista->pri;
     int swapped, i;
-    NodoString *ptr1;
+    NodoString *ptr1 = inicio;
     NodoString *lptr = NULL;
   
     if (inicio == NULL)
@@ -348,10 +354,6 @@ void nuevaCategoria(FILE* reporte, char* seccion){
             fprintf(reporte, aux->str);
         }
     }
-
-
-
-
 
     /* PEND
     crearListadoOperadoresCtesPuntuacion(); PEND
