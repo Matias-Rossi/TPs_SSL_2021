@@ -3,6 +3,7 @@
 
 %{
 #include "categorias-lexicas.c"
+int linea;
 ListaIdentificadores* identificadores;
 ListaStrings* cadenas;
 ListaStrings* palabrasReservadas;
@@ -51,7 +52,7 @@ SUFIJO_REAL     "f"|"F"|"l"|"L"
 /******** Constante Caracter ********/
 CONST_CARACTER '{CARACTERES_SINGULARES}'|'{SECUENCIA_DE_ESCAPE}' 
 /****************** LITERAL CADENA *******************/
-LITERAL_CADENA                   "{SECUENCIA_CARACTERES}"
+LITERAL_CADENA                   \"{SECUENCIA_CARACTERES}\"
 SECUENCIA_CARACTERES             {CARACTER}|{SECUENCIA_CARACTERES}{CARACTER}
 CARACTER                         [{DIGITO_NO_CERO}{DIGITO_DECIMAL}{CARACTERES_ESPECIALES}{SECUENCIA_DE_ESCAPE}]
 /******************* IDENTIFICADOR *******************/
@@ -74,16 +75,16 @@ COMENTARIOS             {COMENTARIOS_LINEAL}|{COMENTARIOS_MULTILINEAL}
 COMENTARIOS_LINEAL      "//".
 COMENTARIOS_MULTILINEAL "/*"."*/"
 %%
-{IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext);}
-{LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
-{PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);}
-{CONST_OCTAL}           {agregarInt(octales, atoi(yytext));}
-{CONST_HEXADECIMAL}     {agregarInt(hexadecimales, atoi(yytext));}
-{CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
-{CONST_REAL}            {reales[realesEncontrados] = strtod(yytext); realesEncontrados++;}
-{CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}}
-{COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);}
-{COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);}
+{IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext); linea++;}
+{LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);linea++;}
+{PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);linea++;}
+{CONST_OCTAL}           {agregarInt(octales, atoi(yytext));linea++;}
+{CONST_HEXADECIMAL}     {agregarInt(hexadecimales, atoi(yytext));linea++;}
+{CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);linea++;}
+{CONST_REAL}            {reales[realesEncontrados] = strtod(yytext); realesEncontrados++;linea++;}
+{CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}linea++;}
+{COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);linea++;}
+{COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);linea++;}
 .                       {; //todo}
 %%
 int main()
@@ -92,6 +93,7 @@ int main()
     FILE* reporte = fopen("reporte.txt", "w+");
 
     //Inicializacion
+    linea = 0;
     identificadores = inicializarListaIdentificadores(identificadores);
     cadenas = inicializarListaStrings(cadenas);
     palabrasReservadas = inicializarListaStrings(palabrasReservadas);
