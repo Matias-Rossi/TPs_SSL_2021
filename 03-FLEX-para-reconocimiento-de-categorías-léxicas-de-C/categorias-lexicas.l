@@ -3,25 +3,25 @@
 
 %{
 #include "categorias-lexicas.c"
-ListaIdentificadores *identificadores = inicializarListaIdentificadores(identificadores);
-ListaStrings *cadenas = inicializarListaStrings(cadenas);
-ListaStrings *palabrasReservadas = inicializarListaStrings(palabrasReservadas);
+ListaIdentificadores* identificadores;
+ListaStrings* cadenas;
+ListaStrings* palabrasReservadas;
 
-ListaInt *octales = inicializarListaInt(octales);
-ListaInt *hexadecimales = inicializarListaInt(hexadecimales);
-ListaInt *decimales = inicializarListaInt(decimales);
-int acumuladorDecimal = 0;
+ListaInt* octales;
+ListaInt* hexadecimales;
+ListaInt* decimales;
+int acumuladorDecimal;
 
 //TODO: me canse de hacer estructuras que seguramente estén mal, por queda de manera provisoria un arreglo con memoria estática
 //double *reales; 
 double reales[100];
-int realesEncontrados = 0;
+int realesEncontrados;
 char caracteres[100];
-int caracteresEncontrados = 0;
+int caracteresEncontrados;
 
 //PEND Operadores / caracteres de puntuación
 
-ListaStrings *comentarios = inicializarListaStrings(comentarios);
+ListaStrings *comentarios;
 
 %}
 /* DEFINICIONES */
@@ -90,6 +90,19 @@ int main()
 {
     yyin = fopen("input.c", "r+");
     FILE* reporte = fopen("reporte.txt", "w+");
+
+    //Inicializacion
+    identificadores = inicializarListaIdentificadores(identificadores);
+    cadenas = inicializarListaStrings(cadenas);
+    palabrasReservadas = inicializarListaStrings(palabrasReservadas);
+    octales = inicializarListaInt(octales);
+    hexadecimales = inicializarListaInt(hexadecimales);
+    decimales = inicializarListaInt(decimales);
+    acumuladorDecimal = 0;
+    realesEncontrados = 0;
+    caracteresEncontrados = 0;
+    comentarios = inicializarListaStrings(comentarios);
+
 
     yylex();
 
