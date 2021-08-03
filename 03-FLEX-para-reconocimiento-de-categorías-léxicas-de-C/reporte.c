@@ -100,14 +100,23 @@
 
 //todo: a partir de acá falta adaptar a estructuras de datos con memoria dinámica
 
-    void crearListadoCtesReales(FILE* reporte, double reales[], int realesEncontrados){
-        if(realesEncontrados){
+    void crearListadoCtesReales(FILE* reporte, ListaDouble* reales){
+        if(reales->pri > 0){
             nuevaCategoria(reporte, "CONSTANTES REALES");
-            for(int i=0; i<realesEncontrados; i++){
-                int parteEntera = (int)reales[i];
-                double mantisa = reales[i] - parteEntera;
+
+            NodoDouble* iterador = reales->pri;
+            NodoDouble* siguiente = iterador->sig;
+            while(siguiente){
+                int parteEntera = iterador->valor;
+                double mantisa = iterador->valor - parteEntera;
                 fprintf(reporte, "Mantisa: %f // Parte entera: %d\n", mantisa, parteEntera);
+
+                iterador = siguiente;
+                siguiente = iterador->sig;
             }
+            int parteEntera = iterador->valor;
+            double mantisa = iterador->valor - parteEntera;
+            fprintf(reporte, "Mantisa: %f // Parte entera: %d\n", mantisa, parteEntera);
         }
         //todo: liberarLista
     }

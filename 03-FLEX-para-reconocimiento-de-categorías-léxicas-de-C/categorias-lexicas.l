@@ -8,8 +8,6 @@
 ListaIdentificadores* identificadores;
 ListaStrings* cadenas;
 ListaStrings* palabrasReservadas;
-
-//PEND Operadores / caracteres de puntuación
 ListaStrings* operadoresCtesPuntuacion;
 int operadoresCtesPuntuacionEncontrados;
 
@@ -18,13 +16,10 @@ ListaInt* hexadecimales;
 ListaInt* decimales;
 int acumuladorDecimal;
 
-//TODO: queda de manera provisoria un arreglo con memoria estática, hay que cambiarlo a estructuras sin límites o acordes
-//double *reales; 
-double reales[100];
-int realesEncontrados;
+ListaDouble* reales;
 char caracteres[100];
-int caracteresEncontrados;
 
+int caracteresEncontrados;
 
 ListaStrings *comentarios;
 ListaStrings *noReconocidos;
@@ -92,7 +87,7 @@ SALTO_DE_LINEA (\n)+
 {CONST_OCTAL}           {agregarInt(octales, atoi(yytext));}
 {CONST_HEXADECIMAL}     {agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
 {CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
-{CONST_PTOFLOTANTE}            {reales[realesEncontrados] = strtod(yytext, NULL); realesEncontrados++;}
+{CONST_PTOFLOTANTE}     {agregarDouble(reales, strtod(yytext, NULL));}
 {CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}}
 {COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);}
 {COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);}
@@ -115,7 +110,7 @@ int main()
     hexadecimales = inicializarListaInt(hexadecimales);
     decimales = inicializarListaInt(decimales);
     acumuladorDecimal = 0;
-    realesEncontrados = 0;
+    reales = inicializarListaDouble(reales);
     caracteresEncontrados = 0;
     operadoresCtesPuntuacion = inicializarListaStrings(operadoresCtesPuntuacion);
     operadoresCtesPuntuacionEncontrados = 0;
@@ -133,7 +128,7 @@ int main()
     crearListadoCtesHexadecimales(reporte, hexadecimales);
     crearListadoCtesDecimales(reporte, decimales, acumuladorDecimal);
     printf("Id listo\n");
-    crearListadoCtesReales(reporte, reales, realesEncontrados);
+    crearListadoCtesReales(reporte, reales);
     crearListadoCtesCaracter(reporte, caracteres, caracteresEncontrados);
     crearListadoOperadoresCtesPuntuacion(reporte, operadoresCtesPuntuacion);
     crearListadoComentarios(reporte, comentarios);

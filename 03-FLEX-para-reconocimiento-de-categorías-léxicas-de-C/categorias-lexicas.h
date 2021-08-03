@@ -63,6 +63,24 @@ typedef struct {
 
 ListaInt* inicializarListaInt(ListaInt*);
 void agregarInt(ListaInt* , int);
+
+/* ### LISTA ENLAZADA DOUBLEs ### */
+
+typedef struct {
+    struct NodoDouble* pri;
+    double cantElementos;
+}ListaDouble;
+
+typedef struct {
+    double valor;
+    struct NodoDouble* sig;
+}NodoDouble;
+
+ListaDouble* inicializarListaDouble(ListaDouble*);
+void agregarDouble(ListaDouble* , double);
+
+
+/* ### OTROS ### */
 int caracterYaEstaRegistrado(char [], int , char);
 
 
@@ -80,7 +98,7 @@ int caracterYaEstaRegistrado(char [], int , char);
     void crearListadoCtesDecimales(FILE* reporte, ListaInt* decimales, int acumuladorDecimal);
 
     //todo: a partir de acá falta adaptar a estructuras de datos con memoria dinámica
-    void crearListadoCtesReales(FILE* reporte, double reales[], int realesEncontrados);
+    void crearListadoCtesReales(FILE* reporte, ListaDouble* reales);
     void crearListadoCtesCaracter(FILE* reporte, char caracteres[], int caracteresEncontrados);
 
     void crearListadoComentarios(FILE* reporte, ListaStrings* comentarios);

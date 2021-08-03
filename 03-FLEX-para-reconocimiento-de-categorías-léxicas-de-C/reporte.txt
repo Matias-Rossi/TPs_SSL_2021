@@ -1,36 +1,72 @@
 
 
 --IDENTIFICADORES--
-mayor: 3 veces
+include: 1 veces
 main: 1 veces
-n1: 4 veces
-n2: 4 veces
-max: 3 veces
-printf: 2 veces
-scanf: 1 veces
-a: 3 veces
-b: 3 veces
+leido: 7 veces
+ESTADO: 2 veces
+estadoInicial: 3 veces
+q0: 2 veces
+estado: 7 veces
+error: 11 veces
+i: 9 veces
+Nodo: 1 veces
+pila: 9 veces
+NULL: 1 veces
+lenExpresion: 5 veces
+printf: 4 veces
+scanf: 3 veces
+fflush: 3 veces
+stdin: 3 veces
+continuar: 3 veces
+inicializarPila: 2 veces
+strlen: 1 veces
+nuevoEstado: 1 veces
+proximoEstado: 3 veces
+actualizarPila: 1 veces
+_: 1 veces
+errorHandler: 4 veces
+pilaVacia: 2 veces
+pop: 1 veces
+vaciarPila: 1 veces
+inputContinuar: 4 veces
+free: 1 veces
+FD: 1 veces
 
 
 --LITERALES CADENA--
-"%d %d"
-"Ingrese dos numeros enteros: "
-"El mayor entre %d y %d es %d\n"
+"$"
+"%c"
+"tp2.h"
+"%[^\n]"
+"%[^\n]"
+"Ingrese una expresion: "
+"\nIngrese una expresion: "
+"La cadena es sintacticamente correcta\n"
+"\nDesea continuar ingresando expresiones? (Y/N)\n"
 
 
 --PALABRAS RESERVADAS--
 int
+char
 int
 int
 int
-void
 int
-return
+while
 int
-int
-int
+for
 if
-return
+if
+if
+if
+if
+if
+else
+if
+if
+char
+if
 else
 return
 
@@ -38,42 +74,76 @@ return
 --CONSTANTES OCTALES--
 0
 0
-25
+0
+0
+0
+0
+0
+0
+0
+0
+0
+45
 
 
 --CONSTANTES HEXADECIMALES--
-15
-4090
+255
 
 
 --CONSTANTES DECIMALES--
-85
-13
-20
-40
-30
-La suma de todas las constantes decimales es 188
+1
+2
+2
+1
+1
+3
+3
+6
+6
+10
+La suma de todas las constantes decimales es 35
 
---CONSTANTES REALES--
-Mantisa: 0.450000 // Parte entera: 20
+--CONSTANTES CARACTER--
+'
 
 
 --OPERADORES / CARACTERES DE PUNTUACION--
-( aparece 8 veces
-, aparece 10 veces
-) aparece 8 veces
-; aparece 9 veces
-{ aparece 2 veces
-& aparece 2 veces
-= aparece 1 veces
-} aparece 2 veces
-> aparece 1 veces
+# aparece 1 veces
+( aparece 36 veces
+) aparece 36 veces
+{ aparece 12 veces
+* aparece 2 veces
+; aparece 41 veces
+= aparece 16 veces
+, aparece 13 veces
+} aparece 12 veces
+!= aparece 2 veces
+& aparece 7 veces
+< aparece 1 veces
+++ aparece 1 veces
+[ aparece 2 veces
+] aparece 2 veces
+== aparece 9 veces
+. aparece 3 veces
+&& aparece 1 veces
+|| aparece 1 veces
 
 
 --COMENTARIOS--
-Comentario de una linea: // Funcion
-Comentario de multiples lineas: 
-/*
-comentario multilinea
-*/
-Comentario de multiples lineas: /* comentario multilinean't */
+Comentario de una linea: //Ingreso de datos
+Comentario de una linea: //printf("\nPOS: %d\n", i+1);
+Comentario de una linea: //printf("T(%d,", estado.proximoEstado);
+Comentario de una linea: //printf(" %c,", leido[i]);
+Comentario de una linea: //printf(" %c) -> ", cimaDePila(pila));
+Comentario de una linea: //printf("(%d, ", estado.proximoEstado);
+Comentario de una linea: //printf("%s)\n", estado.simbolosAPila);
+Comentario de una linea: //printf("PILA: \n");
+Comentario de una linea: //mostrarPila(pila);
+Comentario de una linea: //Reinicio
+Comentario de una linea: //Preguntar si continuar
+Comentario de una linea: //Ingresar entrada nuevamente
+
+
+--TOKENS NO RECONOCIDOS--
+Token no reconocido en linea 28: 	'
+Token no reconocido en linea 28: 	'

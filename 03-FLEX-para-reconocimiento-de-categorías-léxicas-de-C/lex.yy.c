@@ -563,8 +563,6 @@ char *yytext;
 ListaIdentificadores* identificadores;
 ListaStrings* cadenas;
 ListaStrings* palabrasReservadas;
-
-//PEND Operadores / caracteres de puntuación
 ListaStrings* operadoresCtesPuntuacion;
 int operadoresCtesPuntuacionEncontrados;
 
@@ -573,13 +571,10 @@ ListaInt* hexadecimales;
 ListaInt* decimales;
 int acumuladorDecimal;
 
-//TODO: queda de manera provisoria un arreglo con memoria estática, hay que cambiarlo a estructuras sin límites o acordes
-//double *reales; 
-double reales[100];
-int realesEncontrados;
+ListaDouble* reales;
 char caracteres[100];
-int caracteresEncontrados;
 
+int caracteresEncontrados;
 
 ListaStrings *comentarios;
 ListaStrings *noReconocidos;
@@ -597,7 +592,7 @@ ListaStrings *noReconocidos;
 /********* Digitos y Caracteres  ********/
 /****************** COMENTARIOS *********************/
 /**** OTROS ****/
-#line 601 "lex.yy.c"
+#line 596 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -748,9 +743,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 87 "categorias-lexicas.l"
+#line 82 "categorias-lexicas.l"
 
-#line 754 "lex.yy.c"
+#line 749 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -843,75 +838,75 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 88 "categorias-lexicas.l"
+#line 83 "categorias-lexicas.l"
 {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 89 "categorias-lexicas.l"
+#line 84 "categorias-lexicas.l"
 {agregarString(palabrasReservadas, yytext);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 90 "categorias-lexicas.l"
+#line 85 "categorias-lexicas.l"
 {agregarIdentificador(identificadores, yytext); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 91 "categorias-lexicas.l"
+#line 86 "categorias-lexicas.l"
 {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 92 "categorias-lexicas.l"
+#line 87 "categorias-lexicas.l"
 {agregarInt(octales, atoi(yytext));}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 93 "categorias-lexicas.l"
+#line 88 "categorias-lexicas.l"
 {agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 94 "categorias-lexicas.l"
+#line 89 "categorias-lexicas.l"
 {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 95 "categorias-lexicas.l"
-{reales[realesEncontrados] = strtod(yytext, NULL); realesEncontrados++;}
+#line 90 "categorias-lexicas.l"
+{agregarDouble(reales, strtod(yytext, NULL));}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 96 "categorias-lexicas.l"
+#line 91 "categorias-lexicas.l"
 {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 97 "categorias-lexicas.l"
+#line 92 "categorias-lexicas.l"
 {agregarStringAux(comentarios, yytext, 0);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 98 "categorias-lexicas.l"
+#line 93 "categorias-lexicas.l"
 {agregarStringAux(comentarios, yytext, 1);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 99 "categorias-lexicas.l"
+#line 94 "categorias-lexicas.l"
 {;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 100 "categorias-lexicas.l"
+#line 95 "categorias-lexicas.l"
 {agregarStringAux(noReconocidos, yytext, yylineno); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 101 "categorias-lexicas.l"
+#line 96 "categorias-lexicas.l"
 ECHO;
 	YY_BREAK
-#line 915 "lex.yy.c"
+#line 910 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1795,7 +1790,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 101 "categorias-lexicas.l"
+#line 96 "categorias-lexicas.l"
 
 int main()
 {
@@ -1813,7 +1808,7 @@ int main()
     hexadecimales = inicializarListaInt(hexadecimales);
     decimales = inicializarListaInt(decimales);
     acumuladorDecimal = 0;
-    realesEncontrados = 0;
+    reales = inicializarListaDouble(reales);
     caracteresEncontrados = 0;
     operadoresCtesPuntuacion = inicializarListaStrings(operadoresCtesPuntuacion);
     operadoresCtesPuntuacionEncontrados = 0;
@@ -1831,7 +1826,7 @@ int main()
     crearListadoCtesHexadecimales(reporte, hexadecimales);
     crearListadoCtesDecimales(reporte, decimales, acumuladorDecimal);
     printf("Id listo\n");
-    crearListadoCtesReales(reporte, reales, realesEncontrados);
+    crearListadoCtesReales(reporte, reales);
     crearListadoCtesCaracter(reporte, caracteres, caracteresEncontrados);
     crearListadoOperadoresCtesPuntuacion(reporte, operadoresCtesPuntuacion);
     crearListadoComentarios(reporte, comentarios);

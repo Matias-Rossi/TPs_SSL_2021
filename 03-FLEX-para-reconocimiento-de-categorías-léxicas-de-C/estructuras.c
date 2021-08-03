@@ -256,8 +256,6 @@ ListaInt* inicializarListaInt(ListaInt* lista){
     return lista;
 }
 
-
-//TODO: Arreglar esta funcion que es un asco. encima no anda
 void agregarInt(ListaInt* lista, int num){
     NodoInt* nuevo = malloc(sizeof(NodoInt));
     nuevo->valor = malloc(sizeof(int));
@@ -276,9 +274,42 @@ void agregarInt(ListaInt* lista, int num){
     else{
         lista->pri = nuevo;
     }
+
+    lista->cantElementos++;
 }
 
-//constantes caracter, entiendo que se enumeran UNA VEZ segun orden de aparicion. Cambiable fácilmente.
+
+/* --- Lista enlazada DOUBLE --- */
+
+ListaDouble* inicializarListaDouble(ListaDouble* lista){
+    lista = (ListaDouble*)malloc(sizeof(ListaDouble));
+    lista->cantElementos = 0;
+    lista->pri = NULL;
+
+    return lista;
+}
+
+void agregarDouble(ListaDouble* lista, double num){
+    NodoDouble* nuevo = malloc(sizeof(NodoDouble));
+    nuevo->valor = num;
+    nuevo->sig = NULL;
+
+    if(lista->pri != NULL) {
+        NodoDouble* ultimo = lista->pri;
+
+        while(ultimo->sig != NULL){
+            ultimo = ultimo->sig;
+        }
+        ultimo->sig = nuevo;
+
+    }
+    else{
+        lista->pri = nuevo;
+    }
+}
+
+
+//CONSTANTES CARACTER, entiendo que se enumeran UNA VEZ segun orden de aparicion. Cambiable fácilmente.
 
 int caracterYaEstaRegistrado(char caracteres[], int length, char caracter) {
     for(int i=0; i<length; i++) {
