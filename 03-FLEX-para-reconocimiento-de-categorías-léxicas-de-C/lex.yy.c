@@ -1797,7 +1797,6 @@ int main()
 
 int main()
 {
-    //todo: de usar yylineno, no hace falta la variable linea
     printf("[LOG]: Inicio del programa (1/5)\n");
     yyin = fopen("input.c", "r+");
     FILE* reporte = fopen("reporte.txt", "w+");

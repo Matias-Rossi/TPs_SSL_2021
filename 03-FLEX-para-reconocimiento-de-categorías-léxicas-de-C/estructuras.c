@@ -70,7 +70,6 @@ void nuevoIdentificador(ListaIdentificadores* lista, char* cadena) {
 
 void ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*))
 {
-    //todo: no funciona
     printf("Ordenando\n");
     struct Identificador* inicio = lista->pri;
     int swapped, i;
