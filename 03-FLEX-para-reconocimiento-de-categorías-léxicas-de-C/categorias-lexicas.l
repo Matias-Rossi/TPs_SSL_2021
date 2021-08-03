@@ -1,5 +1,6 @@
 %option noyywrap
 %option yylineno
+%option debug
 
 %{
 #include "categorias-lexicas.h"

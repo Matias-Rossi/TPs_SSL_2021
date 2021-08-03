@@ -266,9 +266,13 @@ static void yy_flex_free YY_PROTO(( void * ));
 
 #define yywrap() 1
 #define YY_SKIP_YYWRAP
+
+#define FLEX_DEBUG
 typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 typedef int yy_state_type;
+
+#define FLEX_DEBUG
 extern int yylineno;
 int yylineno = 1;
 extern char *yytext;
@@ -599,6 +603,15 @@ static yyconst short int yy_chk[822] =
       157
     } ;
 
+extern int yy_flex_debug;
+int yy_flex_debug = 1;
+
+static yyconst short int yy_rule_linenum[12] =
+    {   0,
+       80,   81,   82,   83,   84,   85,   86,   87,   88,   89,
+       90
+    } ;
+
 static yy_state_type yy_state_buf[YY_BUF_SIZE + 2], *yy_state_ptr;
 static char *yy_full_match;
 static int yy_lp;
@@ -615,7 +628,7 @@ goto find_rule; \
 char *yytext;
 #line 1 "categorias-lexicas.l"
 #define INITIAL 0
-#line 5 "categorias-lexicas.l"
+#line 6 "categorias-lexicas.l"
 #include "categorias-lexicas.h"
 int linea;
 ListaIdentificadores* identificadores;
@@ -651,7 +664,7 @@ ListaStrings *noReconocidos;
 /********* Secuencia de Escape **********/
 /********* Digitos y Caracteres  ********/
 /****************** COMENTARIOS *********************/
-#line 655 "lex.yy.c"
+#line 668 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -802,9 +815,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 78 "categorias-lexicas.l"
+#line 79 "categorias-lexicas.l"
 
-#line 808 "lex.yy.c"
+#line 821 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -892,70 +905,85 @@ find_rule: /* we branch to this label when backing up */
 
 do_action:	/* This label is used only to access EOF actions. */
 
+		if ( yy_flex_debug )
+			{
+			if ( yy_act == 0 )
+				fprintf( stderr, "--scanner backing up\n" );
+			else if ( yy_act < 12 )
+				fprintf( stderr, "--accepting rule at line %d (\"%s\")\n",
+				         yy_rule_linenum[yy_act], yytext );
+			else if ( yy_act == 12 )
+				fprintf( stderr, "--accepting default rule (\"%s\")\n",
+				         yytext );
+			else if ( yy_act == 13 )
+				fprintf( stderr, "--(end of buffer or a NUL)\n" );
+			else
+				fprintf( stderr, "--EOF (start condition %d)\n", YY_START );
+			}
 
 		switch ( yy_act )
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 79 "categorias-lexicas.l"
+#line 80 "categorias-lexicas.l"
 {agregarIdentificador(identificadores, yytext); linea++;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 80 "categorias-lexicas.l"
+#line 81 "categorias-lexicas.l"
 {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);linea++;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 81 "categorias-lexicas.l"
+#line 82 "categorias-lexicas.l"
 {agregarString(palabrasReservadas, yytext);linea++;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 82 "categorias-lexicas.l"
+#line 83 "categorias-lexicas.l"
 {agregarInt(octales, atoi(yytext));linea++;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 83 "categorias-lexicas.l"
+#line 84 "categorias-lexicas.l"
 {agregarInt(hexadecimales, atoi(yytext));linea++;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 84 "categorias-lexicas.l"
+#line 85 "categorias-lexicas.l"
 {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);linea++;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 85 "categorias-lexicas.l"
+#line 86 "categorias-lexicas.l"
 {reales[realesEncontrados] = strtod(yytext, NULL); realesEncontrados++;linea++;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 86 "categorias-lexicas.l"
+#line 87 "categorias-lexicas.l"
 {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}linea++;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 87 "categorias-lexicas.l"
+#line 88 "categorias-lexicas.l"
 {agregarStringAux(comentarios, yytext, 0);linea++;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 88 "categorias-lexicas.l"
+#line 89 "categorias-lexicas.l"
 {agregarStringAux(comentarios, yytext, 1);linea++;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 89 "categorias-lexicas.l"
+#line 90 "categorias-lexicas.l"
 {agregarStringAux(noReconocidos, yytext, linea); linea++;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 90 "categorias-lexicas.l"
+#line 91 "categorias-lexicas.l"
 ECHO;
 	YY_BREAK
-#line 959 "lex.yy.c"
+#line 987 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1839,7 +1867,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 90 "categorias-lexicas.l"
+#line 91 "categorias-lexicas.l"
 
 int main()
 {
