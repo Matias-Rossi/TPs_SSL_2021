@@ -266,13 +266,9 @@ static void yy_flex_free YY_PROTO(( void * ));
 
 #define yywrap() 1
 #define YY_SKIP_YYWRAP
-
-#define FLEX_DEBUG
 typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 typedef int yy_state_type;
-
-#define FLEX_DEBUG
 extern int yylineno;
 int yylineno = 1;
 extern char *yytext;
@@ -542,15 +538,6 @@ static yyconst short int yy_chk[430] =
       181,  181,  181,  181,  181,  181,  181,  181,  181
     } ;
 
-extern int yy_flex_debug;
-int yy_flex_debug = 1;
-
-static yyconst short int yy_rule_linenum[14] =
-    {   0,
-       88,   89,   90,   91,   92,   93,   94,   95,   96,   97,
-       98,   99,  100
-    } ;
-
 static yy_state_type yy_state_buf[YY_BUF_SIZE + 2], *yy_state_ptr;
 static char *yy_full_match;
 static int yy_lp;
@@ -567,9 +554,10 @@ goto find_rule; \
 char *yytext;
 #line 1 "categorias-lexicas.l"
 #define INITIAL 0
+/* %option debug */
 #line 6 "categorias-lexicas.l"
 #include "categorias-lexicas.h"
-int linea;
+
 ListaIdentificadores* identificadores;
 ListaStrings* cadenas;
 ListaStrings* palabrasReservadas;
@@ -583,7 +571,7 @@ ListaInt* hexadecimales;
 ListaInt* decimales;
 int acumuladorDecimal;
 
-//TODO: me canse de hacer estructuras que seguramente estén mal, por queda de manera provisoria un arreglo con memoria estática
+//TODO: queda de manera provisoria un arreglo con memoria estática, hay que cambiarlo a estructuras sin límites o acordes
 //double *reales; 
 double reales[100];
 int realesEncontrados;
@@ -607,7 +595,7 @@ ListaStrings *noReconocidos;
 /********* Digitos y Caracteres  ********/
 /****************** COMENTARIOS *********************/
 /**** OTROS ****/
-#line 611 "lex.yy.c"
+#line 599 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -760,7 +748,7 @@ YY_DECL
 
 #line 87 "categorias-lexicas.l"
 
-#line 764 "lex.yy.c"
+#line 752 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -848,78 +836,63 @@ find_rule: /* we branch to this label when backing up */
 
 do_action:	/* This label is used only to access EOF actions. */
 
-		if ( yy_flex_debug )
-			{
-			if ( yy_act == 0 )
-				fprintf( stderr, "--scanner backing up\n" );
-			else if ( yy_act < 14 )
-				fprintf( stderr, "--accepting rule at line %d (\"%s\")\n",
-				         yy_rule_linenum[yy_act], yytext );
-			else if ( yy_act == 14 )
-				fprintf( stderr, "--accepting default rule (\"%s\")\n",
-				         yytext );
-			else if ( yy_act == 15 )
-				fprintf( stderr, "--(end of buffer or a NUL)\n" );
-			else
-				fprintf( stderr, "--EOF (start condition %d)\n", YY_START );
-			}
 
 		switch ( yy_act )
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
 #line 88 "categorias-lexicas.l"
-{agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);linea++;}
+{agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 89 "categorias-lexicas.l"
-{agregarString(palabrasReservadas, yytext);linea++;}
+{agregarString(palabrasReservadas, yytext);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 90 "categorias-lexicas.l"
-{agregarIdentificador(identificadores, yytext); linea++;}
+{agregarIdentificador(identificadores, yytext); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 91 "categorias-lexicas.l"
-{if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} linea++;}
+{if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 92 "categorias-lexicas.l"
-{agregarInt(octales, atoi(yytext));linea++;}
+{agregarInt(octales, atoi(yytext));}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 93 "categorias-lexicas.l"
-{agregarInt(hexadecimales, strtol(yytext, NULL, 16));linea++;}
+{agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 94 "categorias-lexicas.l"
-{agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);linea++;}
+{agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 95 "categorias-lexicas.l"
-{reales[realesEncontrados] = strtod(yytext, NULL); realesEncontrados++;linea++;}
+{reales[realesEncontrados] = strtod(yytext, NULL); realesEncontrados++;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 96 "categorias-lexicas.l"
-{if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}linea++;}
+{if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 97 "categorias-lexicas.l"
-{agregarStringAux(comentarios, yytext, 0);linea++;}
+{agregarStringAux(comentarios, yytext, 0);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 98 "categorias-lexicas.l"
-{agregarStringAux(comentarios, yytext, 1);linea++;}
+{agregarStringAux(comentarios, yytext, 1);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
@@ -929,14 +902,14 @@ YY_RULE_SETUP
 case 13:
 YY_RULE_SETUP
 #line 100 "categorias-lexicas.l"
-{agregarStringAux(noReconocidos, yytext, yylineno); linea++;}
+{agregarStringAux(noReconocidos, yytext, yylineno); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 101 "categorias-lexicas.l"
 ECHO;
 	YY_BREAK
-#line 940 "lex.yy.c"
+#line 913 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1830,8 +1803,8 @@ int main()
     FILE* reporte = fopen("reporte.txt", "w+");
 
     printf("[LOG]: Inicializando variables (2/5)\n");
+
     //Inicializacion
-    linea = 0;
     identificadores = inicializarListaIdentificadores(identificadores);
     cadenas = inicializarListaStrings(cadenas);
     palabrasReservadas = inicializarListaStrings(palabrasReservadas);

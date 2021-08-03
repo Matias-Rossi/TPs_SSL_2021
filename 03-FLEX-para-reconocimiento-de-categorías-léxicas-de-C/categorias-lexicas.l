@@ -1,10 +1,10 @@
 %option noyywrap
 %option yylineno
-%option debug
+/* %option debug */
 
 %{
 #include "categorias-lexicas.h"
-int linea;
+
 ListaIdentificadores* identificadores;
 ListaStrings* cadenas;
 ListaStrings* palabrasReservadas;
@@ -18,7 +18,7 @@ ListaInt* hexadecimales;
 ListaInt* decimales;
 int acumuladorDecimal;
 
-//TODO: me canse de hacer estructuras que seguramente estén mal, por queda de manera provisoria un arreglo con memoria estática
+//TODO: queda de manera provisoria un arreglo con memoria estática, hay que cambiarlo a estructuras sin límites o acordes
 //double *reales; 
 double reales[100];
 int realesEncontrados;
@@ -85,19 +85,19 @@ ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
 SALTO_DE_LINEA (\n)+
 %%
-{LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);linea++;}
-{PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);linea++;}
-{IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext); linea++;}
-{OP_CARACT_DE_PUNTUACION} {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} linea++;}
-{CONST_OCTAL}           {agregarInt(octales, atoi(yytext));linea++;}
-{CONST_HEXADECIMAL}     {agregarInt(hexadecimales, strtol(yytext, NULL, 16));linea++;}
-{CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);linea++;}
-{CONST_PTOFLOTANTE}            {reales[realesEncontrados] = strtod(yytext, NULL); realesEncontrados++;linea++;}
-{CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}linea++;}
-{COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);linea++;}
-{COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);linea++;}
+{LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
+{PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);}
+{IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext); }
+{OP_CARACT_DE_PUNTUACION} {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} }
+{CONST_OCTAL}           {agregarInt(octales, atoi(yytext));}
+{CONST_HEXADECIMAL}     {agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
+{CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
+{CONST_PTOFLOTANTE}            {reales[realesEncontrados] = strtod(yytext, NULL); realesEncontrados++;}
+{CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}}
+{COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);}
+{COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);}
 {ESPACIO_EN_BLANCO}|{TABULACION}|{SALTO_DE_LINEA} {;}
-.                       {agregarStringAux(noReconocidos, yytext, yylineno); linea++;}
+.                       {agregarStringAux(noReconocidos, yytext, yylineno); }
 %%
 int main()
 {
@@ -107,8 +107,8 @@ int main()
     FILE* reporte = fopen("reporte.txt", "w+");
 
     printf("[LOG]: Inicializando variables (2/5)\n");
+
     //Inicializacion
-    linea = 0;
     identificadores = inicializarListaIdentificadores(identificadores);
     cadenas = inicializarListaStrings(cadenas);
     palabrasReservadas = inicializarListaStrings(palabrasReservadas);
