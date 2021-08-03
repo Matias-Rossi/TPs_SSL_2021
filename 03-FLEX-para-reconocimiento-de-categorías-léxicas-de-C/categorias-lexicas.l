@@ -2,7 +2,7 @@
 %option yylineno
 
 %{
-#include "categorias-lexicas.c"
+#include "categorias-lexicas.h"
 int linea;
 ListaIdentificadores* identificadores;
 ListaStrings* cadenas;
@@ -82,7 +82,7 @@ COMENTARIOS_MULTILINEAL "/*"."*/"
 {CONST_OCTAL}           {agregarInt(octales, atoi(yytext));linea++;}
 {CONST_HEXADECIMAL}     {agregarInt(hexadecimales, atoi(yytext));linea++;}
 {CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);linea++;}
-{CONST_REAL}            {reales[realesEncontrados] = strtod(yytext); realesEncontrados++;linea++;}
+{CONST_REAL}            {reales[realesEncontrados] = strtod(yytext, NULL); realesEncontrados++;linea++;}
 {CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}linea++;}
 {COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);linea++;}
 {COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);linea++;}

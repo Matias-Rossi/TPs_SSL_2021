@@ -175,6 +175,15 @@ int ordenarPorLongitud(char* a, char* b) {
 
 /* --- Lista enlazada INTs --- */
 
+ListaInt* inicializarListaInt(ListaInt* lista){
+    lista = (ListaInt*)malloc(sizeof(ListaInt));
+    lista->cantElementos = (int)malloc(sizeof(int));
+    lista->cantElementos = 0;
+    lista->pri = NULL;
+
+    return lista;
+}
+
 
 //TODO: Arreglar esta funcion que es un asco
 void agregarInt(ListaInt* lista, int* num){
