@@ -46,7 +46,6 @@ int identificadorIncrementarSiRegistrado(Identificador* lista, char* cadena){
     return 0;
 }
 
-//todo: esta funcion rompe
 void nuevoIdentificador(ListaIdentificadores* lista, char* cadena) {
 
     Identificador* nuevo = malloc(sizeof(Identificador));
@@ -113,6 +112,7 @@ int ordenarAlfabeticamente(char* a, char* b) {
 }
 
 
+
 /* --- Lista enlazada STRINGS --- */
 
 struct NodoString {
@@ -130,7 +130,7 @@ ListaStrings* inicializarListaStrings(ListaStrings* lista) {
     return lista;
 }
 
-//todo: Estas tres funciones a continuación seguramente puedan anidarse de alguna manera para no repetir lógica, queda pendiente
+//todo: Estas tres funciones a continuación quizás puedan anidarse de alguna manera para no repetir lógica, queda pendiente
 
 void agregarString(ListaStrings* lista, char* str){
     NodoString* nuevo = (NodoString*)malloc(sizeof(NodoString));

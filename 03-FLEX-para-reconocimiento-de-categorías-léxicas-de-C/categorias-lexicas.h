@@ -29,6 +29,7 @@ typedef struct {
     struct NodoString* pri;
     int cantElementos;
 }ListaStrings;
+
 typedef struct nodoString {
     char* str;
     int valor;
@@ -36,7 +37,7 @@ typedef struct nodoString {
 }NodoString;
 
 ListaStrings* inicializarListaStrings(ListaStrings* lista);
-//todo: Estas tres funciones a continuación seguramente puedan anidarse de alguna manera para no repetir lógica, queda pendiente
+//todo: Estas tres funciones a continuación quizás puedan anidarse de alguna manera para no repetir lógica, queda pendiente
 void agregarString(ListaStrings*, char*);
 void agregarStringAuxFuncion(ListaStrings*, char*, int (char*));
 void agregarStringAux(ListaStrings*, char*, int );
@@ -66,7 +67,7 @@ int caracterYaEstaRegistrado(char [], int , char);
 
 
 
-/* REPORTE */ //todo: testear, AGREGAR LIBERACIÓN DE MEMORIA
+/* REPORTE */
 
     void nuevaCategoria(FILE* reporte, char* seccion);
     void crearListadoIdentificadores(FILE* reporte, ListaIdentificadores* identificadores);
@@ -81,9 +82,16 @@ int caracterYaEstaRegistrado(char [], int , char);
     //todo: a partir de acá falta adaptar a estructuras de datos con memoria dinámica
     void crearListadoCtesReales(FILE* reporte, double reales[], int realesEncontrados);
     void crearListadoCtesCaracter(FILE* reporte, char caracteres[], int caracteresEncontrados);
+
     void crearListadoComentarios(FILE* reporte, ListaStrings* comentarios);
     void crearListadoOperadoresCtesPuntuacion(FILE* reporte, ListaStrings* lista);
     void crearListadoNoReconocidos(FILE* reporte, ListaStrings* noReconocidos);
+
+    //Liberación de memoria
+    void liberarListaIdentificadores(ListaIdentificadores*);
+    void liberarListaStrings(ListaStrings*);
+    void liberarListaInt(ListaInt*);
+
 
 
 /* Otros */
