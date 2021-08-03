@@ -10,6 +10,11 @@ int main(void)
     printf("El mayor entre %d y %d es %d\n", n1, n2, max);
     return 0;
 }
+/*
+comentario multilinea
+*/
+/* comentario multilinean't */
+
 int mayor(int a, int b)
 {
     if (a > b)

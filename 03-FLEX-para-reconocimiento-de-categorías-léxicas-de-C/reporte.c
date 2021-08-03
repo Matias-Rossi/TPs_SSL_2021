@@ -131,9 +131,9 @@
                 if(aux->valor == 0) {
                     fprintf(reporte, "Comentario de una linea: ");
                 } else {
-                    fprintf(reporte, "Comentario de multiples lineas: ");
+                    fprintf(reporte, "Comentario de multiples lineas: \n");
                 }
-                fprintf(reporte, "%s", aux->str);
+                fprintf(reporte, "%s\n", aux->str);
                 aux = aux->sig;
             }
             if(aux->valor == 0) {
@@ -141,7 +141,7 @@
             } else {
                 fprintf(reporte, "Comentario de multiples lineas: ");
             }
-            fprintf(reporte, "%s", aux->str);
+            fprintf(reporte, "%s\n", aux->str);
         }
         liberarListaStrings(comentarios);
     }

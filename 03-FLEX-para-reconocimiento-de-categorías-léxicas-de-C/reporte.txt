@@ -72,3 +72,8 @@ Mantisa: 0.450000 // Parte entera: 20
 
 --COMENTARIOS--
 Comentario de una linea: // Funcion
+Comentario de multiples lineas: 
+/*
+comentario multilinea
+*/
+Comentario de multiples lineas: /* comentario multilinean't */

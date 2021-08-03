@@ -79,7 +79,7 @@ S_CHAR [^\"\\\n]
 /****************** COMENTARIOS *********************/
 COMENTARIOS             {COMENTARIOS_LINEAL}|{COMENTARIOS_MULTILINEAL}
 COMENTARIOS_LINEAL      "//"(.)*
-COMENTARIOS_MULTILINEAL "/*"."*/"
+COMENTARIOS_MULTILINEAL "/*"([^*]|(\*+[^*/]))*\*+\/
 /**** OTROS ****/
 ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
@@ -136,7 +136,6 @@ int main()
     crearListadoCtesReales(reporte, reales, realesEncontrados);
     crearListadoCtesCaracter(reporte, caracteres, caracteresEncontrados);
     crearListadoOperadoresCtesPuntuacion(reporte, operadoresCtesPuntuacion);
-    //todo: arreglar comentarios multilinea 
     crearListadoComentarios(reporte, comentarios);
     crearListadoNoReconocidos(reporte, noReconocidos);
 
