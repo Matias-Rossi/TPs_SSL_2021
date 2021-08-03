@@ -129,50 +129,12 @@ ListaStrings* inicializarListaStrings(ListaStrings* lista) {
     return lista;
 }
 
-//todo: Estas tres funciones a continuación quizás puedan anidarse de alguna manera para no repetir lógica, queda pendiente
-
 void agregarString(ListaStrings* lista, char* str){
     agregarStringAux(lista, str, 0);
-    /*
-    NodoString* nuevo = (NodoString*)malloc(sizeof(NodoString));
-    nuevo->str = strdup(str);
-    nuevo->sig = NULL;
-
-    if(lista->pri != NULL) {
-        NodoString* ultimo = lista->pri;
-
-        //No sale de este bucle
-        while(ultimo->sig != NULL){
-            ultimo = ultimo->sig;
-            //printf("Direccion: %p -> %p\n",ultimo, ultimo->sig);
-        }
-        ultimo->sig = nuevo;
-
-    }
-    else{
-    lista->pri = nuevo;
-    }
-    */
 }
 
 void agregarStringAuxFuncion(ListaStrings* lista, char* str, int valorAuxiliar(char*)){
     agregarStringAux(lista, str, valorAuxiliar(str));
-    /*
-    NodoString* nuevo = (NodoString*)malloc(sizeof(NodoString));
-    nuevo->str = strdup(str);
-    nuevo->valor = valorAuxiliar(str);
-    nuevo->sig = NULL;
-
-    if(lista->pri != NULL){
-        NodoString* ultimo = lista->pri;
-        while(ultimo->sig != NULL){
-            ultimo = ultimo->sig;
-        }
-        ultimo->sig = nuevo;
-    }
-    else
-    lista->pri = nuevo;
-    */
 }
 
 void agregarStringAux(ListaStrings* lista, char* str, int valorAuxiliar){
