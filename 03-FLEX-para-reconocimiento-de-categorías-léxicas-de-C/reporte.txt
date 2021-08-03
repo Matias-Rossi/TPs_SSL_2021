@@ -101,7 +101,7 @@ return
 6
 6
 10
-La suma de todas las constantes decimales es 35
+La suma de todas las constantes decimales es 4330636
 
 --CONSTANTES CARACTER--
 '

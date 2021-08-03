@@ -87,29 +87,22 @@ int caracterYaEstaRegistrado(char [], int , char);
 
 /* REPORTE */
 
-    void nuevaCategoria(FILE* reporte, char* seccion);
-    void crearListadoIdentificadores(FILE* reporte, ListaIdentificadores* identificadores);
-    void crearListadoLiteralesCadena(FILE* reporte, ListaStrings* cadenas);
-    void crearListadoPalabrasReservadas(FILE* reporte, ListaStrings* palabrasReservadas);
-
-    //todo: estas 3 funciones repiten lógica
-    void crearListadoCtesOctales(FILE* reporte, ListaInt* octales);
-    void crearListadoCtesHexadecimales(FILE* reporte, ListaInt* hexadecimales);
-    void crearListadoCtesDecimales(FILE* reporte, ListaInt* decimales, int acumuladorDecimal);
-
-    //todo: a partir de acá falta adaptar a estructuras de datos con memoria dinámica
-    void crearListadoCtesReales(FILE* reporte, ListaDouble* reales);
-    void crearListadoCtesCaracter(FILE* reporte, char caracteres[], int caracteresEncontrados);
-
-    void crearListadoComentarios(FILE* reporte, ListaStrings* comentarios);
-    void crearListadoOperadoresCtesPuntuacion(FILE* reporte, ListaStrings* lista);
-    void crearListadoNoReconocidos(FILE* reporte, ListaStrings* noReconocidos);
+    void nuevaCategoria(FILE*, char*);
+    void crearListadoIdentificadores(FILE*, ListaIdentificadores*);
+    void crearListadoLiteralesCadena(FILE*, ListaStrings*);
+    void crearListadoPalabrasReservadas(FILE*, ListaStrings*);
+    void crearListadoCtesInt(FILE*, ListaInt*, int, int*);
+    void crearListadoCtesReales(FILE*, ListaDouble*);
+    void crearListadoCtesCaracter(FILE*, char [], int);
+    void crearListadoComentarios(FILE*, ListaStrings*);
+    void crearListadoOperadoresCtesPuntuacion(FILE*, ListaStrings*);
+    void crearListadoNoReconocidos(FILE*, ListaStrings*);
 
     //Liberación de memoria
     void liberarListaIdentificadores(ListaIdentificadores*);
     void liberarListaStrings(ListaStrings*);
     void liberarListaInt(ListaInt*);
-    void liberarListaDouble(ListaDouble* );
+    void liberarListaDouble(ListaDouble*);
 
 
 

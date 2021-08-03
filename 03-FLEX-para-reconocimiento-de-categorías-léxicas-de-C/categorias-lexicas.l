@@ -124,9 +124,9 @@ int main()
     crearListadoIdentificadores(reporte, identificadores);
     crearListadoLiteralesCadena(reporte, cadenas);
     crearListadoPalabrasReservadas(reporte, palabrasReservadas);
-    crearListadoCtesOctales(reporte, octales);
-    crearListadoCtesHexadecimales(reporte, hexadecimales);
-    crearListadoCtesDecimales(reporte, decimales, acumuladorDecimal);
+    crearListadoCtesInt(reporte, octales, 8, NULL);
+    crearListadoCtesInt(reporte, hexadecimales, 16, NULL);
+    crearListadoCtesInt(reporte, decimales, 10, &acumuladorDecimal);
     printf("Id listo\n");
     crearListadoCtesReales(reporte, reales);
     crearListadoCtesCaracter(reporte, caracteres, caracteresEncontrados);

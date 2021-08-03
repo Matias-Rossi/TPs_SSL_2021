@@ -53,51 +53,29 @@
         liberarListaStrings(palabrasReservadas);
     }
 
-//todo: estas 3 funciones repiten lógica
-    void crearListadoCtesOctales(FILE* reporte, ListaInt* octales){
-        if(octales->pri != NULL){
-            nuevaCategoria(reporte, "CONSTANTES OCTALES");
+    void crearListadoCtesInt(FILE* reporte, ListaInt* lista, int base, int* acumuladorDecimal){
+        if(lista->pri != NULL){
+            switch(base){
+                case 8: nuevaCategoria(reporte, "CONSTANTES OCTALES"); break;
+                case 10: nuevaCategoria(reporte, "CONSTANTES DECIMALES"); break;
+                case 16: nuevaCategoria(reporte, "CONSTANTES HEXADECIMALES"); break;
+                default: printf("Error de base en crearListadoCtesInt\n");
+            }
 
-            NodoInt* aux = octales->pri;
+            NodoInt* aux = lista->pri;
             while(aux->sig != NULL) {
                 fprintf(reporte, "%d\n", aux->valor);
                 aux = aux->sig;
             }
             fprintf(reporte, "%d\n", aux->valor);
-        }
-        liberarListaInt(octales);
 
-    }
-
-    void crearListadoCtesHexadecimales(FILE* reporte, ListaInt* hexadecimales){
-        if(hexadecimales->pri != NULL){
-            nuevaCategoria(reporte, "CONSTANTES HEXADECIMALES");
-
-            NodoInt* aux = hexadecimales->pri;
-            while(aux->sig != NULL) {
-                fprintf(reporte, "%d\n", aux->valor);
-                aux = aux->sig;
+            if(base == 10) {
+                fprintf(reporte, "La suma de todas las constantes decimales es %d", acumuladorDecimal);
             }
-            fprintf(reporte, "%d\n", aux->valor);
         }
-        liberarListaInt(hexadecimales);
+        liberarListaInt(lista);
+
     }
-
-    void crearListadoCtesDecimales(FILE* reporte, ListaInt* decimales, int acumuladorDecimal){
-        if(decimales->pri != NULL){
-            nuevaCategoria(reporte, "CONSTANTES DECIMALES");
-
-            NodoInt* aux = decimales->pri;
-            while(aux->sig != NULL) {
-                fprintf(reporte, "%d\n", aux->valor);
-                aux = aux->sig;
-            }
-            fprintf(reporte, "%d\n", aux->valor);
-            fprintf(reporte, "La suma de todas las constantes decimales es %d", acumuladorDecimal);
-        }
-        liberarListaInt(decimales);
-    }
-
 
     void crearListadoCtesReales(FILE* reporte, ListaDouble* reales){
         if(reales->pri > 0){
