@@ -1843,11 +1843,11 @@ int main()
 
 int main()
 {
-    printf("[LOG]: Inicio del programa");
+    printf("[LOG]: Inicio del programa (1/5)\n");
     yyin = fopen("input.c", "r+");
     FILE* reporte = fopen("reporte.txt", "w+");
 
-    printf("[LOG]: Inicializando variables");
+    printf("[LOG]: Inicializando variables (2/5)\n");
     //Inicializacion
     linea = 0;
     identificadores = inicializarListaIdentificadores(identificadores);
@@ -1862,10 +1862,10 @@ int main()
     comentarios = inicializarListaStrings(comentarios);
     noReconocidos = inicializarListaStrings(noReconocidos);
 
-    printf("[LOG]: Corriendo analizador lexico");
+    printf("[LOG]: Corriendo analizador lexico (3/5)\n");
     yylex();
 
-    printf("[LOG]: Generando reporte");
+    printf("[LOG]: Generando reporte (4/5)\n");
     crearListadoIdentificadores(reporte, identificadores);
     crearListadoLiteralesCadena(reporte, cadenas);
     crearListadoPalabrasReservadas(reporte, palabrasReservadas);
@@ -1881,7 +1881,7 @@ int main()
     fclose(yyin);
     fclose(reporte);
 
-    printf("[LOG]: Fin del programa");
+    printf("[LOG]: Fin del programa (5/5)\n");
 
     return 0;
 }
