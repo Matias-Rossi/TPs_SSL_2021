@@ -68,13 +68,13 @@ typedef struct {
     int cantElementos;
 }ListaInt;
 typedef struct {
-    int* valor;
+    int valor;
     struct NodoInt* sig;
 }NodoInt;
 
 ListaInt* inicializarListaInt(ListaInt* );
 
-void agregarInt(ListaInt* , int* );
+void agregarInt(ListaInt* , int );
 
 int caracterYaEstaRegistrado(char caracteres[], int , char );
 

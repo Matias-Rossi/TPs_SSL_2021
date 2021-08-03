@@ -259,32 +259,23 @@ ListaInt* inicializarListaInt(ListaInt* lista){
 
 
 //TODO: Arreglar esta funcion que es un asco. encima no anda
-void agregarInt(ListaInt* lista, int* num){
-    if(lista->pri == NULL) {
-        NodoInt* nuevoNodo = (NodoInt*)malloc(sizeof(nuevoNodo));
-        nuevoNodo->valor = (int*)malloc(sizeof(int));
-        nuevoNodo->sig = (NodoInt*)malloc(sizeof(NodoInt));
+void agregarInt(ListaInt* lista, int num){
+    NodoInt* nuevo = malloc(sizeof(NodoInt));
+    nuevo->valor = malloc(sizeof(int));
+    nuevo->valor = num;
+    nuevo->sig = NULL;
 
-        lista->pri = nuevoNodo;
+    if(lista->pri != NULL) {
+        NodoInt* ultimo = lista->pri;
+
+        while(ultimo->sig != NULL){
+            ultimo = ultimo->sig;
+        }
+        ultimo->sig = nuevo;
+
     }
-    else {
-        NodoInt* ultimoNodo = lista->pri;
-        while(ultimoNodo->sig != NULL){
-            ultimoNodo = ultimoNodo->sig;
-        }
-
-        if(ultimoNodo->valor == NULL) {
-            int* nuevoValor = (int*)malloc(sizeof(int));
-            nuevoValor = num;
-            ultimoNodo->valor = nuevoValor;
-        }
-        else {
-            NodoInt* nuevoNodo = (NodoInt*)malloc(sizeof(nuevoNodo));
-            nuevoNodo->valor = (int*)malloc(sizeof(int));
-            nuevoNodo->sig = (NodoInt*)malloc(sizeof(NodoInt));
-
-            ultimoNodo->sig = nuevoNodo;
-        }
+    else{
+        lista->pri = nuevo;
     }
 }
 
@@ -384,13 +375,10 @@ void nuevaCategoria(FILE* reporte, char* seccion){
 
             NodoInt* aux = decimales->pri;
             while(aux->sig != NULL) {
-                printf("llegue\n");
-                printf("dir: %p\n", aux);
-                fprintf(reporte, "%s\n", aux->valor);
+                fprintf(reporte, "%d\n", aux->valor);
                 aux = aux->sig;
             }
-            printf("sali\n");
-            fprintf(reporte, "%s\n", aux->valor);
+            fprintf(reporte, "%d\n", aux->valor);
             fprintf(reporte, "La suma de todas las constantes decimales es %d", acumuladorDecimal);
         }
     }
@@ -399,11 +387,11 @@ void nuevaCategoria(FILE* reporte, char* seccion){
 
     void crearListadoCtesReales(FILE* reporte, double reales[], int realesEncontrados){
         if(realesEncontrados){
-            nuevaCategoria(reporte, "CONSTANTES decimales");
+            nuevaCategoria(reporte, "CONSTANTES DECIMALES");
             for(int i=0; i<realesEncontrados; i++){
                 int parteEntera = (int)reales[i];
                 double mantisa = reales[i] - parteEntera;
-                fprintf(reporte, "Mantisa: %f // Parte entera: %d", mantisa, parteEntera);
+                fprintf(reporte, "Mantisa: %f // Parte entera: %d\n", mantisa, parteEntera);
             }
         }
     }

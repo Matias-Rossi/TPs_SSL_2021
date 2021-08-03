@@ -20,4 +20,7 @@ int mayor(int a, int b)
 085
 0xF
 13
+20
+40
+30
 20.45
