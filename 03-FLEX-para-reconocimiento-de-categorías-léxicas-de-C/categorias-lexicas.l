@@ -83,7 +83,6 @@ COMENTARIOS_MULTILINEAL "/*"."*/"
 ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
 %%
-{ESPACIO_EN_BLANCO}|{TABULACION} {;}
 {IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext); linea++;}
 {LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);linea++;}
 {PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);linea++;}
@@ -95,6 +94,7 @@ TABULACION (\t)+
 {CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}linea++;}
 {COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);linea++;}
 {COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);linea++;}
+{ESPACIO_EN_BLANCO}|{TABULACION} {;}
 .                       {agregarStringAux(noReconocidos, yytext, linea); linea++;}
 %%
 int main()
