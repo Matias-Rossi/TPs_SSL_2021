@@ -41,7 +41,7 @@ OP_CARACT_DE_PUNTUACION ";"|"["|"]"|"("|")"|"{"|"}"|"."|"->"|"++"|"--"|"&"|"*"|"
 /**************** CONSTANTES ENTERAS *****************/
 /******* Constantes Enteras Decimales *******/
 CONST_ENTERA      {CONST_DECIMAL}{SUFIJO_ENTERO}?|{CONST_OCTAL}{SUFIJO_ENTERO}?|{CONST_HEXADECIMAL}{SUFIJO_ENTERO}?
-CONST_HEXADECIMAL ((0x)|(0X)){DIGITO_HEXADECIMAL}
+CONST_HEXADECIMAL ((0x)|(0X)){DIGITO_HEXADECIMAL}+
 CONST_OCTAL       0{DIGITO_OCTAL}*
 CONST_DECIMAL     {DIGITO_NO_CERO}{DIGITO_DECIMAL}*
 SUFIJO_ENTERO  {SUFIJO_U}|{SUFIJO_L}|({SUFIJO_L}{SUFIJO_U})|({SUFIJO_U}{SUFIJO_L})
@@ -49,7 +49,7 @@ SUFIJO_L "L"|"l"
 SUFIJO_U "U"|"u"
 /******** Constante Real *********/
 CONST_REAL      {CONST_FRAC}{PARTE_EXPONENTE}?{SUFIJO_REAL}?|{DIGITO_DECIMAL}+{PARTE_EXPONENTE}{SUFIJO_REAL}?
-CONST_FRAC      (({DIGITO_DECIMAL}+)?\.{DIGITO_DECIMAL}+)|{DIGITO_DECIMAL}+ 
+CONST_FRAC      ({DIGITO_NO_CERO}{DIGITO_DECIMAL}*\.{DIGITO_DECIMAL}+)|{DIGITO_DECIMAL}+ 
 PARTE_EXPONENTE {OPERADOR_E}{SIGNO}?{DIGITO_DECIMAL}+
 OPERADOR_E      "E"|"e"
 SIGNO           "-"|"+"
@@ -89,7 +89,7 @@ SALTO_DE_LINEA (\n)+
 {IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext); linea++;}
 {OP_CARACT_DE_PUNTUACION} {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} linea++;}
 {CONST_OCTAL}           {agregarInt(octales, atoi(yytext));linea++;}
-{CONST_HEXADECIMAL}     {agregarInt(hexadecimales, atoi(yytext));linea++;}
+{CONST_HEXADECIMAL}     {agregarInt(hexadecimales, strtol(yytext, NULL, 16));linea++;}
 {CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);linea++;}
 {CONST_REAL}            {reales[realesEncontrados] = strtod(yytext, NULL); realesEncontrados++;linea++;}
 {CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}linea++;}

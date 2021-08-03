@@ -18,7 +18,9 @@ int mayor(int a, int b)
         return b;
 }
 085
+025
 0xF
+0xFFA
 13
 20
 40

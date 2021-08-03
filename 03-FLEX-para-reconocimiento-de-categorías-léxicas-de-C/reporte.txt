@@ -36,11 +36,13 @@ return
 
 
 --CONSTANTES OCTALES--
-(null)
+0
+25
 
 
 --CONSTANTES HEXADECIMALES--
-(null)
+15
+4090
 
 
 --CONSTANTES DECIMALES--

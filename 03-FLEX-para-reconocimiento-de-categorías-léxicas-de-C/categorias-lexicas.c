@@ -349,10 +349,10 @@ void nuevaCategoria(FILE* reporte, char* seccion){
 
             NodoInt* aux = octales->pri;
             while(aux->sig != NULL) {
-                fprintf(reporte, "%s\n", aux->valor);
+                fprintf(reporte, "%d\n", aux->valor);
                 aux = aux->sig;
             }
-            fprintf(reporte, "%s\n", aux->valor);
+            fprintf(reporte, "%d\n", aux->valor);
         }
     }
 
@@ -362,10 +362,10 @@ void nuevaCategoria(FILE* reporte, char* seccion){
 
             NodoInt* aux = hexadecimales->pri;
             while(aux->sig != NULL) {
-                fprintf(reporte, "%s\n", aux->valor);
+                fprintf(reporte, "%d\n", aux->valor);
                 aux = aux->sig;
             }
-            fprintf(reporte, "%s\n", aux->valor);
+            fprintf(reporte, "%d\n", aux->valor);
         }
     }
 
