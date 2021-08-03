@@ -90,9 +90,11 @@ COMENTARIOS_MULTILINEAL "/*"."*/"
 %%
 int main()
 {
+    printf("[LOG]: Inicio del programa");
     yyin = fopen("input.c", "r+");
     FILE* reporte = fopen("reporte.txt", "w+");
 
+    printf("[LOG]: Inicializando variables");
     //Inicializacion
     linea = 0;
     identificadores = inicializarListaIdentificadores(identificadores);
@@ -107,8 +109,10 @@ int main()
     comentarios = inicializarListaStrings(comentarios);
     noReconocidos = inicializarListaStrings(noReconocidos);
 
+    printf("[LOG]: Corriendo analizador lexico");
     yylex();
 
+    printf("[LOG]: Generando reporte");
     crearListadoIdentificadores(reporte, identificadores);
     crearListadoLiteralesCadena(reporte, cadenas);
     crearListadoPalabrasReservadas(reporte, palabrasReservadas);
@@ -123,6 +127,8 @@ int main()
 
     fclose(yyin);
     fclose(reporte);
+
+    printf("[LOG]: Fin del programa");
 
     return 0;
 }
