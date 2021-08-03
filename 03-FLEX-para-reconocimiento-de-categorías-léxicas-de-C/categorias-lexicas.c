@@ -14,7 +14,7 @@ void agregarIdentificador(ListaIdentificadores* lista, char* cadena){
     int indice = -1;
 
     if(lista->cantElementos > 0)
-    buscarIdentificador(lista->pri, cadena);
+    indice = buscarIdentificador(lista->pri, cadena);
 
     if(indice != -1) {
         Identificador* aux;
@@ -24,7 +24,7 @@ void agregarIdentificador(ListaIdentificadores* lista, char* cadena){
             aux->ocurrencias++;
     }
     else {
-        nuevoIdentificador(lista->pri, cadena);
+        nuevoIdentificador(lista, cadena);
     }
 }
 
@@ -43,18 +43,24 @@ int buscarIdentificador(Identificador* lista, char* cadena){
     return -1;
 }
 
-void nuevoIdentificador(Identificador* lista, char* cadena) {
-    Identificador* ultimo = lista;
-    while(ultimo->sig != NULL){
-        ultimo = ultimo->sig;
-    }
-
-    Identificador* nuevo = (Identificador*)malloc(sizeof(Identificador));  //casteo (?????????
+//todo: esta funcion rompe
+void nuevoIdentificador(ListaIdentificadores* lista, char* cadena) {
+    Identificador* nuevo = malloc(sizeof(Identificador));
+    nuevo->nombre = malloc(strlen(cadena)*sizeof(char));
     strcpy(nuevo->nombre, cadena);
-    nuevo->ocurrencias = 1;
     nuevo->sig = NULL;
 
-    ultimo->sig = nuevo;
+
+    if(!lista->pri){
+        lista->pri = nuevo;
+    }
+    else {
+        Identificador* aux = lista->pri;
+        while(aux->sig) {
+            aux=aux->sig;
+        }
+        aux->sig = nuevo;
+    }
 }
 
 void ordernarIdentificadores(Identificador** lista) {

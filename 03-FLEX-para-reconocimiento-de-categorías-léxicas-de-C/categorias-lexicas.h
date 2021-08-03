@@ -23,7 +23,7 @@ void agregarIdentificador(ListaIdentificadores*, char*);
 
 int buscarIdentificador(Identificador*, char*);
 
-void nuevoIdentificador(Identificador*, char*);
+void nuevoIdentificador(ListaIdentificadores*, char*);
 
 void ordernarIdentificadores(Identificador**);
 

@@ -1,4 +1,4 @@
-int Mayor(int, int);
+int mayor(int, int);
 
 int main(void)
 {
