@@ -37,7 +37,7 @@ PALABRAS_RESERVADAS_TIPOS_DE_DATOS char|double|float|int|short|long|signed|unsig
 PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL if|switch|for|do|break|continue|while
 PALABRAS_RESERVADAS_OTHERS auto|case|const|default|else|enum|extern|goto|register|return|sizeof|static|struct|typedef|union|volatile
 /******* OPERADORES Y CARACTERES DE PUNTUACION *******/
-OP_CARACT_DE_PUNTUACION "["|"]"|"("|")"|"{"|"}"|"."|"->"|"++"|"--"|"&"|"*"|"+"|"-"|"~"|"!"|"/"|"%"|"<<"|">>"|"<"|">"|"<="|">="|"=="|"!="|"^"|"|"|"&&"|"||"|"="|"*="|"/="|"%="|"+="|"-="|"<<="|">>="|"&="|"^="|"|="|"?"|":"|";"|"..."|","|"#"|"##"
+OP_CARACT_DE_PUNTUACION ";"|"["|"]"|"("|")"|"{"|"}"|"."|"->"|"++"|"--"|"&"|"*"|"+"|"-"|"~"|"!"|"/"|"%"|"<<"|">>"|"<"|">"|"<="|">="|"=="|"!="|"^"|"|"|"&&"|"||"|"="|"*="|"/="|"%="|"+="|"-="|"<<="|">>="|"&="|"^="|"|="|"?"|":"|"..."|","|"#"|"##"
 /**************** CONSTANTES ENTERAS *****************/
 /******* Constantes Enteras Decimales *******/
 CONST_ENTERA      {CONST_DECIMAL}{SUFIJO_ENTERO}?|{CONST_OCTAL}{SUFIJO_ENTERO}?|{CONST_HEXADECIMAL}{SUFIJO_ENTERO}?
@@ -84,10 +84,10 @@ ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
 SALTO_DE_LINEA (\n)+
 %%
+{PALABRAS_RESERVADAS}   {printf("Escaneado \"%s\"\n",yytext);agregarString(palabrasReservadas, yytext);linea++;}
 {IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext); linea++;}
-{LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);linea++;}
-{PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);linea++;}
 {OP_CARACT_DE_PUNTUACION} {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} linea++;}
+{LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);linea++;}
 {CONST_OCTAL}           {agregarInt(octales, atoi(yytext));linea++;}
 {CONST_HEXADECIMAL}     {agregarInt(hexadecimales, atoi(yytext));linea++;}
 {CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);linea++;}
@@ -96,10 +96,11 @@ SALTO_DE_LINEA (\n)+
 {COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);linea++;}
 {COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);linea++;}
 {ESPACIO_EN_BLANCO}|{TABULACION}|{SALTO_DE_LINEA} {;}
-.                       {agregarStringAux(noReconocidos, yytext, linea); linea++;}
+.                       {agregarStringAux(noReconocidos, yytext, yylineno); linea++;}
 %%
 int main()
 {
+    //todo: de usar yylineno, no hace falta la variable linea
     printf("[LOG]: Inicio del programa (1/5)\n");
     yyin = fopen("input.c", "r+");
     FILE* reporte = fopen("reporte.txt", "w+");

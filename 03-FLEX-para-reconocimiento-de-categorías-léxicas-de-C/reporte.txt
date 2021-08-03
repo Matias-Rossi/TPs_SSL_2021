@@ -1,0 +1,89 @@
+
+
+--IDENTIFICADORES--
+mayor: 0 veces
+main: 0 veces
+uncion: 0 veces
+n1: 0 veces
+n2: 0 veces
+max: 0 veces
+printf: 0 veces
+Ingrese: 0 veces
+dos: 0 veces
+numeros: 0 veces
+enteros: 0 veces
+scanf: 0 veces
+d: 0 veces
+d: 0 veces
+n1: 0 veces
+n2: 0 veces
+max: 0 veces
+mayor: 0 veces
+n1: 0 veces
+n2: 0 veces
+printf: 0 veces
+El: 0 veces
+mayor: 0 veces
+entre: 0 veces
+d: 0 veces
+y: 0 veces
+d: 0 veces
+es: 0 veces
+d: 0 veces
+n: 0 veces
+n1: 0 veces
+n2: 0 veces
+max: 0 veces
+mayor: 0 veces
+a: 0 veces
+b: 0 veces
+a: 0 veces
+b: 0 veces
+a: 0 veces
+b: 0 veces
+
+
+--PALABRAS RESERVADAS--
+int
+int
+int
+int
+int
+int
+int
+int
+int
+int
+int
+int
+void
+int
+return
+int
+int
+int
+if
+return
+else
+return
+
+
+--CONSTANTES OCTALES--
+
+(null)
+
+
+--OPERADORES / CARACTERES DE PUNTUACION--
+( aparece 8 veces, aparece 10 veces) aparece 8 veces; aparece 9 veces{ aparece 2 veces: aparece 1 veces% aparece 5 veces& aparece 2 veces= aparece 1 veces} aparece 2 veces> aparece 1 veces
+
+--COMENTARIOS--
+Comentario de una linea: //F
+
+--TOKENS NO RECONOCIDOS--
+Token no reconocido en linea 15: "
+Token no reconocido en linea 15: "
+Token no reconocido en linea 16: "
+Token no reconocido en linea 16: "
+Token no reconocido en linea 18: "
+Token no reconocido en linea 18: \
+Token no reconocido en linea 18: "

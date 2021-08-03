@@ -92,15 +92,19 @@ void agregarString(ListaStrings* lista, char* str){
     nuevo->sig = NULL;
 
     if(lista->pri != NULL) {
-        NodoString* aux = lista->pri;
-        NodoString* ultimo = aux;
+        NodoString* ultimo = lista->pri;
+
+        //No sale de este bucle
         while(ultimo->sig != NULL){
-            ultimo->sig = ultimo;
+            ultimo = ultimo->sig;
+            //printf("Direccion: %p -> %p\n",ultimo, ultimo->sig);
         }
         ultimo->sig = nuevo;
+
     }
-    else
+    else{
     lista->pri = nuevo;
+    }
 }
 
 void agregarStringAuxFuncion(ListaStrings* lista, char* str, int valorAuxiliar(char*)){
@@ -112,7 +116,7 @@ void agregarStringAuxFuncion(ListaStrings* lista, char* str, int valorAuxiliar(c
     if(lista->pri != NULL){
         NodoString* ultimo = lista->pri;
         while(ultimo->sig != NULL){
-            ultimo->sig = ultimo;
+            ultimo = ultimo->sig;
         }
         ultimo->sig = nuevo;
     }
@@ -129,7 +133,7 @@ void agregarStringAux(ListaStrings* lista, char* str, int valorAuxiliar){
     if(lista->pri != NULL){
         NodoString* ultimo = lista->pri;
         while(ultimo->sig != NULL){
-            ultimo->sig = ultimo;
+            ultimo = ultimo->sig;
         }
         ultimo->sig = nuevo;
     }
@@ -256,7 +260,7 @@ int caracterYaEstaRegistrado(char caracteres[], int length, char caracter) {
 /* --- Creación del reporte --- */
 
 void nuevaCategoria(FILE* reporte, char* seccion){
-        fprintf(reporte,"\n--%s--\n", seccion);
+        fprintf(reporte,"\n\n--%s--\n", seccion);
     }
 
     void crearListadoIdentificadores(FILE* reporte, ListaIdentificadores* identificadores){
@@ -338,8 +342,8 @@ void nuevaCategoria(FILE* reporte, char* seccion){
                 aux = aux->sig;
             }
             fprintf(reporte, "%s\n", aux->valor);
+            fprintf(reporte, "La suma de todas las constantes decimales es %d", acumuladorDecimal);
         }
-        fprintf(reporte, "La suma de todas las constantes decimales es %d", acumuladorDecimal);
     }
 
 //todo: a partir de acá falta adaptar a estructuras de datos con memoria dinámica
@@ -407,10 +411,10 @@ void nuevaCategoria(FILE* reporte, char* seccion){
             NodoString* aux = noReconocidos->pri;
 
             while(aux->sig != NULL) {
-                fprintf(reporte, "Token no reconocido en linea %d: %s", aux->valor, aux->str);
+                fprintf(reporte, "Token no reconocido en linea %d: %s\n", aux->valor, aux->str);
                 aux = aux->sig;
             }
-            fprintf(reporte, "Token no reconocido en linea %d: %s", aux->valor, aux->str);
+            fprintf(reporte, "Token no reconocido en linea %d: %s\n", aux->valor, aux->str);
 
        }
    }
