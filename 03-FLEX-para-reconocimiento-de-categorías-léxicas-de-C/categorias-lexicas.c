@@ -68,15 +68,51 @@ void nuevoIdentificador(ListaIdentificadores* lista, char* cadena) {
 
     lista->cantElementos++;
 }
-/*
-void ordernarIdentificadores(ListaIdentificadores* lista) {
-    for(int i=0; i<lista->cantElementos; i++) {
-        for(int j=0; j<lista->cantElementos; j++) {
-            
+
+void ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*))
+{
+    //todo: no funciona
+    printf("Ordenando\n");
+    struct Identificador* inicio = lista->pri;
+    int swapped, i;
+    struct Identificador* ptr1 = inicio;
+    struct Identificador* lptr = NULL;
+  
+    if (inicio == NULL)
+        return;
+  
+    do
+    {
+        swapped = 0;
+        ptr1 = inicio;
+  
+        while (ptr1->sig != lptr)
+        {
+            if (criterio(ptr1->nombre, ptr1->sig->nombre) > 0)    //Ver si no va alrevés
+            { 
+                swapId(ptr1, ptr1->sig);
+                swapped = 1;
+            }
+            ptr1 = ptr1->sig;
         }
+        lptr = ptr1;
     }
+    while (swapped);
 }
-*/
+  
+void swapId(Identificador *a, Identificador *b)
+{
+    printf("Reordenando...\n");
+    char* temp = a;
+    a = b;
+    b = temp;
+}
+
+int ordenarAlfabeticamente(char* a, char* b) {
+    return (!strcmp(a,b) > 0)? 1 : -1;
+}
+
+
 /* --- Lista enlazada STRINGS --- */
 
 struct NodoString {
@@ -222,7 +258,7 @@ ListaInt* inicializarListaInt(ListaInt* lista){
 }
 
 
-//TODO: Arreglar esta funcion que es un asco
+//TODO: Arreglar esta funcion que es un asco. encima no anda
 void agregarInt(ListaInt* lista, int* num){
     if(lista->pri == NULL) {
         NodoInt* nuevoNodo = (NodoInt*)malloc(sizeof(nuevoNodo));
@@ -234,7 +270,7 @@ void agregarInt(ListaInt* lista, int* num){
     else {
         NodoInt* ultimoNodo = lista->pri;
         while(ultimoNodo->sig != NULL){
-            ultimoNodo->sig = ultimoNodo;
+            ultimoNodo = ultimoNodo->sig;
         }
 
         if(ultimoNodo->valor == NULL) {
@@ -275,7 +311,7 @@ void nuevaCategoria(FILE* reporte, char* seccion){
 
     void crearListadoIdentificadores(FILE* reporte, ListaIdentificadores* identificadores){
         if(identificadores->pri != NULL){
-            //ordernarIdentificadores(identificadores);
+            ordenarIdentificadores(identificadores, ordenarAlfabeticamente);
             Identificador* aux = identificadores->pri;
 
             nuevaCategoria(reporte, "IDENTIFICADORES");
@@ -348,9 +384,12 @@ void nuevaCategoria(FILE* reporte, char* seccion){
 
             NodoInt* aux = decimales->pri;
             while(aux->sig != NULL) {
+                printf("llegue\n");
+                printf("dir: %p\n", aux);
                 fprintf(reporte, "%s\n", aux->valor);
                 aux = aux->sig;
             }
+            printf("sali\n");
             fprintf(reporte, "%s\n", aux->valor);
             fprintf(reporte, "La suma de todas las constantes decimales es %d", acumuladorDecimal);
         }

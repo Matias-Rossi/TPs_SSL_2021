@@ -40,6 +40,19 @@ return
 (null)
 
 
+--CONSTANTES HEXADECIMALES--
+
+(null)
+
+
+--CONSTANTES DECIMALES--
+
+(null)
+La suma de todas las constantes decimales es 13
+
+--CONSTANTES decimales--
+Mantisa: 0.000000 // Parte entera: 85Mantisa: 0.450000 // Parte entera: 20
+
 --OPERADORES / CARACTERES DE PUNTUACION--
 ( aparece 8 veces
 , aparece 10 veces

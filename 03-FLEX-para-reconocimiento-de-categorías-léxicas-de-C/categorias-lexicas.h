@@ -6,7 +6,7 @@
 
 
 // LISTA ENLAZADA IDENTIFICADORES
-typedef struct {
+typedef struct Identificador{
     char* nombre;
     int ocurrencias;
     struct Identificador* sig;
@@ -25,7 +25,11 @@ int identificadorIncrementarSiRegistrado(Identificador* lista, char* cadena);
 
 void nuevoIdentificador(ListaIdentificadores*, char*);
 
-void ordernarIdentificadores(Identificador**);
+void ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*));
+
+void swapId(Identificador *a, Identificador *b);
+
+int ordenarAlfabeticamente(char* a, char* b);
 
 
 // LISTA ENLAZADA STRINGS

@@ -266,9 +266,13 @@ static void yy_flex_free YY_PROTO(( void * ));
 
 #define yywrap() 1
 #define YY_SKIP_YYWRAP
+
+#define FLEX_DEBUG
 typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 typedef int yy_state_type;
+
+#define FLEX_DEBUG
 extern int yylineno;
 int yylineno = 1;
 extern char *yytext;
@@ -540,6 +544,15 @@ static yyconst short int yy_chk[433] =
       178,  178
     } ;
 
+extern int yy_flex_debug;
+int yy_flex_debug = 1;
+
+static yyconst short int yy_rule_linenum[14] =
+    {   0,
+       87,   88,   89,   90,   91,   92,   93,   94,   95,   96,
+       97,   98,   99
+    } ;
+
 static yy_state_type yy_state_buf[YY_BUF_SIZE + 2], *yy_state_ptr;
 static char *yy_full_match;
 static int yy_lp;
@@ -556,7 +569,6 @@ goto find_rule; \
 char *yytext;
 #line 1 "categorias-lexicas.l"
 #define INITIAL 0
-/* option debug */
 #line 6 "categorias-lexicas.l"
 #include "categorias-lexicas.h"
 int linea;
@@ -597,7 +609,7 @@ ListaStrings *noReconocidos;
 /********* Digitos y Caracteres  ********/
 /****************** COMENTARIOS *********************/
 /**** OTROS ****/
-#line 601 "lex.yy.c"
+#line 613 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -750,7 +762,7 @@ YY_DECL
 
 #line 86 "categorias-lexicas.l"
 
-#line 754 "lex.yy.c"
+#line 766 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -838,6 +850,21 @@ find_rule: /* we branch to this label when backing up */
 
 do_action:	/* This label is used only to access EOF actions. */
 
+		if ( yy_flex_debug )
+			{
+			if ( yy_act == 0 )
+				fprintf( stderr, "--scanner backing up\n" );
+			else if ( yy_act < 14 )
+				fprintf( stderr, "--accepting rule at line %d (\"%s\")\n",
+				         yy_rule_linenum[yy_act], yytext );
+			else if ( yy_act == 14 )
+				fprintf( stderr, "--accepting default rule (\"%s\")\n",
+				         yytext );
+			else if ( yy_act == 15 )
+				fprintf( stderr, "--(end of buffer or a NUL)\n" );
+			else
+				fprintf( stderr, "--EOF (start condition %d)\n", YY_START );
+			}
 
 		switch ( yy_act )
 	{ /* beginning of action switch */
@@ -911,7 +938,7 @@ YY_RULE_SETUP
 #line 100 "categorias-lexicas.l"
 ECHO;
 	YY_BREAK
-#line 915 "lex.yy.c"
+#line 942 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1831,6 +1858,7 @@ int main()
     crearListadoCtesOctales(reporte, octales);
     crearListadoCtesHexadecimales(reporte, hexadecimales);
     crearListadoCtesDecimales(reporte, decimales, acumuladorDecimal);
+    printf("Id listo\n");
     crearListadoCtesReales(reporte, reales, realesEncontrados);
     crearListadoCtesCaracter(reporte, caracteres, caracteresEncontrados);
     crearListadoOperadoresCtesPuntuacion(reporte, operadoresCtesPuntuacion);

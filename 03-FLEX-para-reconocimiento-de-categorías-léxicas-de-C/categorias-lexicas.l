@@ -1,6 +1,6 @@
 %option noyywrap
 %option yylineno
-/* option debug */
+%option debug
 
 %{
 #include "categorias-lexicas.h"
@@ -132,6 +132,7 @@ int main()
     crearListadoCtesOctales(reporte, octales);
     crearListadoCtesHexadecimales(reporte, hexadecimales);
     crearListadoCtesDecimales(reporte, decimales, acumuladorDecimal);
+    printf("Id listo\n");
     crearListadoCtesReales(reporte, reales, realesEncontrados);
     crearListadoCtesCaracter(reporte, caracteres, caracteresEncontrados);
     crearListadoOperadoresCtesPuntuacion(reporte, operadoresCtesPuntuacion);
