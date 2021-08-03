@@ -387,7 +387,7 @@ void nuevaCategoria(FILE* reporte, char* seccion){
 
     void crearListadoCtesReales(FILE* reporte, double reales[], int realesEncontrados){
         if(realesEncontrados){
-            nuevaCategoria(reporte, "CONSTANTES DECIMALES");
+            nuevaCategoria(reporte, "CONSTANTES REALES");
             for(int i=0; i<realesEncontrados; i++){
                 int parteEntera = (int)reales[i];
                 double mantisa = reales[i] - parteEntera;

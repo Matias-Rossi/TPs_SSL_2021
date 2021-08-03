@@ -48,6 +48,7 @@ SUFIJO_ENTERO  {SUFIJO_U}|{SUFIJO_L}|({SUFIJO_L}{SUFIJO_U})|({SUFIJO_U}{SUFIJO_L
 SUFIJO_L "L"|"l"
 SUFIJO_U "U"|"u"
 /******** Constante Real *********/
+CONST_PTOFLOTANTE ({SIGNO}?{DIGITO_DECIMAL}*\.{DIGITO_DECIMAL}*{PARTE_EXPONENTE}?)|({SIGNO}?{DIGITO_DECIMAL}+(\.|{DIGITO_DECIMAL}*)?{PARTE_EXPONENTE})
 CONST_REAL      {CONST_FRAC}{PARTE_EXPONENTE}?{SUFIJO_REAL}?|{DIGITO_DECIMAL}+{PARTE_EXPONENTE}{SUFIJO_REAL}?
 CONST_FRAC      ({DIGITO_NO_CERO}{DIGITO_DECIMAL}*\.{DIGITO_DECIMAL}+)|{DIGITO_DECIMAL}+ 
 PARTE_EXPONENTE {OPERADOR_E}{SIGNO}?{DIGITO_DECIMAL}+
@@ -91,7 +92,7 @@ SALTO_DE_LINEA (\n)+
 {CONST_OCTAL}           {agregarInt(octales, atoi(yytext));linea++;}
 {CONST_HEXADECIMAL}     {agregarInt(hexadecimales, strtol(yytext, NULL, 16));linea++;}
 {CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);linea++;}
-{CONST_REAL}            {reales[realesEncontrados] = strtod(yytext, NULL); realesEncontrados++;linea++;}
+{CONST_PTOFLOTANTE}            {reales[realesEncontrados] = strtod(yytext, NULL); realesEncontrados++;linea++;}
 {CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}linea++;}
 {COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);linea++;}
 {COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);linea++;}
