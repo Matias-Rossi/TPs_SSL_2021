@@ -79,7 +79,11 @@ S_CHAR [^\"\\\n]
 COMENTARIOS             {COMENTARIOS_LINEAL}|{COMENTARIOS_MULTILINEAL}
 COMENTARIOS_LINEAL      "//".
 COMENTARIOS_MULTILINEAL "/*"."*/"
+/**** OTROS ****/
+ESPACIO_EN_BLANCO (" ")+
+TABULACION (\t)+
 %%
+{ESPACIO_EN_BLANCO}|{TABULACION} {;}
 {IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext); linea++;}
 {LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);linea++;}
 {PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);linea++;}
@@ -91,7 +95,6 @@ COMENTARIOS_MULTILINEAL "/*"."*/"
 {CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}linea++;}
 {COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);linea++;}
 {COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);linea++;}
-" " {;}
 .                       {agregarStringAux(noReconocidos, yytext, linea); linea++;}
 %%
 int main()
