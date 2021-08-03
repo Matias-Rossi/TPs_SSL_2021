@@ -37,14 +37,12 @@ typedef struct nodoString {
 }NodoString;
 
 ListaStrings* inicializarListaStrings(ListaStrings* lista);
-//todo: Estas tres funciones a continuación quizás puedan anidarse de alguna manera para no repetir lógica, queda pendiente
 void agregarString(ListaStrings*, char*);
 void agregarStringAuxFuncion(ListaStrings*, char*, int (char*));
-void agregarStringAux(ListaStrings*, char*, int );
-//
+void agregarStringAux(ListaStrings*, char*, int);
 void ordenarStrings(ListaStrings*, int (char*, char*));
 void swap(NodoString *, NodoString *);
-int ordenarPorLongitud(char*, char* );
+int ordenarPorLongitud(char*, char*);
 int stringYaEstaRegistrado(ListaStrings*, int, char*);
 
 

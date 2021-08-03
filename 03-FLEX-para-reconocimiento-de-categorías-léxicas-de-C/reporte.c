@@ -70,7 +70,7 @@
             fprintf(reporte, "%d\n", aux->valor);
 
             if(base == 10) {
-                fprintf(reporte, "La suma de todas las constantes decimales es %d", acumuladorDecimal);
+                fprintf(reporte, "La suma de todas las constantes decimales es %d", *acumuladorDecimal);
             }
         }
         liberarListaInt(lista);

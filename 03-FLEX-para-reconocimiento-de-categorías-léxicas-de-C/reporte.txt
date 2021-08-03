@@ -30,6 +30,8 @@ pilaVacia: 2 veces
 pop: 1 veces
 vaciarPila: 1 veces
 inputContinuar: 4 veces
+Y: 1 veces
+y: 1 veces
 free: 1 veces
 FD: 1 veces
 
@@ -101,7 +103,7 @@ return
 6
 6
 10
-La suma de todas las constantes decimales es 4330636
+La suma de todas las constantes decimales es 35
 
 --CONSTANTES CARACTER--
 '
@@ -147,3 +149,7 @@ Comentario de una linea: //Ingresar entrada nuevamente
 --TOKENS NO RECONOCIDOS--
 Token no reconocido en linea 28: 	'
 Token no reconocido en linea 28: 	'
+Token no reconocido en linea 91: 	'
+Token no reconocido en linea 91: 	'
+Token no reconocido en linea 91: 	'
+Token no reconocido en linea 91: 	'
