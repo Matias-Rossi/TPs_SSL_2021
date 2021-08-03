@@ -82,6 +82,7 @@ COMENTARIOS_MULTILINEAL "/*"."*/"
 /**** OTROS ****/
 ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
+SALTO_DE_LINEA (\n)+
 %%
 {IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext); linea++;}
 {LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);linea++;}
@@ -94,7 +95,7 @@ TABULACION (\t)+
 {CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}linea++;}
 {COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);linea++;}
 {COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);linea++;}
-{ESPACIO_EN_BLANCO}|{TABULACION} {;}
+{ESPACIO_EN_BLANCO}|{TABULACION}|{SALTO_DE_LINEA} {;}
 .                       {agregarStringAux(noReconocidos, yytext, linea); linea++;}
 %%
 int main()
