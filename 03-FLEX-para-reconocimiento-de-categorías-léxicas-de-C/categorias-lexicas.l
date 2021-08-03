@@ -23,6 +23,7 @@ int caracteresEncontrados;
 //PEND Operadores / caracteres de puntuación
 
 ListaStrings *comentarios;
+ListaStrings *noReconocidos;
 
 %}
 /* DEFINICIONES */
@@ -85,7 +86,7 @@ COMENTARIOS_MULTILINEAL "/*"."*/"
 {CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}linea++;}
 {COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);linea++;}
 {COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);linea++;}
-.                       {; //todo}
+.                       {agregarStringAux(noReconocidos, yytext, linea); linea++;}
 %%
 int main()
 {
@@ -104,7 +105,7 @@ int main()
     realesEncontrados = 0;
     caracteresEncontrados = 0;
     comentarios = inicializarListaStrings(comentarios);
-
+    noReconocidos = inicializarListaStrings(noReconocidos);
 
     yylex();
 
@@ -118,7 +119,7 @@ int main()
     crearListadoCtesCaracter(reporte, caracteres, caracteresEncontrados);
     //crearListadoOperadoresCtesPuntuacion(); PEND
     crearListadoComentarios(reporte, comentarios);
-    //crearListadoNoReconocidos(); PEND
+    crearListadoNoReconocidos(reporte, noReconocidos);
 
     fclose(yyin);
     fclose(reporte);

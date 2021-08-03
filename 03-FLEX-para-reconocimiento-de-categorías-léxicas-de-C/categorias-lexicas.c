@@ -343,7 +343,7 @@ void nuevaCategoria(FILE* reporte, char* seccion){
                 } else {
                     fprintf(reporte, "Comentario de multiples lineas: ");
                 }
-                fprintf(reporte, aux->str);
+                fprintf(reporte, "%s", aux->str);
                 aux = aux->sig;
             }
             if(aux->valor == 0) {
@@ -351,14 +351,27 @@ void nuevaCategoria(FILE* reporte, char* seccion){
             } else {
                 fprintf(reporte, "Comentario de multiples lineas: ");
             }
-            fprintf(reporte, aux->str);
+            fprintf(reporte, "%s", aux->str);
         }
     }
 
     /* PEND
     crearListadoOperadoresCtesPuntuacion(); PEND
-    crearListadoNoReconocidos(); PEND
+    
     */
+   void crearListadoNoReconocidos(FILE* reporte, ListaStrings* noReconocidos){
+       if(noReconocidos->pri != NULL) {
+           nuevaCategoria(reporte, "TOKENS NO RECONOCIDOS");
+            NodoString* aux = noReconocidos->pri;
+
+            while(aux->sig != NULL) {
+                fprintf(reporte, "Token no reconocido en linea %d: %s", aux->valor, aux->str);
+                aux = aux->sig;
+            }
+            fprintf(reporte, "Token no reconocido en linea %d: %s", aux->valor, aux->str);
+
+       }
+   }
 
 /* Otros */
 

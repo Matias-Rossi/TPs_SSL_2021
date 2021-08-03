@@ -90,6 +90,7 @@ int caracterYaEstaRegistrado(char caracteres[], int , char );
     void crearListadoCtesReales(FILE* reporte, double reales[], int realesEncontrados);
     void crearListadoCtesCaracter(FILE* reporte, char caracteres[], int caracteresEncontrados);
     void crearListadoComentarios(FILE* reporte, ListaStrings* comentarios);
+    void crearListadoNoReconocidos(FILE* reporte, ListaStrings* noReconocidos);
 
 
     /* PEND
