@@ -1,6 +1,6 @@
 %option noyywrap
 %option yylineno
-%option debug
+/* option debug */
 
 %{
 #include "categorias-lexicas.h"
@@ -57,8 +57,8 @@ SUFIJO_REAL     "f"|"F"|"l"|"L"
 /******** Constante Caracter ********/
 CONST_CARACTER '{CARACTERES_SINGULARES}'|'{SECUENCIA_DE_ESCAPE}' 
 /****************** LITERAL CADENA *******************/
-LITERAL_CADENA                   \"{SECUENCIA_CARACTERES}\"
-SECUENCIA_CARACTERES             {CARACTER}+
+LITERAL_CADENA                   \"(\\.|[^"\\])*\"
+SECUENCIA_CARACTERES             {CARACTER}*
 CARACTER                         [{DIGITO_NO_CERO}{DIGITO_DECIMAL}{CARACTERES_ESPECIALES}{SECUENCIA_DE_ESCAPE}]
 /******************* IDENTIFICADOR *******************/
 IDENTIFICADOR {CARACTERES_SINGULARES}({CARACTERES_SINGULARES}|{DIGITO_DECIMAL})*
@@ -77,17 +77,17 @@ CARACTERES_ESPECIALES " "|"!"|"#"|"$"|"%"|"&"|"("|")"|"*"|"+"|","|"-"|"."|"/"|":
 S_CHAR [^\"\\\n]
 /****************** COMENTARIOS *********************/
 COMENTARIOS             {COMENTARIOS_LINEAL}|{COMENTARIOS_MULTILINEAL}
-COMENTARIOS_LINEAL      "//".
+COMENTARIOS_LINEAL      "//"(.)*
 COMENTARIOS_MULTILINEAL "/*"."*/"
 /**** OTROS ****/
 ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
 SALTO_DE_LINEA (\n)+
 %%
-{PALABRAS_RESERVADAS}   {printf("Escaneado \"%s\"\n",yytext);agregarString(palabrasReservadas, yytext);linea++;}
+{LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);linea++;}
+{PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);linea++;}
 {IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext); linea++;}
 {OP_CARACT_DE_PUNTUACION} {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} linea++;}
-{LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);linea++;}
 {CONST_OCTAL}           {agregarInt(octales, atoi(yytext));linea++;}
 {CONST_HEXADECIMAL}     {agregarInt(hexadecimales, atoi(yytext));linea++;}
 {CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);linea++;}
@@ -135,6 +135,7 @@ int main()
     crearListadoCtesReales(reporte, reales, realesEncontrados);
     crearListadoCtesCaracter(reporte, caracteres, caracteresEncontrados);
     crearListadoOperadoresCtesPuntuacion(reporte, operadoresCtesPuntuacion);
+    //todo: arreglar comentarios multilinea 
     crearListadoComentarios(reporte, comentarios);
     crearListadoNoReconocidos(reporte, noReconocidos);
 

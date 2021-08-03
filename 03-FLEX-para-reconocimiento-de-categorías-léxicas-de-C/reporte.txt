@@ -1,57 +1,24 @@
 
 
 --IDENTIFICADORES--
-mayor: 0 veces
-main: 0 veces
-uncion: 0 veces
-n1: 0 veces
-n2: 0 veces
-max: 0 veces
-printf: 0 veces
-Ingrese: 0 veces
-dos: 0 veces
-numeros: 0 veces
-enteros: 0 veces
-scanf: 0 veces
-d: 0 veces
-d: 0 veces
-n1: 0 veces
-n2: 0 veces
-max: 0 veces
-mayor: 0 veces
-n1: 0 veces
-n2: 0 veces
-printf: 0 veces
-El: 0 veces
-mayor: 0 veces
-entre: 0 veces
-d: 0 veces
-y: 0 veces
-d: 0 veces
-es: 0 veces
-d: 0 veces
-n: 0 veces
-n1: 0 veces
-n2: 0 veces
-max: 0 veces
-mayor: 0 veces
-a: 0 veces
-b: 0 veces
-a: 0 veces
-b: 0 veces
-a: 0 veces
-b: 0 veces
+mayor: 3 veces
+main: 1 veces
+n1: 4 veces
+n2: 4 veces
+max: 3 veces
+printf: 2 veces
+scanf: 1 veces
+a: 3 veces
+b: 3 veces
+
+
+--LITERALES CADENA--
+"%d %d"
+"Ingrese dos numeros enteros: "
+"El mayor entre %d y %d es %d\n"
 
 
 --PALABRAS RESERVADAS--
-int
-int
-int
-int
-int
-int
-int
-int
 int
 int
 int
@@ -74,16 +41,16 @@ return
 
 
 --OPERADORES / CARACTERES DE PUNTUACION--
-( aparece 8 veces, aparece 10 veces) aparece 8 veces; aparece 9 veces{ aparece 2 veces: aparece 1 veces% aparece 5 veces& aparece 2 veces= aparece 1 veces} aparece 2 veces> aparece 1 veces
+( aparece 8 veces
+, aparece 10 veces
+) aparece 8 veces
+; aparece 9 veces
+{ aparece 2 veces
+& aparece 2 veces
+= aparece 1 veces
+} aparece 2 veces
+> aparece 1 veces
+
 
 --COMENTARIOS--
-Comentario de una linea: //F
-
---TOKENS NO RECONOCIDOS--
-Token no reconocido en linea 15: "
-Token no reconocido en linea 15: "
-Token no reconocido en linea 16: "
-Token no reconocido en linea 16: "
-Token no reconocido en linea 18: "
-Token no reconocido en linea 18: \
-Token no reconocido en linea 18: "
+Comentario de una linea: // Funcion

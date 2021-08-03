@@ -1,16 +1,8 @@
-int
-int
-int
-int
-int
-int
-int
-int
 int mayor(int, int);
 
 int main(void)
 {
-    //Funcion
+    // Funcion
     int n1, n2, max;
     printf("Ingrese dos numeros enteros: ");
     scanf("%d %d", &n1, &n2);

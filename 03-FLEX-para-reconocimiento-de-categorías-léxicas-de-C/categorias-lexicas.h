@@ -21,7 +21,7 @@ ListaIdentificadores* inicializarListaIdentificadores(ListaIdentificadores*);
 
 void agregarIdentificador(ListaIdentificadores*, char*);
 
-int buscarIdentificador(Identificador*, char*);
+int identificadorIncrementarSiRegistrado(Identificador* lista, char* cadena);
 
 void nuevoIdentificador(ListaIdentificadores*, char*);
 

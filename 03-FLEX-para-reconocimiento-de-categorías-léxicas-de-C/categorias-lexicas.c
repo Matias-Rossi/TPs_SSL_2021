@@ -11,45 +11,49 @@ ListaIdentificadores* inicializarListaIdentificadores(ListaIdentificadores* list
 }
 
 void agregarIdentificador(ListaIdentificadores* lista, char* cadena){
-    int indice = -1;
+    int yaRegistrado = 0;
 
     if(lista->cantElementos > 0)
-    indice = buscarIdentificador(lista->pri, cadena);
+    yaRegistrado = identificadorIncrementarSiRegistrado(lista->pri, cadena);
 
-    if(indice != -1) {
-        Identificador* aux;
-        for(int i=0; i<indice; i++){
-            aux = aux->sig;
-        }
-            aux->ocurrencias++;
-    }
-    else {
+    if(yaRegistrado == 0) {
         nuevoIdentificador(lista, cadena);
+        lista->cantElementos++;
     }
 }
 
-int buscarIdentificador(Identificador* lista, char* cadena){
+//Se fija si ya esta el identificador en la lista enlazada. Si está, incrementa en 1 las ocurrencias y retorna 1. Si no, retorna 0.
+int identificadorIncrementarSiRegistrado(Identificador* lista, char* cadena){
     Identificador* aux = lista;
-    int pos = 0;
 
     while(aux->sig != NULL) {
-        if(strcmp(lista->nombre, cadena)){
-            return pos;
+        //printf("\nCoinciden \"%s\" y \"%s\"?", cadena, aux->nombre);
+        if(!strcmp(aux->nombre, cadena)){
+            //printf("Si\n\n");
+            aux->ocurrencias = aux->ocurrencias + 1;
+            return 1;
         } else {
-            pos++;
             aux = aux -> sig;
         }
     }
-    return -1;
+    if(!strcmp(aux->nombre, cadena)){
+        //printf("Si\n\n");
+        aux->ocurrencias = aux->ocurrencias + 1;
+        return 1;
+    } else {
+        aux = aux -> sig;
+    }
+    return 0;
 }
 
 //todo: esta funcion rompe
 void nuevoIdentificador(ListaIdentificadores* lista, char* cadena) {
+
     Identificador* nuevo = malloc(sizeof(Identificador));
     nuevo->nombre = malloc(strlen(cadena)*sizeof(char));
     strcpy(nuevo->nombre, cadena);
     nuevo->sig = NULL;
-
+    nuevo->ocurrencias = 1;
 
     if(!lista->pri){
         lista->pri = nuevo;
@@ -61,12 +65,18 @@ void nuevoIdentificador(ListaIdentificadores* lista, char* cadena) {
         }
         aux->sig = nuevo;
     }
-}
 
-void ordernarIdentificadores(Identificador** lista) {
-    //todo: PEND. Ordenar alfabéticamente lista enlazada
+    lista->cantElementos++;
 }
-
+/*
+void ordernarIdentificadores(ListaIdentificadores* lista) {
+    for(int i=0; i<lista->cantElementos; i++) {
+        for(int j=0; j<lista->cantElementos; j++) {
+            
+        }
+    }
+}
+*/
 /* --- Lista enlazada STRINGS --- */
 
 struct NodoString {
@@ -161,7 +171,7 @@ void ordenarStrings(ListaStrings* lista, int criterio(char*, char*))
         {
             if (criterio(ptr1->str, ptr1->sig->str) > 0)    //Ver si no va alrevés
             { 
-                swap(ptr1, ptr1->sig);
+                swapStr(ptr1, ptr1->sig);
                 swapped = 1;
             }
             ptr1 = ptr1->sig;
@@ -171,7 +181,7 @@ void ordenarStrings(ListaStrings* lista, int criterio(char*, char*))
     while (swapped);
 }
   
-void swap(NodoString *a, NodoString *b)
+void swapStr(NodoString *a, NodoString *b)
 {
     char* temp = a->str;
     a->str = b->str;
@@ -397,10 +407,10 @@ void nuevaCategoria(FILE* reporte, char* seccion){
             NodoString* aux = lista->pri;
 
             while(aux->sig != NULL) {
-                fprintf(reporte, "%s aparece %d veces", aux->str, aux->valor);
+                fprintf(reporte, "%s aparece %d veces\n", aux->str, aux->valor);
                 aux = aux->sig;
             }
-            fprintf(reporte, "%s aparece %d veces", aux->str, aux->valor);
+            fprintf(reporte, "%s aparece %d veces\n", aux->str, aux->valor);
         }
     }
     
@@ -411,10 +421,10 @@ void nuevaCategoria(FILE* reporte, char* seccion){
             NodoString* aux = noReconocidos->pri;
 
             while(aux->sig != NULL) {
-                fprintf(reporte, "Token no reconocido en linea %d: %s\n", aux->valor, aux->str);
+                fprintf(reporte, "Token no reconocido en linea %d: \t%s\n", aux->valor, aux->str);
                 aux = aux->sig;
             }
-            fprintf(reporte, "Token no reconocido en linea %d: %s\n", aux->valor, aux->str);
+            fprintf(reporte, "Token no reconocido en linea %d: \t%s\n", aux->valor, aux->str);
 
        }
    }
