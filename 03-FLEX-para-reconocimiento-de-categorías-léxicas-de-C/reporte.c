@@ -98,7 +98,6 @@
         liberarListaInt(decimales);
     }
 
-//todo: a partir de acá falta adaptar a estructuras de datos con memoria dinámica
 
     void crearListadoCtesReales(FILE* reporte, ListaDouble* reales){
         if(reales->pri > 0){
@@ -118,7 +117,7 @@
             double mantisa = iterador->valor - parteEntera;
             fprintf(reporte, "Mantisa: %f // Parte entera: %d\n", mantisa, parteEntera);
         }
-        //todo: liberarLista
+        liberarListaDouble(reales);
     }
 
     void crearListadoCtesCaracter(FILE* reporte, char caracteres[], int caracteresEncontrados){
@@ -128,7 +127,6 @@
                 fprintf(reporte, "%c\n", caracteres[i]);
             }
         }
-        //todo: liberarLista
     }
 
     void crearListadoComentarios(FILE* reporte, ListaStrings* comentarios){
@@ -243,8 +241,30 @@ void liberarListaInt(ListaInt* lista){
 
     //Lista con elementos
     } else {                    
-        NodoString* borrador = lista->pri;
-        NodoString* siguiente;
+        NodoInt* borrador = lista->pri;
+        NodoInt* siguiente;
+
+        //Minetras haya más elementos
+        while(borrador->sig) {  
+            siguiente = borrador->sig;
+            free(borrador);
+            borrador = siguiente;
+        }
+        //Para el último elemento
+        siguiente = borrador->sig;
+        free(borrador);
+    }
+}
+
+void liberarListaDouble(ListaDouble* lista) {
+    //Lista vacía
+    if(lista->pri == NULL) {    
+        free(lista);
+
+    //Lista con elementos
+    } else {                    
+        NodoDouble* borrador = lista->pri;
+        NodoDouble* siguiente;
 
         //Minetras haya más elementos
         while(borrador->sig) {  

@@ -109,6 +109,7 @@ int caracterYaEstaRegistrado(char [], int , char);
     void liberarListaIdentificadores(ListaIdentificadores*);
     void liberarListaStrings(ListaStrings*);
     void liberarListaInt(ListaInt*);
+    void liberarListaDouble(ListaDouble* );
 
 
 
