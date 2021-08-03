@@ -178,6 +178,23 @@ int ordenarPorLongitud(char* a, char* b) {
     return strlen(a) - strlen(b);
 }
 
+//Se fija si ya esta el string en la lista enlazada. Si está, incrementa en 1 el valor auxiliar y retorna 1. Si no, retorna 0.
+int stringIncrementarSiRegistrado(ListaStrings* lista, int length, char* str){
+    if(lista->pri) {
+        NodoString* aux = lista->pri;
+        for(int i=0; i<length; i++) {
+            if(!strcmp(aux->str, str)) {
+                aux->valor = aux->valor + 1;
+                return 1;
+            }
+            else {
+                aux = aux->sig;
+            }
+        }
+    }
+    return 0;
+}
+
 
 /* --- Lista enlazada INTs --- */
 
@@ -370,13 +387,23 @@ void nuevaCategoria(FILE* reporte, char* seccion){
         }
     }
 
-    /* PEND
-    crearListadoOperadoresCtesPuntuacion(); PEND
+    void crearListadoOperadoresCtesPuntuacion(FILE* reporte, ListaStrings* lista) {
+        if(lista->pri != NULL) {
+            nuevaCategoria(reporte, "OPERADORES / CARACTERES DE PUNTUACION");
+            NodoString* aux = lista->pri;
+
+            while(aux->sig != NULL) {
+                fprintf(reporte, "%s aparece %d veces", aux->str, aux->valor);
+                aux = aux->sig;
+            }
+            fprintf(reporte, "%s aparece %d veces", aux->str, aux->valor);
+        }
+    }
     
-    */
-   void crearListadoNoReconocidos(FILE* reporte, ListaStrings* noReconocidos){
+    
+    void crearListadoNoReconocidos(FILE* reporte, ListaStrings* noReconocidos){
        if(noReconocidos->pri != NULL) {
-           nuevaCategoria(reporte, "TOKENS NO RECONOCIDOS");
+            nuevaCategoria(reporte, "TOKENS NO RECONOCIDOS");
             NodoString* aux = noReconocidos->pri;
 
             while(aux->sig != NULL) {

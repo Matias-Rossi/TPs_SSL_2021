@@ -9,6 +9,10 @@ ListaIdentificadores* identificadores;
 ListaStrings* cadenas;
 ListaStrings* palabrasReservadas;
 
+//PEND Operadores / caracteres de puntuación
+ListaStrings* operadoresCtesPuntuacion;
+int operadoresCtesPuntuacionEncontrados;
+
 ListaInt* octales;
 ListaInt* hexadecimales;
 ListaInt* decimales;
@@ -21,7 +25,6 @@ int realesEncontrados;
 char caracteres[100];
 int caracteresEncontrados;
 
-//PEND Operadores / caracteres de puntuación
 
 ListaStrings *comentarios;
 ListaStrings *noReconocidos;
@@ -80,6 +83,7 @@ COMENTARIOS_MULTILINEAL "/*"."*/"
 {IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext); linea++;}
 {LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);linea++;}
 {PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);linea++;}
+{OP_CARACT_DE_PUNTUACION} {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} linea++;}
 {CONST_OCTAL}           {agregarInt(octales, atoi(yytext));linea++;}
 {CONST_HEXADECIMAL}     {agregarInt(hexadecimales, atoi(yytext));linea++;}
 {CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);linea++;}
@@ -87,6 +91,7 @@ COMENTARIOS_MULTILINEAL "/*"."*/"
 {CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}linea++;}
 {COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);linea++;}
 {COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);linea++;}
+" " {;}
 .                       {agregarStringAux(noReconocidos, yytext, linea); linea++;}
 %%
 int main()
@@ -107,6 +112,8 @@ int main()
     acumuladorDecimal = 0;
     realesEncontrados = 0;
     caracteresEncontrados = 0;
+    operadoresCtesPuntuacion = inicializarListaStrings(operadoresCtesPuntuacion);
+    operadoresCtesPuntuacionEncontrados = 0;
     comentarios = inicializarListaStrings(comentarios);
     noReconocidos = inicializarListaStrings(noReconocidos);
 
@@ -122,7 +129,7 @@ int main()
     crearListadoCtesDecimales(reporte, decimales, acumuladorDecimal);
     crearListadoCtesReales(reporte, reales, realesEncontrados);
     crearListadoCtesCaracter(reporte, caracteres, caracteresEncontrados);
-    //crearListadoOperadoresCtesPuntuacion(); PEND
+    crearListadoOperadoresCtesPuntuacion(reporte, operadoresCtesPuntuacion);
     crearListadoComentarios(reporte, comentarios);
     crearListadoNoReconocidos(reporte, noReconocidos);
 

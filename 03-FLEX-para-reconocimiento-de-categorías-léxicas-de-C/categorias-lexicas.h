@@ -55,6 +55,8 @@ void swap(NodoString *, NodoString *);
 
 int ordenarPorLongitud(char*, char* );
 
+int stringYaEstaRegistrado(ListaStrings*, int, char*);
+
 // LISTA ENLAZADA INTs       Falta agregar chequeo de NULL para cuando lsita esta vacia, etc
 
 typedef struct {
@@ -90,13 +92,9 @@ int caracterYaEstaRegistrado(char caracteres[], int , char );
     void crearListadoCtesReales(FILE* reporte, double reales[], int realesEncontrados);
     void crearListadoCtesCaracter(FILE* reporte, char caracteres[], int caracteresEncontrados);
     void crearListadoComentarios(FILE* reporte, ListaStrings* comentarios);
+    void crearListadoOperadoresCtesPuntuacion(FILE* reporte, ListaStrings* lista);
     void crearListadoNoReconocidos(FILE* reporte, ListaStrings* noReconocidos);
 
-
-    /* PEND
-    crearListadoOperadoresCtesPuntuacion(); PEND
-    crearListadoNoReconocidos(); PEND
-    */
 
 /* Otros */
 
