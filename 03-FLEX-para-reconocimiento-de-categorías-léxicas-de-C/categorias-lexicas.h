@@ -2,10 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* ESTRUCTURAS (podría separarse en dos archivos) */
-
-
-// LISTA ENLAZADA IDENTIFICADORES
+/* ### LISTA ENLAZADA IDENTIFICADORES ### */
 typedef struct Identificador{
     char* nombre;
     int ocurrencias;
@@ -18,21 +15,16 @@ typedef struct {
 } ListaIdentificadores;
 
 ListaIdentificadores* inicializarListaIdentificadores(ListaIdentificadores*);
-
 void agregarIdentificador(ListaIdentificadores*, char*);
-
 int identificadorIncrementarSiRegistrado(Identificador* lista, char* cadena);
-
 void nuevoIdentificador(ListaIdentificadores*, char*);
-
 void ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*));
-
 void swapId(Identificador *a, Identificador *b);
-
 int ordenarAlfabeticamente(char* a, char* b);
 
 
-// LISTA ENLAZADA STRINGS
+
+/* ### LISTA ENLAZADA STRINGS ### */
 typedef struct {
     struct NodoString* pri;
     int cantElementos;
@@ -44,39 +36,33 @@ typedef struct nodoString {
 }NodoString;
 
 ListaStrings* inicializarListaStrings(ListaStrings* lista);
-
 //todo: Estas tres funciones a continuación seguramente puedan anidarse de alguna manera para no repetir lógica, queda pendiente
-
 void agregarString(ListaStrings*, char*);
-
-void agregarStringAuxFuncion(ListaStrings*, char*, int valorAuxiliar(char*));
-
+void agregarStringAuxFuncion(ListaStrings*, char*, int (char*));
 void agregarStringAux(ListaStrings*, char*, int );
-
-void ordenarStrings(ListaStrings*, int criterio(char*, char*));
-  
+//
+void ordenarStrings(ListaStrings*, int (char*, char*));
 void swap(NodoString *, NodoString *);
-
 int ordenarPorLongitud(char*, char* );
-
 int stringYaEstaRegistrado(ListaStrings*, int, char*);
 
-// LISTA ENLAZADA INTs       Falta agregar chequeo de NULL para cuando lsita esta vacia, etc
+
+
+/* ### LISTA ENLAZADA INTs ### */
 
 typedef struct {
     struct NodoInt* pri;
     int cantElementos;
 }ListaInt;
+
 typedef struct {
     int valor;
     struct NodoInt* sig;
 }NodoInt;
 
-ListaInt* inicializarListaInt(ListaInt* );
-
-void agregarInt(ListaInt* , int );
-
-int caracterYaEstaRegistrado(char caracteres[], int , char );
+ListaInt* inicializarListaInt(ListaInt*);
+void agregarInt(ListaInt* , int);
+int caracterYaEstaRegistrado(char [], int , char);
 
 
 
@@ -87,12 +73,12 @@ int caracterYaEstaRegistrado(char caracteres[], int , char );
     void crearListadoLiteralesCadena(FILE* reporte, ListaStrings* cadenas);
     void crearListadoPalabrasReservadas(FILE* reporte, ListaStrings* palabrasReservadas);
 
-//todo: estas 3 funciones repiten lógica
+    //todo: estas 3 funciones repiten lógica
     void crearListadoCtesOctales(FILE* reporte, ListaInt* octales);
     void crearListadoCtesHexadecimales(FILE* reporte, ListaInt* hexadecimales);
     void crearListadoCtesDecimales(FILE* reporte, ListaInt* decimales, int acumuladorDecimal);
 
-//todo: a partir de acá falta adaptar a estructuras de datos con memoria dinámica
+    //todo: a partir de acá falta adaptar a estructuras de datos con memoria dinámica
     void crearListadoCtesReales(FILE* reporte, double reales[], int realesEncontrados);
     void crearListadoCtesCaracter(FILE* reporte, char caracteres[], int caracteresEncontrados);
     void crearListadoComentarios(FILE* reporte, ListaStrings* comentarios);
@@ -102,4 +88,4 @@ int caracterYaEstaRegistrado(char caracteres[], int , char );
 
 /* Otros */
 
-int strlenMenosDos(char* str);
+int strlenMenosDos(char*);
