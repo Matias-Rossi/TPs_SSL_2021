@@ -18,7 +18,7 @@ ListaIdentificadores* inicializarListaIdentificadores(ListaIdentificadores*);
 void agregarIdentificador(ListaIdentificadores*, char*);
 int identificadorIncrementarSiRegistrado(Identificador* lista, char* cadena);
 void nuevoIdentificador(ListaIdentificadores*, char*);
-void ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*));
+int ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*));
 void swapId(Identificador *a, Identificador *b);
 int ordenarAlfabeticamente(char* a, char* b);
 

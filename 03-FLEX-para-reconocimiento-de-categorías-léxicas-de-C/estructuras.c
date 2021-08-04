@@ -68,46 +68,43 @@ void nuevoIdentificador(ListaIdentificadores* lista, char* cadena) {
     lista->cantElementos++;
 }
 
-void ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*))
-{
-    printf("Ordenando\n");
-    struct Identificador* inicio = lista->pri;
-    int swapped, i;
-    struct Identificador* ptr1 = inicio;
-    struct Identificador* lptr = NULL;
-  
-    if (inicio == NULL)
-        return;
-  
-    do
-    {
-        swapped = 0;
-        ptr1 = inicio;
-  
-        while (ptr1->sig != lptr)
-        {
-            if (criterio(ptr1->nombre, ptr1->sig->nombre) > 0)    //Ver si no va alrevés
-            { 
-                swapId(ptr1, ptr1->sig);
-                swapped = 1;
-            }
-            ptr1 = ptr1->sig;
-        }
-        lptr = ptr1;
+//Funcion modificada de https://stackoverflow.com/questions/43569069/how-to-linked-list-pointer-sorting
+int ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*)) {
+    Identificador *pTail = lista->pri;
+    while(pTail->sig) {
+        pTail = pTail->sig;
     }
-    while (swapped);
-}
-  
-void swapId(Identificador *a, Identificador *b)
-{
-    printf("Reordenando...\n");
-    char* temp = a;
-    a = b;
-    b = temp;
+
+    Identificador *pHead;                    /* ptr to first node */
+    Identificador *pEnd;                     /* ptr to end of unsorted part of list */
+    Identificador *pnEnd;                    /* pEnd for next pass */
+    Identificador *pNext;                    /* ptr to next node */
+    Identificador **ppCurr;                  /* ptr to ptr to curr node */
+    if(lista->pri == NULL || lista->pri->sig == NULL) /* if empty list or single node */
+        return 0;           /*  return pTail */
+    pHead = lista->pri;
+    pEnd  = NULL;  /* change to normal list */
+    do{
+        ppCurr = &pHead;        /* set ppCurr to start of list */
+        pnEnd = pHead->sig;    /* set pnEnd to 2nd node */
+        while((pNext = (*ppCurr)->sig) != pEnd){
+            if(ordenarAlfabeticamente((*ppCurr)->nombre, pNext->nombre) > 0){ /* if out of order swap */
+                (*ppCurr)->sig = pNext->sig;
+                pnEnd = pNext->sig = *ppCurr;
+                *ppCurr = pNext;
+            }
+            ppCurr = &(*ppCurr)->sig; /* advance to next node */
+        }
+        if(pEnd == NULL)        /* if first time, set pTail */
+            pTail = *ppCurr;    /*  in case last two nodes swapped */
+        pEnd = pnEnd;           /* update pEnd since rest of list is sorted */
+    }while(pEnd != pHead->sig); /* loop until pEnd => 2nd node */
+
+    return pTail;
 }
 
 int ordenarAlfabeticamente(char* a, char* b) {
-    return (!strcmp(a,b) > 0)? 1 : -1;
+    return (strcmp(a,b) > 0)? 1 : -1;
 }
 
 
