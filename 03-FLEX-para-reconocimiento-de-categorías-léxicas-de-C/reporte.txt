@@ -134,11 +134,6 @@ Comentario de multiples lineas:
 Comentario de multiples lineas: /* Todo esto acá abajo está a modo de prueba para el reporte y no es C válido */
 
 
---DIRECTIVAS--
-Directiva: 	#include "tp2.h"
-Directiva: 	#define NUM 5
-
-
 --TOKENS NO RECONOCIDOS--
 Token no reconocido en linea 118: 	$
 Token no reconocido en linea 119: 	$
@@ -149,3 +144,8 @@ Token no reconocido en linea 119: 	$
 Token no reconocido en linea 120: 	$
 Token no reconocido en linea 123: 	"
 Token no reconocido en linea 124: 	'
+
+
+--DIRECTIVAS--
+#include "tp2.h"
+#define NUM 5

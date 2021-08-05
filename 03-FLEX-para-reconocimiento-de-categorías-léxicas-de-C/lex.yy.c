@@ -1849,8 +1849,8 @@ int main()
     crearListadoCtesCaracter(reporte, caracteres, caracteresEncontrados);
     crearListadoOperadoresCtesPuntuacion(reporte, operadoresCtesPuntuacion);
     crearListadoComentarios(reporte, comentarios);
-    crearListadoDirectivas(reporte, directivas);
     crearListadoNoReconocidos(reporte, noReconocidos);
+    crearListadoDirectivas(reporte, directivas);
 
     fclose(yyin);
     fclose(reporte);

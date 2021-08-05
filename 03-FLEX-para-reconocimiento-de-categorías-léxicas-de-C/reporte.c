@@ -154,10 +154,10 @@
             NodoString* aux = directivas->pri;
 
             while(aux->sig != NULL) {
-                fprintf(reporte, "Directiva: \t%s\n", aux->str);
+                fprintf(reporte, "%s\n", aux->str);
                 aux = aux->sig;
             }
-            fprintf(reporte, "Directiva: \t%s\n", aux->str);
+            fprintf(reporte, "%s\n", aux->str);
         }
         liberarListaStrings(directivas);
 
