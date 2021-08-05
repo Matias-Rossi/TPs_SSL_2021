@@ -51,7 +51,7 @@ OPERADOR_E      "E"|"e"
 SIGNO           "-"|"+"
 SUFIJO_REAL     "f"|"F"|"l"|"L"
 /******** Constante Caracter ********/
-CONST_CARACTER '[{CARACTERES_SINGULARES}{SECUENCIA_DE_ESCAPE}{ESPACIO_EN_BLANCO}]'
+CONST_CARACTER '({CARACTERES_SINGULARES}|{SECUENCIA_DE_ESCAPE}|{ESPACIO_EN_BLANCO})'
 /****************** LITERAL CADENA *******************/
 LITERAL_CADENA                   \"(\\.|[^"\\])*\"
 SECUENCIA_CARACTERES             {CARACTER}*
@@ -88,7 +88,7 @@ SALTO_DE_LINEA (\n)+
 {CONST_HEXADECIMAL}     {agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
 {CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
 {CONST_PTOFLOTANTE}     {agregarDouble(reales, strtod(yytext, NULL));}
-{CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[0])){caracteres[caracteresEncontrados] = yytext[0];caracteresEncontrados++;}}
+{CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[1])){caracteres[caracteresEncontrados] = yytext[1];caracteresEncontrados++;}}
 {COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);}
 {COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);}
 {ESPACIO_EN_BLANCO}|{TABULACION}|{SALTO_DE_LINEA} {;}

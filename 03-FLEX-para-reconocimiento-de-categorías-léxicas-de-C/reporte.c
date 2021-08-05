@@ -105,7 +105,7 @@
         if(caracteresEncontrados){
             nuevaCategoria(reporte, "CONSTANTES CARACTER");
             for(int i=0; i<caracteresEncontrados; i++){
-                fprintf(reporte, "%c\n", caracteres[i]);
+                fprintf(reporte, "'%c'\n", caracteres[i]);
             }
         }
     }

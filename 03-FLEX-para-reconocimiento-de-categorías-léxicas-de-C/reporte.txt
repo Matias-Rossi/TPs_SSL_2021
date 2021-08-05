@@ -18,7 +18,6 @@ scanf: 3 veces
 stdin: 3 veces
 strlen: 1 veces
 vaciarPila: 1 veces
-y: 1 veces
 
 
 --LITERALES CADENA--
@@ -92,7 +91,11 @@ La suma de todas las constantes decimales es 35
 
 
 --CONSTANTES CARACTER--
-'
+' '
+'N'
+'Y'
+'y'
+'a'
 
 
 --OPERADORES / CARACTERES DE PUNTUACION--
@@ -130,12 +133,3 @@ Comentario de una linea: //mostrarPila(pila);
 Comentario de una linea: //Reinicio
 Comentario de una linea: //Preguntar si continuar
 Comentario de una linea: //Ingresar entrada nuevamente
-
-
---TOKENS NO RECONOCIDOS--
-Token no reconocido en linea 28: 	'
-Token no reconocido en linea 28: 	'
-Token no reconocido en linea 91: 	'
-Token no reconocido en linea 91: 	'
-Token no reconocido en linea 91: 	'
-Token no reconocido en linea 91: 	'
