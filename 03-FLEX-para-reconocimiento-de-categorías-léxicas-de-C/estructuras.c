@@ -27,9 +27,7 @@ int identificadorIncrementarSiRegistrado(Identificador* lista, char* cadena){
     Identificador* aux = lista;
 
     while(aux->sig != NULL) {
-        //printf("\nCoinciden \"%s\" y \"%s\"?", cadena, aux->nombre);
         if(!strcmp(aux->nombre, cadena)){
-            //printf("Si\n\n");
             aux->ocurrencias = aux->ocurrencias + 1;
             return 1;
         } else {
@@ -37,7 +35,6 @@ int identificadorIncrementarSiRegistrado(Identificador* lista, char* cadena){
         }
     }
     if(!strcmp(aux->nombre, cadena)){
-        //printf("Si\n\n");
         aux->ocurrencias = aux->ocurrencias + 1;
         return 1;
     } else {
@@ -47,13 +44,14 @@ int identificadorIncrementarSiRegistrado(Identificador* lista, char* cadena){
 }
 
 void nuevoIdentificador(ListaIdentificadores* lista, char* cadena) {
-
+    //Crea el identificador (nodo)
     Identificador* nuevo = malloc(sizeof(Identificador));
     nuevo->nombre = malloc(strlen(cadena)*sizeof(char));
     strcpy(nuevo->nombre, cadena);
     nuevo->sig = NULL;
     nuevo->ocurrencias = 1;
 
+    //Lo posiciona al final de la lista
     if(!lista->pri){
         lista->pri = nuevo;
     }
@@ -64,8 +62,6 @@ void nuevoIdentificador(ListaIdentificadores* lista, char* cadena) {
         }
         aux->sig = nuevo;
     }
-
-    lista->cantElementos++;
 }
 
 //Funcion modificada de https://stackoverflow.com/questions/43569069/how-to-linked-list-pointer-sorting
@@ -110,7 +106,6 @@ int ordenarAlfabeticamente(char* a, char* b) {
 
 
 /* --- Lista enlazada STRINGS --- */
-
 struct NodoString {
     char* str;
     int valor;
@@ -130,10 +125,12 @@ void agregarString(ListaStrings* lista, char* str){
     agregarStringAux(lista, str, 0);
 }
 
+//Agrega un String a la lista enlazada, cuyo valor auxiliar está determinado por la función pasada como parámetro
 void agregarStringAuxFuncion(ListaStrings* lista, char* str, int valorAuxiliar(char*)){
     agregarStringAux(lista, str, valorAuxiliar(str));
 }
 
+//Agrega un String a la lista enlazada, cuyo valor auxiliar es asignado directamente como es pasado
 void agregarStringAux(ListaStrings* lista, char* str, int valorAuxiliar){
     NodoString* nuevo = (NodoString*)malloc(sizeof(NodoString));
     nuevo->str = strdup(str);
@@ -149,6 +146,8 @@ void agregarStringAux(ListaStrings* lista, char* str, int valorAuxiliar){
     }
     else 
     lista->pri = nuevo;
+
+    lista->cantElementos++;
 }
 
 
@@ -271,6 +270,8 @@ void agregarDouble(ListaDouble* lista, double num){
     else{
         lista->pri = nuevo;
     }
+
+    lista->cantElementos++;
 }
 
 
@@ -293,5 +294,5 @@ int caracterYaEstaRegistrado(char caracteres[], int length, char caracter) {
 /* Otros */
 
 int strlenMenosDos(char* str) {
-    return strlen(str) - 2;
+    return strlen(str) - 2;         //(-2).strlen :P
 }

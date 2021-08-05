@@ -48,7 +48,6 @@ int stringYaEstaRegistrado(ListaStrings*, int, char*);
 
 
 /* ### LISTA ENLAZADA INTs ### */
-
 typedef struct {
     struct NodoInt* pri;
     int cantElementos;
@@ -62,8 +61,9 @@ typedef struct {
 ListaInt* inicializarListaInt(ListaInt*);
 void agregarInt(ListaInt* , int);
 
-/* ### LISTA ENLAZADA DOUBLEs ### */
 
+
+/* ### LISTA ENLAZADA DOUBLEs ### */
 typedef struct {
     struct NodoDouble* pri;
     double cantElementos;
@@ -76,6 +76,7 @@ typedef struct {
 
 ListaDouble* inicializarListaDouble(ListaDouble*);
 void agregarDouble(ListaDouble* , double);
+
 
 
 /* ### OTROS ### */
@@ -105,5 +106,4 @@ int caracterYaEstaRegistrado(char [], int , char);
 
 
 /* Otros */
-
 int strlenMenosDos(char*);

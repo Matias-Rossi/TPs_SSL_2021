@@ -3,18 +3,19 @@
 
 /* --- Creación del reporte --- */
 
+    //Crea un separador a modo de título
     void nuevaCategoria(FILE* reporte, char* seccion){
         fprintf(reporte,"\n\n--%s--\n", seccion);
     }
 
     void crearListadoIdentificadores(FILE* reporte, ListaIdentificadores* identificadores){
-        if(identificadores->pri != NULL){
+        if(identificadores->pri != NULL){                                                       //Si la lista no esta vacía
             ordenarIdentificadores(identificadores, ordenarAlfabeticamente);
             Identificador* aux = identificadores->pri;
 
             nuevaCategoria(reporte, "IDENTIFICADORES");
-            while(aux->sig != NULL) {
-                fprintf(reporte, "%s: %d veces\n" ,aux->nombre, aux->ocurrencias);
+            while(aux->sig != NULL) {                                                           //Itera por los nodos
+                fprintf(reporte, "%s: %d veces\n" ,aux->nombre, aux->ocurrencias);              //El while podría reemplazarse por un do{}(while)
                 aux = aux->sig;
             }
             fprintf(reporte, "%s: %d veces\n" ,aux->nombre, aux->ocurrencias);
@@ -28,7 +29,7 @@
             nuevaCategoria(reporte, "LITERALES CADENA");
             ordenarStrings(cadenas, ordenarPorLongitud);
 
-            //Acá y en la funcion crearLsitadoPalabrasReservadas se repite lógica, por el momento dejo así hasta que funcione
+            //Acá y en la funcion crearListadoPalabrasReservadas se repite lógica, por el momento dejo así hasta que funcione
             NodoString* aux = cadenas->pri;
             while(aux->sig != NULL) {
                 fprintf(reporte, "%s\n", aux->str);
@@ -53,6 +54,7 @@
         liberarListaStrings(palabrasReservadas);
     }
 
+    //Funcion igual al resto que toma un par de parámetros adicionales para evitar repetir (más) lógica
     void crearListadoCtesInt(FILE* reporte, ListaInt* lista, int base, int* acumuladorDecimal){
         if(lista->pri != NULL){
             switch(base){
@@ -257,6 +259,6 @@ void liberarListaDouble(ListaDouble* lista) {
 }
 
 /* 
-La vida sería más linda si C tuviera templates 
+La vida sería más hermosa si C tuviera templates 
                                     -Paulo Coelho 
 */
