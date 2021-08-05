@@ -84,6 +84,13 @@ return
 La suma de todas las constantes decimales es 35
 
 
+--CONSTANTES REALES--
+Mantisa: 0.456000 // Parte entera: 0
+Mantisa: 0.850000 // Parte entera: 0
+Mantisa: 0.000000 // Parte entera: 100
+Mantisa: 0.400000 // Parte entera: 20
+
+
 --CONSTANTES CARACTER--
 ' '
 'N'
@@ -111,7 +118,7 @@ La suma de todas las constantes decimales es 35
 . aparece 3 veces
 && aparece 1 veces
 || aparece 1 veces
-% aparece 1 veces
+% aparece 2 veces
 
 
 --COMENTARIOS--
@@ -135,6 +142,7 @@ Comentario de multiples lineas: /* Todo esto acá abajo está a modo de prueba p
 
 
 --TOKENS NO RECONOCIDOS--
+Token no reconocido en linea 117: 	'
 Token no reconocido en linea 118: 	$
 Token no reconocido en linea 119: 	$
 Token no reconocido en linea 119: 	$
@@ -142,6 +150,8 @@ Token no reconocido en linea 119: 	$
 Token no reconocido en linea 119: 	$
 Token no reconocido en linea 119: 	$
 Token no reconocido en linea 120: 	$
+Token no reconocido en linea 121: 	'
+Token no reconocido en linea 121: 	'
 Token no reconocido en linea 123: 	"
 Token no reconocido en linea 124: 	'
 

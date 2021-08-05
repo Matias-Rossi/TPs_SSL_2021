@@ -29,8 +29,9 @@ ListaStrings *noReconocidos;
 /* DEFINICIONES */
 /******* DIRECTIVAS PREPROCESAMIENTO *******/
 DIRECTIVAS_PREPROCESAMIENTO {INCLUDE}|{DEFINE}
-INCLUDE #include(.)+
-DEFINE #define(.)+
+INCLUDE "#include"{ESPACIO}({LITERAL_CADENA}|{LIBRERIA})
+DEFINE "#define"({ESPACIO}({CARACTERES_SINGULARES}+){ESPACIO}{CONSTANTE})
+LIBRERIA <((.)+)>
 /**************** PALABRAS RESERVADAS ****************/
 PALABRAS_RESERVADAS {PALABRAS_RESERVADAS_TIPOS_DE_DATOS}|{PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL}|{PALABRAS_RESERVADAS_OTHERS}
 PALABRAS_RESERVADAS_TIPOS_DE_DATOS char|double|float|int|short|long|signed|unsigned|void
@@ -39,6 +40,7 @@ PALABRAS_RESERVADAS_OTHERS auto|case|const|default|else|enum|extern|goto|registe
 /******* OPERADORES Y CARACTERES DE PUNTUACION *******/
 OP_CARACT_DE_PUNTUACION ";"|"["|"]"|"("|")"|"{"|"}"|"."|"->"|"++"|"--"|"&"|"*"|"+"|"-"|"~"|"!"|"/"|"%"|"<<"|">>"|"<"|">"|"<="|">="|"=="|"!="|"^"|"|"|"&&"|"||"|"="|"*="|"/="|"%="|"+="|"-="|"<<="|">>="|"&="|"^="|"|="|"?"|":"|"..."|","|"#"|"##"
 /**************** CONSTANTES ENTERAS *****************/
+CONSTANTE {CONST_ENTERA}|{CONST_PTOFLOTANTE}|{CONST_CARACTER}|{LITERAL_CADENA}
 /******* Constantes Enteras Decimales *******/
 CONST_ENTERA      {CONST_DECIMAL}{SUFIJO_ENTERO}?|{CONST_OCTAL}{SUFIJO_ENTERO}?|{CONST_HEXADECIMAL}{SUFIJO_ENTERO}?
 CONST_HEXADECIMAL ((0x)|(0X)){DIGITO_HEXADECIMAL}+
@@ -81,6 +83,7 @@ COMENTARIOS             {COMENTARIOS_LINEAL}|{COMENTARIOS_MULTILINEAL}
 COMENTARIOS_LINEAL      "//"(.)*
 COMENTARIOS_MULTILINEAL "/*"([^*]|(\*+[^*/]))*\*+\/
 /**** OTROS ****/
+ESPACIO [ \n\t\r]+
 ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
 SALTO_DE_LINEA (\n)+

@@ -114,12 +114,16 @@ int main(){
 10FD
 'a'
 'a'
-'a'
+'a
 $
 $$$$$
 $
-%
+'%%'
 &
 "asdfsa
 'dsadas
 #define NUM 5
+0.456
+.85
+10e1
+20.4
