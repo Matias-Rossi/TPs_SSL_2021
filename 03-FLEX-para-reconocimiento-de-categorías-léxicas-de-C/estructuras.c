@@ -292,7 +292,6 @@ void agregarDouble(ListaDouble* lista, double num){
 int caracterYaEstaRegistrado(char caracteres[], int length, char caracter) {
     for(int i=0; i<length; i++) {
         if (caracteres[i] == caracter) {
-            printf("Caracter ya esta registrado\n");
             return 1;
         }
     }
