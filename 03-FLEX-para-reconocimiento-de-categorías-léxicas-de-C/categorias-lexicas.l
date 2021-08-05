@@ -1,6 +1,6 @@
 %option noyywrap
 %option yylineno
-/* %option debug */
+%option debug
 
 %{
 #include "categorias-lexicas.h"
@@ -22,10 +22,15 @@ char caracteres[100];
 int caracteresEncontrados;
 
 ListaStrings *comentarios;
+ListaStrings *directivas;
 ListaStrings *noReconocidos;
 
 %}
 /* DEFINICIONES */
+/******* DIRECTIVAS PREPROCESAMIENTO *******/
+DIRECTIVAS_PREPROCESAMIENTO {INCLUDE}|{DEFINE}
+INCLUDE #include(.)+
+DEFINE #define(.)+
 /**************** PALABRAS RESERVADAS ****************/
 PALABRAS_RESERVADAS {PALABRAS_RESERVADAS_TIPOS_DE_DATOS}|{PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL}|{PALABRAS_RESERVADAS_OTHERS}
 PALABRAS_RESERVADAS_TIPOS_DE_DATOS char|double|float|int|short|long|signed|unsigned|void
@@ -80,6 +85,7 @@ ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
 SALTO_DE_LINEA (\n)+
 %%
+{DIRECTIVAS_PREPROCESAMIENTO} {agregarString(directivas, yytext);}
 {LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
 {PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);}
 {IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext); }
@@ -115,6 +121,7 @@ int main()
     operadoresCtesPuntuacion = inicializarListaStrings(operadoresCtesPuntuacion);
     operadoresCtesPuntuacionEncontrados = 0;
     comentarios = inicializarListaStrings(comentarios);
+    directivas = inicializarListaStrings(directivas);
     noReconocidos = inicializarListaStrings(noReconocidos);
 
     printf("[LOG]: Corriendo analizador lexico (3/5)\n");
@@ -131,6 +138,7 @@ int main()
     crearListadoCtesCaracter(reporte, caracteres, caracteresEncontrados);
     crearListadoOperadoresCtesPuntuacion(reporte, operadoresCtesPuntuacion);
     crearListadoComentarios(reporte, comentarios);
+    crearListadoDirectivas(reporte, directivas);
     crearListadoNoReconocidos(reporte, noReconocidos);
 
     fclose(yyin);

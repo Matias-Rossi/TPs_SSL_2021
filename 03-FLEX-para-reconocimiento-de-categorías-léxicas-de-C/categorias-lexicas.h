@@ -95,6 +95,7 @@ int caracterYaEstaRegistrado(char [], int , char);
     void crearListadoCtesCaracter(FILE*, char [], int);
     void crearListadoComentarios(FILE*, ListaStrings*);
     void crearListadoOperadoresCtesPuntuacion(FILE*, ListaStrings*);
+    void crearListadoDirectivas(FILE*, ListaStrings*);
     void crearListadoNoReconocidos(FILE*, ListaStrings*);
 
     //Liberación de memoria

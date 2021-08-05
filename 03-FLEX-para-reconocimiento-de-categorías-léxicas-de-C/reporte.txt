@@ -1,11 +1,6 @@
 
 
 --IDENTIFICADORES--
-include: 1 veces
-inicializarPila: 2 veces
-inputContinuar: 4 veces
-leido: 7 veces
-lenExpresion: 5 veces
 main: 1 veces
 nuevoEstado: 1 veces
 pila: 9 veces
@@ -27,7 +22,6 @@ Longitud 25: 	"\nIngrese una expresion: "
 Longitud 23: 	"Ingrese una expresion: "
 Longitud 6: 	"%[^\n]"
 Longitud 6: 	"%[^\n]"
-Longitud 5: 	"tp2.h"
 Longitud 2: 	"%c"
 Longitud 1: 	"$"
 
@@ -99,7 +93,6 @@ La suma de todas las constantes decimales es 35
 
 
 --OPERADORES / CARACTERES DE PUNTUACION--
-# aparece 1 veces
 ( aparece 36 veces
 ) aparece 36 veces
 { aparece 12 veces
@@ -109,7 +102,7 @@ La suma de todas las constantes decimales es 35
 , aparece 13 veces
 } aparece 12 veces
 != aparece 2 veces
-& aparece 7 veces
+& aparece 8 veces
 < aparece 1 veces
 ++ aparece 1 veces
 [ aparece 2 veces
@@ -118,6 +111,7 @@ La suma de todas las constantes decimales es 35
 . aparece 3 veces
 && aparece 1 veces
 || aparece 1 veces
+% aparece 1 veces
 
 
 --COMENTARIOS--
@@ -133,3 +127,25 @@ Comentario de una linea: //mostrarPila(pila);
 Comentario de una linea: //Reinicio
 Comentario de una linea: //Preguntar si continuar
 Comentario de una linea: //Ingresar entrada nuevamente
+Comentario de multiples lineas: 
+/*
+    Fin del programa
+*/
+Comentario de multiples lineas: /* Todo esto acá abajo está a modo de prueba para el reporte y no es C válido */
+
+
+--DIRECTIVAS--
+Directiva: 	#include "tp2.h"
+Directiva: 	#define NUM 5
+
+
+--TOKENS NO RECONOCIDOS--
+Token no reconocido en linea 118: 	$
+Token no reconocido en linea 119: 	$
+Token no reconocido en linea 119: 	$
+Token no reconocido en linea 119: 	$
+Token no reconocido en linea 119: 	$
+Token no reconocido en linea 119: 	$
+Token no reconocido en linea 120: 	$
+Token no reconocido en linea 123: 	"
+Token no reconocido en linea 124: 	'

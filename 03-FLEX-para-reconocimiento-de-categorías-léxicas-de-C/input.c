@@ -103,6 +103,11 @@ int main(){
 
     return 0;
 }
+/*
+    Fin del programa
+*/
+
+/* Todo esto acá abajo está a modo de prueba para el reporte y no es C válido */
 
 0xFF
 045
@@ -110,3 +115,11 @@ int main(){
 'a'
 'a'
 'a'
+$
+$$$$$
+$
+%
+&
+"asdfsa
+'dsadas
+#define NUM 5
