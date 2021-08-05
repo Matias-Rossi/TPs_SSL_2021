@@ -22,15 +22,15 @@ y: 1 veces
 
 
 --LITERALES CADENA--
-"$"
-"%c"
-"tp2.h"
-"%[^\n]"
-"%[^\n]"
-"Ingrese una expresion: "
-"\nIngrese una expresion: "
-"La cadena es sintacticamente correcta\n"
-"\nDesea continuar ingresando expresiones? (Y/N)\n"
+Longitud 49: 	"\nDesea continuar ingresando expresiones? (Y/N)\n"
+Longitud 39: 	"La cadena es sintacticamente correcta\n"
+Longitud 25: 	"\nIngrese una expresion: "
+Longitud 23: 	"Ingrese una expresion: "
+Longitud 6: 	"%[^\n]"
+Longitud 6: 	"%[^\n]"
+Longitud 5: 	"tp2.h"
+Longitud 2: 	"%c"
+Longitud 1: 	"$"
 
 
 --PALABRAS RESERVADAS--

@@ -168,7 +168,7 @@ void ordenarStrings(ListaStrings* lista, int criterio(char*, char*))
   
         while (ptr1->sig != lptr)
         {
-            if (criterio(ptr1->str, ptr1->sig->str) > 0)    //Ver si no va alrevés
+            if (criterio(ptr1->str, ptr1->sig->str) < 0)    //Ver si no va alrevés
             { 
                 swapStr(ptr1, ptr1->sig);
                 swapped = 1;
@@ -182,9 +182,21 @@ void ordenarStrings(ListaStrings* lista, int criterio(char*, char*))
   
 void swapStr(NodoString *a, NodoString *b)
 {
-    char* temp = a->str;
+    //Cambio de String
+    char* tempC = a->str;
     a->str = b->str;
-    b->str = temp;
+    b->str = tempC;
+
+    //Cambio de valor auxiliar (longitud)
+    int tempI = a->valor;
+    a->valor = b->valor;
+    b->valor = tempI;
+
+    /*
+    NodoString* temp = a;
+    a = b;
+    b = temp;
+    */
 }
 
 int ordenarPorLongitud(char* a, char* b) {

@@ -15,7 +15,7 @@
 
             nuevaCategoria(reporte, "IDENTIFICADORES");
             while(aux->sig != NULL) {                                                           //Itera por los nodos
-                fprintf(reporte, "%s: %d veces\n" ,aux->nombre, aux->ocurrencias);              //El while podría reemplazarse por un do{}(while)
+                fprintf(reporte, "%s: %d veces\n" ,aux->nombre, aux->ocurrencias);              
                 aux = aux->sig;
             }
             fprintf(reporte, "%s: %d veces\n" ,aux->nombre, aux->ocurrencias);
@@ -32,10 +32,11 @@
             //Acá y en la funcion crearListadoPalabrasReservadas se repite lógica, por el momento dejo así hasta que funcione
             NodoString* aux = cadenas->pri;
             while(aux->sig != NULL) {
-                fprintf(reporte, "%s\n", aux->str);
+                fprintf(reporte, "Longitud %d: \t%s\n", aux->valor ,aux->str);
                 aux = aux->sig;
             }
-            fprintf(reporte, "%s\n", aux->str);
+            fprintf(reporte, "Longitud %d: \t%s\n", aux->valor ,aux->str);
+
         }
         liberarListaStrings(cadenas);
     }
