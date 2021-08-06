@@ -64,7 +64,8 @@ void nuevoIdentificador(ListaIdentificadores* lista, char* cadena) {
     }
 }
 
-//Funcion modificada de https://stackoverflow.com/questions/43569069/how-to-linked-list-pointer-sorting
+//Funcion adaptada de https://stackoverflow.com/questions/43569069/how-to-linked-list-pointer-sorting
+//(La original era para listas enlazadas circulares)
 int ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*)) {
     Identificador *pTail = lista->pri;
     while(pTail->sig) {
