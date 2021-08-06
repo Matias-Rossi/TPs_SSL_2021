@@ -80,7 +80,7 @@ CARACTERES_ESPECIALES " "|"!"|"#"|"$"|"%"|"&"|"("|")"|"*"|"+"|","|"-"|"."|"/"|":
 S_CHAR [^\"\\\n]
 /****************** COMENTARIOS *********************/
 COMENTARIOS             {COMENTARIOS_LINEAL}|{COMENTARIOS_MULTILINEAL}
-COMENTARIOS_LINEAL      "//"(.)*
+COMENTARIOS_LINEAL      ("//"(.)*)|("/*".*"*/")
 COMENTARIOS_MULTILINEAL "/*"([^*]|(\*+[^*/]))*\*+\/
 /**** OTROS ****/
 ESPACIO [ \n\t\r]+

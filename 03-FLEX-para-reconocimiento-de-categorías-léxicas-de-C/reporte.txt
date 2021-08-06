@@ -140,7 +140,7 @@ Comentario de multiples lineas:
 /*
     Fin del programa
 */
-Comentario de multiples lineas: /* Todo esto acá abajo está a modo de prueba para el reporte y no es C válido */
+Comentario de una linea: /* Todo esto acá abajo está a modo de prueba para el reporte y no es C válido */
 
 
 --TOKENS NO RECONOCIDOS--
