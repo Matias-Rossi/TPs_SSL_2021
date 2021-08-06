@@ -52,22 +52,24 @@ return
 
 
 --CONSTANTES OCTALES--
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-45
+Octal / Decimal
+00 / 0
+00 / 0
+00 / 0
+00 / 0
+00 / 0
+00 / 0
+00 / 0
+00 / 0
+00 / 0
+00 / 0
+00 / 0
+055 / 45
 
 
 --CONSTANTES HEXADECIMALES--
-255
+Hexadecimal / Decimal
+0xFF / 255
 
 
 --CONSTANTES DECIMALES--

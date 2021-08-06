@@ -59,18 +59,30 @@
     void crearListadoCtesInt(FILE* reporte, ListaInt* lista, int base, int* acumuladorDecimal){
         if(lista->pri != NULL){
             switch(base){
-                case 8: nuevaCategoria(reporte, "CONSTANTES OCTALES"); break;
-                case 10: nuevaCategoria(reporte, "CONSTANTES DECIMALES"); break;
-                case 16: nuevaCategoria(reporte, "CONSTANTES HEXADECIMALES"); break;
+                case 8: 
+                    nuevaCategoria(reporte, "CONSTANTES OCTALES"); 
+                    fprintf(reporte, "Octal / Decimal\n");
+                break;
+
+                case 10: 
+                    nuevaCategoria(reporte, "CONSTANTES DECIMALES"); 
+                break;
+
+                case 16: 
+                    nuevaCategoria(reporte, "CONSTANTES HEXADECIMALES"); 
+                    fprintf(reporte, "Hexadecimal / Decimal\n"); 
+                break;
+
                 default: printf("Error de base en crearListadoCtesInt\n");
             }
+            
 
             NodoInt* aux = lista->pri;
             while(aux->sig != NULL) {
-                fprintf(reporte, "%d\n", aux->valor);
+                imprimirEnBase(reporte, aux->valor, base);
                 aux = aux->sig;
             }
-            fprintf(reporte, "%d\n", aux->valor);
+            imprimirEnBase(reporte, aux->valor, base);
 
             if(base == 10) {
                 fprintf(reporte, "La suma de todas las constantes decimales es %d\n", *acumuladorDecimal);
@@ -78,6 +90,16 @@
         }
         liberarListaInt(lista);
 
+    }
+
+    void imprimirEnBase(FILE* reporte, int numero, int base) {
+        switch(base) {
+            case 8:  fprintf(reporte, "0%o / %d\n", numero, numero); break;
+            case 10: fprintf(reporte, "%d\n", numero); break;
+            case 16: fprintf(reporte, "0x%X / %d\n", numero, numero); break;
+            default: printf("Error de base en imprimirEnBase\n");
+            
+        }
     }
 
     void crearListadoCtesReales(FILE* reporte, ListaDouble* reales){
