@@ -111,14 +111,14 @@
             while(siguiente){
                 int parteEntera = iterador->valor;
                 double mantisa = iterador->valor - parteEntera;
-                fprintf(reporte, "Mantisa: %f // Parte entera: %d\n", mantisa, parteEntera);
+                fprintf(reporte, "Parte entera: %d // Mantisa: %.4f \n", parteEntera, mantisa);
 
                 iterador = siguiente;
                 siguiente = iterador->sig;
             }
             int parteEntera = iterador->valor;
             double mantisa = iterador->valor - parteEntera;
-            fprintf(reporte, "Mantisa: %f // Parte entera: %d\n", mantisa, parteEntera);
+            fprintf(reporte, "Parte entera: %d // Mantisa: %.4f \n", parteEntera, mantisa);
         }
         liberarListaDouble(reales);
     }
