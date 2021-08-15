@@ -76,6 +76,7 @@ int ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char
             }
             aux1 = aux1->sig;
             aux2 = aux2->sig;
+            
         }
         aux1 = lista->pri;
         aux2 = aux1->sig;
