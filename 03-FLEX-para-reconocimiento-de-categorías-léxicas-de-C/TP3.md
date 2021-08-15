@@ -1,4 +1,7 @@
-## Compilando y ejecutando
-Powershell: `flex categorias-lexicas.l`  
-Powershell: `gcc estructuras.c reporte.c lex.yy.c -w -o "TP3 Categorias Lexicas"`  
-cmd: `"TP3 Categorias Lexicas.exe"`
+# Compilando y ejecutando
+
+Powershell:
+
+1. `flex categorias-lexicas.l`
+2. `gcc estructuras.c reporte.c lex.yy.c -w -o TP3_categoriasLexicas`  
+3. `& .\TP3_categoriasLexicas.exe`
