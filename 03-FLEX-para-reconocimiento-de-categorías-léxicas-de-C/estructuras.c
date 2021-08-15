@@ -68,35 +68,24 @@ void nuevoIdentificador(ListaIdentificadores* lista, char* cadena) {
 int ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*)) {
     Identificador* aux1 = lista->pri;
     Identificador* aux2 = aux1->sig;
-    //printf("A\n");
-    //printf("Identificadores tiene %d elementos\n", lista->cantElementos);
-    int contador = 0;
 
     for(int i=0; i<lista->cantElementos; i++){
         for(int j=0; j<lista->cantElementos && aux1->sig; j++){
             if(criterio(aux1->nombre, aux2->nombre) > 0) {
-                //printf("[O] %s esta antes que %s. Cambiando...\n", aux1->nombre, aux2->nombre);
                 intercambiarIdentificadores(aux1, aux2);
-                //printf("[O] Cambio terminado: %s quedo antes que %s\n",aux1->nombre, aux2->nombre );
-                //printf("C\n");
             }
             aux1 = aux1->sig;
             aux2 = aux2->sig;
-            contador++;
         }
         aux1 = lista->pri;
         aux2 = aux1->sig;
 
     }
-    //printf("Contador comparo cadenas %d veces\n", contador);
 }
 
 void intercambiarIdentificadores(Identificador* a, Identificador* b) {
-    //printf("[S] 1: %s; 2: %s\n", a->nombre, b->nombre);
     int auxOcurrencias = a->ocurrencias;
-    //printf("Copiado el valor %d\n", auxOcurrencias);
-    char* auxNombre = a->nombre; //OK
-    //printf("Copiado el valor %c de la direccion %p\n", *auxNombre, auxNombre);
+    char* auxNombre = a->nombre;
 
     a->ocurrencias = b->ocurrencias;
     a->nombre = b->nombre;
@@ -104,7 +93,6 @@ void intercambiarIdentificadores(Identificador* a, Identificador* b) {
     b->ocurrencias = auxOcurrencias;
     b->nombre = auxNombre;
 
-    //printf("[S] 1: %s; 2: %s\n", a->nombre, b->nombre);
 }
 
 
