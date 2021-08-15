@@ -10,7 +10,7 @@
 
     void crearListadoIdentificadores(FILE* reporte, ListaIdentificadores* identificadores){
         if(identificadores->pri != NULL){                                                       //Si la lista no esta vacía
-            ordenarIdentificadores(identificadores, ordenarAlfabeticamente);
+            ordenarIdentificadores(identificadores, strcmp);
             Identificador* aux = identificadores->pri;
 
             nuevaCategoria(reporte, "IDENTIFICADORES");

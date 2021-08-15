@@ -64,44 +64,47 @@ void nuevoIdentificador(ListaIdentificadores* lista, char* cadena) {
     }
 }
 
-//Funcion adaptada de https://stackoverflow.com/questions/43569069/how-to-linked-list-pointer-sorting
-//(La original era para listas enlazadas circulares)
+
 int ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*)) {
-    Identificador *pTail = lista->pri;
-    while(pTail->sig) {
-        pTail = pTail->sig;
-    }
+    Identificador* aux1 = lista->pri;
+    Identificador* aux2 = aux1->sig;
+    //printf("A\n");
+    //printf("Identificadores tiene %d elementos\n", lista->cantElementos);
+    int contador = 0;
 
-    Identificador *pHead;                    /* ptr to first node */
-    Identificador *pEnd;                     /* ptr to end of unsorted part of list */
-    Identificador *pnEnd;                    /* pEnd for next pass */
-    Identificador *pNext;                    /* ptr to next node */
-    Identificador **ppCurr;                  /* ptr to ptr to curr node */
-    if(lista->pri == NULL || lista->pri->sig == NULL) /* if empty list or single node */
-        return 0;           /*  return pTail */
-    pHead = lista->pri;
-    pEnd  = NULL;  /* change to normal list */
-    do{
-        ppCurr = &pHead;        /* set ppCurr to start of list */
-        pnEnd = pHead->sig;    /* set pnEnd to 2nd node */
-        while((pNext = (*ppCurr)->sig) != pEnd){
-            if(ordenarAlfabeticamente((*ppCurr)->nombre, pNext->nombre) > 0){ /* if out of order swap */
-                (*ppCurr)->sig = pNext->sig;
-                pnEnd = pNext->sig = *ppCurr;
-                *ppCurr = pNext;
+    for(int i=0; i<lista->cantElementos; i++){
+        for(int j=0; j<lista->cantElementos && aux1->sig; j++){
+            if(criterio(aux1->nombre, aux2->nombre) > 0) {
+                //printf("[O] %s esta antes que %s. Cambiando...\n", aux1->nombre, aux2->nombre);
+                intercambiarIdentificadores(aux1, aux2);
+                //printf("[O] Cambio terminado: %s quedo antes que %s\n",aux1->nombre, aux2->nombre );
+                //printf("C\n");
             }
-            ppCurr = &(*ppCurr)->sig; /* advance to next node */
+            aux1 = aux1->sig;
+            aux2 = aux2->sig;
+            contador++;
         }
-        if(pEnd == NULL)        /* if first time, set pTail */
-            pTail = *ppCurr;    /*  in case last two nodes swapped */
-        pEnd = pnEnd;           /* update pEnd since rest of list is sorted */
-    }while(pEnd != pHead->sig); /* loop until pEnd => 2nd node */
+        aux1 = lista->pri;
+        aux2 = aux1->sig;
 
-    return pTail;
+    }
+    //printf("Contador comparo cadenas %d veces\n", contador);
 }
 
-int ordenarAlfabeticamente(char* a, char* b) {
-    return (strcmp(a,b) > 0)? 1 : -1;
+void intercambiarIdentificadores(Identificador* a, Identificador* b) {
+    //printf("[S] 1: %s; 2: %s\n", a->nombre, b->nombre);
+    int auxOcurrencias = a->ocurrencias;
+    //printf("Copiado el valor %d\n", auxOcurrencias);
+    char* auxNombre = a->nombre; //OK
+    //printf("Copiado el valor %c de la direccion %p\n", *auxNombre, auxNombre);
+
+    a->ocurrencias = b->ocurrencias;
+    a->nombre = b->nombre;
+
+    b->ocurrencias = auxOcurrencias;
+    b->nombre = auxNombre;
+
+    //printf("[S] 1: %s; 2: %s\n", a->nombre, b->nombre);
 }
 
 

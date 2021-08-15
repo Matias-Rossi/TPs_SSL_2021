@@ -20,7 +20,7 @@ int identificadorIncrementarSiRegistrado(Identificador* lista, char* cadena);
 void nuevoIdentificador(ListaIdentificadores*, char*);
 int ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*));
 void swapId(Identificador *a, Identificador *b);
-int ordenarAlfabeticamente(char* a, char* b);
+void intercambiarIdentificadores(Identificador* a, Identificador* b);
 
 
 

@@ -1,6 +1,27 @@
 
 
 --IDENTIFICADORES--
+ESTADO: 2 veces
+FD: 1 veces
+NULL: 1 veces
+Nodo: 1 veces
+_: 1 veces
+a: 1 veces
+actualizarPila: 1 veces
+asdfsa: 1 veces
+continuar: 3 veces
+dsadas: 1 veces
+error: 11 veces
+errorHandler: 4 veces
+estado: 7 veces
+estadoInicial: 3 veces
+fflush: 3 veces
+free: 1 veces
+i: 9 veces
+inicializarPila: 2 veces
+inputContinuar: 4 veces
+leido: 7 veces
+lenExpresion: 5 veces
 main: 1 veces
 nuevoEstado: 1 veces
 pila: 9 veces

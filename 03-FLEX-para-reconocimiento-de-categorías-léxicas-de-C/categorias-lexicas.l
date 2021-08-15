@@ -91,7 +91,7 @@ SALTO_DE_LINEA (\n)+
 {DIRECTIVAS_PREPROCESAMIENTO} {agregarString(directivas, yytext);}
 {LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
 {PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);}
-{IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext); }
+{IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext);}
 {OP_CARACT_DE_PUNTUACION} {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} }
 {CONST_OCTAL}           {agregarInt(octales, atoi(yytext));}
 {CONST_HEXADECIMAL}     {agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
