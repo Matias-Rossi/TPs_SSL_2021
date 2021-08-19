@@ -86,24 +86,23 @@ int caracterYaEstaRegistrado(char [], int , char);
 
 /* REPORTE */
 
-    void nuevaCategoria(FILE*, char*);
-    void crearListadoIdentificadores(FILE*, ListaIdentificadores*);
-    void crearListadoLiteralesCadena(FILE*, ListaStrings*);
-    void crearListadoPalabrasReservadas(FILE*, ListaStrings*);
-    void crearListadoCtesInt(FILE*, ListaInt*, int, int*);
-    void imprimirEnBase(FILE*, int, int);
-    void crearListadoCtesReales(FILE*, ListaDouble*);
-    void crearListadoCtesCaracter(FILE*, char [], int);
-    void crearListadoComentarios(FILE*, ListaStrings*);
-    void crearListadoOperadoresCtesPuntuacion(FILE*, ListaStrings*);
-    void crearListadoDirectivas(FILE*, ListaStrings*);
-    void crearListadoNoReconocidos(FILE*, ListaStrings*);
-
-    //Liberación de memoria
-    void liberarListaIdentificadores(ListaIdentificadores*);
-    void liberarListaStrings(ListaStrings*);
-    void liberarListaInt(ListaInt*);
-    void liberarListaDouble(ListaDouble*);
+void nuevaCategoria(FILE*, char*);
+void crearListadoIdentificadores(FILE*, ListaIdentificadores*);
+void crearListadoLiteralesCadena(FILE*, ListaStrings*);
+void crearListadoPalabrasReservadas(FILE*, ListaStrings*, char*);
+void crearListadoCtesInt(FILE*, ListaInt*, int, int*);
+void imprimirEnBase(FILE*, int, int);
+void crearListadoCtesReales(FILE*, ListaDouble*);
+void crearListadoCtesCaracter(FILE*, char [], int);
+void crearListadoComentarios(FILE*, ListaStrings*);
+void crearListadoOperadoresCtesPuntuacion(FILE*, ListaStrings*);
+void crearListadoDirectivas(FILE*, ListaStrings*);
+void crearListadoNoReconocidos(FILE*, ListaStrings*);
+//Liberación de memoria
+void liberarListaIdentificadores(ListaIdentificadores*);
+void liberarListaStrings(ListaStrings*);
+void liberarListaInt(ListaInt*);
+void liberarListaDouble(ListaDouble*);
 
 
 

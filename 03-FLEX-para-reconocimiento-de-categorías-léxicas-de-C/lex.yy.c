@@ -289,36 +289,36 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	*yy_cp = '\0'; \
 	yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 15
-#define YY_END_OF_BUFFER 16
+#define YY_NUM_RULES 17
+#define YY_END_OF_BUFFER 18
 static yyconst short int yy_acclist[265] =
     {   0,
-       16,   14,   15,   13,   14,   15,   13,   15,   13,   14,
-       15,    5,   14,   15,   14,   15,    5,   14,   15,    5,
-       14,   15,    5,   14,   15,   14,   15,    5,   14,   15,
-        5,   14,   15,    5,   14,   15,    5,   14,   15,    5,
-        9,   14,   15,    5,   14,   15,    6,   14,   15,    8,
-       14,   15,    5,   14,   15,    5,   14,   15,    5,   14,
-       15,    4,   14,   15,    5,   14,   15,    4,   14,   15,
-        4,   14,   15,    4,   14,   15,    4,   14,   15,    4,
-       14,   15,    4,   14,   15,    4,   14,   15,    4,   14,
-       15,    4,   14,   15,    4,   14,   15,    4,   14,   15,
+       18,   16,   17,   15,   16,   17,   15,   17,   15,   16,
+       17,    7,   16,   17,   16,   17,    7,   16,   17,    7,
+       16,   17,    7,   16,   17,   16,   17,    7,   16,   17,
+        7,   16,   17,    7,   16,   17,    7,   16,   17,    7,
+       11,   16,   17,    7,   16,   17,    8,   16,   17,   10,
+       16,   17,    7,   16,   17,    7,   16,   17,    7,   16,
+       17,    6,   16,   17,    7,   16,   17,    6,   16,   17,
+        6,   16,   17,    6,   16,   17,    6,   16,   17,    6,
+       16,   17,    6,   16,   17,    6,   16,   17,    6,   16,
+       17,    6,   16,   17,    6,   16,   17,    6,   16,   17,
 
-        4,   14,   15,    4,   14,   15,    4,   14,   15,    4,
-       14,   15,    5,   14,   15,   13,   13,   13,    5,    2,
-        9,    9,   11,    9,    6,    8,    5,    5,    4,    4,
-        4,    4,    4,    4,    4,    3,    4,    4,    4,    4,
-        4,    4,    4,    3,    4,    4,    4,    4,    4,    4,
-        4,    4,    4,    4,    4,    4,   10,    9,   11,    9,
-        7,    4,    4,    4,    4,    4,    4,    4,    4,    4,
-        4,    4,    4,    3,    4,    4,    4,    4,    4,    4,
-        4,    4,    4,    4,    4,    4,    4,    4,    4,    4,
-       12,    9,    3,    4,    4,    4,    4,    4,    4,    4,
+        6,   16,   17,    6,   16,   17,    6,   16,   17,    6,
+       16,   17,    7,   16,   17,   15,   15,   15,    7,    2,
+       11,   11,   13,   11,    8,   10,    7,    7,    6,    6,
+        6,    6,    6,    6,    6,    4,    6,    6,    6,    6,
+        6,    6,    6,    4,    6,    6,    6,    6,    6,    6,
+        6,    6,    6,    6,    6,    6,   12,   11,   13,   11,
+        9,    6,    6,    6,    6,    6,    6,    6,    6,    6,
+        6,    6,    6,    3,    6,    6,    6,    6,    6,    6,
+        6,    6,    6,    6,    6,    6,    6,    6,    6,    6,
+       14,   11,    5,    6,    6,    6,    6,    6,    6,    6,
 
-        4,    4,    4,    4,    4,    4,    4,    4,    4,    4,
-        4,    4,    4,    4,    4,    4,    4,    4,    4,    4,
-        4,    4,    4,    4,    4,    4,    4,    4,    4,    4,
-        4,    4,    4,    4,    4,    4,    4,    4,    1,    1,
+        6,    6,    6,    6,    6,    6,    6,    6,    6,    6,
+        6,    6,    6,    6,    6,    6,    6,    6,    6,    6,
+        6,    6,    6,    6,    6,    6,    6,    6,    6,    6,
+        6,    6,    6,    6,    6,    6,    6,    6,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1
@@ -632,15 +632,17 @@ goto find_rule; \
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 ".\\categorias-lexicas.l"
+#line 1 ".\\flex.l"
 #define INITIAL 0
 /* %option debug */
-#line 6 ".\\categorias-lexicas.l"
-#include "categorias-lexicas.h"
+#line 6 ".\\flex.l"
+#include "tp3.h"
 
 ListaIdentificadores* identificadores;
 ListaStrings* cadenas;
-ListaStrings* palabrasReservadas;
+ListaStrings* palabrasReservadas_tipoDeDato;
+ListaStrings* palabrasReservadas_control;
+ListaStrings* palabrasReservadas_otros;
 ListaStrings* operadoresCtesPuntuacion;
 int operadoresCtesPuntuacionEncontrados;
 
@@ -672,7 +674,7 @@ ListaStrings *noReconocidos;
 /********* Digitos y Caracteres  ********/
 /****************** COMENTARIOS *********************/
 /**** OTROS ****/
-#line 676 "lex.yy.c"
+#line 678 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -823,9 +825,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 90 ".\\categorias-lexicas.l"
+#line 92 ".\\flex.l"
 
-#line 829 "lex.yy.c"
+#line 831 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -918,80 +920,90 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 91 ".\\categorias-lexicas.l"
+#line 93 ".\\flex.l"
 {agregarString(directivas, yytext);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 92 ".\\categorias-lexicas.l"
+#line 94 ".\\flex.l"
 {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 93 ".\\categorias-lexicas.l"
-{agregarString(palabrasReservadas, yytext);}
+#line 95 ".\\flex.l"
+{agregarString(palabrasReservadas_tipoDeDato, yytext);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 94 ".\\categorias-lexicas.l"
-{agregarIdentificador(identificadores, yytext);}
+#line 96 ".\\flex.l"
+{agregarString(palabrasReservadas_control, yytext);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 95 ".\\categorias-lexicas.l"
-{if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} }
+#line 97 ".\\flex.l"
+{agregarString(palabrasReservadas_otros, yytext);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 96 ".\\categorias-lexicas.l"
-{agregarInt(octales, strtol(yytext, NULL, 8));}
+#line 98 ".\\flex.l"
+{agregarIdentificador(identificadores, yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 97 ".\\categorias-lexicas.l"
-{agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
+#line 99 ".\\flex.l"
+{if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 98 ".\\categorias-lexicas.l"
-{agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
+#line 100 ".\\flex.l"
+{agregarInt(octales, strtol(yytext, NULL, 8));}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 99 ".\\categorias-lexicas.l"
-{agregarDouble(reales, strtod(yytext, NULL));}
+#line 101 ".\\flex.l"
+{agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 100 ".\\categorias-lexicas.l"
-{if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[1])){caracteres[caracteresEncontrados] = yytext[1];caracteresEncontrados++;}}
+#line 102 ".\\flex.l"
+{agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 101 ".\\categorias-lexicas.l"
-{agregarStringAux(comentarios, yytext, 0);}
+#line 103 ".\\flex.l"
+{agregarDouble(reales, strtod(yytext, NULL));}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 102 ".\\categorias-lexicas.l"
-{agregarStringAux(comentarios, yytext, 1);}
+#line 104 ".\\flex.l"
+{if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[1])){caracteres[caracteresEncontrados] = yytext[1];caracteresEncontrados++;}}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 103 ".\\categorias-lexicas.l"
-{;}
+#line 105 ".\\flex.l"
+{agregarStringAux(comentarios, yytext, 0);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 104 ".\\categorias-lexicas.l"
-{agregarStringAux(noReconocidos, yytext, yylineno); }
+#line 106 ".\\flex.l"
+{agregarStringAux(comentarios, yytext, 1);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 105 ".\\categorias-lexicas.l"
+#line 107 ".\\flex.l"
+{;}
+	YY_BREAK
+case 16:
+YY_RULE_SETUP
+#line 108 ".\\flex.l"
+{agregarStringAux(noReconocidos, yytext, yylineno); }
+	YY_BREAK
+case 17:
+YY_RULE_SETUP
+#line 109 ".\\flex.l"
 ECHO;
 	YY_BREAK
-#line 995 "lex.yy.c"
+#line 1007 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1875,31 +1887,34 @@ int main()
 	return 0;
 	}
 #endif
-#line 105 ".\\categorias-lexicas.l"
+#line 109 ".\\flex.l"
 
-int main()
-{
+
+int main(int argc, char **argv){
+
     printf("[LOG]: Inicio del programa (1/5)\n");
-    yyin = fopen("input.c", "r+");
+    yyin = fopen(argv[1], "r+");
     FILE* reporte = fopen("reporte.txt", "w+");
 
     printf("[LOG]: Inicializando variables (2/5)\n");
 
     //Inicializacion
-    identificadores = inicializarListaIdentificadores(identificadores);
-    cadenas = inicializarListaStrings(cadenas);
-    palabrasReservadas = inicializarListaStrings(palabrasReservadas);
-    octales = inicializarListaInt(octales);
-    hexadecimales = inicializarListaInt(hexadecimales);
-    decimales = inicializarListaInt(decimales);
-    acumuladorDecimal = 0;
-    reales = inicializarListaDouble(reales);
-    caracteresEncontrados = 0;
-    operadoresCtesPuntuacion = inicializarListaStrings(operadoresCtesPuntuacion);
+    identificadores                     = inicializarListaIdentificadores(identificadores);
+    cadenas                             = inicializarListaStrings(cadenas);
+    palabrasReservadas_tipoDeDato       = inicializarListaStrings(palabrasReservadas_tipoDeDato);
+    palabrasReservadas_control          = inicializarListaStrings(palabrasReservadas_control);
+    palabrasReservadas_otros            = inicializarListaStrings(palabrasReservadas_otros);
+    octales                             = inicializarListaInt(octales);
+    hexadecimales                       = inicializarListaInt(hexadecimales);
+    decimales                           = inicializarListaInt(decimales);
+    acumuladorDecimal                   = 0;
+    reales                              = inicializarListaDouble(reales);
+    caracteresEncontrados               = 0;
+    operadoresCtesPuntuacion            = inicializarListaStrings(operadoresCtesPuntuacion);
     operadoresCtesPuntuacionEncontrados = 0;
-    comentarios = inicializarListaStrings(comentarios);
-    directivas = inicializarListaStrings(directivas);
-    noReconocidos = inicializarListaStrings(noReconocidos);
+    comentarios                         = inicializarListaStrings(comentarios);
+    directivas                          = inicializarListaStrings(directivas);
+    noReconocidos                       = inicializarListaStrings(noReconocidos);
 
     printf("[LOG]: Corriendo analizador lexico (3/5)\n");
     yylex();
@@ -1907,7 +1922,9 @@ int main()
     printf("[LOG]: Generando reporte (4/5)\n");
     crearListadoIdentificadores(reporte, identificadores);
     crearListadoLiteralesCadena(reporte, cadenas);
-    crearListadoPalabrasReservadas(reporte, palabrasReservadas);
+    crearListadoPalabrasReservadas(reporte, palabrasReservadas_tipoDeDato, "tipo de dato");
+    crearListadoPalabrasReservadas(reporte, palabrasReservadas_control,    "estructura de control");
+    crearListadoPalabrasReservadas(reporte, palabrasReservadas_otros,      "otros");
     crearListadoCtesInt(reporte, octales, 8, NULL);
     crearListadoCtesInt(reporte, hexadecimales, 16, NULL);
     crearListadoCtesInt(reporte, decimales, 10, &acumuladorDecimal);

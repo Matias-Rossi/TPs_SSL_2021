@@ -1,4 +1,4 @@
-#include "categorias-lexicas.h"
+#include "tp3.h"
 
 /* --- Lista enlazada IDENTIFICADORES --- */
 ListaIdentificadores* inicializarListaIdentificadores(ListaIdentificadores* lista){

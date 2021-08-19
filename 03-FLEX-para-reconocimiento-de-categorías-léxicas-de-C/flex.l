@@ -3,11 +3,13 @@
 /* %option debug */
 
 %{
-#include "categorias-lexicas.h"
+#include "tp3.h"
 
 ListaIdentificadores* identificadores;
 ListaStrings* cadenas;
-ListaStrings* palabrasReservadas;
+ListaStrings* palabrasReservadas_tipoDeDato;
+ListaStrings* palabrasReservadas_control;
+ListaStrings* palabrasReservadas_otros;
 ListaStrings* operadoresCtesPuntuacion;
 int operadoresCtesPuntuacionEncontrados;
 
@@ -89,43 +91,48 @@ TABULACION (\t)+
 SALTO_DE_LINEA (\n)+
 %%
 {DIRECTIVAS_PREPROCESAMIENTO} {agregarString(directivas, yytext);}
-{LITERAL_CADENA}        {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
-{PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);}
-{IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext);}
-{OP_CARACT_DE_PUNTUACION} {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} }
-{CONST_OCTAL}           {agregarInt(octales, strtol(yytext, NULL, 8));}
-{CONST_HEXADECIMAL}     {agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
-{CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
-{CONST_PTOFLOTANTE}     {agregarDouble(reales, strtod(yytext, NULL));}
-{CONST_CARACTER}        {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[1])){caracteres[caracteresEncontrados] = yytext[1];caracteresEncontrados++;}}
-{COMENTARIOS_LINEAL}    {agregarStringAux(comentarios, yytext, 0);}
-{COMENTARIOS_MULTILINEAL} {agregarStringAux(comentarios, yytext, 1);}
+{LITERAL_CADENA}                                  {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
+{PALABRAS_RESERVADAS_TIPOS_DE_DATOS}              {agregarString(palabrasReservadas_tipoDeDato, yytext);}
+{PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL}       {agregarString(palabrasReservadas_control, yytext);}
+{PALABRAS_RESERVADAS_OTHERS}                      {agregarString(palabrasReservadas_otros, yytext);}
+{IDENTIFICADOR}                                   {agregarIdentificador(identificadores, yytext);}
+{OP_CARACT_DE_PUNTUACION}                         {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} }
+{CONST_OCTAL}                                     {agregarInt(octales, strtol(yytext, NULL, 8));}
+{CONST_HEXADECIMAL}                               {agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
+{CONST_DECIMAL}                                   {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
+{CONST_PTOFLOTANTE}                               {agregarDouble(reales, strtod(yytext, NULL));}
+{CONST_CARACTER}                                  {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[1])){caracteres[caracteresEncontrados] = yytext[1];caracteresEncontrados++;}}
+{COMENTARIOS_LINEAL}                              {agregarStringAux(comentarios, yytext, 0);}
+{COMENTARIOS_MULTILINEAL}                         {agregarStringAux(comentarios, yytext, 1);}
 {ESPACIO_EN_BLANCO}|{TABULACION}|{SALTO_DE_LINEA} {;}
-.                       {agregarStringAux(noReconocidos, yytext, yylineno); }
+.                                                 {agregarStringAux(noReconocidos, yytext, yylineno); }
 %%
-int main()
-{
+
+int main(int argc, char **argv){
+
     printf("[LOG]: Inicio del programa (1/5)\n");
-    yyin = fopen("input.c", "r+");
+    yyin = fopen(argv[1], "r+");
     FILE* reporte = fopen("reporte.txt", "w+");
 
     printf("[LOG]: Inicializando variables (2/5)\n");
 
     //Inicializacion
-    identificadores = inicializarListaIdentificadores(identificadores);
-    cadenas = inicializarListaStrings(cadenas);
-    palabrasReservadas = inicializarListaStrings(palabrasReservadas);
-    octales = inicializarListaInt(octales);
-    hexadecimales = inicializarListaInt(hexadecimales);
-    decimales = inicializarListaInt(decimales);
-    acumuladorDecimal = 0;
-    reales = inicializarListaDouble(reales);
-    caracteresEncontrados = 0;
-    operadoresCtesPuntuacion = inicializarListaStrings(operadoresCtesPuntuacion);
+    identificadores                     = inicializarListaIdentificadores(identificadores);
+    cadenas                             = inicializarListaStrings(cadenas);
+    palabrasReservadas_tipoDeDato       = inicializarListaStrings(palabrasReservadas_tipoDeDato);
+    palabrasReservadas_control          = inicializarListaStrings(palabrasReservadas_control);
+    palabrasReservadas_otros            = inicializarListaStrings(palabrasReservadas_otros);
+    octales                             = inicializarListaInt(octales);
+    hexadecimales                       = inicializarListaInt(hexadecimales);
+    decimales                           = inicializarListaInt(decimales);
+    acumuladorDecimal                   = 0;
+    reales                              = inicializarListaDouble(reales);
+    caracteresEncontrados               = 0;
+    operadoresCtesPuntuacion            = inicializarListaStrings(operadoresCtesPuntuacion);
     operadoresCtesPuntuacionEncontrados = 0;
-    comentarios = inicializarListaStrings(comentarios);
-    directivas = inicializarListaStrings(directivas);
-    noReconocidos = inicializarListaStrings(noReconocidos);
+    comentarios                         = inicializarListaStrings(comentarios);
+    directivas                          = inicializarListaStrings(directivas);
+    noReconocidos                       = inicializarListaStrings(noReconocidos);
 
     printf("[LOG]: Corriendo analizador lexico (3/5)\n");
     yylex();
@@ -133,7 +140,9 @@ int main()
     printf("[LOG]: Generando reporte (4/5)\n");
     crearListadoIdentificadores(reporte, identificadores);
     crearListadoLiteralesCadena(reporte, cadenas);
-    crearListadoPalabrasReservadas(reporte, palabrasReservadas);
+    crearListadoPalabrasReservadas(reporte, palabrasReservadas_tipoDeDato, "tipo de dato");
+    crearListadoPalabrasReservadas(reporte, palabrasReservadas_control,    "estructura de control");
+    crearListadoPalabrasReservadas(reporte, palabrasReservadas_otros,      "otros");
     crearListadoCtesInt(reporte, octales, 8, NULL);
     crearListadoCtesInt(reporte, hexadecimales, 16, NULL);
     crearListadoCtesInt(reporte, decimales, 10, &acumuladorDecimal);

@@ -13,3 +13,9 @@ return
 sizeof
 int
 ;
+
+1
+2
+0X43
+0FD3
+0323
