@@ -80,7 +80,7 @@ CARACTERES_ESPECIALES " "|"!"|"#"|"$"|"%"|"&"|"("|")"|"*"|"+"|","|"-"|"."|"/"|":
 S_CHAR [^\"\\\n]
 /****************** COMENTARIOS *********************/
 COMENTARIOS             {COMENTARIOS_LINEAL}|{COMENTARIOS_MULTILINEAL}
-COMENTARIOS_LINEAL      ("//"(.)*)|("/*".*"*/")
+COMENTARIOS_LINEAL      ("//"(.)*)
 COMENTARIOS_MULTILINEAL "/*"([^*]|(\*+[^*/]))*\*+\/
 /**** OTROS ****/
 ESPACIO [ \n\t\r]+
@@ -93,7 +93,7 @@ SALTO_DE_LINEA (\n)+
 {PALABRAS_RESERVADAS}   {agregarString(palabrasReservadas, yytext);}
 {IDENTIFICADOR}         {agregarIdentificador(identificadores, yytext);}
 {OP_CARACT_DE_PUNTUACION} {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} }
-{CONST_OCTAL}           {agregarInt(octales, atoi(yytext));}
+{CONST_OCTAL}           {agregarInt(octales, strtol(yytext, NULL, 8));}
 {CONST_HEXADECIMAL}     {agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
 {CONST_DECIMAL}         {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
 {CONST_PTOFLOTANTE}     {agregarDouble(reales, strtod(yytext, NULL));}
