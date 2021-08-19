@@ -3,77 +3,104 @@
 int main(){
 
     char *leido;
-    ESTADO estado = {q0, "$"};
-
-    Nodo *pila = NULL;
-    inicializarPila(&pila);
-
+    ESTADO estadoInicial = {q0, "$"};
+    ESTADO estado = estadoInicial;
     int error = 0;
+    int i;
+    Nodo *pila = NULL;
     int lenExpresion;
 
+    //Ingreso de datos
     printf("Ingrese una expresion: ");
-    gets(leido);
-    char *expresionAnalizar = sacarEspacios(leido);
+    scanf("%[^\n]", leido);
+    fflush(stdin);
 
-    while (strcmp(expresionAnalizar, "exit"))
-    {
+    int continuar = 1;
 
-        //printf("La expresion CON ESPACIOS es: %s\n" , leido);
-        //printf("La expresion SIN ESPACIOS es: %s\n" , expresionAnalizar);
-        //printf("strlen(expresionAnalizar): %d\n", strlen(expresionAnalizar));
+    while(continuar != 0){
 
-        lenExpresion = strlen(expresionAnalizar);
+        inicializarPila(&pila);
+        int lenExpresion = strlen(leido);
+        error = 0;
 
-        for(int i=0; i < lenExpresion ; i++){
-            
-            //printf("\nPOS: %d\n", i+1);
-            //printf("T(%d,", estado.proximoEstado);
-            //printf(" %c,", expresionAnalizar[i]);
-            //printf(" %c) -> ", cimaDePila(pila));
+        for(i=0; i < lenExpresion ; i++){
+        
+            if(leido[i] != ' '){
 
-            estado = nuevoEstado(estado.proximoEstado, expresionAnalizar[i], pila, i);
-            actualizarPila(estado, &pila);
+                //printf("\nPOS: %d\n", i+1);
+                //printf("T(%d,", estado.proximoEstado);
+                //printf(" %c,", leido[i]);
+                //printf(" %c) -> ", cimaDePila(pila));
 
-            //printf("(%d, ", estado.proximoEstado);
-            //printf("%s)\n", estado.simbolosAPila);
-            //printf("PILA: \n");
-            //mostrarPila(pila);
+                if(error == 0)
+                {
+                    estado = nuevoEstado(estado.proximoEstado, leido[i], pila, i, &error);
+                    actualizarPila(estado, &pila);
+                    
 
-            if(estado.proximoEstado == _){
-                errorHandler(2, i);
-                error = 1;
-            }
-            if(pilaVacia(pila)){
-                errorHandler(1, i);
-                error = 1;
+                    //printf("(%d, ", estado.proximoEstado);
+                    //printf("%s)\n", estado.simbolosAPila);
+                    //printf("PILA: \n");
+                    //mostrarPila(pila);
+
+                    if(estado.proximoEstado == _){
+                        errorHandler(2, i);       
+                        error = 2;
+                    }
+
+                    if(pilaVacia(pila) && error == 0){
+                        errorHandler(1, i);
+                        error = 1;
+                    }
+                }
             }
         }
 
         pop(&pila);
 
-        if(pilaVacia(pila)==0){
-            errorHandler(3, lenExpresion);
-            error = 1;
+
+        if(error == 0){
+            if(pilaVacia(pila)==0){
+                errorHandler(3, lenExpresion);
+                error = 3;
+            }
+            else if(estado.proximoEstado == q0) {
+                errorHandler(6, lenExpresion);
+                error = 6;
+            }
         }
-        else if(estado.proximoEstado == q0){
-            errorHandler(6, lenExpresion);
-            error = 1;
-        }
-        else if(error == 0)
+        
+        if(error == 0)
             printf("La cadena es sintacticamente correcta\n");
 
-        //free(expresionAnalizar);
-        //free(leido);
+
+        //Reinicio
+        estado = estadoInicial;
+        vaciarPila(&pila);
+        inicializarPila(&pila);
+
+
+        //Preguntar si continuar
+        char inputContinuar = 'N';
+        printf("\nDesea continuar ingresando expresiones? (Y/N)\n");
+        scanf("%c", &inputContinuar);
+        fflush(stdin);
         
-        printf("Ingrese una expresion: ");
-        gets(leido);
-        expresionAnalizar = sacarEspacios(leido);
+
+        //Ingresar entrada nuevamente
+        if(inputContinuar == 'Y' || inputContinuar == 'y')
+        {
+            printf("\nIngrese una expresion: ");
+            scanf("%[^\n]", leido);
+            fflush(stdin);
+
+        }
+        else
+            continuar = 0;
     }
 
-    free(expresionAnalizar);
     free(leido);
 
     return 0;
 }
-
 

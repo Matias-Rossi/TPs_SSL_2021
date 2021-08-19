@@ -1,6 +1,6 @@
 #include "tp2.h"
 
-ESTADO nuevoEstado(int estado, char leido, Nodo* pila, int pos) {
+ESTADO nuevoEstado(int estado, char leido, Nodo* pila, int pos, int *error) {
    char cima = cimaDePila(pila);
    
    int columna = caracter_columna(leido);
@@ -8,6 +8,7 @@ ESTADO nuevoEstado(int estado, char leido, Nodo* pila, int pos) {
 
     if(columna == 5){
         errorHandler(4, pos);
+        *error = 4;
     }
 
     return TABLA_DE_MOVIMIENTOS[fila][columna];
@@ -81,4 +82,10 @@ void actualizarPila(ESTADO estado, Nodo** pila)
         push(pila, estado.simbolosAPila[i]);
 
     return;
+}
+
+ESTADO volverAEstadoInicial()
+{
+    ESTADO estado = {0, "$"};
+    return estado;
 }

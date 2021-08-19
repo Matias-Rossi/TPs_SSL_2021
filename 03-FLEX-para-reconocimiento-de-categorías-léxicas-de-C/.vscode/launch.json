@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "c:\\Users\\Uri\\Documents\\UTN\\SSL\\21-002-09\\03-FLEX-para-reconocimiento-de-categorías-léxicas-de-C",
+      "environment": [],
+      "program": "c:\\Users\\Uri\\Documents\\UTN\\SSL\\21-002-09\\03-FLEX-para-reconocimiento-de-categorías-léxicas-de-C\\build\\Debug\\outDebug",
+      "internalConsoleOptions": "openOnSessionStart",
+      "MIMode": "gdb",
+      "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe",
+      "externalConsole": false
+    }
+  ]
+}
