@@ -41,18 +41,25 @@ void crearListadoLiteralesCadena(FILE* reporte, ListaStrings* cadenas){
     liberarListaStrings(cadenas);
 }
 
-void crearListadoPalabrasReservadas(FILE* reporte, ListaStrings* palabrasReservadas, char* tipo){
-
+void crearListadoPalabrasReservadas(FILE* reporte, ListaStrings* palabrasReservadas){
     if(palabrasReservadas->pri != NULL){
 
-        fprintf(reporte,"\n\n--%s: %s--\n", "PALABRAS RESERVADAS", tipo);
+        nuevaCategoria(reporte, "PALABRAS RESERVADAS");
 
         NodoString* aux = palabrasReservadas->pri;
         while(aux->sig != NULL) {
-            fprintf(reporte, "%s\n", aux->str);
+            switch(aux->valor) {
+                case 0: fprintf(reporte, "Tipo de dato: %s\n", aux->str); break;
+                case 1: fprintf(reporte, "Estructura de control: %s\n", aux->str); break;
+                case 2: fprintf(reporte, "Otro: %s\n", aux->str); break;
+            }
             aux = aux->sig;
         }
-        fprintf(reporte, "%s\n", aux->str);
+        switch(aux->valor) {
+            case 0: fprintf(reporte, "Tipo de dato: %s\n", aux->str); break;
+            case 1: fprintf(reporte, "Estructura de control: %s\n", aux->str); break;
+            case 2: fprintf(reporte, "Otro: %s\n", aux->str); break;
+        }
     }
     liberarListaStrings(palabrasReservadas);
 }

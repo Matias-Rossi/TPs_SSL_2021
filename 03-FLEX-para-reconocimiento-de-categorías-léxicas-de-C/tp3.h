@@ -89,7 +89,7 @@ int caracterYaEstaRegistrado(char [], int , char);
 void nuevaCategoria(FILE*, char*);
 void crearListadoIdentificadores(FILE*, ListaIdentificadores*);
 void crearListadoLiteralesCadena(FILE*, ListaStrings*);
-void crearListadoPalabrasReservadas(FILE*, ListaStrings*, char*);
+void crearListadoPalabrasReservadas(FILE*, ListaStrings*);
 void crearListadoCtesInt(FILE*, ListaInt*, int, int*);
 void imprimirEnBase(FILE*, int, int);
 void crearListadoCtesReales(FILE*, ListaDouble*);

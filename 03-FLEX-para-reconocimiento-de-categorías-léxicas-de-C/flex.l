@@ -7,9 +7,7 @@
 
 ListaIdentificadores* identificadores;
 ListaStrings* cadenas;
-ListaStrings* palabrasReservadas_tipoDeDato;
-ListaStrings* palabrasReservadas_control;
-ListaStrings* palabrasReservadas_otros;
+ListaStrings* palabrasReservadas;
 ListaStrings* operadoresCtesPuntuacion;
 int operadoresCtesPuntuacionEncontrados;
 
@@ -92,9 +90,9 @@ SALTO_DE_LINEA (\n)+
 %%
 {DIRECTIVAS_PREPROCESAMIENTO} {agregarString(directivas, yytext);}
 {LITERAL_CADENA}                                  {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
-{PALABRAS_RESERVADAS_TIPOS_DE_DATOS}              {agregarString(palabrasReservadas_tipoDeDato, yytext);}
-{PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL}       {agregarString(palabrasReservadas_control, yytext);}
-{PALABRAS_RESERVADAS_OTHERS}                      {agregarString(palabrasReservadas_otros, yytext);}
+{PALABRAS_RESERVADAS_TIPOS_DE_DATOS}              {agregarStringAux(palabrasReservadas, yytext, 0);}
+{PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL}       {agregarStringAux(palabrasReservadas, yytext, 1);}
+{PALABRAS_RESERVADAS_OTHERS}                      {agregarStringAux(palabrasReservadas, yytext, 2);}
 {IDENTIFICADOR}                                   {agregarIdentificador(identificadores, yytext);}
 {OP_CARACT_DE_PUNTUACION}                         {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} }
 {CONST_OCTAL}                                     {agregarInt(octales, strtol(yytext, NULL, 8));}
@@ -119,9 +117,7 @@ int main(int argc, char **argv){
     //Inicializacion
     identificadores                     = inicializarListaIdentificadores(identificadores);
     cadenas                             = inicializarListaStrings(cadenas);
-    palabrasReservadas_tipoDeDato       = inicializarListaStrings(palabrasReservadas_tipoDeDato);
-    palabrasReservadas_control          = inicializarListaStrings(palabrasReservadas_control);
-    palabrasReservadas_otros            = inicializarListaStrings(palabrasReservadas_otros);
+    palabrasReservadas                  = inicializarListaStrings(palabrasReservadas);
     octales                             = inicializarListaInt(octales);
     hexadecimales                       = inicializarListaInt(hexadecimales);
     decimales                           = inicializarListaInt(decimales);
@@ -140,9 +136,7 @@ int main(int argc, char **argv){
     printf("[LOG]: Generando reporte (4/5)\n");
     crearListadoIdentificadores(reporte, identificadores);
     crearListadoLiteralesCadena(reporte, cadenas);
-    crearListadoPalabrasReservadas(reporte, palabrasReservadas_tipoDeDato, "tipo de dato");
-    crearListadoPalabrasReservadas(reporte, palabrasReservadas_control,    "estructura de control");
-    crearListadoPalabrasReservadas(reporte, palabrasReservadas_otros,      "otros");
+    crearListadoPalabrasReservadas(reporte, palabrasReservadas);
     crearListadoCtesInt(reporte, octales, 8, NULL);
     crearListadoCtesInt(reporte, hexadecimales, 16, NULL);
     crearListadoCtesInt(reporte, decimales, 10, &acumuladorDecimal);

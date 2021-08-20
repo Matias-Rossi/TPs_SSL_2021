@@ -632,17 +632,15 @@ goto find_rule; \
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 ".\\flex.l"
+#line 1 "flex.l"
 #define INITIAL 0
 /* %option debug */
-#line 6 ".\\flex.l"
+#line 6 "flex.l"
 #include "tp3.h"
 
 ListaIdentificadores* identificadores;
 ListaStrings* cadenas;
-ListaStrings* palabrasReservadas_tipoDeDato;
-ListaStrings* palabrasReservadas_control;
-ListaStrings* palabrasReservadas_otros;
+ListaStrings* palabrasReservadas;
 ListaStrings* operadoresCtesPuntuacion;
 int operadoresCtesPuntuacionEncontrados;
 
@@ -674,7 +672,7 @@ ListaStrings *noReconocidos;
 /********* Digitos y Caracteres  ********/
 /****************** COMENTARIOS *********************/
 /**** OTROS ****/
-#line 678 "lex.yy.c"
+#line 676 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -825,9 +823,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 92 ".\\flex.l"
+#line 90 "flex.l"
 
-#line 831 "lex.yy.c"
+#line 829 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -920,90 +918,90 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 93 ".\\flex.l"
+#line 91 "flex.l"
 {agregarString(directivas, yytext);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 94 ".\\flex.l"
+#line 92 "flex.l"
 {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 95 ".\\flex.l"
-{agregarString(palabrasReservadas_tipoDeDato, yytext);}
+#line 93 "flex.l"
+{agregarStringAux(palabrasReservadas, yytext, 0);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 96 ".\\flex.l"
-{agregarString(palabrasReservadas_control, yytext);}
+#line 94 "flex.l"
+{agregarStringAux(palabrasReservadas, yytext, 1);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 97 ".\\flex.l"
-{agregarString(palabrasReservadas_otros, yytext);}
+#line 95 "flex.l"
+{agregarStringAux(palabrasReservadas, yytext, 2);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 98 ".\\flex.l"
+#line 96 "flex.l"
 {agregarIdentificador(identificadores, yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 99 ".\\flex.l"
+#line 97 "flex.l"
 {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 100 ".\\flex.l"
+#line 98 "flex.l"
 {agregarInt(octales, strtol(yytext, NULL, 8));}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 101 ".\\flex.l"
+#line 99 "flex.l"
 {agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 102 ".\\flex.l"
+#line 100 "flex.l"
 {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 103 ".\\flex.l"
+#line 101 "flex.l"
 {agregarDouble(reales, strtod(yytext, NULL));}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 104 ".\\flex.l"
+#line 102 "flex.l"
 {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[1])){caracteres[caracteresEncontrados] = yytext[1];caracteresEncontrados++;}}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 105 ".\\flex.l"
+#line 103 "flex.l"
 {agregarStringAux(comentarios, yytext, 0);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 106 ".\\flex.l"
+#line 104 "flex.l"
 {agregarStringAux(comentarios, yytext, 1);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 107 ".\\flex.l"
+#line 105 "flex.l"
 {;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 108 ".\\flex.l"
+#line 106 "flex.l"
 {agregarStringAux(noReconocidos, yytext, yylineno); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 109 ".\\flex.l"
+#line 107 "flex.l"
 ECHO;
 	YY_BREAK
-#line 1007 "lex.yy.c"
+#line 1005 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1887,7 +1885,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 109 ".\\flex.l"
+#line 107 "flex.l"
 
 
 int main(int argc, char **argv){
@@ -1901,9 +1899,7 @@ int main(int argc, char **argv){
     //Inicializacion
     identificadores                     = inicializarListaIdentificadores(identificadores);
     cadenas                             = inicializarListaStrings(cadenas);
-    palabrasReservadas_tipoDeDato       = inicializarListaStrings(palabrasReservadas_tipoDeDato);
-    palabrasReservadas_control          = inicializarListaStrings(palabrasReservadas_control);
-    palabrasReservadas_otros            = inicializarListaStrings(palabrasReservadas_otros);
+    palabrasReservadas                  = inicializarListaStrings(palabrasReservadas);
     octales                             = inicializarListaInt(octales);
     hexadecimales                       = inicializarListaInt(hexadecimales);
     decimales                           = inicializarListaInt(decimales);
@@ -1922,9 +1918,7 @@ int main(int argc, char **argv){
     printf("[LOG]: Generando reporte (4/5)\n");
     crearListadoIdentificadores(reporte, identificadores);
     crearListadoLiteralesCadena(reporte, cadenas);
-    crearListadoPalabrasReservadas(reporte, palabrasReservadas_tipoDeDato, "tipo de dato");
-    crearListadoPalabrasReservadas(reporte, palabrasReservadas_control,    "estructura de control");
-    crearListadoPalabrasReservadas(reporte, palabrasReservadas_otros,      "otros");
+    crearListadoPalabrasReservadas(reporte, palabrasReservadas);
     crearListadoCtesInt(reporte, octales, 8, NULL);
     crearListadoCtesInt(reporte, hexadecimales, 16, NULL);
     crearListadoCtesInt(reporte, decimales, 10, &acumuladorDecimal);

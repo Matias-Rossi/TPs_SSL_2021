@@ -9,13 +9,10 @@ d: 1 veces
 Longitud 1: 	"a"
 
 
---PALABRAS RESERVADAS: tipo de dato--
-int
-
-
---PALABRAS RESERVADAS: otros--
-return
-sizeof
+--PALABRAS RESERVADAS--
+Otro: return
+Otro: sizeof
+Tipo de dato: int
 
 
 --CONSTANTES OCTALES--
