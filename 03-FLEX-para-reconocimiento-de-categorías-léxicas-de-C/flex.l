@@ -33,10 +33,9 @@ INCLUDE "#include"{ESPACIO}({LITERAL_CADENA}|{LIBRERIA})
 DEFINE "#define"({ESPACIO}({CARACTERES_SINGULARES}+){ESPACIO}{CONSTANTE})
 LIBRERIA <((.)+)>
 /**************** PALABRAS RESERVADAS ****************/
-PALABRAS_RESERVADAS {PALABRAS_RESERVADAS_TIPOS_DE_DATOS}|{PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL}|{PALABRAS_RESERVADAS_OTHERS}
 PALABRAS_RESERVADAS_TIPOS_DE_DATOS char|double|float|int|short|long|signed|unsigned|void
-PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL if|switch|for|do|break|continue|while
-PALABRAS_RESERVADAS_OTHERS auto|case|const|default|else|enum|extern|goto|register|return|sizeof|static|struct|typedef|union|volatile
+PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL if|else|switch|for|do|break|continue|while|return|goto
+PALABRAS_RESERVADAS_OTHERS auto|case|const|default|enum|extern|register|sizeof|static|struct|typedef|union|volatile
 /******* OPERADORES Y CARACTERES DE PUNTUACION *******/
 OP_CARACT_DE_PUNTUACION ";"|"["|"]"|"("|")"|"{"|"}"|"."|"->"|"++"|"--"|"&"|"*"|"+"|"-"|"~"|"!"|"/"|"%"|"<<"|">>"|"<"|">"|"<="|">="|"=="|"!="|"^"|"|"|"&&"|"||"|"="|"*="|"/="|"%="|"+="|"-="|"<<="|">>="|"&="|"^="|"|="|"?"|":"|"..."|","|"#"|"##"
 /**************** CONSTANTES ENTERAS *****************/

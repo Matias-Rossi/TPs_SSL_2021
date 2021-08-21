@@ -505,7 +505,7 @@ static yyconst short int yy_nxt[674] =
       216,  216,  216,  141,  221,  226,  223,  141,  141,  224,
       229,  217,  229,  227,  120,  230,  230,  230,  221,  216,
       216,  216,  241,  242,  218,  217,  219,  219,  220,  218,
-      231,  220,  220,  220,  230,  230,  230,  221,  141,  241,
+      231,  220,  220,  220,  230,  230,  230,  221,   84,  241,
       222,  223,  221,  232,  231,  232,  182,  242,  233,  233,
 
       233,  221,  233,  233,  233,  141,  221,  222,  218,  120,
@@ -523,7 +523,7 @@ static yyconst short int yy_nxt[674] =
       209,  209,  209,  209,  214,  165,  214,  214,  214,  236,
       236,  164,  141,   84,  163,  162,  161,  160,  120,  159,
       158,  157,  156,  155,  154,  153,  152,  151,  150,  149,
-      120,  141,  148,  147,  141,  141,  146,  145,  120,  141,
+      120,   84,  148,  147,  141,   84,  146,  145,  120,  141,
       142,  141,  102,  137,  136,  135,  130,  129,  124,  121,
       120,  119,   84,  118,  117,  116,  115,  114,  113,  112,
       111,  110,  109,  108,   46,   46,  102,   46,   98,   98,
@@ -632,10 +632,10 @@ goto find_rule; \
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "flex.l"
+#line 1 ".\\flex.l"
 #define INITIAL 0
 /* %option debug */
-#line 6 "flex.l"
+#line 6 ".\\flex.l"
 #include "tp3.h"
 
 ListaIdentificadores* identificadores;
@@ -823,7 +823,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 90 "flex.l"
+#line 89 ".\\flex.l"
 
 #line 829 "lex.yy.c"
 
@@ -918,87 +918,87 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 91 "flex.l"
+#line 90 ".\\flex.l"
 {agregarString(directivas, yytext);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 92 "flex.l"
+#line 91 ".\\flex.l"
 {agregarStringAuxFuncion(cadenas, yytext, strlenMenosDos);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 93 "flex.l"
+#line 92 ".\\flex.l"
 {agregarStringAux(palabrasReservadas, yytext, 0);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 94 "flex.l"
+#line 93 ".\\flex.l"
 {agregarStringAux(palabrasReservadas, yytext, 1);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 95 "flex.l"
+#line 94 ".\\flex.l"
 {agregarStringAux(palabrasReservadas, yytext, 2);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 96 "flex.l"
+#line 95 ".\\flex.l"
 {agregarIdentificador(identificadores, yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 97 "flex.l"
+#line 96 ".\\flex.l"
 {if(!stringIncrementarSiRegistrado(operadoresCtesPuntuacion, operadoresCtesPuntuacionEncontrados, yytext)){agregarStringAux(operadoresCtesPuntuacion, yytext, 1); operadoresCtesPuntuacionEncontrados++;} }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 98 "flex.l"
+#line 97 ".\\flex.l"
 {agregarInt(octales, strtol(yytext, NULL, 8));}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 99 "flex.l"
+#line 98 ".\\flex.l"
 {agregarInt(hexadecimales, strtol(yytext, NULL, 16));}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 100 "flex.l"
+#line 99 ".\\flex.l"
 {agregarInt(decimales, atoi(yytext)); acumuladorDecimal += atoi(yytext);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 101 "flex.l"
+#line 100 ".\\flex.l"
 {agregarDouble(reales, strtod(yytext, NULL));}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 102 "flex.l"
+#line 101 ".\\flex.l"
 {if(!caracterYaEstaRegistrado(caracteres, caracteresEncontrados, yytext[1])){caracteres[caracteresEncontrados] = yytext[1];caracteresEncontrados++;}}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 103 "flex.l"
+#line 102 ".\\flex.l"
 {agregarStringAux(comentarios, yytext, 0);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 104 "flex.l"
+#line 103 ".\\flex.l"
 {agregarStringAux(comentarios, yytext, 1);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 105 "flex.l"
+#line 104 ".\\flex.l"
 {;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 106 "flex.l"
+#line 105 ".\\flex.l"
 {agregarStringAux(noReconocidos, yytext, yylineno); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 107 "flex.l"
+#line 106 ".\\flex.l"
 ECHO;
 	YY_BREAK
 #line 1005 "lex.yy.c"
@@ -1885,7 +1885,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 107 "flex.l"
+#line 106 ".\\flex.l"
 
 
 int main(int argc, char **argv){
