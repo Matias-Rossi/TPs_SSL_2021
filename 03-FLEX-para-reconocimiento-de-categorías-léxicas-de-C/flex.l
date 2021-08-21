@@ -57,7 +57,7 @@ OPERADOR_E      "E"|"e"
 SIGNO           "-"|"+"
 SUFIJO_REAL     "f"|"F"|"l"|"L"
 /******** Constante Caracter ********/
-CONST_CARACTER '({CARACTERES_SINGULARES}|{SECUENCIA_DE_ESCAPE}|{ESPACIO_EN_BLANCO})'
+CONST_CARACTER '({CARACTERES_SINGULARES}|{SECUENCIA_DE_ESCAPE}|{ESPACIO_EN_BLANCO}|{CARACTERES_ESPECIALES})'
 /****************** LITERAL CADENA *******************/
 LITERAL_CADENA                   \"(\\.|[^"\\])*\"
 SECUENCIA_CARACTERES             {CARACTER}*
