@@ -30,7 +30,7 @@ C_FLAGS+=-Isrc -Iobj -Wall
 L_FLAGS+=
 
 L_OBJS=$(patsubst src/%.l, obj/%.yy.o, $(wildcard src/*.l))
-C_OBJS=$(patsubst src/%.c, obj/%.o, $(wildcard src/*.c))
+C_OBJS=$(patsubst src/%.c, obj/%.o, $(filter-out src/input.c, $(wildcard src/*.c)))
 
 BINS=$(patsubst src/%.l, bin/%.$(EXT), $(wildcard src/*.l))
 
