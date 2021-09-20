@@ -103,32 +103,32 @@ especificadores_de_declaracion:   especificador_categoria_almacenamiento especif
                                 ;
 
 
-especificador_categoría_almacenamiento:   auto
-                                        | register
-                                        | static
-                                        | extern
-                                        | typedef
+especificador_categoría_almacenamiento:   'auto'
+                                        | 'register'
+                                        | 'static'
+                                        | 'extern'
+                                        | 'typedef'
                                         ;
 
 
 
-especificador_de_tipo:    void
-                        | char
-                        | short
-                        | int
-                        | long
-                        | float
-                        | double
-                        | signed
-                        | unsigned  
+especificador_de_tipo:    'void'
+                        | 'char'
+                        | 'short'
+                        | 'int'
+                        | 'long'
+                        | 'float'
+                        | 'double'
+                        | 'signed'
+                        | 'unsigned'  
                         | especificador_estructura_union
                         | especificador_enum
                         | nombre_typedef
                         ;
 
 
-calificador_de_tipo:   const
-                     | volatile
+calificador_de_tipo:   'const'
+                     | 'volatile'
                      ;
 
 
@@ -136,8 +136,8 @@ especificador_estructura_o_union:     estructura_o_union IDENTIFICADOR /*opt*/  
                                     | estructura_o_union IDENTIFICADOR
 
 
-estructura_o_union:   struct
-                    | union
+estructura_o_union:   'struct'
+                    | 'union'
                     ;
 
 
@@ -176,8 +176,8 @@ declarador_struct:    declarador
                     ;
 
 
-especificador_enum:       enum IDENTIFICADOR /*opt*/   '{' lista_de_enumerador '}'
-                        | enum IDENTIFICADOR
+especificador_enum:       'enum' IDENTIFICADOR /*opt*/   '{' lista_de_enumerador '}'
+                        | 'enum' IDENTIFICADOR
                         ;
 
 
