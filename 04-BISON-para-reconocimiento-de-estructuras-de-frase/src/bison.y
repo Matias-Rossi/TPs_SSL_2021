@@ -22,52 +22,51 @@ int analisisCorrecto = 1;
 %union{
     char* idval;
     int val;
-    
 }
 
-%type <> unidad_de_traduccion
-%type <> declaracion_externa
-%type <> definicion_de_funcion
-%type <> declaracion 
-%type <> declaracion_externa
-%type <> declarador
-%type <> especificadores_de_declaracion 
-%type <> lista_de_declaracion
-%type <> especificador_categoria_almacenamiento
-%type <> especificador_de_tipo
-%type <> calificador_de_tipo
-%type <> lista_declaradores_ini
-%type <> especificador_tipo
-%type <> especificador_estructura_union
-%type <> especificador_enum
-%type <> lista_de_enumerador
-%type <> enumerador
-%type <> declarador_directo
-%type <> lista_tipos_de_parametro
-%type <> lista_de_identificadores
-%type <> apuntador
-%type <> lista_calificadores_de_tipo
-%type <> lista_de_parametros
-%type <> declaracion_parametro
-%type <> declarador_abstracto
+%type <val> unidad_de_traduccion
+%type <val> declaracion_externa
+%type <val> definicion_de_funcion
+%type <val> declaracion 
+%type <val> declaracion_externa
+%type <val> declarador
+%type <val> especificadores_de_declaracion 
+%type <val> lista_de_declaracion
+%type <val> especificador_categoria_almacenamiento
+%type <val> especificador_de_tipo
+%type <val> calificador_de_tipo
+%type <val> lista_declaradores_ini
+%type <val> especificador_tipo
+%type <val> especificador_estructura_union
+%type <val> especificador_enum
+%type <val> lista_de_enumerador
+%type <val> enumerador
+%type <val> declarador_directo
+%type <val> lista_tipos_de_parametro
+%type <val> lista_de_identificadores
+%type <val> apuntador
+%type <val> lista_calificadores_de_tipo
+%type <val> lista_de_parametros
+%type <val> declaracion_parametro
+%type <val> declarador_abstracto
 
 
 
 
-%token DIRECTIVAS_PREPROCESAMIENTO
-%token LITERAL_CADENA
-%token PALABRAS_RESERVADAS_TIPOS_DE_DATOS
-%token PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL
-%token PALABRAS_RESERVADAS_OTHERS
-%token IDENTIFICADOR
-%token OP_CARACT_DE_PUNTUACION
-%token CONST_OCTAL
-%token CONST_HEXADECIMAL
-%token CONST_DECIMAL
-%token CONST_PTOFLOTANTE
-%token CONST_CARACTER
-%token COMENTARIOS_LINEAL
-%token COMENTARIOS_MULTILINEAL
+%token <val> DIRECTIVAS_PREPROCESAMIENTO
+%token <val> LITERAL_CADENA
+%token <val> PALABRAS_RESERVADAS_TIPOS_DE_DATOS
+%token <val> PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL
+%token <val> PALABRAS_RESERVADAS_OTHERS
+%token <val> IDENTIFICADOR
+%token <val> OP_CARACT_DE_PUNTUACION
+%token <val> CONST_OCTAL
+%token <val> CONST_HEXADECIMAL
+%token <val> CONST_DECIMAL
+%token <val> CONST_PTOFLOTANTE
+%token <val> CONST_CARACTER
+%token <val> COMENTARIOS_LINEAL
+%token <val> COMENTARIOS_MULTILINEAL
 
 %%
 //REGLAS (PRODUCCIONES GIC - CÓDIGO C) -> Conocido como PATRÓN/ACCIÓN
@@ -133,8 +132,8 @@ calificador_de_tipo:   const
                      ;
 
 
-especificador_estructura_o_union:     estructura_o_union identificador /*opt*/  { lista_declaraciones_struct }
-                                    | estructura_o_union identificador
+especificador_estructura_o_union:     estructura_o_union IDENTIFICADOR /*opt*/  { lista_declaraciones_struct }
+                                    | estructura_o_union IDENTIFICADOR
 
 
 estructura_o_union:   struct
@@ -168,7 +167,7 @@ lista_calificador_especificador:    especificador_de_tipo lista_calificador_espe
 
 
 lista_declaradores_struct:    declarador_struct
-                            | lista_declaradores_struct   ,  declarador_struct
+                            | lista_declaradores_struct  ,  declarador_struct
                             ;
 
 
@@ -177,8 +176,8 @@ declarador_struct:    declarador
                     ;
 
 
-especificador_enum:       enum identificador /*opt*/   { lista_de_enumerador }
-                        | enum identificador
+especificador_enum:       enum IDENTIFICADOR /*opt*/   '{' lista_de_enumerador '}'
+                        | enum IDENTIFICADOR
                         ;
 
 
@@ -187,35 +186,33 @@ lista_de_enumerador:      enumerador
                         ;
 
 
-enumerador:    identificador
-             | identificador = expresion_constante
+enumerador:    IDENTIFICADOR
+             | IDENTIFICADOR = expresion_constante
              ;
 
 
 declarador:    apuntador /*opt*/ declarador_directo;
 
 
-declarador_directo:       identificador
-                        | ( declarador )
-                        | declarador_directo  [ expresión-constante /*opt*/ ]
-                        | declarador_directo  ( lista_tipos_de_parametro )
-                        | declarador_directo  ( lista_de_identificadores /*opt*/ )
+declarador_directo:       IDENTIFICADOR
+                        | '(' declarador ')'
+                        | declarador_directo  '[' expresión_constante /*opt*/ ']'
+                        | declarador_directo  '(' lista_tipos_de_parametro ')'
+                        | declarador_directo  '(' lista_de_identificadores /*opt*/ ')'
                         ;
 
 
-apuntador:        * lista_calificadores_de_tipoopt
-|||| * l        i    sta-_alificadores-_e-_ipoo /*opt*/apuntador
-
-                ;
+apuntador:  '*' lista_calificadores_de_tipo /*opt*/
+            |'*' lista_calificadores_de_tipo /*opt*/ apuntador
 
 
-lista_calificadores_de_tipo:    cificaficador_de_tipo
+lista_calificadores_de_tipo:    calificador_de_tipo
                                 | lista_calificadores_de_tipo calificador_de_tipo
                                 ;
 
 
 lista_tipos_de_parametro:      lista_de_parametros
-                             | lista_de_parametros , ...
+                             | lista_de_parametros ', ...'
                              ;
 
 
@@ -229,215 +226,201 @@ declaracion_parametro:     especificadores_de_declaracion declarador
                          ;
 
 
-lista_de_identificadores:     identificador
-                            | lista_de_identificadores , identificador
+lista_de_identificadores:     IDENTIFICADOR
+                            | lista_de_identificadores , IDENTIFICADOR
                             ;
 
 
-inicializador:
-expresión-asignación
-{   lista-de-inicializadores   }
-{   lista-de-inicializadores  ,   }
+inicializador:  expresion_de_asignacion
+                |'{'   lista_de_inicializadores   '}'
+                |'{'   lista_de_inicializadores  ',''}'
+                ;
 
 
-lista-de-inicializadores:
-inicializador
-lista-de-inicializadores  ,  inicializador
+lista_de_inicializadores:   inicializador
+                            | lista_de_inicializadores ','  inicializador
+                            ;
  
 
-nombre-de-tipo:
-lista-calificador-especificador declarador-abstractoopt
+nombre_de_tipo:     lista_calificador_especificador declarador_abstracto/*opt*/
+;
 
 
-
-declarador-abstracto:
-apuntador
-apuntadoropt declarador-abstracto-directo
+declarador_abstracto:   apuntador
+                        | apuntador/*opt*/ declarador_abstracto_directo
  
 
-declarador-abstracto-directo:
-(   declarador-abstracto   )
-declarador-abstracto-directoopt     [    expresión-constanteopt    ]
-declarador-abstracto-directoopt  (    lista-tipos-de-parámetroopt   )
+declarador_abstracto_directo:   '(' declarador_abstracto ')'
+                                | declarador_abstracto_directo/*opt*/ '[' expresion_constante/*opt*/ ']'
+                                | declarador_abstracto_directo/*opt*/  '(' lista_tipos_de_parametro/*opt*/ ')'
+                                ;
+
+nombre_typedef: IDENTIFICADOR
+;
 
 
-nombre-typedef:
-identificador
- 
-
-sentencia:
-sentencia-etiquetada
-sentencia-expresión
-sentencia-compuesta
-sentencia-de-selección
-sentencia-de-iteración
-sentencia-de-salto
+sentencia:  sentencia_etiquetada
+            | sentencia_expresion
+            | sentencia_compuesta
+            | sentencia_de_seleccion
+            | sentencia_de_iteracion
+            | sentencia_de_salto
+            ;
 
 
-sentencia-etiquetada:
-identificador   :    sentencia
-case    expresión-constante    :   sentencia
-default    :   sentencia
-
- 
-sentencia-expresión:
-expresiónopt  ;
- 
-
-sentencia-compuesta:
-{    lista-declaraciónopt    lista-de-sentenciasopt    }
- 
-
-lista-de-sentencias:
-sentencia
-lista-de-sentencias   sentencia
-
-
-sentencia-de-selección:
-if ( expresión ) sentencia
-if ( expresión ) sentencia else sentencia
-switch ( expresión ) sentencia
-
-
-sentencia-de-iteración:
-while   (   expresión   )   sentencia
-do   sentencia   while   (   expresión   )   ;
-(  expresiónopt   ;   expresiónopt   ;   expresiónopt   )   sentencia
-
-
-sentencia-de-salto:
-goto   identificador   ;
-continue   ;
-break ;
-retun   expresiónopt   ;
+sentencia_etiquetada:   IDENTIFICADOR ':' sentencia
+                        | 'case' expresion_constante ':' sentencia
+                        | 'default' ':' sentencia
+                        ;
 
  
-expresión:
-expresión-de-asignación
-expresión    ,    expresión-de-asignación
-
-
-expresión-de-asignación:
-expresión-condicional
-expresión-unaria    operador-de-asignación    expresión-de-asignación
-
-
-operador-de-asignación: uno de    =   *=     /=     %=     +=     -=     <<=    >>=    &=   ^=     |=
-
-
-expresión-condicional:
-expresión-lógica-OR
-expresión-lógica-OR    ?    expresión   :     expresión-condicional
-
- 
-expresión-constante:
-expresión-condicional
+sentencia_expresion: expresion/*opt*/  ';'
+;
  
 
-expresión-lógica-OR:
-expresión-lógica-AND
-expresión-lógica-OR   ||  expresión-lógica-AND
+sentencia-compuesta: '{' lista_declaracion/*opt*/    lista_de_sentencias/*opt*/ '}'
+;
+
+lista_de_sentencias:    sentencia
+                        | lista_de_sentencias sentencia
+                        ;
 
 
-expresión-lógica-AND:
-expresión-OR-inclusivo
-expresión-lógica-AND    &&    expresión-OR-inclusivo
+sentencia_de_seleccion: 'if' '(' expresion ')' sentencia
+                        | 'if' '(' expresion ')' sentencia 'else' sentencia
+                        | 'switch' '(' expresion ')' sentencia
+                        ;
+
+sentencia_de_iteración: 'while' '(' expresion ')' sentencia
+                        | 'do' sentencia 'while' '(' expresion ')' ';'
+                        | '(' expresion/*opt*/ ';' expresion/*opt*/ ';' expresion/*opt*/ ')' sentencia /* //todo: falta el for?*/
+                        ;
+
+sentencia_de_salto: 'goto' IDENTIFICADOR ';'
+                    | 'continue'   ';'
+                    | 'break' ';'
+                    | 'return' expresion/*opt*/   ';'
+                    ;
+
+
+expresion:  expresion_de_asignacion
+            | expresion , expresion_de_asignacion
+            ;
+
+
+expresion_de_asignacion:    expresion_condicional
+                            | expresion_unaria operador_de_asignacion expresion_de_asignacion
+                            ;
+
+
+operador_de_asignacion: | '=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>>=' | '&=' | '^=' | '|=' ;
+
+
+expresion_condicional:  expresion_logica_OR
+                        | expresion_logica_OR '?' expresion ':' expresion_condicional
+                        ;
+ 
+expresion_constante: expresion_condicional
+;
  
 
-expresión-OR-inclusivo:
-expresión-OR-exclusivo
-expresión-OR-inclusivo | expresión-OR-exclusivo
+expresion_logica_OR:    expresion_logica_AND
+                        | expresion_logica_OR   '||'  expresion_logica_AND
+                        ;
 
 
-expresión-OR-exclusivo:
-expresión-AND
-expresión-OR-exclusivo   ^   expresión-AND
+expresion_logica_AND:   expresion_OR_inclusivo
+                        |expresion_logica_AND '&&' expresion_OR_inclusivo
+ ;
+
+expresion_OR_inclusivo: expresion_OR_exclusivo
+                        | expresion_OR_inclusivo '|' expresion_OR_exclusivo
+;
+
+expresion_OR_exclusivo: expresion_AND
+                        |expresion_OR_exclusivo   '^'   expresion_AND
+;
+
+expresion_AND:  expresion_de_igualdad
+                | expresion_AND   '&'   expresion_de_igualdad
+;
+
+expresion_de_igualdad:  expresion_relacional
+                        | expresion_de_igualdad    '=='    expresion_relacional
+                        | expresion_de_igualdad    '!='     expresion_relacional
+                        ;
 
 
-expresión-AND:
-expresión-de-igualdad
-expresión-AND   &   expresión-de-igualdad
-
-
-expresión-de-igualdad:
-expresión-relacional
-expresión-de-igualdad    ==    expresión-relacional
-expresión-de-igualdad    !=     expresión-relacional
-
-
-expresión-relacional:
-expresión-de-corrimiento
-expresión-relacional < expresión-de-corrimiento
-expresión-relacional > expresión-de-corrimiento
-expresión-relacional <= expresión-de-corrimiento
-expresión-relacional > = expresión-de-corrimiento
+expresion_relacional:   expresion_de_corrimiento
+                        | expresion_relacional '<' expresion_de_corrimiento
+                        | expresion_relacional '>' expresion_de_corrimiento
+                        | expresion_relacional '<=' expresion_de_corrimiento
+                        | expresion_relacional '>=' expresion_de_corrimiento
+                        ;
  
 
-expresión-de-corrimiento:
-expresión-aditiva
-expresión-de-corrimiento   <<   expresión-aditiva
-expresión-de-corrimiento   >>  expresión-aditiva
+expresion_de_corrimiento:   expresion_aditiva
+                            |expresion_de_corrimiento   '<<'   expresion_aditiva
+                            |expresion_de_corrimiento   '>>'  expresion_aditiva
 
 
-expresión-aditiva:
-expresión-multiplicativa
-expresión-aditiva + expresión-multiplicativa
-expresión-aditiva - expresión-multiplicativa
+expresion_aditiva:  expresion_multiplicativa
+                    | expresion_aditiva '+' expresion_multiplicativa
+                    | expresion_aditiva '-' expresion_multiplicativa
+                    ;
 
 
-expresión-multiplicativa:
-expresión-cast
-expresión-multiplicativa * expresión-cast
-expresión-multiplicativa / expresión-cast
-expresión multiplicativa % expresión-cast
+expresion_multiplicativa:   expresion_cast
+                            | expresion_multiplicativa '*' expresion_cast
+                            | expresion_multiplicativa '/' expresion_cast
+                            | expresion_multiplicativa '%' expresion_cast
+                            ;
 
 
-expresión-cast:
-expresión-unaria
-(   nombre-de-tipo   )   expresión-cast
+expresion_cast: expresion_unaria
+                | '(' nombre_de_tipo ')' expresion_cast
+                ;
  
 
-expresión-unaria:
-expresión-posfija
-++   expresión-unaria
---    expresión-unaria
-operador-unario   expresión-cast
-sizeof    expresión-unaria
-sizeof    (    nombre-de-tipo   )
+expresion_unaria:   expresion_posfija
+                | '++'   expresion_unaria
+                | '--'    expresion_unaria
+                | operador_unario   expresion_cast
+                | 'sizeof'    expresion_unaria
+                | 'sizeof'    '('    nombre_de_tipo   ')'
+                ;
 
 
-operador-unario: uno de    &    *   +   -   ~   !
+operador-unario: '&' | '*' | '+' | '-' | '~' | '!' ;
 
 
-expresión-posfija:
-expresión-primaria
-expresión-posfija   [   expresión   ]
-expresión-posfija   (   lista-de-expresiones-argumentoopt   )
-expresión-posfija    .    identificador
-expresión-posfija    ->   identificador
-expresión-posfija   ++
-expresión-posfija  --
-
- 
-expresión-primaria:
-identificador
-constante
-cadena
-( expresión )
-
-
-lista-expresiones-argumento:
-expresión-de-asignación
-lista-expresiones-argumento   ,   expresión-de-asignación
+expresion_posfija:  expresion_primaria
+                    | expresion_posfija   '['   expresion   ']'
+                    | expresion_posfija   '('   lista_de_expresiones_argumento/*opt*/   ')'
+                    | expresion_posfija    '.'    IDENTIFICADOR
+                    | expresion_posfija    '->'   IDENTIFICADOR
+                    | expresion_posfija   '++'
+                    | expresion_posfija  '--'
+                    ;
 
  
-constante:
-constante-octal
-constante-hexadecimal
-constante-decimal
-constante-de-carácter
-constante-flotante
-constante-enumeración
+expresion_primaria: IDENTIFICADOR
+                    | constante
+                    | cadena
+                    | '(' expresion ')'
+                    ;
+
+
+lista_expresiones_argumento:    expresion_de_asignacion
+                                | lista_expresiones_argumento   ','   expresion_de_asignacion
+
+ 
+constante:  constante_octal
+            | CONST_HEXADECIMAL
+            | CONST_DECIMAL
+            | CONST_CARACTER
+            | CONST_PTOFLOTANTE
+            | constante_enumeracion //TODO: puede ser que no la tengamos?
 
 
 
