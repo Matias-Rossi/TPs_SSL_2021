@@ -81,14 +81,15 @@ declaracion_externa:      definicion_de_funcion
                         ;
 
 
-definicion_de_funcion:    especificadores_de_declaracion /*opt*/
-                        | declarador
-                        | lista_de_declaracion /*opt*/ , sentencia_compuesta
+definicion_de_funcion:    especificadores_de_declaracion /*opt*/ declarador lista_de_declaracion /*opt*/ ',' sentencia_compuesta
+                        | declarador ',' sentencia_compuesta
+                        | especificadores_de_declaracion /*opt*/ declarador ',' sentencia_compuesta
+                        | declarador lista_de_declaracion /*opt*/ ',' sentencia_compuesta
                         ;
 
 
-declaracion:              especificadores_de_declaracion 
-                        | lista_declaradores_ini ; /*opt */ //>:( //ojo: doble punto y coma?
+declaracion:              especificadores_de_declaracion lista_declaradores_ini ';'
+                        | especificadores_de_declaracion ';'
                         ;
 
 
@@ -98,8 +99,11 @@ lista_de_declaracion:     declaracion
 
 
 especificadores_de_declaracion:   especificador_categoria_almacenamiento especificadores_de_declaracion /*opt*/
+                                | especificador_categoria_almacenamiento 
                                 | especificador_de_tipo especificadores_de_declaracion /*opt*/
+                                | especificador_de_tipo
                                 | calificador_de_tipo especificadores_de_declaracion /*opt*/
+                                | calificador_de_tipo
                                 ;
 
 
@@ -132,8 +136,10 @@ calificador_de_tipo:   'const'
                      ;
 
 
-especificador_estructura_o_union:     estructura_o_union IDENTIFICADOR /*opt*/  { lista_declaraciones_struct }
+especificador_estructura_o_union:     estructura_o_union IDENTIFICADOR /*opt*/  '{' lista_declaraciones_struct '}'
                                     | estructura_o_union IDENTIFICADOR
+                                    | '{' lista_declaraciones_struct '}'
+                                    ;
 
 
 estructura_o_union:   'struct'
@@ -147,12 +153,12 @@ lista_declaraciones_struct:   declaracion_struct
 
 
 lista_declaradores_init:    declarador_init
-                            | lista_declaradores_init , declarador_init
+                            | lista_declaradores_init ',' declarador_init
                             ;
 
 
 declarador_init:      declarador
-                    | declarador = inicializador
+                    | declarador '=' inicializador
                     ;
 
 
@@ -162,48 +168,58 @@ declaracion_struct:   lista_calificador_especificador
 
 
 lista_calificador_especificador:    especificador_de_tipo lista_calificador_especificador /*opt*/
+                                  | especificador_de_tipo
                                   | calificador_de_tipo lista_calificador_especificador /*opt*/
+                                  | calificador_de_tipo
                                   ;
 
 
 lista_declaradores_struct:    declarador_struct
-                            | lista_declaradores_struct  ,  declarador_struct
+                            | lista_declaradores_struct  ','  declarador_struct
                             ;
 
 
 declarador_struct:    declarador
-                    | declarador /*opt*/ : expresion_constante
+                    | declarador /*opt*/ ':' expresion_constante
+                    | ':' expresion_constante
                     ;
 
 
 especificador_enum:       'enum' IDENTIFICADOR /*opt*/   '{' lista_de_enumerador '}'
+                        | '{' lista_de_enumerador '}'
                         | 'enum' IDENTIFICADOR
                         ;
 
 
 lista_de_enumerador:      enumerador
-                        | lista_de_enumerador , enumerador
+                        | lista_de_enumerador ',' enumerador
                         ;
 
 
 enumerador:    IDENTIFICADOR
-             | IDENTIFICADOR = expresion_constante
+             | IDENTIFICADOR '=' expresion_constante
              ;
 
 
-declarador:    apuntador /*opt*/ declarador_directo;
+declarador:   apuntador /*opt*/ declarador_directo
+            | declarador_directo
+;
 
 
 declarador_directo:       IDENTIFICADOR
                         | '(' declarador ')'
-                        | declarador_directo  '[' expresión_constante /*opt*/ ']'
+                        | declarador_directo  '[' expresion_constante /*opt*/ ']'
+                        | declarador_directo  '[' ']'
                         | declarador_directo  '(' lista_tipos_de_parametro ')'
                         | declarador_directo  '(' lista_de_identificadores /*opt*/ ')'
+                        | declarador_directo  '(' ')'
                         ;
 
 
 apuntador:  '*' lista_calificadores_de_tipo /*opt*/
+            |'*' 
             |'*' lista_calificadores_de_tipo /*opt*/ apuntador
+            |'*' apuntador
 
 
 lista_calificadores_de_tipo:    calificador_de_tipo
@@ -217,17 +233,18 @@ lista_tipos_de_parametro:      lista_de_parametros
 
 
 lista_de_parametros:      declaracion_parametro
-                        | lista_de_parametros , declaracion_parametro
+                        | lista_de_parametros ',' declaracion_parametro
                         ;
 
 
 declaracion_parametro:     especificadores_de_declaracion declarador
                          | especificadores_de_declaracion declarador_abstracto /*opt*/
+                         | especificadores_de_declaracion 
                          ;
 
 
 lista_de_identificadores:     IDENTIFICADOR
-                            | lista_de_identificadores , IDENTIFICADOR
+                            | lista_de_identificadores ',' IDENTIFICADOR
                             ;
 
 
@@ -243,16 +260,27 @@ lista_de_inicializadores:   inicializador
  
 
 nombre_de_tipo:     lista_calificador_especificador declarador_abstracto/*opt*/
+                    | lista_calificador_especificador 
 ;
 
 
 declarador_abstracto:   apuntador
                         | apuntador/*opt*/ declarador_abstracto_directo
+                        |  declarador_abstracto_directo
+                        ;
  
 
+//Acá hay combinación de opcionales, primero está el que tiene los 2, después ninguno, después solo primero, después solo segundo (twice).
 declarador_abstracto_directo:   '(' declarador_abstracto ')'
                                 | declarador_abstracto_directo/*opt*/ '[' expresion_constante/*opt*/ ']'
+                                |  '[' ']'
+                                | declarador_abstracto_directo/*opt*/ '['  ']'
+                                |  '[' expresion_constante/*opt*/ ']'
+
                                 | declarador_abstracto_directo/*opt*/  '(' lista_tipos_de_parametro/*opt*/ ')'
+                                |  '('  ')'
+                                | declarador_abstracto_directo/*opt*/  '('  ')'
+                                | '(' lista_tipos_de_parametro/*opt*/ ')'
                                 ;
 
 nombre_typedef: IDENTIFICADOR
@@ -274,11 +302,15 @@ sentencia_etiquetada:   IDENTIFICADOR ':' sentencia
                         ;
 
  
-sentencia_expresion: expresion/*opt*/  ';'
+sentencia_expresion:    expresion/*opt*/  ';'
+                        |  ';'
 ;
  
 
 sentencia-compuesta: '{' lista_declaracion/*opt*/    lista_de_sentencias/*opt*/ '}'
+                      | '{''}'
+                      | '{' lista_declaracion/*opt*/   '}'
+                      | '{' lista_de_sentencias/*opt*/ '}'
 ;
 
 lista_de_sentencias:    sentencia
@@ -293,15 +325,17 @@ sentencia_de_seleccion: 'if' '(' expresion ')' sentencia
 
 sentencia_de_iteración: 'while' '(' expresion ')' sentencia
                         | 'do' sentencia 'while' '(' expresion ')' ';'
-                        | '(' expresion/*opt*/ ';' expresion/*opt*/ ';' expresion/*opt*/ ')' sentencia /* //todo: falta el for?*/
+                        | '(' expresion_opt ';' expresion_opt ';' expresion_opt ')' sentencia /* //todo: falta el for? */
                         ;
 
 sentencia_de_salto: 'goto' IDENTIFICADOR ';'
                     | 'continue'   ';'
                     | 'break' ';'
-                    | 'return' expresion/*opt*/   ';'
+                    | 'return' expresion_opt   ';'
                     ;
 
+//No está en la gramática, la agergo para evitar copiar 2000 veces las mismas líneas omitiendo opcionales
+expresion_opt: expresion | /* empty */;
 
 expresion:  expresion_de_asignacion
             | expresion , expresion_de_asignacion
@@ -397,6 +431,7 @@ operador-unario: '&' | '*' | '+' | '-' | '~' | '!' ;
 expresion_posfija:  expresion_primaria
                     | expresion_posfija   '['   expresion   ']'
                     | expresion_posfija   '('   lista_de_expresiones_argumento/*opt*/   ')'
+                    | expresion_posfija   '(' ')'
                     | expresion_posfija    '.'    IDENTIFICADOR
                     | expresion_posfija    '->'   IDENTIFICADOR
                     | expresion_posfija   '++'
