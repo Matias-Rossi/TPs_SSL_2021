@@ -16,19 +16,21 @@ extern FILE* yyin;
 extern int yylineno;
 int analisisCorrecto = 1;
 
-}%
+%}
 //DEFINICIONES DE BISON
 
 %union{
-    char* idval;
-    int val;
+    struct yylval_struct
+    {
+        int tipo;
+        char* val;
+    } mystruct;
 }
 
 %type <val> unidad_de_traduccion
 %type <val> declaracion_externa
 %type <val> definicion_de_funcion
-%type <val> declaracion 
-%type <val> declaracion_externa
+%type <val> declaracion
 %type <val> declarador
 %type <val> especificadores_de_declaracion 
 %type <val> lista_de_declaracion
@@ -52,7 +54,6 @@ int analisisCorrecto = 1;
 
 
 
-
 %token <val> DIRECTIVAS_PREPROCESAMIENTO
 %token <val> LITERAL_CADENA
 %token <val> PALABRAS_RESERVADAS_TIPOS_DE_DATOS
@@ -67,6 +68,7 @@ int analisisCorrecto = 1;
 %token <val> CONST_CARACTER
 %token <val> COMENTARIOS_LINEAL
 %token <val> COMENTARIOS_MULTILINEAL
+
 
 %%
 //REGLAS (PRODUCCIONES GIC - CÓDIGO C) -> Conocido como PATRÓN/ACCIÓN
@@ -107,12 +109,8 @@ especificadores_de_declaracion:   especificador_categoria_almacenamiento especif
                                 ;
 
 
-especificador_categoría_almacenamiento:   'auto'
-                                        | 'register'
-                                        | 'static'
-                                        | 'extern'
-                                        | 'typedef'
-                                        ;
+especificador_categoria_almacenamiento:   PALABRAS_RESERVADAS_OTHERS 
+                                       ;
 
 
 
@@ -307,7 +305,7 @@ sentencia_expresion:    expresion/*opt*/  ';'
 ;
  
 
-sentencia-compuesta: '{' lista_declaracion/*opt*/    lista_de_sentencias/*opt*/ '}'
+sentencia_compuesta: '{' lista_declaracion/*opt*/    lista_de_sentencias/*opt*/ '}'
                       | '{''}'
                       | '{' lista_declaracion/*opt*/   '}'
                       | '{' lista_de_sentencias/*opt*/ '}'
@@ -323,7 +321,7 @@ sentencia_de_seleccion: 'if' '(' expresion ')' sentencia
                         | 'switch' '(' expresion ')' sentencia
                         ;
 
-sentencia_de_iteración: 'while' '(' expresion ')' sentencia
+sentencia_de_iteracion: 'while' '(' expresion ')' sentencia
                         | 'do' sentencia 'while' '(' expresion ')' ';'
                         | '(' expresion_opt ';' expresion_opt ';' expresion_opt ')' sentencia /* //todo: falta el for? */
                         ;
@@ -338,7 +336,7 @@ sentencia_de_salto: 'goto' IDENTIFICADOR ';'
 expresion_opt: expresion | /* empty */;
 
 expresion:  expresion_de_asignacion
-            | expresion , expresion_de_asignacion
+            | expresion ',' expresion_de_asignacion
             ;
 
 
@@ -425,7 +423,7 @@ expresion_unaria:   expresion_posfija
                 ;
 
 
-operador-unario: '&' | '*' | '+' | '-' | '~' | '!' ;
+operador_unario: '&' | '*' | '+' | '-' | '~' | '!' ;
 
 
 expresion_posfija:  expresion_primaria
@@ -459,12 +457,16 @@ constante:  constante_octal
 
 
 
+%%
+
 // DECLARACIONES
 
-
-
-%%
 //CÓDIGO C DE USUARIO -> Código C que ejecuta el analizado     léxico
+int yyerror(const char* msg){
+    printf("Fallo del analisis en la linea %d %s", yylineno, msg);
+    analisisCorrecto = 0;
+    return 0;
+}
 
 int main (int argc, char **argv)
 {
@@ -476,11 +478,5 @@ int main (int argc, char **argv)
         printf("Analisis finalizado correctamente");
     }
 
-    return 0;
-}
-
-int yyerror(const char* msg){
-    printf("Fallo del analisis en la linea %d %s", yylineno, msg);
-    analisisCorrecto = 0;
     return 0;
 }
