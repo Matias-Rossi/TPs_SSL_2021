@@ -7,20 +7,20 @@
 
 
 %}
+
 /* DEFINICIONES */
-/******* DIRECTIVAS PREPROCESAMIENTO *******/
-DIRECTIVAS_PREPROCESAMIENTO {INCLUDE}|{DEFINE}
-INCLUDE "#include"{ESPACIO}({LITERAL_CADENA}|{LIBRERIA})
-DEFINE "#define"({ESPACIO}({CARACTERES_SINGULARES}+){ESPACIO}{CONSTANTE})
-LIBRERIA <((.)+)>
-/**************** PALABRAS RESERVADAS ****************/
-PALABRAS_RESERVADAS_TIPOS_DE_DATOS char|double|float|int|short|long|signed|unsigned|void
-PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL if|else|switch|for|do|break|continue|while|return|goto
-PALABRAS_RESERVADAS_OTHERS auto|case|const|default|enum|extern|register|sizeof|static|struct|typedef|union|volatile
-/******* OPERADORES Y CARACTERES DE PUNTUACION *******/
-OP_CARACT_DE_PUNTUACION ";"|"["|"]"|"("|")"|"{"|"}"|"."|"->"|"++"|"--"|"&"|"*"|"+"|"-"|"~"|"!"|"/"|"%"|"<<"|">>"|"<"|">"|"<="|">="|"=="|"!="|"^"|"|"|"&&"|"||"|"="|"*="|"/="|"%="|"+="|"-="|"<<="|">>="|"&="|"^="|"|="|"?"|":"|"..."|","|"#"|"##"
-/**************** CONSTANTES ENTERAS *****************/
-CONSTANTE {CONST_ENTERA}|{CONST_PTOFLOTANTE}|{CONST_CARACTER}|{LITERAL_CADENA}
+OPER_ASIGNACIONES "=" | "+="
+OPER_IGUALDADES "==" | "!="
+OPER_COMPARATIVAS "<" | ">" | "<=" | ">="
+OPER_BASICAS "+" | "-"
+OPER_MULTIPLICATIVAS "*" | "/" | "%"
+OPER_INCREMENTALES "++" | "--"
+OPER_UNARIO "&" | "*" | "-" | "!"
+NOMBRE_TIPO "int" | "float" | "double" | "char" | "bool" | "void"
+
+/**    CONSTANTES   **/
+CONSTANTE_NUMERO {CONST_ENTERA} | {CONST_PTOFLOTANTE}
+CONSTANTE_STRING {CONST_CARACTER}|{LITERAL_CADENA}
 /******* Constantes Enteras Decimales *******/
 CONST_ENTERA      {CONST_DECIMAL}{SUFIJO_ENTERO}?|{CONST_OCTAL}{SUFIJO_ENTERO}?|{CONST_HEXADECIMAL}{SUFIJO_ENTERO}?
 CONST_HEXADECIMAL ((0x)|(0X)){DIGITO_HEXADECIMAL}+
@@ -67,23 +67,17 @@ ESPACIO [ \n\t\r]+
 ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
 SALTO_DE_LINEA (\n)+
-%%
-{DIRECTIVAS_PREPROCESAMIENTO}                     {return DIRECTIVAS_PREPROCESAMIENTO; strcpy(yylval.idval, yytext);}
-{LITERAL_CADENA}                                  {return LITERAL_CADENA;}
-{PALABRAS_RESERVADAS_TIPOS_DE_DATOS}              {return PALABRAS_RESERVADAS_TIPOS_DE_DATOS;}
-{PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL}       {return PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL;}
-{PALABRAS_RESERVADAS_OTHERS}                      {return PALABRAS_RESERVADAS_OTHERS;}
-{IDENTIFICADOR}                                   {return IDENTIFICADOR;}
-{OP_CARACT_DE_PUNTUACION}                         {return OP_CARACT_DE_PUNTUACION;}
-{CONST_OCTAL}                                     {return CONST_OCTAL;}
-{CONST_HEXADECIMAL}                               {return CONST_HEXADECIMAL;}
-{CONST_DECIMAL}                                   {return CONST_DECIMAL;}
-{CONST_PTOFLOTANTE}                               {return CONST_PTOFLOTANTE;}
-{CONST_CARACTER}                                  {return CONST_CARACTER;}
-{COMENTARIOS_LINEAL}                              {return COMENTARIOS_LINEAL;}
-{COMENTARIOS_MULTILINEAL}                         {return COMENTARIOS_MULTILINEAL;}
-{ESPACIO_EN_BLANCO}|{TABULACION}|{SALTO_DE_LINEA} {/*return  ¿? ;*/}
-.                                                 {/* todo: tokens no reconocidos */ }
+
 %%
 
-
+{OPER_ASIGNACIONES}           {return OPER_ASIGNACION;}
+{OPER_IGUALDADES}             {return OPER_IGUALDADES;}
+{OPER_BASICAS}                {return OPER_BASICA;}
+{OPER_COMPARATIVAS}           {return OPER_COMPARATIVAS;}
+{OPER_MULTIPLICATIVAS}        {return OPER_MULTIPLICATIVAS;}
+{OPER_INCREMENTALES}          {return OPER_INCREMENTALES;}
+{OPER_UNARIO}                 {return OPER_UNARIO;}
+{IDENTIFICADOR}               {return IDENTIFICADOR;}
+{CONSTANTE_NUMERO}            {return CONSTANTE_NUMERO;}
+{CONSTANTE_STRING}            {return CONSTANTE_STRING;}
+{NOMBRE_TIPO}                 {return NOMBRE_TIPO;}    

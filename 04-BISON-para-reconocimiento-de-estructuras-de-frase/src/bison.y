@@ -1,3 +1,4 @@
+
 %{
 //DEFINICIONES Y DECLARACIONES DE C
 
@@ -27,53 +28,56 @@ int analisisCorrecto = 1;
     } mystruct;
 }
 
-%type <val> unidad_de_traduccion
-%type <val> declaracion_externa
-%type <val> definicion_de_funcion
-%type <val> declaracion
-%type <val> declarador
-%type <val> especificadores_de_declaracion 
-%type <val> lista_de_declaracion
-%type <val> especificador_categoria_almacenamiento
-%type <val> especificador_de_tipo
-%type <val> calificador_de_tipo
-%type <val> lista_declaradores_ini
-%type <val> especificador_tipo
-%type <val> especificador_estructura_union
-%type <val> especificador_enum
-%type <val> lista_de_enumerador
-%type <val> enumerador
-%type <val> declarador_directo
-%type <val> lista_tipos_de_parametro
-%type <val> lista_de_identificadores
-%type <val> apuntador
-%type <val> lista_calificadores_de_tipo
-%type <val> lista_de_parametros
-%type <val> declaracion_parametro
-%type <val> declarador_abstracto
+%type <mystruct> unidad_de_traduccion
+%type <mystruct> declaracion_externa
+%type <mystruct> definicion_de_funcion
+%type <mystruct> declaracion
+%type <mystruct> declarador
+%type <mystruct> especificadores_de_declaracion 
+%type <mystruct> lista_de_declaracion
+%type <mystruct> especificador_categoria_almacenamiento
+%type <mystruct> especificador_de_tipo
+%type <mystruct> calificador_de_tipo
+%type <mystruct> lista_declaradores_init
+%type <mystruct> especificador_tipo
+%type <mystruct> especificador_estructura_union
+%type <mystruct> especificador_enum
+%type <mystruct> lista_de_enumerador
+%type <mystruct> enumerador
+%type <mystruct> declarador_directo
+%type <mystruct> lista_tipos_de_parametro
+%type <mystruct> lista_de_identificadores
+%type <mystruct> apuntador
+%type <mystruct> lista_calificadores_de_tipo
+%type <mystruct> lista_de_parametros
+%type <mystruct> declaracion_parametro
+%type <mystruct> declarador_abstracto
+%type <mystruct> lista_declaracion
+%type <mystruct> expresion_aditiva
+%type <mystruct> lista_de_expresiones_argumento
 
+%token <mystruct> DIRECTIVAS_PREPROCESAMIENTO
+%token <mystruct> LITERAL_CADENA
+%token <mystruct> PALABRAS_RESERVADAS_TIPOS_DE_DATOS
+%token <mystruct> PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL
+%token <mystruct> PALABRAS_RESERVADAS_OTHERS
+%token <mystruct> IDENTIFICADOR
+%token <mystruct> OP_CARACT_DE_PUNTUACION
+%token <mystruct> CONST_OCTAL
+%token <mystruct> CONST_HEXADECIMAL
+%token <mystruct> CONST_DECIMAL
+%token <mystruct> CONST_PTOFLOTANTE
+%token <mystruct> CONST_CARACTER
+%token <mystruct> COMENTARIOS_LINEAL
+%token <mystruct> COMENTARIOS_MULTILINEAL
+%token <mystruct> CONST_ENUMERACION
 
-
-%token <val> DIRECTIVAS_PREPROCESAMIENTO
-%token <val> LITERAL_CADENA
-%token <val> PALABRAS_RESERVADAS_TIPOS_DE_DATOS
-%token <val> PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL
-%token <val> PALABRAS_RESERVADAS_OTHERS
-%token <val> IDENTIFICADOR
-%token <val> OP_CARACT_DE_PUNTUACION
-%token <val> CONST_OCTAL
-%token <val> CONST_HEXADECIMAL
-%token <val> CONST_DECIMAL
-%token <val> CONST_PTOFLOTANTE
-%token <val> CONST_CARACTER
-%token <val> COMENTARIOS_LINEAL
-%token <val> COMENTARIOS_MULTILINEAL
-
+%start unidad_de_traduccion
 
 %%
 //REGLAS (PRODUCCIONES GIC - CÓDIGO C) -> Conocido como PATRÓN/ACCIÓN
 
-unidad_de_traduccion:     declaracion_externa
+unidad_de_traduccion:     declaracion_externa 
                         | unidad_de_traduccion declaracion_externa
                         ;
 
@@ -83,14 +87,14 @@ declaracion_externa:      definicion_de_funcion
                         ;
 
 
-definicion_de_funcion:    especificadores_de_declaracion /*opt*/ declarador lista_de_declaracion /*opt*/ ',' sentencia_compuesta
+definicion_de_funcion:    especificadores_de_declaracion  declarador lista_de_declaracion ',' sentencia_compuesta
                         | declarador ',' sentencia_compuesta
-                        | especificadores_de_declaracion /*opt*/ declarador ',' sentencia_compuesta
-                        | declarador lista_de_declaracion /*opt*/ ',' sentencia_compuesta
+                        | especificadores_de_declaracion  declarador ',' sentencia_compuesta
+                        | declarador lista_de_declaracion ',' sentencia_compuesta
                         ;
 
 
-declaracion:              especificadores_de_declaracion lista_declaradores_ini ';'
+declaracion:              especificadores_de_declaracion lista_declaradores_init ';'
                         | especificadores_de_declaracion ';'
                         ;
 
@@ -100,11 +104,11 @@ lista_de_declaracion:     declaracion
                         ;
 
 
-especificadores_de_declaracion:   especificador_categoria_almacenamiento especificadores_de_declaracion /*opt*/
+especificadores_de_declaracion:   especificador_categoria_almacenamiento especificadores_de_declaracion 
                                 | especificador_categoria_almacenamiento 
-                                | especificador_de_tipo especificadores_de_declaracion /*opt*/
+                                | especificador_de_tipo especificadores_de_declaracion 
                                 | especificador_de_tipo
-                                | calificador_de_tipo especificadores_de_declaracion /*opt*/
+                                | calificador_de_tipo especificadores_de_declaracion 
                                 | calificador_de_tipo
                                 ;
 
@@ -134,7 +138,7 @@ calificador_de_tipo:   'const'
                      ;
 
 
-especificador_estructura_o_union:     estructura_o_union IDENTIFICADOR /*opt*/  '{' lista_declaraciones_struct '}'
+especificador_estructura_o_union:     estructura_o_union IDENTIFICADOR  '{' lista_declaraciones_struct '}'
                                     | estructura_o_union IDENTIFICADOR
                                     | '{' lista_declaraciones_struct '}'
                                     ;
@@ -165,9 +169,9 @@ declaracion_struct:   lista_calificador_especificador
                     ;
 
 
-lista_calificador_especificador:    especificador_de_tipo lista_calificador_especificador /*opt*/
+lista_calificador_especificador:    especificador_de_tipo lista_calificador_especificador 
                                   | especificador_de_tipo
-                                  | calificador_de_tipo lista_calificador_especificador /*opt*/
+                                  | calificador_de_tipo lista_calificador_especificador 
                                   | calificador_de_tipo
                                   ;
 
@@ -178,12 +182,12 @@ lista_declaradores_struct:    declarador_struct
 
 
 declarador_struct:    declarador
-                    | declarador /*opt*/ ':' expresion_constante
+                    | declarador  ':' expresion_constante
                     | ':' expresion_constante
                     ;
 
 
-especificador_enum:       'enum' IDENTIFICADOR /*opt*/   '{' lista_de_enumerador '}'
+especificador_enum:       'enum' IDENTIFICADOR  '{' lista_de_enumerador '}'
                         | '{' lista_de_enumerador '}'
                         | 'enum' IDENTIFICADOR
                         ;
@@ -199,25 +203,26 @@ enumerador:    IDENTIFICADOR
              ;
 
 
-declarador:   apuntador /*opt*/ declarador_directo
+declarador:   apuntador declarador_directo
             | declarador_directo
 ;
 
 
 declarador_directo:       IDENTIFICADOR
                         | '(' declarador ')'
-                        | declarador_directo  '[' expresion_constante /*opt*/ ']'
+                        | declarador_directo  '[' expresion_constante ']'
                         | declarador_directo  '[' ']'
                         | declarador_directo  '(' lista_tipos_de_parametro ')'
-                        | declarador_directo  '(' lista_de_identificadores /*opt*/ ')'
+                        | declarador_directo  '(' lista_de_identificadores ')'
                         | declarador_directo  '(' ')'
                         ;
 
 
-apuntador:  '*' lista_calificadores_de_tipo /*opt*/
+apuntador:  '*' lista_calificadores_de_tipo 
             |'*' 
-            |'*' lista_calificadores_de_tipo /*opt*/ apuntador
+            |'*' lista_calificadores_de_tipo  apuntador
             |'*' apuntador
+            ;
 
 
 lista_calificadores_de_tipo:    calificador_de_tipo
@@ -236,7 +241,7 @@ lista_de_parametros:      declaracion_parametro
 
 
 declaracion_parametro:     especificadores_de_declaracion declarador
-                         | especificadores_de_declaracion declarador_abstracto /*opt*/
+                         | especificadores_de_declaracion declarador_abstracto 
                          | especificadores_de_declaracion 
                          ;
 
@@ -257,28 +262,26 @@ lista_de_inicializadores:   inicializador
                             ;
  
 
-nombre_de_tipo:     lista_calificador_especificador declarador_abstracto/*opt*/
+nombre_de_tipo:     lista_calificador_especificador declarador_abstracto
                     | lista_calificador_especificador 
 ;
 
 
 declarador_abstracto:   apuntador
-                        | apuntador/*opt*/ declarador_abstracto_directo
+                        | apuntador declarador_abstracto_directo
                         |  declarador_abstracto_directo
                         ;
  
-
-//Acá hay combinación de opcionales, primero está el que tiene los 2, después ninguno, después solo primero, después solo segundo (twice).
 declarador_abstracto_directo:   '(' declarador_abstracto ')'
-                                | declarador_abstracto_directo/*opt*/ '[' expresion_constante/*opt*/ ']'
+                                | declarador_abstracto_directo '[' expresion_constante ']'
                                 |  '[' ']'
-                                | declarador_abstracto_directo/*opt*/ '['  ']'
-                                |  '[' expresion_constante/*opt*/ ']'
+                                | declarador_abstracto_directo '['  ']'
+                                |  '[' expresion_constante ']'
 
-                                | declarador_abstracto_directo/*opt*/  '(' lista_tipos_de_parametro/*opt*/ ')'
+                                | declarador_abstracto_directo '(' lista_tipos_de_parametro ')'
                                 |  '('  ')'
-                                | declarador_abstracto_directo/*opt*/  '('  ')'
-                                | '(' lista_tipos_de_parametro/*opt*/ ')'
+                                | declarador_abstracto_directo  '('  ')'
+                                | '(' lista_tipos_de_parametro ')'
                                 ;
 
 nombre_typedef: IDENTIFICADOR
@@ -300,15 +303,15 @@ sentencia_etiquetada:   IDENTIFICADOR ':' sentencia
                         ;
 
  
-sentencia_expresion:    expresion/*opt*/  ';'
+sentencia_expresion:    expresion ';'
                         |  ';'
 ;
  
 
-sentencia_compuesta: '{' lista_declaracion/*opt*/    lista_de_sentencias/*opt*/ '}'
+sentencia_compuesta: '{' lista_declaracion  lista_de_sentencias '}'
                       | '{''}'
-                      | '{' lista_declaracion/*opt*/   '}'
-                      | '{' lista_de_sentencias/*opt*/ '}'
+                      | '{' lista_declaracion  '}'
+                      | '{' lista_de_sentencias '}'
 ;
 
 lista_de_sentencias:    sentencia
@@ -323,7 +326,7 @@ sentencia_de_seleccion: 'if' '(' expresion ')' sentencia
 
 sentencia_de_iteracion: 'while' '(' expresion ')' sentencia
                         | 'do' sentencia 'while' '(' expresion ')' ';'
-                        | '(' expresion_opt ';' expresion_opt ';' expresion_opt ')' sentencia /* //todo: falta el for? */
+                        | '(' expresion_opt ';' expresion_opt ';' expresion_opt ')' sentencia 
                         ;
 
 sentencia_de_salto: 'goto' IDENTIFICADOR ';'
@@ -333,7 +336,7 @@ sentencia_de_salto: 'goto' IDENTIFICADOR ';'
                     ;
 
 //No está en la gramática, la agergo para evitar copiar 2000 veces las mismas líneas omitiendo opcionales
-expresion_opt: expresion | /* empty */;
+expresion_opt: expresion | '\n';
 
 expresion:  expresion_de_asignacion
             | expresion ',' expresion_de_asignacion
@@ -394,6 +397,7 @@ expresion_relacional:   expresion_de_corrimiento
 expresion_de_corrimiento:   expresion_aditiva
                             |expresion_de_corrimiento   '<<'   expresion_aditiva
                             |expresion_de_corrimiento   '>>'  expresion_aditiva
+                            ;
 
 
 expresion_aditiva:  expresion_multiplicativa
@@ -428,7 +432,7 @@ operador_unario: '&' | '*' | '+' | '-' | '~' | '!' ;
 
 expresion_posfija:  expresion_primaria
                     | expresion_posfija   '['   expresion   ']'
-                    | expresion_posfija   '('   lista_de_expresiones_argumento/*opt*/   ')'
+                    | expresion_posfija   '('   lista_de_expresiones_argumento   ')'
                     | expresion_posfija   '(' ')'
                     | expresion_posfija    '.'    IDENTIFICADOR
                     | expresion_posfija    '->'   IDENTIFICADOR
@@ -446,16 +450,20 @@ expresion_primaria: IDENTIFICADOR
 
 lista_expresiones_argumento:    expresion_de_asignacion
                                 | lista_expresiones_argumento   ','   expresion_de_asignacion
+                                ;
+
+cadena:  IDENTIFICADOR
+         | IDENTIFICADOR ' ' cadena
+         ; 
 
  
-constante:  constante_octal
+constante:  CONST_OCTAL
             | CONST_HEXADECIMAL
             | CONST_DECIMAL
             | CONST_CARACTER
             | CONST_PTOFLOTANTE
-            | constante_enumeracion //TODO: puede ser que no la tengamos?
-
-
+            | CONST_ENUMERACION
+            ;
 
 %%
 
