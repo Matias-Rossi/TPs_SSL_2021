@@ -10,7 +10,7 @@ int yylex(void);
 int yywrap(){
     return(1);
 }
-int yyerror (const char* s) {
+int yyerror(const char* s){
     fprintf (stderr, "%s\n", s);
 }
 extern FILE* yyin;
@@ -22,38 +22,10 @@ int analisisCorrecto = 1;
 
 %union{
    int ival;
-    double dval;
-    char* cval;
-    
+   double dval;
+   char* cval;
 }
 
-%type <cval> unidad_de_traduccion
-%type <cval> declaracion_externa
-%type <cval> definicion_de_funcion
-%type <cval> declaracion
-%type <cval> declarador
-%type <cval> especificadores_de_declaracion 
-%type <cval> lista_de_declaracion
-%type <cval> especificador_categoria_almacenamiento
-%type <cval> especificador_de_tipo
-%type <cval> calificador_de_tipo
-%type <cval> lista_declaradores_init
-%type <cval> especificador_tipo
-%type <cval> especificador_estructura_union
-%type <cval> especificador_enum
-%type <cval> lista_de_enumerador
-%type <cval> enumerador
-%type <cval> declarador_directo
-%type <cval> lista_tipos_de_parametro
-%type <cval> lista_de_identificadores
-%type <cval> apuntador
-%type <cval> lista_calificadores_de_tipo
-%type <cval> lista_de_parametros
-%type <cval> declaracion_parametro
-%type <cval> declarador_abstracto
-%type <cval> lista_declaracion
-%type <cval> expresion_aditiva
-%type <cval> lista_de_expresiones_argumento
 
 %token <cval> DIRECTIVAS_PREPROCESAMIENTO //Ver
 %token <cval> PALABRAS_RESERVADAS_TIPOS_DE_DATOS
@@ -62,18 +34,18 @@ int analisisCorrecto = 1;
 %token <cval> PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL //Ver
 %token <cval> PALABRAS_RESERVADAS_OTHERS
 %token <cval> TIPO_STRUCT
-%token <cval> enum
-%token <cval> case
-%token <cval> default
-%token <cval> switch
-%token <cval> if
-%token <cval> else
-%token <cval> do
-%token <cval> while
-%token <cval> goto
+%token <cval> ENUM
+%token <cval> CASE
+%token <cval> DEFAULT
+%token <cval> SWITCH
+%token <cval> IF
+%token <cval> ELSE
+%token <cval> DO
+%token <cval> WHILE
+%token <cval> GOTO
 %token <cval> retornar
-%token <cval> continue
-%token <cval> break
+%token <cval> CONTINUE
+%token <cval> BREAK
 %token <cval> IDENTIFICADOR
 %token <cval> OP_CARACT_DE_PUNTUACION //Ver
 %token <cval> OP_ASIGNACION 
@@ -83,11 +55,12 @@ int analisisCorrecto = 1;
 %token <cval> OP_BASICA
 %token <cval> EXPR_MULTIPLICATIVA 
 %token <cval> OP_INCREMENTO
-%token <cval> sizeof
+%token <cval> SIZEOF
 %token <cval> FLECHA
 %token <cval> OP_UNARIO
 
-
+%token <cval> COMENTARIOS_LINEAL
+%token <cval> COMENTARIOS_MULTILINEAL
 %token <ival> CONST_OCTAL
 %token <ival> CONST_HEXADECIMAL
 %token <ival> CONST_DECIMAL
@@ -142,7 +115,7 @@ especificador_categoria_almacenamiento:   PALABRAS_RESERVADAS_OTHERS
 
 
 especificador_de_tipo:    PALABRAS_RESERVADAS_TIPOS_DE_DATOS  
-                        | especificador_estructura_union
+                        | especificador_estructura_o_union
                         | especificador_enum
                         | nombre_typedef
                         ;
@@ -190,9 +163,9 @@ declarador_struct:    declarador
                     ;
 
 
-especificador_enum:       enum IDENTIFICADOR  '{' lista_de_enumerador '}'
+especificador_enum:       ENUM IDENTIFICADOR  '{' lista_de_enumerador '}'
                         | '{' lista_de_enumerador '}'
-                        | enum IDENTIFICADOR
+                        | ENUM IDENTIFICADOR
                         ;
 
 
@@ -228,8 +201,8 @@ apuntador:  '*' lista_calificadores_de_tipo //Ver
             ;
 
 
-lista_calificadores_de_tipo:    calificador_de_tipo
-                                | lista_calificadores_de_tipo calificador_de_tipo //Recursividad a Izquierda - lista_calificadores_de_tipo
+lista_calificadores_de_tipo:    CALIFICADOR_TIPO
+                                | lista_calificadores_de_tipo CALIFICADOR_TIPO //Recursividad a Izquierda - lista_calificadores_de_tipo
                                 ;
 
 
@@ -301,8 +274,8 @@ sentencia:  sentencia_etiquetada
 
 
 sentencia_etiquetada:   IDENTIFICADOR ':' sentencia //Asociatividad a derecha - sentencia
-                        | case expresion_constante ':' sentencia
-                        | default ':' sentencia
+                        | CASE expresion_constante ':' sentencia
+                        | DEFAULT ':' sentencia
                         ;
 
  
@@ -311,30 +284,30 @@ sentencia_expresion:    expresion ';'
 ;
  
 
-sentencia_compuesta: '{' lista_declaracion  lista_de_sentencias '}' 
+sentencia_compuesta: '{' lista_de_declaracion  lista_de_sentencias '}' 
                       | '{''}'
-                      | '{' lista_declaracion  '}'
+                      | '{' lista_de_declaracion  '}'
                       | '{' lista_de_sentencias '}'
-;
+                      ;
 
 lista_de_sentencias:    sentencia
                         | lista_de_sentencias sentencia //Recursividad a izquierda - lista_de_sentencias
                         ;
 
 
-sentencia_de_seleccion: if '(' expresion ')' sentencia //Factorizacion a Izquierda 
-                        | if '(' expresion ')' sentencia else sentencia
-                        | switch '(' expresion ')' sentencia
+sentencia_de_seleccion: IF '(' expresion ')' sentencia //Factorizacion a Izquierda 
+                        | IF '(' expresion ')' sentencia ELSE sentencia
+                        | SWITCH '(' expresion ')' sentencia
                         ;
 
-sentencia_de_iteracion: while '(' expresion ')' sentencia //Factorizacion a Izquierda??
-                        | do sentencia while '(' expresion ')' ';'
+sentencia_de_iteracion: WHILE '(' expresion ')' sentencia //Factorizacion a Izquierda??
+                        | DO sentencia WHILE '(' expresion ')' ';'
                         | '(' expresion_opt ';' expresion_opt ';' expresion_opt ')' sentencia 
                         ;
 
-sentencia_de_salto: goto IDENTIFICADOR ';'
-                    | continue   ';'
-                    | break ';'
+sentencia_de_salto: GOTO IDENTIFICADOR ';'
+                    | CONTINUE   ';'
+                    | BREAK ';'
                     | retornar expresion_opt   ';'
                     ;
 
@@ -413,18 +386,19 @@ expresion_cast: expresion_unaria
 expresion_unaria:   expresion_posfija
                 | OP_INCREMENTO   expresion_unaria
                 | OP_UNARIO   expresion_cast //Recursividad a Izquierda - operador_unario
-                | sizeof    expresion_unaria
-                | sizeof   '('    nombre_de_tipo   ')'
+                | SIZEOF   expresion_unaria
+                | SIZEOF   '('    nombre_de_tipo   ')'
                 ;
 
 expresion_posfija:  expresion_primaria
                     | expresion_posfija   '['   expresion   ']' //Recursividad  a Izquierda - expresion_posfija
-                    | expresion_posfija   '('   lista_de_expresiones_argumento   ')'
+                    | expresion_posfija   '('   lista_expresiones_argumento   ')'
                     | expresion_posfija   '(' ')'
                     | expresion_posfija    '.'    IDENTIFICADOR
                     | expresion_posfija    FLECHA   IDENTIFICADOR
                     | expresion_posfija   OP_INCREMENTO
                     ;
+
 
  
 expresion_primaria: IDENTIFICADOR
@@ -456,12 +430,12 @@ constante:  CONST_OCTAL
 // DECLARACIONES
 
 //CÓDIGO C DE USUARIO -> Código C que ejecuta el analizado     léxico
-int yyerror(const char* msg){
+/* int yyerror(const char* msg){
     printf("Fallo del analisis en la linea %d %s", yylineno, msg);
     analisisCorrecto = 0;
     return 0;
 }
-
+ */
 int main (int argc, char **argv)
 {
     yyin = fopen(argv[1], "r");
