@@ -9,17 +9,17 @@
 %}
 
 /* DEFINICIONES */
-OPER_ASIGNACIONES "=" | "+="
-OPER_IGUALDADES "==" | "!="
-OPER_COMPARATIVAS "<" | ">" | "<=" | ">="
-OPER_BASICAS "+" | "-"
-OPER_MULTIPLICATIVAS "*" | "/" | "%"
-OPER_INCREMENTALES "++" | "--"
-OPER_UNARIO "&" | "*" | "-" | "!"
-NOMBRE_TIPO "int" | "float" | "double" | "char" | "bool" | "void"
+OPER_ASIGNACIONES "="|"+="
+OPER_IGUALDADES "=="|"!="
+OPER_COMPARATIVAS "<"|">"|"<="|">="
+OPER_BASICAS "+"|"-"
+OPER_MULTIPLICATIVAS "*"|"/"|"%"
+OPER_INCREMENTALES "++"|"--"
+OPER_UNARIO "&"|"*"|"-"|"!"
+NOMBRE_TIPO "int"|"float"|"double"|"char"|"bool"|"void"
 
 /**    CONSTANTES   **/
-CONSTANTE_NUMERO {CONST_ENTERA} | {CONST_PTOFLOTANTE}
+CONSTANTE_NUMERO {CONST_ENTERA}|{CONST_PTOFLOTANTE}
 CONSTANTE_STRING {CONST_CARACTER}|{LITERAL_CADENA}
 /******* Constantes Enteras Decimales *******/
 CONST_ENTERA      {CONST_DECIMAL}{SUFIJO_ENTERO}?|{CONST_OCTAL}{SUFIJO_ENTERO}?|{CONST_HEXADECIMAL}{SUFIJO_ENTERO}?
@@ -70,9 +70,9 @@ SALTO_DE_LINEA (\n)+
 
 %%
 
-{OPER_ASIGNACIONES}           {return OPER_ASIGNACION;}
+{OPER_ASIGNACIONES}           {return OPER_ASIGNACIONES;}
 {OPER_IGUALDADES}             {return OPER_IGUALDADES;}
-{OPER_BASICAS}                {return OPER_BASICA;}
+{OPER_BASICAS}                {return OPER_BASICAS;}
 {OPER_COMPARATIVAS}           {return OPER_COMPARATIVAS;}
 {OPER_MULTIPLICATIVAS}        {return OPER_MULTIPLICATIVAS;}
 {OPER_INCREMENTALES}          {return OPER_INCREMENTALES;}
@@ -81,3 +81,5 @@ SALTO_DE_LINEA (\n)+
 {CONSTANTE_NUMERO}            {return CONSTANTE_NUMERO;}
 {CONSTANTE_STRING}            {return CONSTANTE_STRING;}
 {NOMBRE_TIPO}                 {return NOMBRE_TIPO;}    
+.
+%%

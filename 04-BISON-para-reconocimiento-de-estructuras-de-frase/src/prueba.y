@@ -20,38 +20,24 @@ int analisisCorrecto = 1;
 //DEFINICIONES DE BISON
 
 %union{
-    int int;
-    double double;
-    string string;
+    int ival;
+    double dval;
+    char* cval;
 }
 
-%type <string> expresion
-%type <string> expAsignacion
-%type <string> expCondicional
-%type <string> expOr
-%type <string> expAnd
-%type <string> expIgualdad
-%type <string> expRelacional
-%type <string> expAditiva
-%type <string> expMultiplicativa
-%type <string> expUnaria
-%type <string> expPostfijo
-%type <string> listaArgumentos
-%type <string> expPrimaria
+%token <cval> IDENTIFICADOR
+%token <cval> NOMBRE_TIPO
+%token <cval> CONSTANTE_STRING
+%token <ival> CONSTANTE_NUMERO
+%token <cval> OPER_ASIGNACIONES
+%token <cval> OPER_IGUALDADES
+%token <cval> OPER_COMPARATIVAS
+%token <cval> OPER_BASICAS
+%token <cval> OPER_MULTIPLICATIVAS
+%token <cval> OPER_INCREMENTALES
+%token <cval> OPER_UNARIO
 
-%token <string> IDENTIFICADOR
-%token <string> NOMBRE_TIPO
-%token <string> CONSTANTE_STRING
-%token <int> CONSTANTE_NUMERO
-%token <string> OPER_ASIGNACIONES
-%token <string> OPER_IGUALDADES
-%token <string> OPER_COMPARATIVAS
-%token <string> OPER_BASICAS
-%token <string> OPER_MULTIPLICATIVAS
-%token <string> OPER_INCREMENTALES
-%token <string> OPER_UNARIO
-
-%token <string> OPCIONAL //listaArgumentos(op)
+%token <cval> OPCIONAL //listaArgumentos(op)
 
 
 %%

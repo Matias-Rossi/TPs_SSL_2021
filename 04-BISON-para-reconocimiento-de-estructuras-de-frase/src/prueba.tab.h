@@ -63,9 +63,9 @@ typedef union YYSTYPE
 /* Line 1676 of yacc.c  */
 #line 22 "prueba.y"
 
-    int int;
-    double double;
-    string string;
+    int numerico;
+    double idval;
+    char* val;
 
 
 
