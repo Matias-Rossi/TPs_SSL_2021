@@ -21,82 +21,79 @@ int analisisCorrecto = 1;
 //DEFINICIONES DE BISON
 
 %union{
-    struct yylval_struct
-    {
-        int tipo;
-        char* val;
-    } mystruct;
+   int ival;
+    double dval;
+    char* cval;
+    
 }
 
-%type <mystruct> unidad_de_traduccion
-%type <mystruct> declaracion_externa
-%type <mystruct> definicion_de_funcion
-%type <mystruct> declaracion
-%type <mystruct> declarador
-%type <mystruct> especificadores_de_declaracion 
-%type <mystruct> lista_de_declaracion
-%type <mystruct> especificador_categoria_almacenamiento
-%type <mystruct> especificador_de_tipo
-%type <mystruct> calificador_de_tipo
-%type <mystruct> lista_declaradores_init
-%type <mystruct> especificador_tipo
-%type <mystruct> especificador_estructura_union
-%type <mystruct> especificador_enum
-%type <mystruct> lista_de_enumerador
-%type <mystruct> enumerador
-%type <mystruct> declarador_directo
-%type <mystruct> lista_tipos_de_parametro
-%type <mystruct> lista_de_identificadores
-%type <mystruct> apuntador
-%type <mystruct> lista_calificadores_de_tipo
-%type <mystruct> lista_de_parametros
-%type <mystruct> declaracion_parametro
-%type <mystruct> declarador_abstracto
-%type <mystruct> lista_declaracion
-%type <mystruct> expresion_aditiva
-%type <mystruct> lista_de_expresiones_argumento
+%type <cval> unidad_de_traduccion
+%type <cval> declaracion_externa
+%type <cval> definicion_de_funcion
+%type <cval> declaracion
+%type <cval> declarador
+%type <cval> especificadores_de_declaracion 
+%type <cval> lista_de_declaracion
+%type <cval> especificador_categoria_almacenamiento
+%type <cval> especificador_de_tipo
+%type <cval> calificador_de_tipo
+%type <cval> lista_declaradores_init
+%type <cval> especificador_tipo
+%type <cval> especificador_estructura_union
+%type <cval> especificador_enum
+%type <cval> lista_de_enumerador
+%type <cval> enumerador
+%type <cval> declarador_directo
+%type <cval> lista_tipos_de_parametro
+%type <cval> lista_de_identificadores
+%type <cval> apuntador
+%type <cval> lista_calificadores_de_tipo
+%type <cval> lista_de_parametros
+%type <cval> declaracion_parametro
+%type <cval> declarador_abstracto
+%type <cval> lista_declaracion
+%type <cval> expresion_aditiva
+%type <cval> lista_de_expresiones_argumento
 
-%token <mystruct> DIRECTIVAS_PREPROCESAMIENTO
-%token <mystruct> PALABRAS_RESERVADAS_TIPOS_DE_DATOS
-%token <mystruct> CALIFICADOR_TIPO
-%token <mystruct> LITERAL_CADENA
-%token <mystruct> PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL
-%token <mystruct> PALABRAS_RESERVADAS_OTHERS
-%token <mystruct> TIPO_STRUCT
-%token <mystruct> enum
-%token <mystruct> case
-%token <mystruct> default
-%token <mystruct> switch
-%token <mystruct> if
-%token <mystruct> else
-%token <mystruct> do
-%token <mystruct> while
-%token <mystruct> goto
-%token <mystruct> retornar
-%token <mystruct> continue
-%token <mystruct> break
-%token <mystruct> IDENTIFICADOR
-%token <mystruct> OP_CARACT_DE_PUNTUACION
-%token <mystruct> OP_ASIGNACION 
-%token <mystruct> EXPR_ASIGNACION
-%token <mystruct> EXPR_RELACION
-%token <mystruct> EXPR_CORRIMIENTO
-%token <mystruct> OP_BASICA
-%token <mystruct> EXPR_MULTIPLICATIVA 
-%token <mystruct> OP_INCREMENTO
-%token <mystruct> sizeof
-%token <mystruct> FLECHA
-%token <mystruct> OP_UNARIO
+%token <cval> DIRECTIVAS_PREPROCESAMIENTO //Ver
+%token <cval> PALABRAS_RESERVADAS_TIPOS_DE_DATOS
+%token <cval> CALIFICADOR_TIPO
+%token <cval> LITERAL_CADENA //Ver
+%token <cval> PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL //Ver
+%token <cval> PALABRAS_RESERVADAS_OTHERS
+%token <cval> TIPO_STRUCT
+%token <cval> enum
+%token <cval> case
+%token <cval> default
+%token <cval> switch
+%token <cval> if
+%token <cval> else
+%token <cval> do
+%token <cval> while
+%token <cval> goto
+%token <cval> retornar
+%token <cval> continue
+%token <cval> break
+%token <cval> IDENTIFICADOR
+%token <cval> OP_CARACT_DE_PUNTUACION //Ver
+%token <cval> OP_ASIGNACION 
+%token <cval> EXPR_ASIGNACION
+%token <cval> EXPR_RELACION
+%token <cval> EXPR_CORRIMIENTO
+%token <cval> OP_BASICA
+%token <cval> EXPR_MULTIPLICATIVA 
+%token <cval> OP_INCREMENTO
+%token <cval> sizeof
+%token <cval> FLECHA
+%token <cval> OP_UNARIO
 
 
-%token <mystruct> CONST_OCTAL
-%token <mystruct> CONST_HEXADECIMAL
-%token <mystruct> CONST_DECIMAL
-%token <mystruct> CONST_PTOFLOTANTE
-%token <mystruct> CONST_CARACTER
-%token <mystruct> COMENTARIOS_LINEAL
-%token <mystruct> COMENTARIOS_MULTILINEAL
-%token <mystruct> CONST_ENUMERACION
+%token <ival> CONST_OCTAL
+%token <ival> CONST_HEXADECIMAL
+%token <ival> CONST_DECIMAL
+%token <dval> CONST_PTOFLOTANTE
+%token <cval> CONST_CARACTER
+%token <ival> CONST_ENUMERACION //Ver
 
 %start unidad_de_traduccion
 
