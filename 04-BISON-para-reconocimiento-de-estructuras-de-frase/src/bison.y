@@ -26,7 +26,6 @@ int analisisCorrecto = 1;
    char* cval;
 }
 
-
 %token <cval> DIRECTIVAS_PREPROCESAMIENTO //Ver
 %token <cval> PALABRAS_RESERVADAS_TIPOS_DE_DATOS
 %token <cval> CALIFICADOR_TIPO
@@ -68,15 +67,17 @@ int analisisCorrecto = 1;
 %token <cval> CONST_CARACTER
 %token <ival> CONST_ENUMERACION //Ver
 
+%right CALIFICADOR_TIPO
+%
+
 %start unidad_de_traduccion
 
 %%
 //REGLAS (PRODUCCIONES GIC - CÓDIGO C) -> Conocido como PATRÓN/ACCIÓN
 
 unidad_de_traduccion:     declaracion_externa 
-                        | unidad_de_traduccion declaracion_externa
+                        | unidad_de_traduccion declaracion_externa 
                         ;
-
 
 declaracion_externa:      definicion_de_funcion
                         | declaracion
@@ -90,7 +91,7 @@ definicion_de_funcion:    especificadores_de_declaracion  declarador lista_de_de
                         ;
 
 
-declaracion:              especificadores_de_declaracion lista_declaradores_init ';' //Asociatividad - especificadores_de_declaracion
+declaracion:              especificadores_de_declaracion lista_declaradores_init ';' 
                         | especificadores_de_declaracion ';'
                         ;
 
@@ -104,23 +105,23 @@ especificadores_de_declaracion:   especificador_categoria_almacenamiento especif
                                 | especificador_categoria_almacenamiento 
                                 | especificador_de_tipo especificadores_de_declaracion //Asociatividad a izquierda - especificador_de_tipo 
                                 | especificador_de_tipo
-                                | CALIFICADOR_TIPO especificadores_de_declaracion // Recursividad a izquierda - calificador_de_tipo
-                                | CALIFICADOR_TIPO
+                                | CALIFICADOR_TIPO especificadores_de_declaracion                          {$<cval>1; }
+                                | CALIFICADOR_TIPO                                                         {$<cval>1; }
                                 ;
 
 
-especificador_categoria_almacenamiento:   PALABRAS_RESERVADAS_OTHERS 
+especificador_categoria_almacenamiento:   PALABRAS_RESERVADAS_OTHERS                                       {$<cval>1; }
                                        ;
 
 
 
-especificador_de_tipo:    PALABRAS_RESERVADAS_TIPOS_DE_DATOS  
+especificador_de_tipo:    PALABRAS_RESERVADAS_TIPOS_DE_DATOS                                               {$<cval>1; }
                         | especificador_estructura_o_union
                         | especificador_enum
                         | nombre_typedef
                         ;
 
-especificador_estructura_o_union:     TIPO_STRUCT IDENTIFICADOR  '{' lista_declaraciones_struct '}'
+especificador_estructura_o_union:     TIPO_STRUCT IDENTIFICADOR  '{' lista_declaraciones_struct '}'        
                                     | TIPO_STRUCT IDENTIFICADOR
                                     | '{' lista_declaraciones_struct '}'
                                     ;
@@ -353,7 +354,7 @@ expresion_AND:  expresion_de_igualdad
                 | expresion_AND   '&'   expresion_de_igualdad //Recursividad a Izquierda . expresion_AND
 ;
 
-expresion_de_igualdad:  expresion_relacional
+expresion_de_igualdad:  expresion_relacional 
                         | expresion_de_igualdad    EXPR_ASIGNACION    expresion_relacional //Recursividad a Izquierda - expresion_de_igualdad
                         ;
 
@@ -396,7 +397,7 @@ expresion_posfija:  expresion_primaria
                     | expresion_posfija   '(' ')'
                     | expresion_posfija    '.'    IDENTIFICADOR
                     | expresion_posfija    FLECHA   IDENTIFICADOR
-                    | expresion_posfija   OP_INCREMENTO
+                    | expresion_posfija    OP_INCREMENTO
                     ;
 
 

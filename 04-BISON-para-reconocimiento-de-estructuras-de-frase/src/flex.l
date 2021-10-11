@@ -80,6 +80,7 @@ ESPACIO [ \n\t\r]+
 ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
 SALTO_DE_LINEA (\n)+
+
 %%
 {DIRECTIVAS_PREPROCESAMIENTO}                     {return DIRECTIVAS_PREPROCESAMIENTO; strcpy(yylval.cval, yytext);}
 {PALABRAS_RESERVADAS_TIPOS_DE_DATOS}              {return PALABRAS_RESERVADAS_TIPOS_DE_DATOS;}
@@ -121,7 +122,7 @@ SALTO_DE_LINEA (\n)+
 {COMENTARIOS_LINEAL}                              {return COMENTARIOS_LINEAL;}
 {COMENTARIOS_MULTILINEAL}                         {return COMENTARIOS_MULTILINEAL;}
 {ESPACIO_EN_BLANCO}|{TABULACION}|{SALTO_DE_LINEA} {/*return  ¿? ;*/}
-.                                                 {/* todo: tokens no reconocidos */ }
+.                                                 {printf("ERROR LEXICO: %s, EN LINEA: %d \n",yytext,yylineno);}
 %%
 
 

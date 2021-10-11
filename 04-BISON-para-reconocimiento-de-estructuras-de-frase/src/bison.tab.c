@@ -546,7 +546,7 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    76,    76,    77,    81,    82,    86,    87,    88,    89,
+       0,    77,    77,    78,    81,    82,    86,    87,    88,    89,
       93,    94,    98,    99,   103,   104,   105,   106,   107,   108,
      112,   117,   118,   119,   120,   123,   124,   125,   128,   129,
      133,   134,   138,   139,   143,   144,   148,   149,   150,   151,
@@ -1879,10 +1879,38 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-      
+        case 18:
 
 /* Line 1455 of yacc.c  */
-#line 1886 "bison.tab.c"
+#line 107 "bison.y"
+    {(yyvsp[(1) - (2)].cval); ;}
+    break;
+
+  case 19:
+
+/* Line 1455 of yacc.c  */
+#line 108 "bison.y"
+    {(yyvsp[(1) - (1)].cval); ;}
+    break;
+
+  case 20:
+
+/* Line 1455 of yacc.c  */
+#line 112 "bison.y"
+    {(yyvsp[(1) - (1)].cval); ;}
+    break;
+
+  case 21:
+
+/* Line 1455 of yacc.c  */
+#line 117 "bison.y"
+    {(yyvsp[(1) - (1)].cval); ;}
+    break;
+
+
+
+/* Line 1455 of yacc.c  */
+#line 1914 "bison.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
