@@ -1,7 +1,5 @@
 
 %{
-//DEFINICIONES Y DECLARACIONES DE C
-
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -10,70 +8,95 @@ int yylex(void);
 int yywrap(){
     return(1);
 }
-int yyerror(const char* s){
-    fprintf (stderr, "%s\n", s);
-}
+int yyerror(const char* s);
 extern FILE* yyin;
 extern int yylineno;
 int analisisCorrecto = 1;
 
 %}
-//DEFINICIONES DE BISON
-
 %union{
    int ival;
    double dval;
    char* cval;
 }
 
-%token <cval> DIRECTIVAS_PREPROCESAMIENTO //Ver
-%token <cval> PALABRAS_RESERVADAS_TIPOS_DE_DATOS
-%token <cval> CALIFICADOR_TIPO
-%token <cval> LITERAL_CADENA //Ver
-%token <cval> PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL //Ver
-%token <cval> PALABRAS_RESERVADAS_OTHERS
-%token <cval> TIPO_STRUCT
-%token <cval> ENUM
-%token <cval> CASE
-%token <cval> DEFAULT
-%token <cval> SWITCH
-%token <cval> IF
-%token <cval> ELSE
-%token <cval> DO
-%token <cval> WHILE
-%token <cval> GOTO
-%token <cval> retornar
-%token <cval> CONTINUE
-%token <cval> BREAK
-%token <cval> IDENTIFICADOR
-%token <cval> OP_CARACT_DE_PUNTUACION //Ver
-%token <cval> OP_ASIGNACION 
-%token <cval> EXPR_ASIGNACION
-%token <cval> EXPR_RELACION
-%token <cval> EXPR_CORRIMIENTO
-%token <cval> OP_BASICA
-%token <cval> EXPR_MULTIPLICATIVA 
-%token <cval> OP_INCREMENTO
-%token <cval> SIZEOF
-%token <cval> FLECHA
-%token <cval> OP_UNARIO
+%token INCLUDE  
+%token DEFINE  
+%token AUTO   	
+%token REGISTER  
+%token STATIC  
+%token EXTERN  
+%token TYPEDEF  
+%token VOID  
+%token CHAR  
+%token SHORT  
+%token INT  
+%token LONG  
+%token FLOAT  
+%token DOUBLE  
+%token SIGNED  
+%token UNSIGNED  	
+%token CONST  
+%token VOLATILE  
+%token ENUM  
+%token CASE  	
+%token DEFAULT  
+%token IF  
+%token SWITCH  
+%token ELSE  
+%token FOR  
+%token DO  
+%token WHILE  
+%token GOTO  
+%token CONTINUE  
+%token BREAK  
+%token STRUCT  
+%token UNION  
+%token RETURN  
+%token SIZEOF  
+%token CTE_OR  
+%token CTE_AND  
+%token ELIPSIS  
+%token IGUAL_IGUAL  
+%token DISTINTO  
+%token MENOR_IGUAL  
+%token MAYOR_IGUAL  
+%token CORR_DER  
+%token CORR_IZQ  
+%token MAS_MAS  
+%token MENOS_MENOS  
+%token FLECHA  
+%token POR_IGUAL  
+%token DIV_IGUAL  
+%token MAS_IGUAL  
+%token MENOS_IGUAL  
+%token MOD_IGUAL  
+%token CORR_DER_IGUAL  
+%token CORR_IZQ_IGUAL  
+%token Y_IGUAL  
+%token POT_IGUAL  
+%token  O_IGUAL  
 
-%token <cval> COMENTARIOS_LINEAL
-%token <cval> COMENTARIOS_MULTILINEAL
-%token <ival> CONST_OCTAL
-%token <ival> CONST_HEXADECIMAL
-%token <ival> CONST_DECIMAL
-%token <dval> CONST_PTOFLOTANTE
-%token <cval> CONST_CARACTER
-%token <ival> CONST_ENUMERACION //Ver
 
-%right CALIFICADOR_TIPO
-%
+%token IDENTIFICADOR
+%token LITERAL_CADENA
+%token   CONST_OCTAL
+%token   CONST_HEXADECIMAL
+%token   CONST_DECIMAL
+%token   CONST_PTOFLOTANTE
+%token   CONST_CARACTER
 
-%start unidad_de_traduccion
-
+%left       '+' '-'
+%left       '*' '/'
+%left       '('
+%nonassoc IFX
+%nonassoc ELSE
+%start unidad_de_programa
 %%
-//REGLAS (PRODUCCIONES GIC - CÓDIGO C) -> Conocido como PATRÓN/ACCIÓN
+unidad_de_programa: INCLUDE  unidad_de_programa                           
+				  | DEFINE  expresion_primaria   unidad_de_programa                  	
+				  | unidad_de_traduccion 
+	    		  ;
 
 unidad_de_traduccion:     declaracion_externa 
                         | unidad_de_traduccion declaracion_externa 
@@ -84,55 +107,72 @@ declaracion_externa:      definicion_de_funcion
                         ;
 
 
-definicion_de_funcion:    especificadores_de_declaracion  declarador lista_de_declaracion ',' sentencia_compuesta
-                        | declarador ',' sentencia_compuesta
-                        | especificadores_de_declaracion  declarador ',' sentencia_compuesta
-                        | declarador lista_de_declaracion ',' sentencia_compuesta
-                        ;
+definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declaracion sentencia_compuesta 
+				     | declarador lista_de_declaracion sentencia_compuesta 
+				     | especificadores_de_declaracion declarador sentencia_compuesta 			
+				     | declarador sentencia_compuesta 
+				     ;
 
 
 declaracion:              especificadores_de_declaracion lista_declaradores_init ';' 
                         | especificadores_de_declaracion ';'
                         ;
 
-
-lista_de_declaracion:     declaracion
-                        | lista_de_declaracion declaracion //Recursividad a izquierda - lista_de_declaracion
+lista_de_declaracion:   declaracion
+                        | lista_de_declaracion declaracion 
                         ;
 
-
-especificadores_de_declaracion:   especificador_categoria_almacenamiento especificadores_de_declaracion //Asociatividad a izquierda - especificador_categoria_almacenamiento
+especificadores_de_declaracion:   especificador_categoria_almacenamiento especificadores_de_declaracion 
                                 | especificador_categoria_almacenamiento 
-                                | especificador_de_tipo especificadores_de_declaracion //Asociatividad a izquierda - especificador_de_tipo 
+                                | especificador_de_tipo especificadores_de_declaracion 
                                 | especificador_de_tipo
-                                | CALIFICADOR_TIPO especificadores_de_declaracion                          {$<cval>1; }
-                                | CALIFICADOR_TIPO                                                         {$<cval>1; }
+                                | calificador_de_tipo especificadores_de_declaracion                          
+                                | calificador_de_tipo                                                        
                                 ;
 
 
-especificador_categoria_almacenamiento:   PALABRAS_RESERVADAS_OTHERS                                       {$<cval>1; }
-                                       ;
+especificador_categoria_almacenamiento:   AUTO 
+				                    |REGISTER
+				                    |STATIC 
+				                    |EXTERN 
+				                    |TYPEDEF 
+				                    ;
 
 
+especificador_de_tipo: INT {printf("\nespecificador_de_tipo : int\n");} 
+	  		|CHAR {printf("especificador_de_tipo : char\n");}
+	  		|FLOAT {printf("especificador_de_tipo : float\n");}
+	  		|DOUBLE {printf("especificador_de_tipo : double\n");}
+          	|SHORT 
+	  		|VOID 
+	  		|LONG 
+	 		|SIGNED 
+            |UNSIGNED 										
+	        |especificador_estructura_o_union
+	        |especificador_enum 
+	        |nombre_typedef 
+	        ;
 
-especificador_de_tipo:    PALABRAS_RESERVADAS_TIPOS_DE_DATOS                                               {$<cval>1; }
-                        | especificador_estructura_o_union
-                        | especificador_enum
-                        | nombre_typedef
-                        ;
+calificador_de_tipo: CONST  
+	               | VOLATILE 
+	               ;
 
-especificador_estructura_o_union:     TIPO_STRUCT IDENTIFICADOR  '{' lista_declaraciones_struct '}'        
-                                    | TIPO_STRUCT IDENTIFICADOR
+especificador_estructura_o_union:    estructura_o_union IDENTIFICADOR  '{' lista_declaraciones_struct '}'        
+                                    | estructura_o_union IDENTIFICADOR
                                     | '{' lista_declaraciones_struct '}'
                                     ;
 
+estructura_o_union: STRUCT 
+	              | UNION  
+                  ;
+
 lista_declaraciones_struct:   declaracion_struct
-                            | lista_declaraciones_struct declaracion_struct //Recursividad a Izquierda - lista_declaradores_struct
+                            | lista_declaraciones_struct declaracion_struct 
                             ;
 
 
 lista_declaradores_init:    declarador_init
-                            | lista_declaradores_init ',' declarador_init //Recursividad a izquierda - lista_declaradores_init
+                            | lista_declaradores_init ',' declarador_init 
                             ;
 
 
@@ -141,20 +181,19 @@ declarador_init:      declarador
                     ;
 
 
-declaracion_struct:   lista_calificador_especificador
-                    | lista_declaradores_struct
-                    ;
+declaracion_struct:   lista_calificador_especificador  lista_declaradores_struct   ';'
+                  ;
 
 
-lista_calificador_especificador:    especificador_de_tipo lista_calificador_especificador //Asociatividad a izquierda - especificador_de_tipo
+lista_calificador_especificador:    especificador_de_tipo lista_calificador_especificador
                                   | especificador_de_tipo
-                                  | CALIFICADOR_TIPO lista_calificador_especificador // Recursividad a izquierda - calificador_de_tipo
-                                  | CALIFICADOR_TIPO
+                                  | calificador_de_tipo lista_calificador_especificador 
+                                  | calificador_de_tipo
                                   ;
 
 
 lista_declaradores_struct:    declarador_struct
-                            | lista_declaradores_struct  ','  declarador_struct //recursividad a izquierda . lista_declaradores_struct
+                            | lista_declaradores_struct  ','  declarador_struct 
                             ;
 
 
@@ -171,7 +210,7 @@ especificador_enum:       ENUM IDENTIFICADOR  '{' lista_de_enumerador '}'
 
 
 lista_de_enumerador:      enumerador
-                        | lista_de_enumerador ',' enumerador // Recursividad a Izquierda - lista_de_enumerador
+                        | lista_de_enumerador ',' enumerador 
                         ;
 
 
@@ -187,7 +226,7 @@ declarador:   apuntador declarador_directo
 
 declarador_directo:       IDENTIFICADOR
                         | '(' declarador ')'
-                        | declarador_directo  '[' expresion_constante ']' //Recursividad a izquierda - declarador_directo
+                        | declarador_directo  '[' expresion_constante ']'
                         | declarador_directo  '[' ']'
                         | declarador_directo  '(' lista_tipos_de_parametro ')'
                         | declarador_directo  '(' lista_de_identificadores ')'
@@ -195,25 +234,25 @@ declarador_directo:       IDENTIFICADOR
                         ;
 
 
-apuntador:  '*' lista_calificadores_de_tipo //Ver
+apuntador:  '*' lista_calificadores_de_tipo 
             |'*' 
             |'*' lista_calificadores_de_tipo  apuntador
             |'*' apuntador
             ;
 
 
-lista_calificadores_de_tipo:    CALIFICADOR_TIPO
-                                | lista_calificadores_de_tipo CALIFICADOR_TIPO //Recursividad a Izquierda - lista_calificadores_de_tipo
+lista_calificadores_de_tipo:    calificador_de_tipo
+                                | lista_calificadores_de_tipo calificador_de_tipo 
                                 ;
 
 
 lista_tipos_de_parametro:      lista_de_parametros
-                             | lista_de_parametros ',' '...' //Generar nuevo token para ...
+                             | lista_de_parametros ',' ELIPSIS
                              ;
 
 
 lista_de_parametros:      declaracion_parametro
-                        | lista_de_parametros ',' declaracion_parametro //Recursividad a Izquierda - lista_de_parametros
+                        | lista_de_parametros ',' declaracion_parametro 
                         ;
 
 
@@ -224,22 +263,22 @@ declaracion_parametro:     especificadores_de_declaracion declarador
 
 
 lista_de_identificadores:     IDENTIFICADOR
-                            | lista_de_identificadores ',' IDENTIFICADOR //Recursividad a izquierda - lista_de_identificadores
+                            | lista_de_identificadores ',' IDENTIFICADOR 
                             ;
 
 
-inicializador:  expresion_de_asignacion
+inicializador:  expresion_de_asignacion  
                 |'{'   lista_de_inicializadores   '}'
                 |'{'   lista_de_inicializadores  ',''}'
                 ;
 
 
 lista_de_inicializadores:   inicializador
-                            | lista_de_inicializadores ','  inicializador //Recursividad a izquierda - lista_de_inicializadores
+                            | lista_de_inicializadores ','  inicializador 
                             ;
  
 
-nombre_de_tipo:     lista_calificador_especificador declarador_abstracto //Asociatividad a Izquierda - lista_calificador_especificador
+nombre_de_tipo:     lista_calificador_especificador declarador_abstracto
                     | lista_calificador_especificador 
 ;
 
@@ -252,7 +291,7 @@ declarador_abstracto:   apuntador
 declarador_abstracto_directo:   '(' declarador_abstracto ')'
                                 | declarador_abstracto_directo '[' expresion_constante ']'
                                 |  '[' ']'
-                                | declarador_abstracto_directo '['  ']' //Recursividad a izquierda - declarador_abstracto_directo
+                                | declarador_abstracto_directo '['  ']' 
                                 |  '[' expresion_constante ']'
 
                                 | declarador_abstracto_directo '(' lista_tipos_de_parametro ')'
@@ -261,8 +300,8 @@ declarador_abstracto_directo:   '(' declarador_abstracto ')'
                                 | '(' lista_tipos_de_parametro ')'
                                 ;
 
-nombre_typedef: IDENTIFICADOR
-;
+nombre_typedef: 't'
+              ;
 
 
 sentencia:  sentencia_etiquetada
@@ -270,11 +309,11 @@ sentencia:  sentencia_etiquetada
             | sentencia_compuesta
             | sentencia_de_seleccion
             | sentencia_de_iteracion
-            | sentencia_de_salto
+            | sentencia_de_salto {printf("\nFin de una sentencia de salto\n");}
             ;
 
 
-sentencia_etiquetada:   IDENTIFICADOR ':' sentencia //Asociatividad a derecha - sentencia
+sentencia_etiquetada:   IDENTIFICADOR ':' sentencia 
                         | CASE expresion_constante ':' sentencia
                         | DEFAULT ':' sentencia
                         ;
@@ -282,7 +321,7 @@ sentencia_etiquetada:   IDENTIFICADOR ':' sentencia //Asociatividad a derecha - 
  
 sentencia_expresion:    expresion ';'
                         |  ';'
-;
+                        ;
  
 
 sentencia_compuesta: '{' lista_de_declaracion  lista_de_sentencias '}' 
@@ -292,41 +331,58 @@ sentencia_compuesta: '{' lista_de_declaracion  lista_de_sentencias '}'
                       ;
 
 lista_de_sentencias:    sentencia
-                        | lista_de_sentencias sentencia //Recursividad a izquierda - lista_de_sentencias
+                        | lista_de_sentencias sentencia 
                         ;
 
+sentencia_de_seleccion: IF '(' expresion ')' sentencia  %prec IFX 
+                      | IF '(' expresion ')' sentencia ELSE sentencia
+                      | SWITCH '(' expresion ')' sentencia
+                      ;
 
-sentencia_de_seleccion: IF '(' expresion ')' sentencia //Factorizacion a Izquierda 
-                        | IF '(' expresion ')' sentencia ELSE sentencia
-                        | SWITCH '(' expresion ')' sentencia
-                        ;
-
-sentencia_de_iteracion: WHILE '(' expresion ')' sentencia //Factorizacion a Izquierda??
-                        | DO sentencia WHILE '(' expresion ')' ';'
-                        | '(' expresion_opt ';' expresion_opt ';' expresion_opt ')' sentencia 
-                        ;
+sentencia_de_iteracion: WHILE '(' expresion ')' sentencia                                          
+				   | DO sentencia WHILE '(' expresion ')' ';'                                           
+				   | FOR '(' expresion ';' expresion ';' expresion ')' sentencia                                           
+				   | FOR '(' expresion ';' expresion ';'	')' sentencia                                           
+				   | FOR '(' expresion ';' ';' expresion ')' sentencia                                          
+				   | FOR '(' expresion ';' ';' ')' sentencia                                           
+				   | FOR '(' ';' expresion ';' expresion ')' sentencia                                           
+				   | FOR '(' ';' expresion ';' ')' sentencia                                           
+				   | FOR '(' ';' ';' expresion ')' sentencia                                           
+				   | FOR '(' ';' ';' ')' sentencia   
+				   ;
 
 sentencia_de_salto: GOTO IDENTIFICADOR ';'
                     | CONTINUE   ';'
                     | BREAK ';'
-                    | retornar expresion_opt   ';'
+                    | RETURN expresion   ';'
+                    | RETURN  ';'
                     ;
 
-//No está en la gramática, la agergo para evitar copiar 2000 veces las mismas líneas omitiendo opcionales
-expresion_opt: expresion | '\n';
-
 expresion:  expresion_de_asignacion
-            | expresion ',' expresion_de_asignacion //Recursividad a Izquierda - expresion
+            | expresion ',' expresion_de_asignacion 
             ;
 
 
 expresion_de_asignacion:    expresion_condicional
-                            | expresion_unaria OP_ASIGNACION expresion_de_asignacion
+                            | expresion_unaria operador_de_asignacion expresion_de_asignacion
                             ;
+
+operador_de_asignacion:    POR_IGUAL 
+						|DIV_IGUAL 
+						|MAS_IGUAL 
+						|MENOS_IGUAL 
+						|MOD_IGUAL 
+						|CORR_IZQ_IGUAL 
+						|CORR_DER_IGUAL 
+						|Y_IGUAL 
+						|POT_IGUAL 
+						|O_IGUAL 
+						| '=' 
+						;
 
 
 expresion_condicional:  expresion_logica_OR
-                        | expresion_logica_OR '?' expresion ':' expresion_condicional //Asociatividad a Izquierda - expresion_logica_OR
+                        | expresion_logica_OR '?' expresion ':' expresion_condicional 
                         ;
  
 expresion_constante: expresion_condicional
@@ -334,49 +390,56 @@ expresion_constante: expresion_condicional
  
 
 expresion_logica_OR:    expresion_logica_AND
-                        | expresion_logica_OR   '||'  expresion_logica_AND //Recursividad a Izquierda - expresion_logica_OR
+                        | expresion_logica_OR   CTE_OR  expresion_logica_AND 
                         ;
 
 
 expresion_logica_AND:   expresion_OR_inclusivo
-                        |expresion_logica_AND '&&' expresion_OR_inclusivo //Recursividad a Izquierda - expresion_logica_AND
+                        |expresion_logica_AND CTE_AND expresion_OR_inclusivo 
  ;
 
 expresion_OR_inclusivo: expresion_OR_exclusivo
-                        | expresion_OR_inclusivo '|' expresion_OR_exclusivo //Recursividad a Izquierda - expresion_OR_inclusivo
+                        | expresion_OR_inclusivo '|' expresion_OR_exclusivo 
 ;
 
 expresion_OR_exclusivo: expresion_AND
-                        |expresion_OR_exclusivo   '^'   expresion_AND //Recursividad a Izquierda - expresion_OR_exclusivo
+                        |expresion_OR_exclusivo   '^'   expresion_AND 
 ;
 
 expresion_AND:  expresion_de_igualdad
-                | expresion_AND   '&'   expresion_de_igualdad //Recursividad a Izquierda . expresion_AND
+                | expresion_AND   '&'   expresion_de_igualdad 
 ;
 
 expresion_de_igualdad:  expresion_relacional 
-                        | expresion_de_igualdad    EXPR_ASIGNACION    expresion_relacional //Recursividad a Izquierda - expresion_de_igualdad
-                        ;
+                        | expresion_de_igualdad    IGUAL_IGUAL    expresion_relacional 
+                        | expresion_de_igualdad    DISTINTO       expresion_relacional 
+                        ;                        
 
 
-expresion_relacional:   expresion_de_corrimiento
-                        | expresion_relacional EXPR_RELACION expresion_de_corrimiento //Recursividad a Izquierda - expresion_relacional
-                        ;
+expresion_relacional: expresion_de_corrimiento 
+					| expresion_relacional '<' expresion_de_corrimiento 
+					| expresion_relacional '>' expresion_de_corrimiento  
+					| expresion_relacional MENOR_IGUAL expresion_de_corrimiento 
+					| expresion_relacional MAYOR_IGUAL expresion_de_corrimiento 
+					;
  
 
-expresion_de_corrimiento:   expresion_aditiva
-                            |expresion_de_corrimiento   EXPR_CORRIMIENTO  expresion_aditiva //Recursividad a Izquierda - expresion_de_corrimiento
-                            ;
+expresion_de_corrimiento: expresion_aditiva 
+                        | expresion_de_corrimiento CORR_IZQ expresion_aditiva 
+						| expresion_de_corrimiento CORR_DER expresion_aditiva 
+						;
 
 
-expresion_aditiva:  expresion_multiplicativa
-                    | expresion_aditiva OP_BASICA expresion_multiplicativa //Recursividad a Izquierda - expresion_aditiva
-                    ;
+expresion_aditiva: expresion_multiplicativa 
+				| expresion_aditiva '+' expresion_multiplicativa 
+				| expresion_aditiva '-' expresion_multiplicativa 
+				;
 
-
-expresion_multiplicativa:   expresion_cast
-                            | expresion_multiplicativa EXPR_MULTIPLICATIVA expresion_cast //Recursividad a Izquierda - expresion_multiplicativa
-                            ;
+expresion_multiplicativa: expresion_cast 
+					| expresion_multiplicativa '*' expresion_cast 
+					| expresion_multiplicativa '/' expresion_cast 
+					| expresion_multiplicativa '%' expresion_cast 
+					;
 
 
 expresion_cast: expresion_unaria
@@ -384,59 +447,54 @@ expresion_cast: expresion_unaria
                 ;
  
 
-expresion_unaria:   expresion_posfija
-                | OP_INCREMENTO   expresion_unaria
-                | OP_UNARIO   expresion_cast //Recursividad a Izquierda - operador_unario
-                | SIZEOF   expresion_unaria
-                | SIZEOF   '('    nombre_de_tipo   ')'
+expresion_unaria: expresion_posfija 
+				| MENOS_MENOS  expresion_unaria
+				| MAS_MAS expresion_unaria 
+				| operador_unario  expresion_cast 
+				| SIZEOF expresion_unaria 
+				| SIZEOF '(' nombre_de_tipo ')'
                 ;
 
+operador_unario: '&' 
+			| '*' 
+			| '+' 
+			| '-' 
+			| '~' 
+			| '!' 			
+			;
+
 expresion_posfija:  expresion_primaria
-                    | expresion_posfija   '['   expresion   ']' //Recursividad  a Izquierda - expresion_posfija
+                    | expresion_posfija   '['   expresion   ']' 
                     | expresion_posfija   '('   lista_expresiones_argumento   ')'
                     | expresion_posfija   '(' ')'
                     | expresion_posfija    '.'    IDENTIFICADOR
-                    | expresion_posfija    FLECHA   IDENTIFICADOR
-                    | expresion_posfija    OP_INCREMENTO
-                    ;
+                    | expresion_posfija   FLECHA   IDENTIFICADOR
+					| expresion_posfija   MENOS_MENOS 
+					| expresion_posfija   MAS_MAS 
+					;
 
 
  
 expresion_primaria: IDENTIFICADOR
                     | constante
-                    | cadena
+                    | LITERAL_CADENA 
                     | '(' expresion ')'
                     ;
 
 
 lista_expresiones_argumento:    expresion_de_asignacion
-                                | lista_expresiones_argumento   ','   expresion_de_asignacion //Recursividad a Izquierda - lista_expresiones_argumento
+                                | lista_expresiones_argumento   ','   expresion_de_asignacion 
                                 ;
 
-cadena:  IDENTIFICADOR
-         | IDENTIFICADOR ' ' cadena
-         ; 
-
- 
 constante:  CONST_OCTAL
             | CONST_HEXADECIMAL
             | CONST_DECIMAL
             | CONST_CARACTER
             | CONST_PTOFLOTANTE
-            | CONST_ENUMERACION
+            | ENUM
             ;
 
 %%
-
-// DECLARACIONES
-
-//CÓDIGO C DE USUARIO -> Código C que ejecuta el analizado     léxico
-/* int yyerror(const char* msg){
-    printf("Fallo del analisis en la linea %d %s", yylineno, msg);
-    analisisCorrecto = 0;
-    return 0;
-}
- */
 int main (int argc, char **argv)
 {
     yyin = fopen(argv[1], "r");
@@ -448,4 +506,10 @@ int main (int argc, char **argv)
     }
 
     return 0;
+}
+int yyerror(const char *msg)
+{
+	printf("\nFallo el analisis en la linea: %d %s\n",yylineno,msg);
+	analisisCorrecto = 0;
+	return 0;
 }

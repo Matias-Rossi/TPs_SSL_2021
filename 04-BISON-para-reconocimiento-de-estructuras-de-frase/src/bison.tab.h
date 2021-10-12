@@ -39,45 +39,70 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     DIRECTIVAS_PREPROCESAMIENTO = 258,
-     PALABRAS_RESERVADAS_TIPOS_DE_DATOS = 259,
-     CALIFICADOR_TIPO = 260,
-     LITERAL_CADENA = 261,
-     PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL = 262,
-     PALABRAS_RESERVADAS_OTHERS = 263,
-     TIPO_STRUCT = 264,
-     ENUM = 265,
-     CASE = 266,
-     DEFAULT = 267,
-     SWITCH = 268,
-     IF = 269,
-     ELSE = 270,
-     DO = 271,
-     WHILE = 272,
-     GOTO = 273,
-     retornar = 274,
-     CONTINUE = 275,
-     BREAK = 276,
-     IDENTIFICADOR = 277,
-     OP_CARACT_DE_PUNTUACION = 278,
-     OP_ASIGNACION = 279,
-     EXPR_ASIGNACION = 280,
-     EXPR_RELACION = 281,
-     EXPR_CORRIMIENTO = 282,
-     OP_BASICA = 283,
-     EXPR_MULTIPLICATIVA = 284,
-     OP_INCREMENTO = 285,
-     SIZEOF = 286,
-     FLECHA = 287,
-     OP_UNARIO = 288,
-     COMENTARIOS_LINEAL = 289,
-     COMENTARIOS_MULTILINEAL = 290,
-     CONST_OCTAL = 291,
-     CONST_HEXADECIMAL = 292,
-     CONST_DECIMAL = 293,
-     CONST_PTOFLOTANTE = 294,
-     CONST_CARACTER = 295,
-     CONST_ENUMERACION = 296
+     INCLUDE = 258,
+     DEFINE = 259,
+     AUTO = 260,
+     REGISTER = 261,
+     STATIC = 262,
+     EXTERN = 263,
+     TYPEDEF = 264,
+     VOID = 265,
+     CHAR = 266,
+     SHORT = 267,
+     INT = 268,
+     LONG = 269,
+     FLOAT = 270,
+     DOUBLE = 271,
+     SIGNED = 272,
+     UNSIGNED = 273,
+     CONST = 274,
+     VOLATILE = 275,
+     ENUM = 276,
+     CASE = 277,
+     DEFAULT = 278,
+     IF = 279,
+     SWITCH = 280,
+     ELSE = 281,
+     FOR = 282,
+     DO = 283,
+     WHILE = 284,
+     GOTO = 285,
+     CONTINUE = 286,
+     BREAK = 287,
+     STRUCT = 288,
+     UNION = 289,
+     RETURN = 290,
+     SIZEOF = 291,
+     CTE_OR = 292,
+     CTE_AND = 293,
+     ELIPSIS = 294,
+     IGUAL_IGUAL = 295,
+     DISTINTO = 296,
+     MENOR_IGUAL = 297,
+     MAYOR_IGUAL = 298,
+     CORR_DER = 299,
+     CORR_IZQ = 300,
+     MAS_MAS = 301,
+     MENOS_MENOS = 302,
+     FLECHA = 303,
+     POR_IGUAL = 304,
+     DIV_IGUAL = 305,
+     MAS_IGUAL = 306,
+     MENOS_IGUAL = 307,
+     MOD_IGUAL = 308,
+     CORR_DER_IGUAL = 309,
+     CORR_IZQ_IGUAL = 310,
+     Y_IGUAL = 311,
+     POT_IGUAL = 312,
+     O_IGUAL = 313,
+     IDENTIFICADOR = 314,
+     LITERAL_CADENA = 315,
+     CONST_OCTAL = 316,
+     CONST_HEXADECIMAL = 317,
+     CONST_DECIMAL = 318,
+     CONST_PTOFLOTANTE = 319,
+     CONST_CARACTER = 320,
+     IFX = 321
    };
 #endif
 
@@ -88,7 +113,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 23 "bison.y"
+#line 17 "bison.y"
 
    int ival;
    double dval;
@@ -97,7 +122,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 101 "bison.tab.h"
+#line 126 "bison.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

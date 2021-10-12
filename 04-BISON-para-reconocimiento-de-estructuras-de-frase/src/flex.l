@@ -3,7 +3,6 @@
 /* %option debug */
 
 %{
-#include "tp4.h"
 #include <stdio.h>
 #include <string.h>
 #include "bison.tab.h"
@@ -12,26 +11,9 @@
 %}
 /* DEFINICIONES */
 /******* DIRECTIVAS PREPROCESAMIENTO *******/
-DIRECTIVAS_PREPROCESAMIENTO {INCLUDE}|{DEFINE}
 INCLUDE "#include"{ESPACIO}({LITERAL_CADENA}|{LIBRERIA})
 DEFINE "#define"({ESPACIO}({CARACTERES_SINGULARES}+){ESPACIO}{CONSTANTE})
 LIBRERIA <((.)+)>
-/**************** PALABRAS RESERVADAS ****************/
-PALABRAS_RESERVADAS_TIPOS_DE_DATOS char|double|float|int|short|long|signed|unsigned|void
-PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL if|else|switch|for|do|break|continue|while|return|goto
-PALABRAS_RESERVADAS_OTHERS auto|case|const|default|enum|extern|register|sizeof|static|struct|typedef|union|volatile
-CALIFICADOR_TIPO const|volatile 
-TIPO_STRUCT struct|union
-/******* OPERADORES Y CARACTERES DE PUNTUACION *******/
-OP_CARACT_DE_PUNTUACION ";"|"["|"]"|"("|")"|"{"|"}"|"."|"->"|"++"|"--"|"&"|"*"|"+"|"-"|"~"|"!"|"/"|"%"|"<<"|">>"|"<"|">"|"<="|">="|"=="|"!="|"^"|"|"|"&&"|"||"|"="|"*="|"/="|"%="|"+="|"-="|"<<="|">>="|"&="|"^="|"|="|"?"|":"|"..."|","|"#"|"##"
-OP_ASIGNACION "="|"*="|"/="|"%="|"+="|"-="|"<<="|">>="|"&="|"^="|"|="
-EXPR_ASIGNACION "=="|"!="
-EXPR_RELACION "<"|">"|"<="|">="
-EXPR_CORRIMIENTO "<<"|">>"
-OP_BASICA "+"|"-"
-EXPR_MULTIPLICATIVA "*"|"/"|"%"
-OP_INCREMENTO "++"|"--"
-OP_UNARIO "&"|"*"|"+"|"-"|"~"|"!" 
 /**************** CONSTANTES ENTERAS *****************/
 CONSTANTE {CONST_ENTERA}|{CONST_PTOFLOTANTE}|{CONST_CARACTER}|{LITERAL_CADENA}
 /******* Constantes Enteras Decimales *******/
@@ -82,45 +64,72 @@ TABULACION (\t)+
 SALTO_DE_LINEA (\n)+
 
 %%
-{DIRECTIVAS_PREPROCESAMIENTO}                     {return DIRECTIVAS_PREPROCESAMIENTO; strcpy(yylval.cval, yytext);}
-{PALABRAS_RESERVADAS_TIPOS_DE_DATOS}              {return PALABRAS_RESERVADAS_TIPOS_DE_DATOS;}
-{CALIFICADOR_TIPO}                                {return CALIFICADOR_TIPO;}
-{LITERAL_CADENA}                                  {return LITERAL_CADENA;}
-{PALABRAS_RESERVADAS_TIPOS_DE_DATOS}              {return PALABRAS_RESERVADAS_TIPOS_DE_DATOS;}
-{PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL}       {return PALABRAS_RESERVADAS_ESTRUCTURA_DE_CONTROL;}
-{PALABRAS_RESERVADAS_OTHERS}                      {return PALABRAS_RESERVADAS_OTHERS;}
-{TIPO_STRUCT}                                     {return TIPO_STRUCT;}
-"enum"                                            {return ENUM;}
-"case"                                            {return CASE;}
-"default"                                         {return DEFAULT;}
-"switch"                                          {return SWITCH;}
-"if"                                              {return IF;}
-"else"                                            {return ELSE;}
-"while"                                           {return WHILE;}
-"do"                                              {return DO;}
-"goto"                                            {return GOTO;}
-"continue"                                        {return CONTINUE;}
-"break"                                           {return BREAK;}
-"return"                                          {return retornar;}
+{INCLUDE}                               {return INCLUDE;}
+{DEFINE}                                {return DEFINE;}
+"auto"									{return AUTO;} 	
+"register"								{return REGISTER;}
+"static"							    {return STATIC;}
+"extern"                                {return EXTERN;}
+"typedef"							    {return TYPEDEF;}
+"void" 									{return VOID;}
+"char" 									{return CHAR;}
+"short" 								{return SHORT;}
+"int" 									{return INT;}
+"long" 									{return LONG;}
+"float" 								{return FLOAT;}
+"double" 								{return DOUBLE;}
+"signed" 								{return SIGNED;}
+"unsigned" 								{return UNSIGNED;}	
+"const"                                 {return CONST;}
+"volatile"					            {return VOLATILE;}
+"enum"									{return ENUM;}
+"case"									{return CASE;}	
+"default"								{return DEFAULT;}
+"if"									{return IF;}
+"switch"								{return SWITCH;}
+"else"									{return ELSE;}
+"for"									{return FOR;}
+"do"									{return DO;}
+"while"									{return WHILE;}
+"goto"									{return GOTO;}
+"continue"								{return CONTINUE;}
+"break"									{return BREAK;}
+"struct"								{return STRUCT;}
+"union"									{return UNION;}
+"return"								{return RETURN;}
+"sizeof"								{return SIZEOF;}
+"||" 									{return CTE_OR;}
+"&&"									{return CTE_AND;}
+"..."									{return ELIPSIS;}
+"=="									{return IGUAL_IGUAL;}
+"!="								    {return DISTINTO;}
+"<="									{return MENOR_IGUAL;}
+">="								    {return MAYOR_IGUAL;}
+">>"									{return CORR_DER;}
+"<<"								    {return CORR_IZQ;}
+"++"									{return MAS_MAS;}
+"--"								    {return MENOS_MENOS;}
+"->"									{return FLECHA;}
+"*="									{return POR_IGUAL;}
+"/="									{return DIV_IGUAL;}
+"+="									{return MAS_IGUAL;}
+"-="		 							{return MENOS_IGUAL;}
+"%="									{return MOD_IGUAL;}
+">>="									{return CORR_DER_IGUAL;}
+"<<="									{return CORR_IZQ_IGUAL;}
+"&="									{return Y_IGUAL;}
+"^="									{return POT_IGUAL;}
+"|="									{return O_IGUAL;}
+";"|"="|","|"{"|"}"|"("|")"|"["|"]"|"*"|"+"|"-"|"/"|"?"|":"|"&"|"|"|"^"|"!"|"~"|"%"|"<"|">"	{return yytext[0];}
 {IDENTIFICADOR}                                   {return IDENTIFICADOR;}
-{OP_ASIGNACION}                                   {return OP_ASIGNACION;}
-{OP_CARACT_DE_PUNTUACION}                         {return OP_CARACT_DE_PUNTUACION;}
-{EXPR_ASIGNACION}                                 {return EXPR_ASIGNACION;}
-{EXPR_RELACION}                                   {return EXPR_RELACION;}
-{EXPR_CORRIMIENTO}                                {return EXPR_CORRIMIENTO;}
-{OP_BASICA}                                       {return OP_BASICA;}
-{EXPR_MULTIPLICATIVA}                             {return EXPR_MULTIPLICATIVA;}
-{OP_INCREMENTO}                                   {return OP_INCREMENTO;}
-"sizeof"                                          {return SIZEOF;}
-{OP_UNARIO}                                       {return OP_UNARIO;} 
-"->"                                              {return FLECHA;}
+{LITERAL_CADENA}                                  {return LITERAL_CADENA;}
 {CONST_OCTAL}                                     {return CONST_OCTAL;}
 {CONST_HEXADECIMAL}                               {return CONST_HEXADECIMAL;}
 {CONST_DECIMAL}                                   {return CONST_DECIMAL;}
 {CONST_PTOFLOTANTE}                               {return CONST_PTOFLOTANTE;}
 {CONST_CARACTER}                                  {return CONST_CARACTER;}
-{COMENTARIOS_LINEAL}                              {return COMENTARIOS_LINEAL;}
-{COMENTARIOS_MULTILINEAL}                         {return COMENTARIOS_MULTILINEAL;}
+{COMENTARIOS_LINEAL}                              {;}
+{COMENTARIOS_MULTILINEAL}                         {;}
 {ESPACIO_EN_BLANCO}|{TABULACION}|{SALTO_DE_LINEA} {/*return  ¿? ;*/}
 .                                                 {printf("ERROR LEXICO: %s, EN LINEA: %d \n",yytext,yylineno);}
 %%
