@@ -37,6 +37,8 @@ void                  liberarListaIdentificadores          (ListaIdentificadores
 //reporte.c
 void nuevaCategoria              (FILE*, char*);
 void crearListadoIdentificadores (FILE*, ListaIdentificadores*);
+int tDatoCtoI (char*);
+char* tDatoItoC(int);
 
 ListaIdentificadores* identificadores_variables;
 ListaIdentificadores* identificadores_funciones;
