@@ -32,6 +32,7 @@ void                  nuevoIdentificador                   (ListaIdentificadores
 int                   ordenarIdentificadores               (ListaIdentificadores*, int criterio(char*, char*));
 void                  swapId                               (Identificador*, Identificador*);
 void                  intercambiarIdentificadores          (Identificador*, Identificador*);
+void                  liberarListaIdentificadores          (ListaIdentificadores*);
 
 //reporte.c
 void nuevaCategoria              (FILE*, char*);

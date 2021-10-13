@@ -226,13 +226,13 @@ declarador:   apuntador declarador_directo
 ;
 
 
-declarador_directo:       IDENTIFICADOR                                           {agregarIdentificador(identificadores_variables,  $1, aux_tIdentificador);}
+declarador_directo:       IDENTIFICADOR                                           {agregarIdentificador(identificadores_variables,  $<>1, aux_tIdentificador);}
                         | '(' declarador ')'
-                        | IDENTIFICADOR  '[' expresion_constante ']'              {agregarIdentificador(identificadores_variables,  $1, aux_tIdentificador);}
-                        | IDENTIFICADOR  '[' ']'                                  {agregarIdentificador(identificadores_variables,  $1, aux_tIdentificador);}
-                        | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {agregarIdentificador(identificadores_funciones,  $1, aux_tIdentificador);}
-                        | IDENTIFICADOR '(' lista_de_identificadores ')'          {agregarIdentificador(identificadores_funciones,  $1, aux_tIdentificador);}
-                        | IDENTIFICADOR '(' ')'                                   {agregarIdentificador(identificadores_funciones,  $1, aux_tIdentificador);}
+                        | IDENTIFICADOR  '[' expresion_constante ']'              {agregarIdentificador(identificadores_variables,  $<>1, aux_tIdentificador);}
+                        | IDENTIFICADOR  '[' ']'                                  {agregarIdentificador(identificadores_variables,  $<>1, aux_tIdentificador);}
+                        | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {agregarIdentificador(identificadores_funciones,  $<>1, aux_tIdentificador);}
+                        | IDENTIFICADOR '(' lista_de_identificadores ')'          {agregarIdentificador(identificadores_funciones,  $<>1, aux_tIdentificador);}
+                        | IDENTIFICADOR '(' ')'                                   {agregarIdentificador(identificadores_funciones,  $<>1, aux_tIdentificador);}
                         ;
 
 

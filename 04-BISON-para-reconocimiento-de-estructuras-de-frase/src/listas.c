@@ -3,7 +3,7 @@
 /* --- Lista enlazada IDENTIFICADORES --- */
 ListaIdentificadores* inicializarListaIdentificadores(ListaIdentificadores* lista){
     lista = (ListaIdentificadores*)malloc(sizeof(ListaIdentificadores));
-    lista->cantElementos = (int)malloc(sizeof(int)); //Esto para que??
+    //lista->cantElementos = (int)malloc(sizeof(int)); //Esto para que??
     lista->cantElementos = 0;
     lista->pri = NULL;
 
@@ -95,4 +95,28 @@ void intercambiarIdentificadores(Identificador* a, Identificador* b) {
     b->ocurrencias = auxOcurrencias;
     b->nombre = auxNombre;
 
+}
+
+void liberarListaIdentificadores(ListaIdentificadores* lista){
+    //Lista vacía
+    if(lista->pri == NULL) {    
+        free(lista);
+
+    //Lista con elementos
+    } else {                    
+        Identificador* borrador = lista->pri;
+        Identificador* siguiente;
+
+        //Minetras haya más elementos
+        while(borrador->sig) {  
+            siguiente = borrador->sig;
+            free(borrador->nombre);
+            free(borrador);
+            borrador = siguiente;
+        }
+        //Para el último elemento
+        siguiente = borrador->sig;
+        free(borrador->nombre);
+        free(borrador);
+    }
 }
