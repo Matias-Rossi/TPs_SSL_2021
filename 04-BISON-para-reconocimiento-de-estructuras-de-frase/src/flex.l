@@ -72,18 +72,18 @@ SALTO_DE_LINEA (\n)+
 "static"							    {return STATIC;}
 "extern"                                {return EXTERN;}
 "typedef"							    {return TYPEDEF;}
-"void" 									{return VOID;}
-"char" 									{return CHAR;}
+"void" 									{yylval.cval = yytext; return VOID;}
+"char" 									{yylval.cval = yytext; return CHAR;}
 "short" 								{return SHORT;}
-"int" 									{return INT;}
+"int" 									{yylval.cval = yytext; return INT;}
 "long" 									{return LONG;}
-"float" 								{return FLOAT;}
-"double" 								{return DOUBLE;}
+"float" 								{yylval.cval = yytext; return FLOAT;}
+"double" 								{yylval.cval = yytext; return DOUBLE;}
 "signed" 								{return SIGNED;}
 "unsigned" 								{return UNSIGNED;}	
 "const"                                 {return CONST;}
 "volatile"					            {return VOLATILE;}
-"enum"									{return ENUM;}
+"enum"									{yylval.cval = yytext; return ENUM;}
 "case"									{return CASE;}	
 "default"								{return DEFAULT;}
 "if"									{return IF;}
@@ -95,8 +95,8 @@ SALTO_DE_LINEA (\n)+
 "goto"									{return GOTO;}
 "continue"								{return CONTINUE;}
 "break"									{return BREAK;}
-"struct"								{return STRUCT;}
-"union"									{return UNION;}
+"struct"								{yylval.cval = yytext; return STRUCT;}
+"union"									{yylval.cval = yytext; return UNION;}
 "return"								{return RETURN;}
 "sizeof"								{return SIZEOF;}
 "||" 									{return CTE_OR;}
@@ -122,7 +122,7 @@ SALTO_DE_LINEA (\n)+
 "^="									{return POT_IGUAL;}
 "|="									{return O_IGUAL;}
 ";"|"="|","|"{"|"}"|"("|")"|"["|"]"|"*"|"+"|"-"|"/"|"?"|":"|"&"|"|"|"^"|"!"|"~"|"%"|"<"|">"	{return yytext[0];}
-{IDENTIFICADOR}                                   {return IDENTIFICADOR;}
+{IDENTIFICADOR}                                   {yylval.cval = yytext; return IDENTIFICADOR;}
 {LITERAL_CADENA}                                  {return LITERAL_CADENA;}
 {CONST_OCTAL}                                     {return CONST_OCTAL;}
 {CONST_HEXADECIMAL}                               {return CONST_HEXADECIMAL;}

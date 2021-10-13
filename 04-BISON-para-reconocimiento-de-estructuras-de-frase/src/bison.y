@@ -8,12 +8,12 @@ int yylex(void);
 int yywrap(){
     return(1);
 }
-int yyerror(const char* s){
-    printf("ERROR SINTACTICO en la Linea: %d\n",yylineno);
-};
+
+//extern int yylineno;
+
+int idVar = 0;
 
 extern FILE* yyin;
-extern int yylineno;
 int analisisCorrecto = 1;
 
 %}
@@ -105,20 +105,20 @@ unidad_de_traduccion:     declaracion_externa
                         | unidad_de_traduccion declaracion_externa 
                         ;
 
-declaracion_externa:      definicion_de_funcion
-                        | declaracion
+declaracion_externa:      definicion_de_funcion                                         
+                        | declaracion                                                   
                         ;
 
 
 definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declaracion sentencia_compuesta 
-				     | declarador lista_de_declaracion sentencia_compuesta 
+				     | declarador lista_de_declaracion sentencia_compuesta
 				     | especificadores_de_declaracion declarador sentencia_compuesta 			
 				     | declarador sentencia_compuesta 
 				     ;
 
 
-declaracion:              especificadores_de_declaracion lista_declaradores_init ';' 
-                        | especificadores_de_declaracion ';'
+declaracion:              especificadores_de_declaracion lista_declaradores_init ';'    {/* printf("Declaracion de variable: %s \n", $<cval>1); */}
+                        | especificadores_de_declaracion ';'                            {/* printf("Declaracion de variable: %s \n", $<cval>1); */}
                         ;
 
 lista_de_declaracion:   declaracion
@@ -142,15 +142,15 @@ especificador_categoria_almacenamiento:   AUTO
 				                    ;
 
 
-especificador_de_tipo: INT                         {idVar++; push(pilaDeTipos, "Int", idVar);} 
-	  		|CHAR                                  {idVar++; push(pilaDeTipos, "Char", idVar);}
-	  		|FLOAT                                 {idVar++; push(pilaDeTipos, "Float", idVar);}
-	  		|DOUBLE                                {idVar++; push(pilaDeTipos, "Double", idVar);}
-          	|SHORT                                 {idVar++; push(pilaDeTipos, "Short", idVar);}
-	  		|VOID                                  {idVar++; push(pilaDeTipos, "Void", idVar);}
-	  		|LONG                                  {idVar++; push(pilaDeTipos, "Long", idVar);}
-	 		|SIGNED                                {idVar++; push(pilaDeTipos, "Signed", idVar);}
-            |UNSIGNED 							   {idVar++; push(pilaDeTipos, "Unsigned", idVar);}		
+especificador_de_tipo: INT                         
+	  		|CHAR                                  
+	  		|FLOAT                                 
+	  		|DOUBLE                                
+          	|SHORT                                 
+	  		|VOID                                  
+	  		|LONG                                  
+	 		|SIGNED                                
+            |UNSIGNED 							   
 	        |especificador_estructura_o_union
 	        |especificador_enum 
 	        |nombre_typedef 
@@ -174,13 +174,13 @@ lista_declaraciones_struct:   declaracion_struct
                             ;
 
 
-lista_declaradores_init:    declarador_init
-                            | lista_declaradores_init ',' declarador_init 
+lista_declaradores_init:    declarador_init                                             {/* printf("Declaracion de variable: %s \n", $<cval>1); */}
+                            | lista_declaradores_init ',' declarador_init               {/* printf("Declaracion de variable: %s \n", $<cval>1); */}
                             ;
 
 
-declarador_init:      declarador
-                    | declarador '=' inicializador
+declarador_init:      declarador                                                        {printf("Declaracion de variable: %s \n", $<cval>1);}
+                    | declarador '=' inicializador                                      {printf("Declaracion de variable: %s \n", $<cval>1);}
                     ;
 
 
@@ -221,18 +221,18 @@ enumerador:    IDENTIFICADOR
              | IDENTIFICADOR '=' expresion_constante
              ;
 
-declarador:   apuntador declarador_directo
-            | declarador_directo
+declarador:   apuntador declarador_directo                          
+            | declarador_directo                                    
 ;
 
 
-declarador_directo:       IDENTIFICADOR                                       {push(pilaDeVariables, $1, idVar);}
-                        | '(' declarador ')'
-                        | declarador_directo  '[' expresion_constante ']'     
-                        | declarador_directo  '[' ']'
-                        | declarador_directo  '(' lista_tipos_de_parametro ')'
-                        | declarador_directo  '(' lista_de_identificadores ')' {if(declarador_directo == IDENTIFICADOR){push(pilaDeFunciones , $1 , idVar)}}
-                        | declarador_directo  '(' ')'
+declarador_directo:       IDENTIFICADOR                                             
+                        | '(' declarador ')'                                        
+                        | declarador_directo  '[' expresion_constante ']'               {printf("Declaracion de funcion: %s \n", $<cval>0);}
+                        | declarador_directo  '[' ']'                                   {printf("Declaracion de funcion: %s \n", $<cval>0);}
+                        | declarador_directo  '(' lista_tipos_de_parametro ')'          {printf("Declaracion de funcion: %s \n", $<cval>0);}
+                        | declarador_directo  '(' lista_de_identificadores ')'          {printf("Declaracion de funcion: %s \n", $<cval>0);}
+                        | declarador_directo  '(' ')'                                   {printf("Declaracion de funcion: %s \n", $<cval>0);}
                         ;
 
 
@@ -311,7 +311,7 @@ sentencia:  sentencia_etiquetada
             | sentencia_compuesta
             | sentencia_de_seleccion
             | sentencia_de_iteracion
-            | sentencia_de_salto {printf("\nFin de una sentencia de salto\n");}
+            | sentencia_de_salto
             ;
 
 
@@ -499,28 +499,18 @@ constante:  CONST_OCTAL
 %%
 int main (int argc, char **argv)
 {
-    idVar = 0;
-    nodo **pilaDeVariables;
-    inicializarPila(nodo** pilaDeVariables); 
 
     yyin = fopen(argv[1], "r");
     yyparse();
     fclose(yyin);
 
-    if(analisisCorrecto){
-        printf("Analisis finalizado correctamente");
-        FILE *fpReporte
-        fpReporte = fopen("./reporte.txt" , "w");
-        imprimirEnReporte(fpReporte, pilaDeVariables);
-
-        fclose(fpReporte);
-    }
 
     return 0;
 }
+
 int yyerror(const char *msg)
 {
-
+    int yylineno = 5; //TODO: noma pa que no moleste
 	printf("\nFallo el analisis en la linea: %d %s\n",yylineno,msg);
 	analisisCorrecto = 0;
 	return 0;

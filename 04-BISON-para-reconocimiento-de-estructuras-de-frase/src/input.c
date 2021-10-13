@@ -2,6 +2,8 @@
 
 int main()
 {
+    int a, b;
+    char c;
     return 0;
 }
 
