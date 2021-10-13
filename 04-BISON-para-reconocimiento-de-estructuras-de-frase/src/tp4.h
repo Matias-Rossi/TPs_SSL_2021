@@ -11,27 +11,32 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-typedef struct 
-{
-    char* var;
-    int var_size;
-    int idVar;
-    struct nodo* sig;
-} nodo;
 
-typedef struct 
-{
-    char* var;
-    int var_size;
-    int idVar;
-} nodo_out;
+typedef struct Identificador{
+    char* nombre;
+    int ocurrencias;
+    int tipo;
+    struct Identificador* sig;
+} Identificador;
 
-void inicializarPila(nodo**); 
-void push(nodo**, char*, int);
-nodo_out* pop(nodo**);
-void imprimirEnReporte(FILE*, nodo*);
- char* tipo_de_dato (int);
+typedef struct {
+    struct Identificador* pri;
+    int cantElementos;
+} ListaIdentificadores;
 
-int idVar;
+//listas.c
+ListaIdentificadores* inicializarListaIdentificadores      (ListaIdentificadores*);
+void                  agregarIdentificador                 (ListaIdentificadores*, char*, int);
+int                   identificadorIncrementarSiRegistrado (Identificador* lista, char*);
+void                  nuevoIdentificador                   (ListaIdentificadores*, char*, int);
+int                   ordenarIdentificadores               (ListaIdentificadores*, int criterio(char*, char*));
+void                  swapId                               (Identificador*, Identificador*);
+void                  intercambiarIdentificadores          (Identificador*, Identificador*);
 
+//reporte.c
+void nuevaCategoria              (FILE*, char*);
+void crearListadoIdentificadores (FILE*, ListaIdentificadores*);
 
+ListaIdentificadores* identificadores_variables;
+ListaIdentificadores* identificadores_funciones;
+char*                 aux_tIdentificador;

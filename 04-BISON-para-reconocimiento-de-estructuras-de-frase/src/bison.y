@@ -117,8 +117,8 @@ definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declar
 				     ;
 
 
-declaracion:              especificadores_de_declaracion lista_declaradores_init ';'    {/* printf("Declaracion de variable: %s \n", $<cval>1); */}
-                        | especificadores_de_declaracion ';'                            {/* printf("Declaracion de variable: %s \n", $<cval>1); */}
+declaracion:              especificadores_de_declaracion lista_declaradores_init ';'
+                        | especificadores_de_declaracion ';'
                         ;
 
 lista_de_declaracion:   declaracion
@@ -142,15 +142,15 @@ especificador_categoria_almacenamiento:   AUTO
 				                    ;
 
 
-especificador_de_tipo: INT                         
-	  		|CHAR                                  
-	  		|FLOAT                                 
-	  		|DOUBLE                                
-          	|SHORT                                 
-	  		|VOID                                  
-	  		|LONG                                  
-	 		|SIGNED                                
-            |UNSIGNED 							   
+especificador_de_tipo: INT                         {aux_tIdentificador="int";}
+	  		|CHAR                                  {aux_tIdentificador="char";}
+	  		|FLOAT                                 {aux_tIdentificador="float";}
+	  		|DOUBLE                                {aux_tIdentificador="double";}
+          	|SHORT                                 {aux_tIdentificador="";}
+	  		|VOID                                  {aux_tIdentificador="";}
+	  		|LONG                                  {aux_tIdentificador="";}
+	 		|SIGNED                                {aux_tIdentificador="";}
+            |UNSIGNED 							   {aux_tIdentificador="";}
 	        |especificador_estructura_o_union
 	        |especificador_enum 
 	        |nombre_typedef 
@@ -174,13 +174,13 @@ lista_declaraciones_struct:   declaracion_struct
                             ;
 
 
-lista_declaradores_init:    declarador_init                                             {/* printf("Declaracion de variable: %s \n", $<cval>1); */}
-                            | lista_declaradores_init ',' declarador_init               {/* printf("Declaracion de variable: %s \n", $<cval>1); */}
+lista_declaradores_init:    declarador_init
+                            | lista_declaradores_init ',' declarador_init
                             ;
 
 
-declarador_init:      declarador                                                        {printf("Declaracion de variable: %s \n", $<cval>1);}
-                    | declarador '=' inicializador                                      {printf("Declaracion de variable: %s \n", $<cval>1);}
+declarador_init:      declarador
+                    | declarador '=' inicializador
                     ;
 
 
@@ -226,13 +226,13 @@ declarador:   apuntador declarador_directo
 ;
 
 
-declarador_directo:       IDENTIFICADOR                                             
-                        | '(' declarador ')'                                        
-                        | declarador_directo  '[' expresion_constante ']'               {printf("Declaracion de funcion: %s \n", $<cval>0);}
-                        | declarador_directo  '[' ']'                                   {printf("Declaracion de funcion: %s \n", $<cval>0);}
-                        | declarador_directo  '(' lista_tipos_de_parametro ')'          {printf("Declaracion de funcion: %s \n", $<cval>0);}
-                        | declarador_directo  '(' lista_de_identificadores ')'          {printf("Declaracion de funcion: %s \n", $<cval>0);}
-                        | declarador_directo  '(' ')'                                   {printf("Declaracion de funcion: %s \n", $<cval>0);}
+declarador_directo:       IDENTIFICADOR                                           {agregarIdentificador(identificadores_variables,  $1, aux_tIdentificador);}
+                        | '(' declarador ')'
+                        | IDENTIFICADOR  '[' expresion_constante ']'              {agregarIdentificador(identificadores_variables,  $1, aux_tIdentificador);}
+                        | IDENTIFICADOR  '[' ']'                                  {agregarIdentificador(identificadores_variables,  $1, aux_tIdentificador);}
+                        | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {agregarIdentificador(identificadores_funciones,  $1, aux_tIdentificador);}
+                        | IDENTIFICADOR '(' lista_de_identificadores ')'          {agregarIdentificador(identificadores_funciones,  $1, aux_tIdentificador);}
+                        | IDENTIFICADOR '(' ')'                                   {agregarIdentificador(identificadores_funciones,  $1, aux_tIdentificador);}
                         ;
 
 
@@ -499,11 +499,19 @@ constante:  CONST_OCTAL
 %%
 int main (int argc, char **argv)
 {
-
     yyin = fopen(argv[1], "r");
+    FILE* fpReporte = fopen("reporte.txt", "w+");
+
+    identificadores_variables = inicializarListaIdentificadores(identificadores_variables);
+    identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
+
     yyparse();
     fclose(yyin);
 
+    crearListadoIdentificadores(fpReporte, identificadores_variables);
+    crearListadoIdentificadores(fpReporte, identificadores_funciones);
+
+    fclose(fpReporte)
 
     return 0;
 }
