@@ -8,7 +8,10 @@ int yylex(void);
 int yywrap(){
     return(1);
 }
-int yyerror(const char* s);
+int yyerror(const char* s){
+    printf("ERROR SINTACTICO en la Linea: %d\n",yylineno);
+};
+
 extern FILE* yyin;
 extern int yylineno;
 int analisisCorrecto = 1;
@@ -139,20 +142,20 @@ especificador_categoria_almacenamiento:   AUTO
 				                    ;
 
 
-especificador_de_tipo: INT {printf("\nespecificador_de_tipo : int\n");} 
-	  		|CHAR {printf("especificador_de_tipo : char\n");}
-	  		|FLOAT {printf("especificador_de_tipo : float\n");}
-	  		|DOUBLE {printf("especificador_de_tipo : double\n");}
-          	|SHORT 
-	  		|VOID 
-	  		|LONG 
-	 		|SIGNED 
-            |UNSIGNED 										
+especificador_de_tipo: INT                         {idVar++; push(pilaDeTipos, "Int", idVar);} 
+	  		|CHAR                                  {idVar++; push(pilaDeTipos, "Char", idVar);}
+	  		|FLOAT                                 {idVar++; push(pilaDeTipos, "Float", idVar);}
+	  		|DOUBLE                                {idVar++; push(pilaDeTipos, "Double", idVar);}
+          	|SHORT                                 {idVar++; push(pilaDeTipos, "Short", idVar);}
+	  		|VOID                                  {idVar++; push(pilaDeTipos, "Void", idVar);}
+	  		|LONG                                  {idVar++; push(pilaDeTipos, "Long", idVar);}
+	 		|SIGNED                                {idVar++; push(pilaDeTipos, "Signed", idVar);}
+            |UNSIGNED 							   {idVar++; push(pilaDeTipos, "Unsigned", idVar);}		
 	        |especificador_estructura_o_union
 	        |especificador_enum 
 	        |nombre_typedef 
 	        ;
-
+                                   
 calificador_de_tipo: CONST  
 	               | VOLATILE 
 	               ;
@@ -203,7 +206,7 @@ declarador_struct:    declarador
                     ;
 
 
-especificador_enum:       ENUM IDENTIFICADOR  '{' lista_de_enumerador '}'
+especificador_enum:       ENUM IDENTIFICADOR  '{' lista_de_enumerador '}' 
                         | '{' lista_de_enumerador '}'
                         | ENUM IDENTIFICADOR
                         ;
@@ -224,12 +227,12 @@ declarador:   apuntador declarador_directo
 ;
 
 
-declarador_directo:       IDENTIFICADOR
+declarador_directo:       IDENTIFICADOR                                       {push(pilaDeVariables, $1, idVar);}
                         | '(' declarador ')'
-                        | declarador_directo  '[' expresion_constante ']'
+                        | declarador_directo  '[' expresion_constante ']'     
                         | declarador_directo  '[' ']'
                         | declarador_directo  '(' lista_tipos_de_parametro ')'
-                        | declarador_directo  '(' lista_de_identificadores ')'
+                        | declarador_directo  '(' lista_de_identificadores ')' {if(declarador_directo == IDENTIFICADOR){push(pilaDeFunciones , $1 , idVar)}}
                         | declarador_directo  '(' ')'
                         ;
 
@@ -497,18 +500,28 @@ constante:  CONST_OCTAL
 %%
 int main (int argc, char **argv)
 {
+    idVar = 0;
+    nodo **pilaDeVariables;
+    inicializarPila(nodo** pilaDeVariables); 
+
     yyin = fopen(argv[1], "r");
     yyparse();
     fclose(yyin);
 
     if(analisisCorrecto){
         printf("Analisis finalizado correctamente");
+        FILE *fpReporte
+        fpReporte = fopen("./reporte.txt" , "w");
+        imprimirEnReporte(fpReporte, pilaDeVariables);
+
+        fclose(fpReporte);
     }
 
     return 0;
 }
 int yyerror(const char *msg)
 {
+
 	printf("\nFallo el analisis en la linea: %d %s\n",yylineno,msg);
 	analisisCorrecto = 0;
 	return 0;

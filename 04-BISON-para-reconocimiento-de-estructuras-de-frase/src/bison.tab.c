@@ -78,7 +78,10 @@ int yylex(void);
 int yywrap(){
     return(1);
 }
-int yyerror(const char* s);
+int yyerror(const char* s){
+    printf("ERROR SINTACTICO en la Linea: %d\n",yylineno);
+};
+
 extern FILE* yyin;
 extern int yylineno;
 int analisisCorrecto = 1;
@@ -86,7 +89,7 @@ int analisisCorrecto = 1;
 
 
 /* Line 189 of yacc.c  */
-#line 90 "bison.tab.c"
+#line 93 "bison.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -187,7 +190,7 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 17 "bison.y"
+#line 20 "bison.y"
 
    int ival;
    double dval;
@@ -196,7 +199,7 @@ typedef union YYSTYPE
 
 
 /* Line 214 of yacc.c  */
-#line 200 "bison.tab.c"
+#line 203 "bison.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -208,7 +211,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 212 "bison.tab.c"
+#line 215 "bison.tab.c"
 
 #ifdef short
 # undef short
@@ -591,29 +594,29 @@ static const yytype_int16 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    96,    96,    97,    98,   101,   102,   105,   106,   110,
-     111,   112,   113,   117,   118,   121,   122,   125,   126,   127,
-     128,   129,   130,   134,   135,   136,   137,   138,   142,   143,
-     144,   145,   146,   147,   148,   149,   150,   151,   152,   153,
-     156,   157,   160,   161,   162,   165,   166,   169,   170,   174,
-     175,   179,   180,   184,   188,   189,   190,   191,   195,   196,
-     200,   201,   202,   206,   207,   208,   212,   213,   217,   218,
-     222,   223,   227,   228,   229,   230,   231,   232,   233,   237,
-     238,   239,   240,   244,   245,   249,   250,   254,   255,   259,
-     260,   261,   265,   266,   270,   271,   272,   276,   277,   281,
-     282,   286,   287,   288,   291,   292,   293,   294,   295,   297,
-     298,   299,   300,   303,   307,   308,   309,   310,   311,   312,
-     316,   317,   318,   322,   323,   327,   328,   329,   330,   333,
-     334,   337,   338,   339,   342,   343,   344,   345,   346,   347,
-     348,   349,   350,   351,   354,   355,   356,   357,   358,   361,
-     362,   366,   367,   370,   371,   372,   373,   374,   375,   376,
-     377,   378,   379,   380,   384,   385,   388,   392,   393,   397,
-     398,   401,   402,   405,   406,   409,   410,   413,   414,   415,
-     419,   420,   421,   422,   423,   427,   428,   429,   433,   434,
-     435,   438,   439,   440,   441,   445,   446,   450,   451,   452,
-     453,   454,   455,   458,   459,   460,   461,   462,   463,   466,
-     467,   468,   469,   470,   471,   472,   473,   478,   479,   480,
-     481,   485,   486,   489,   490,   491,   492,   493,   494
+       0,    99,    99,   100,   101,   104,   105,   108,   109,   113,
+     114,   115,   116,   120,   121,   124,   125,   128,   129,   130,
+     131,   132,   133,   137,   138,   139,   140,   141,   145,   146,
+     147,   148,   149,   150,   151,   152,   153,   154,   155,   156,
+     159,   160,   163,   164,   165,   168,   169,   172,   173,   177,
+     178,   182,   183,   187,   191,   192,   193,   194,   198,   199,
+     203,   204,   205,   209,   210,   211,   215,   216,   220,   221,
+     225,   226,   230,   231,   232,   233,   234,   235,   236,   240,
+     241,   242,   243,   247,   248,   252,   253,   257,   258,   262,
+     263,   264,   268,   269,   273,   274,   275,   279,   280,   284,
+     285,   289,   290,   291,   294,   295,   296,   297,   298,   300,
+     301,   302,   303,   306,   310,   311,   312,   313,   314,   315,
+     319,   320,   321,   325,   326,   330,   331,   332,   333,   336,
+     337,   340,   341,   342,   345,   346,   347,   348,   349,   350,
+     351,   352,   353,   354,   357,   358,   359,   360,   361,   364,
+     365,   369,   370,   373,   374,   375,   376,   377,   378,   379,
+     380,   381,   382,   383,   387,   388,   391,   395,   396,   400,
+     401,   404,   405,   408,   409,   412,   413,   416,   417,   418,
+     422,   423,   424,   425,   426,   430,   431,   432,   436,   437,
+     438,   441,   442,   443,   444,   448,   449,   453,   454,   455,
+     456,   457,   458,   461,   462,   463,   464,   465,   466,   469,
+     470,   471,   472,   473,   474,   475,   476,   481,   482,   483,
+     484,   488,   489,   492,   493,   494,   495,   496,   497
 };
 #endif
 
@@ -2151,42 +2154,42 @@ yyreduce:
         case 28:
 
 /* Line 1455 of yacc.c  */
-#line 142 "bison.y"
+#line 145 "bison.y"
     {printf("\nespecificador_de_tipo : int\n");;}
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 143 "bison.y"
+#line 146 "bison.y"
     {printf("especificador_de_tipo : char\n");;}
     break;
 
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 144 "bison.y"
+#line 147 "bison.y"
     {printf("especificador_de_tipo : float\n");;}
     break;
 
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 145 "bison.y"
+#line 148 "bison.y"
     {printf("especificador_de_tipo : double\n");;}
     break;
 
   case 119:
 
 /* Line 1455 of yacc.c  */
-#line 312 "bison.y"
+#line 315 "bison.y"
     {printf("\nFin de una sentencia de salto\n");;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 2190 "bison.tab.c"
+#line 2193 "bison.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2398,7 +2401,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 497 "bison.y"
+#line 500 "bison.y"
 
 int main (int argc, char **argv)
 {
@@ -2408,12 +2411,18 @@ int main (int argc, char **argv)
 
     if(analisisCorrecto){
         printf("Analisis finalizado correctamente");
+        FILE *fpReporte
+        fpReporte = fopen("./reporte.txt" , "w");
+        imprimirReporte()
+
+        fclose(fpReporte);
     }
 
     return 0;
 }
 int yyerror(const char *msg)
 {
+
 	printf("\nFallo el analisis en la linea: %d %s\n",yylineno,msg);
 	analisisCorrecto = 0;
 	return 0;
