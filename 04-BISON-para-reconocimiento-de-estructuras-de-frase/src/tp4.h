@@ -33,3 +33,4 @@ void imprimirEnReporte(FILE*, nodo*);
  char* tipo_de_dato (int);
 
 int idVar;
+

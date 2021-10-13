@@ -2411,9 +2411,9 @@ int main (int argc, char **argv)
 
     if(analisisCorrecto){
         printf("Analisis finalizado correctamente");
-        FILE *fpReporte
+        FILE *fpReporte;
         fpReporte = fopen("./reporte.txt" , "w");
-        imprimirReporte()
+        imprimirReporte();
 
         fclose(fpReporte);
     }
