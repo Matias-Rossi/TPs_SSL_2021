@@ -63,6 +63,7 @@ ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
 SALTO_DE_LINEA (\n)+
 
+
 %%
 {INCLUDE}                               {return INCLUDE;}
 {DEFINE}                                {return DEFINE;}

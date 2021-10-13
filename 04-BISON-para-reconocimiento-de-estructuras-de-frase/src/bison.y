@@ -221,7 +221,6 @@ enumerador:    IDENTIFICADOR
              | IDENTIFICADOR '=' expresion_constante
              ;
 
-
 declarador:   apuntador declarador_directo
             | declarador_directo
 ;

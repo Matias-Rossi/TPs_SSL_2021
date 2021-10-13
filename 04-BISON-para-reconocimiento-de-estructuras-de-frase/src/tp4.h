@@ -34,3 +34,4 @@ void imprimirEnReporte(FILE*, nodo*);
 
 int idVar;
 
+
