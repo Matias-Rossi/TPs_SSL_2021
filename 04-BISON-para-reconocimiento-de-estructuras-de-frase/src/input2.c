@@ -16,6 +16,6 @@
         return 0;
     }
 
-    int hola() {
+    int hola(int m, char z) {
         printf("hola");
     }

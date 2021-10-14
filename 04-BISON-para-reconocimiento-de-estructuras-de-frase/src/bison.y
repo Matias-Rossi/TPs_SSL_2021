@@ -306,12 +306,12 @@ nombre_typedef: 't'
               ;
 
 
-sentencia:  sentencia_etiquetada
-            | sentencia_expresion
-            | sentencia_compuesta
-            | sentencia_de_seleccion
-            | sentencia_de_iteracion
-            | sentencia_de_salto
+sentencia:  sentencia_etiquetada        {agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   yylineno);}
+            | sentencia_expresion       {agregar_sentencia(lista_sentencias, "Sentencia expresion",    yylineno);}
+            | sentencia_compuesta       {agregar_sentencia(lista_sentencias, "Sentencia compuesta",    yylineno);}
+            | sentencia_de_iteracion    {agregar_sentencia(lista_sentencias, "Sentencia de iteracion", yylineno);}
+            | sentencia_de_seleccion    {agregar_sentencia(lista_sentencias, "Sentencia de seleccion", yylineno);}
+            | sentencia_de_salto        {agregar_sentencia(lista_sentencias, "Sentencia de salto",     yylineno);}
             ;
 
 
@@ -504,12 +504,14 @@ int main (int argc, char **argv)
 
     identificadores_variables = inicializarListaIdentificadores(identificadores_variables);
     identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
+    lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
 
     yyparse();
     fclose(yyin);
 
-    crearListadoIdentificadores(fpReporte, identificadores_variables);
-    crearListadoIdentificadores(fpReporte, identificadores_funciones);
+    crearListadoIdentificadores(fpReporte, identificadores_variables, "VARIABLES");
+    crearListadoIdentificadores(fpReporte, identificadores_funciones, "FUNCIONES");
+    crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
 
     fclose(fpReporte);
 

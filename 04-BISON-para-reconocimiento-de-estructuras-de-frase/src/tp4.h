@@ -16,6 +16,17 @@ typedef struct {
     int cantElementos;
 } ListaIdentificadores;
 
+typedef struct {
+    char* tipo;
+    int linea;
+    struct Sentencia* sig;
+} Sentencia;
+
+typedef struct {
+    struct Identificador* pri;
+    int cantElementos;
+} ListaSentencias;
+
 //listas.c
 ListaIdentificadores* inicializarListaIdentificadores      (ListaIdentificadores*);
 void                  agregarIdentificador                 (ListaIdentificadores*, char*, char*);
@@ -25,12 +36,15 @@ int                   ordenarIdentificadores               (ListaIdentificadores
 void                  swapId                               (Identificador*, Identificador*);
 void                  intercambiarIdentificadores          (Identificador*, Identificador*);
 void                  liberarListaIdentificadores          (ListaIdentificadores*);
+ListaSentencias*      inicializarListaSentencias           (ListaSentencias*);
+void                  agregar_sentencia                    (ListaSentencias*, char*, int);
 
 //reporte.c
 void nuevaCategoria              (FILE*, char*);
-void crearListadoIdentificadores (FILE*, ListaIdentificadores*);
+void crearListadoIdentificadores (FILE*, ListaIdentificadores*, char*);
 char* tDatoItoC(int);
 
 ListaIdentificadores* identificadores_variables;
 ListaIdentificadores* identificadores_funciones;
+ListaSentencias*      lista_sentencias;
 char*                 aux_tIdentificador;

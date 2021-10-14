@@ -120,3 +120,30 @@ void liberarListaIdentificadores(ListaIdentificadores* lista){
         free(borrador);
     }
 }
+
+
+ListaSentencias* inicializarListaSentencias(ListaSentencias* lista) {
+    lista = (ListaSentencias*)malloc(sizeof(ListaSentencias));
+    lista->cantElementos = 0;
+    lista->pri = NULL;
+    return lista;
+}
+
+void agregar_sentencia(ListaSentencias* lista, char* tSentencia, int linea){
+    Sentencia* nuevo = (Sentencia*) malloc(sizeof(Sentencia));
+    nuevo->tipo = tSentencia;
+    nuevo->linea = linea;
+    nuevo->sig = NULL;
+
+    if(lista->pri != NULL){
+        Sentencia* ultimo = lista->pri;
+        while(ultimo->sig != NULL){
+            ultimo = ultimo->sig;
+        }
+        ultimo->sig = nuevo;
+    }
+    else 
+    lista->pri = nuevo;
+
+    lista->cantElementos++;
+}
