@@ -1,14 +1,11 @@
 {
     "tasks": [
         {
-            "type": "cppbuild",
-            "label": "C/C++: gcc.exe compilar archivo activo",
-            "command": "C:\\MinGW\\bin\\gcc.exe",
+            "type": "shell",
+            "label": "Compilar",
+            "command": "make",
             "args": [
-                "-g",
-                "${file}",
-                "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "--directory=${workspaceFolder}/04-BISON-para-reconocimiento-de-estructuras-de-frase/src;",
             ],
             "options": {
                 "cwd": "${fileDirname}"

@@ -1,12 +1,4 @@
-#define INT 1
-#define CHAR 2
-#define LONG 3
-#define DOUBLE 4
-#define SHORT 5
-#define SIGNED 6
-#define UNSIGNED 7
-#define ENUM 8
-#define VOID 9
+enum tipo {Int = 1, Char = 2, Long = 3, Double = 4, Short = 5, Signed = 6, Unsigned = 7, Enum = 8, Void = 9, Float = 10};
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -26,9 +18,9 @@ typedef struct {
 
 //listas.c
 ListaIdentificadores* inicializarListaIdentificadores      (ListaIdentificadores*);
-void                  agregarIdentificador                 (ListaIdentificadores*, char*, int);
+void                  agregarIdentificador                 (ListaIdentificadores*, char*, char*);
 int                   identificadorIncrementarSiRegistrado (Identificador* lista, char*);
-void                  nuevoIdentificador                   (ListaIdentificadores*, char*, int);
+void                  nuevoIdentificador                   (ListaIdentificadores*, char*, char*);
 int                   ordenarIdentificadores               (ListaIdentificadores*, int criterio(char*, char*));
 void                  swapId                               (Identificador*, Identificador*);
 void                  intercambiarIdentificadores          (Identificador*, Identificador*);
@@ -37,7 +29,6 @@ void                  liberarListaIdentificadores          (ListaIdentificadores
 //reporte.c
 void nuevaCategoria              (FILE*, char*);
 void crearListadoIdentificadores (FILE*, ListaIdentificadores*);
-int tDatoCtoI (char*);
 char* tDatoItoC(int);
 
 ListaIdentificadores* identificadores_variables;

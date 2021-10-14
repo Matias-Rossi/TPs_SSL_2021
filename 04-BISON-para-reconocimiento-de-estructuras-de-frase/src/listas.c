@@ -10,7 +10,7 @@ ListaIdentificadores* inicializarListaIdentificadores(ListaIdentificadores* list
     return lista;
 }
 
-void agregarIdentificador(ListaIdentificadores* lista, char* cadena, int tDato){
+void agregarIdentificador(ListaIdentificadores* lista, char* cadena, char* tDato){
     int yaRegistrado = 0;
 
     if(lista->cantElementos > 0)
@@ -43,7 +43,7 @@ int identificadorIncrementarSiRegistrado(Identificador* lista, char* cadena){
     return 0;
 }
 
-void nuevoIdentificador(ListaIdentificadores* lista, char* cadena, int tDato){
+void nuevoIdentificador(ListaIdentificadores* lista, char* cadena, char* tDato){
     //Crea el identificador (nodo)
     Identificador* nuevo = malloc(sizeof(Identificador));
     nuevo->nombre = malloc(strlen(cadena)*sizeof(char));

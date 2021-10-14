@@ -1,5 +1,5 @@
 all: bison flex
-	gcc bison.tab.c lex.yy.c
+	gcc bison.tab.c lex.yy.c listas.c reporte.c -Iinclude
 
 bison: 
 	bison -d bison.y

@@ -10,36 +10,15 @@ void crearListadoIdentificadores(FILE* reporte, ListaIdentificadores* identifica
         Identificador* aux = identificadores->pri;
 
         nuevaCategoria(reporte, "VARIABLES");
-        fprintf(reporte, "NOMBRE\tOCURRENCIAS\tTIPO DE DATO");
+        fprintf(reporte, "NOMBRE\tOCURRENCIAS\tTIPO DE DATO\n");
         while(aux->sig != NULL) {                                                           //Itera por los nodos
-            fprintf(reporte, "%s\t%d\t%s\n" ,aux->nombre, aux->ocurrencias, tDatoItoC(aux->tipo));              
+            fprintf(reporte, "%s\t\t%d\t\t%s\n" ,aux->nombre, aux->ocurrencias, tDatoItoC(aux->tipo));              
             aux = aux->sig;
         }
-        fprintf(reporte, "%s\t%d\t%s\n" ,aux->nombre, aux->ocurrencias, tDatoCtoI(aux->tipo));
+        fprintf(reporte, "%s\t\t%d\t\t%s\n" ,aux->nombre, aux->ocurrencias, tDatoItoC(aux->tipo));
 
         liberarListaIdentificadores(identificadores);
     }
-}
-
-int tDatoCtoI (char* tDato){
-    if(strcmp("INT", tDato) == 0)
-        return 1;
-    else if(strcmp("CHAR", tDato) == 0)
-        return 2;
-    else if(strcmp("LONG", tDato) == 0)
-        return 3;
-    else if(strcmp("DOUBLE", tDato) == 0)
-        return 4;
-    else if(strcmp("SHORT", tDato) == 0)
-        return 5;
-    else if(strcmp("SIGNED", tDato) == 0)
-        return 6;
-    else if(strcmp("UNSIGNED", tDato) == 0)
-        return 7;
-    else if(strcmp("ENUM", tDato) == 0)
-        return 8;
-    else if(strcmp("VOID", tDato) == 0)
-        return 9;
 }
 
 char* tDatoItoC(int tDato){
@@ -71,6 +50,9 @@ char* tDatoItoC(int tDato){
             break;
         case 9:
             return "void";
+            break;
+        case 10:
+            return "float";
             break;
         default:
             return "TAD";

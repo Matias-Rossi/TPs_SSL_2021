@@ -143,15 +143,15 @@ especificador_categoria_almacenamiento:   AUTO
 				                    ;
 
 
-especificador_de_tipo: INT                         {aux_tIdentificador="int";}
-	  		|CHAR                                  {aux_tIdentificador="char";}
-	  		|FLOAT                                 {aux_tIdentificador="float";}
-	  		|DOUBLE                                {aux_tIdentificador="double";}
-          	|SHORT                                 {aux_tIdentificador="";}
-	  		|VOID                                  {aux_tIdentificador="";}
-	  		|LONG                                  {aux_tIdentificador="";}
-	 		|SIGNED                                {aux_tIdentificador="";}
-            |UNSIGNED 							   {aux_tIdentificador="";}
+especificador_de_tipo: INT                         {aux_tIdentificador=1;}
+	  		|CHAR                                  {aux_tIdentificador=2;}
+	  		|FLOAT                                 {aux_tIdentificador=10;}
+	  		|DOUBLE                                {aux_tIdentificador=4;}
+          	|SHORT                                 {aux_tIdentificador=5;}
+	  		|VOID                                  {aux_tIdentificador=9;}
+	  		|LONG                                  {aux_tIdentificador=3;}
+	 		|SIGNED                                {aux_tIdentificador=6;}
+            |UNSIGNED 							   {aux_tIdentificador=7;}
 	        |especificador_estructura_o_union
 	        |especificador_enum 
 	        |nombre_typedef 
@@ -226,13 +226,13 @@ declarador:   apuntador declarador_directo
             | declarador_directo                                    
 ;
 
-declarador_directo:       IDENTIFICADOR                                           {agregarIdentificador(identificadores_variables,  $<cval>1, tDatoCtoI(aux_tIdentificador));}
+declarador_directo:       IDENTIFICADOR                                           {agregarIdentificador(identificadores_variables,  $<cval>1, aux_tIdentificador);}
                         | '(' declarador ')'
-                        | IDENTIFICADOR  '[' expresion_constante ']'              {agregarIdentificador(identificadores_variables,  $<cval>1, tDatoCtoI(aux_tIdentificador));}
-                        | IDENTIFICADOR  '[' ']'                                  {agregarIdentificador(identificadores_variables,  $<cval>1, tDatoCtoI(aux_tIdentificador));}
-                        | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {agregarIdentificador(identificadores_funciones,  $<cval>1, tDatoCtoI(aux_tIdentificador));}
-                        | IDENTIFICADOR '(' lista_de_identificadores ')'          {agregarIdentificador(identificadores_funciones,  $<cval>1, tDatoCtoI(aux_tIdentificador));}
-                        | IDENTIFICADOR '(' ')'                                   {agregarIdentificador(identificadores_funciones,  $<cval>1, tDatoCtoI(aux_tIdentificador));}
+                        | IDENTIFICADOR  '[' expresion_constante ']'              {agregarIdentificador(identificadores_variables,  $<cval>1, aux_tIdentificador);}
+                        | IDENTIFICADOR  '[' ']'                                  {agregarIdentificador(identificadores_variables,  $<cval>1, aux_tIdentificador);}
+                        | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
+                        | IDENTIFICADOR '(' lista_de_identificadores ')'          {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
+                        | IDENTIFICADOR '(' ')'                                   {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
                         ;
 
 
@@ -511,7 +511,7 @@ int main (int argc, char **argv)
     crearListadoIdentificadores(fpReporte, identificadores_variables);
     crearListadoIdentificadores(fpReporte, identificadores_funciones);
 
-    fclose(fpReporte)
+    fclose(fpReporte);
 
     return 0;
 }
