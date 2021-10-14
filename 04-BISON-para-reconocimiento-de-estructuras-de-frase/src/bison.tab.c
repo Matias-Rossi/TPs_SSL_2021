@@ -2257,42 +2257,42 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 309 "bison.y"
-    {agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   5);;}
+    {agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   yylineno());;}
     break;
 
   case 115:
 
 /* Line 1455 of yacc.c  */
 #line 310 "bison.y"
-    {agregar_sentencia(lista_sentencias, "Sentencia expresion",    5);;}
+    {agregar_sentencia(lista_sentencias, "Sentencia expresion",    yylineno());;}
     break;
 
   case 116:
 
 /* Line 1455 of yacc.c  */
 #line 311 "bison.y"
-    {agregar_sentencia(lista_sentencias, "Sentencia compuesta",    5);;}
+    {agregar_sentencia(lista_sentencias, "Sentencia compuesta",    yylineno());;}
     break;
 
   case 117:
 
 /* Line 1455 of yacc.c  */
 #line 312 "bison.y"
-    {agregar_sentencia(lista_sentencias, "Sentencia de iteracion", 5);;}
+    {agregar_sentencia(lista_sentencias, "Sentencia de iteracion", yylineno());;}
     break;
 
   case 118:
 
 /* Line 1455 of yacc.c  */
 #line 313 "bison.y"
-    {agregar_sentencia(lista_sentencias, "Sentencia de seleccion", 5);;}
+    {agregar_sentencia(lista_sentencias, "Sentencia de seleccion", yylineno());;}
     break;
 
   case 119:
 
 /* Line 1455 of yacc.c  */
 #line 314 "bison.y"
-    {agregar_sentencia(lista_sentencias, "Sentencia de salto",     5);;}
+    {agregar_sentencia(lista_sentencias, "Sentencia de salto",     yylineno());;}
     break;
 
 
@@ -2526,7 +2526,7 @@ int main (int argc, char **argv)
 
     crearListadoIdentificadores(fpReporte, identificadores_variables, "VARIABLES");
     crearListadoIdentificadores(fpReporte, identificadores_funciones, "FUNCIONES");
-    crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
+    //crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
 
     fclose(fpReporte);
 
@@ -2535,8 +2535,7 @@ int main (int argc, char **argv)
 
 int yyerror(const char *msg)
 {
-    int yylineno = 5; //TODO: noma pa que no moleste
-	printf("\nFallo el analisis en la linea: %d %s\n",yylineno,msg);
+	printf("\nFallo el analisis en la linea: %d %s\n", yylineno(), msg);
 	analisisCorrecto = 0;
 	return 0;
 }

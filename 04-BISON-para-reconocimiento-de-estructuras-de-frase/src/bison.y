@@ -306,12 +306,12 @@ nombre_typedef: 't'
               ;
 
 
-sentencia:  sentencia_etiquetada        {agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   yylineno);}
-            | sentencia_expresion       {agregar_sentencia(lista_sentencias, "Sentencia expresion",    yylineno);}
-            | sentencia_compuesta       {agregar_sentencia(lista_sentencias, "Sentencia compuesta",    yylineno);}
-            | sentencia_de_iteracion    {agregar_sentencia(lista_sentencias, "Sentencia de iteracion", yylineno);}
-            | sentencia_de_seleccion    {agregar_sentencia(lista_sentencias, "Sentencia de seleccion", yylineno);}
-            | sentencia_de_salto        {agregar_sentencia(lista_sentencias, "Sentencia de salto",     yylineno);}
+sentencia:  sentencia_etiquetada        {agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   yylineno());}
+            | sentencia_expresion       {agregar_sentencia(lista_sentencias, "Sentencia expresion",    yylineno());}
+            | sentencia_compuesta       {agregar_sentencia(lista_sentencias, "Sentencia compuesta",    yylineno());}
+            | sentencia_de_iteracion    {agregar_sentencia(lista_sentencias, "Sentencia de iteracion", yylineno());}
+            | sentencia_de_seleccion    {agregar_sentencia(lista_sentencias, "Sentencia de seleccion", yylineno());}
+            | sentencia_de_salto        {agregar_sentencia(lista_sentencias, "Sentencia de salto",     yylineno());}
             ;
 
 
@@ -511,7 +511,7 @@ int main (int argc, char **argv)
 
     crearListadoIdentificadores(fpReporte, identificadores_variables, "VARIABLES");
     crearListadoIdentificadores(fpReporte, identificadores_funciones, "FUNCIONES");
-    crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
+    //crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
 
     fclose(fpReporte);
 
@@ -520,8 +520,7 @@ int main (int argc, char **argv)
 
 int yyerror(const char *msg)
 {
-    int yylineno = 5; //TODO: noma pa que no moleste
-	printf("\nFallo el analisis en la linea: %d %s\n",yylineno,msg);
+	printf("\nFallo el analisis en la linea: %d %s\n", yylineno(), msg);
 	analisisCorrecto = 0;
 	return 0;
 }
