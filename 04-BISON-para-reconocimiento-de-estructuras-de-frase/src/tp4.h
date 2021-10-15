@@ -4,6 +4,9 @@ enum tipo {Int = 1, Char = 2, Long = 3, Double = 4, Short = 5, Signed = 6, Unsig
 #include<stdlib.h>
 #include<string.h>
 
+int yylineno;
+int yyerror(const char *msg);
+
 typedef struct Identificador{
     char* nombre;
     int ocurrencias;
