@@ -1,0 +1,22 @@
+
+
+--VARIABLES--
+NOMBRE	OCURRENCIAS		TIPO DE DATO
+)		1				int
+,		2				int
+=		2				char
+
+
+--FUNCIONES--
+NOMBRE	OCURRENCIAS		TIPO DE DATO
+)		2				int
+
+
+--SENTENCIAS--
+TIPO DE SENTENCIA		NUMERO DE LINEA
+Sentencia expresion		12
+Sentencia compuesta		13
+Sentencia de iteracion		13
+Sentencia expresion		14
+Sentencia de salto		16
+Sentencia expresion		20
