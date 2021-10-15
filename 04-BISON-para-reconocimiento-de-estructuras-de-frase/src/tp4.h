@@ -7,7 +7,7 @@ enum tipo {Int = 1, Char = 2, Long = 3, Double = 4, Short = 5, Signed = 6, Unsig
 typedef struct Identificador{
     char* nombre;
     int ocurrencias;
-    int tipo;
+    char* tipo;
     struct Identificador* sig;
 } Identificador;
 
@@ -16,14 +16,14 @@ typedef struct {
     int cantElementos;
 } ListaIdentificadores;
 
-typedef struct {
+typedef struct Sentencia{
     char* tipo;
     int linea;
     struct Sentencia* sig;
 } Sentencia;
 
 typedef struct {
-    struct Identificador* pri;
+    Sentencia* pri;
     int cantElementos;
 } ListaSentencias;
 
@@ -42,7 +42,7 @@ void                  agregar_sentencia                    (ListaSentencias*, ch
 //reporte.c
 void nuevaCategoria              (FILE*, char*);
 void crearListadoIdentificadores (FILE*, ListaIdentificadores*, char*);
-char* tDatoItoC(int);
+void crearListadoSentencias(FILE*, ListaSentencias*, char*);
 
 ListaIdentificadores* identificadores_variables;
 ListaIdentificadores* identificadores_funciones;

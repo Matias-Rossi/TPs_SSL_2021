@@ -143,15 +143,15 @@ especificador_categoria_almacenamiento:   AUTO
 				                    ;
 
 
-especificador_de_tipo: INT                         {aux_tIdentificador=1;}
-	  		|CHAR                                  {aux_tIdentificador=2;}
-	  		|FLOAT                                 {aux_tIdentificador=10;}
-	  		|DOUBLE                                {aux_tIdentificador=4;}
-          	|SHORT                                 {aux_tIdentificador=5;}
-	  		|VOID                                  {aux_tIdentificador=9;}
-	  		|LONG                                  {aux_tIdentificador=3;}
-	 		|SIGNED                                {aux_tIdentificador=6;}
-            |UNSIGNED 							   {aux_tIdentificador=7;}
+especificador_de_tipo: INT                         {aux_tIdentificador="int";}
+	  		|CHAR                                  {aux_tIdentificador="char";}
+	  		|FLOAT                                 {aux_tIdentificador="float";}
+	  		|DOUBLE                                {aux_tIdentificador="double";}
+          	|SHORT                                 {aux_tIdentificador="short";}
+	  		|VOID                                  {aux_tIdentificador="void";}
+	  		|LONG                                  {aux_tIdentificador="long";}
+	 		|SIGNED                                {aux_tIdentificador="signed";}
+            |UNSIGNED 							   {aux_tIdentificador="unsigned";}
 	        |especificador_estructura_o_union
 	        |especificador_enum 
 	        |nombre_typedef 
@@ -499,19 +499,28 @@ constante:  CONST_OCTAL
 %%
 int main (int argc, char **argv)
 {
+
+    printf("Abriendo archivos\n");
+
     yyin = fopen(argv[1], "r");
     FILE* fpReporte = fopen("reporte.txt", "w+");
+
+    printf("Creando estructuras\n");
 
     identificadores_variables = inicializarListaIdentificadores(identificadores_variables);
     identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
     lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
 
+    printf("Comenzando anlisis lexico y sintactico\n");
+
     yyparse();
     fclose(yyin);
 
+    printf("Imprimiendo reporte\n");
+
     crearListadoIdentificadores(fpReporte, identificadores_variables, "VARIABLES");
     crearListadoIdentificadores(fpReporte, identificadores_funciones, "FUNCIONES");
-    //crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
+    crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
 
     fclose(fpReporte);
 

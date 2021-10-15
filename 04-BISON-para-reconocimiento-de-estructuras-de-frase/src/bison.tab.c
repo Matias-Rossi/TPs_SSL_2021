@@ -2152,63 +2152,63 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 146 "bison.y"
-    {aux_tIdentificador=1;;}
+    {aux_tIdentificador="int";;}
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
 #line 147 "bison.y"
-    {aux_tIdentificador=2;;}
+    {aux_tIdentificador="char";;}
     break;
 
   case 30:
 
 /* Line 1455 of yacc.c  */
 #line 148 "bison.y"
-    {aux_tIdentificador=10;;}
+    {aux_tIdentificador="float";;}
     break;
 
   case 31:
 
 /* Line 1455 of yacc.c  */
 #line 149 "bison.y"
-    {aux_tIdentificador=4;;}
+    {aux_tIdentificador="double";;}
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
 #line 150 "bison.y"
-    {aux_tIdentificador=5;;}
+    {aux_tIdentificador="short";;}
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
 #line 151 "bison.y"
-    {aux_tIdentificador=9;;}
+    {aux_tIdentificador="void";;}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
 #line 152 "bison.y"
-    {aux_tIdentificador=3;;}
+    {aux_tIdentificador="long";;}
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
 #line 153 "bison.y"
-    {aux_tIdentificador=6;;}
+    {aux_tIdentificador="signed";;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
 #line 154 "bison.y"
-    {aux_tIdentificador=7;;}
+    {aux_tIdentificador="unsigned";;}
     break;
 
   case 72:
@@ -2257,7 +2257,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 309 "bison.y"
-    {agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   yylineno());;}
+    {/*agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   yylineno());*/;}
     break;
 
   case 115:
@@ -2514,19 +2514,28 @@ yyreturn:
 
 int main (int argc, char **argv)
 {
+
+    printf("Abriendo archivos\n");
+
     yyin = fopen(argv[1], "r");
     FILE* fpReporte = fopen("reporte.txt", "w+");
+
+    printf("Creando estructuras\n");
 
     identificadores_variables = inicializarListaIdentificadores(identificadores_variables);
     identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
     lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
 
+    printf("Comenzando anlisis lexico y sintactico\n");
+
     yyparse();
     fclose(yyin);
 
+    printf("Imprimiendo reporte\n");
+
     crearListadoIdentificadores(fpReporte, identificadores_variables, "VARIABLES");
     crearListadoIdentificadores(fpReporte, identificadores_funciones, "FUNCIONES");
-    //crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
+    crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
 
     fclose(fpReporte);
 
