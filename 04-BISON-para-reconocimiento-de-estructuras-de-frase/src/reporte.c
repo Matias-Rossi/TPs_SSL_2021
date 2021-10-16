@@ -36,3 +36,11 @@ void crearListadoSentencias(FILE* reporte, ListaSentencias* lSentencias, char* t
         //liberarListaIdentificadores(lSentencias);
     }
 }
+
+char * sacar_ultimo_caracter(char* var){
+    char* min_var = malloc(strlen(var));
+    memcpy(min_var, var, strlen(var) - 1);
+    min_var[strlen(var)-1]='\0';
+
+    return min_var;
+}

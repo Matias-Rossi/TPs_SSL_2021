@@ -1,9 +1,7 @@
 
 %{
-#include <stdio.h>
-#include <ctype.h>
-#include <string.h>
 #include "tp4.h"
+
 
 int yylex(void);
 int yywrap(){
@@ -226,10 +224,10 @@ declarador:   apuntador declarador_directo
             | declarador_directo                                    
 ;
 
-declarador_directo:       IDENTIFICADOR                                           {agregarIdentificador(identificadores_variables,  $<cval>1, aux_tIdentificador);}
+declarador_directo:       IDENTIFICADOR                                           {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
                         | '(' declarador ')'
-                        | IDENTIFICADOR  '[' expresion_constante ']'              {agregarIdentificador(identificadores_variables,  $<cval>1, aux_tIdentificador);}
-                        | IDENTIFICADOR  '[' ']'                                  {agregarIdentificador(identificadores_variables,  $<cval>1, aux_tIdentificador);}
+                        | IDENTIFICADOR  '[' expresion_constante ']'              {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+                        | IDENTIFICADOR  '[' ']'                                  {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
                         | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
                         | IDENTIFICADOR '(' lista_de_identificadores ')'          {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
                         | IDENTIFICADOR '(' ')'                                   {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}

@@ -3,6 +3,10 @@ enum tipo {Int = 1, Char = 2, Long = 3, Double = 4, Short = 5, Signed = 6, Unsig
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include <ctype.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 int yylineno;
 int yyerror(const char *msg);
@@ -43,9 +47,10 @@ ListaSentencias*      inicializarListaSentencias           (ListaSentencias*);
 void                  agregar_sentencia                    (ListaSentencias*, char*, int);
 
 //reporte.c
-void nuevaCategoria              (FILE*, char*);
-void crearListadoIdentificadores (FILE*, ListaIdentificadores*, char*);
-void crearListadoSentencias(FILE*, ListaSentencias*, char*);
+void  nuevaCategoria              (FILE*, char*);
+void  crearListadoIdentificadores (FILE*, ListaIdentificadores*, char*);
+void  crearListadoSentencias(FILE*, ListaSentencias*, char*);
+char* sacar_ultimo_caracter(char*);
 
 ListaIdentificadores* identificadores_variables;
 ListaIdentificadores* identificadores_funciones;

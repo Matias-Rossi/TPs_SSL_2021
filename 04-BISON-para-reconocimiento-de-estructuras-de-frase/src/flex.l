@@ -7,6 +7,7 @@
 #include <string.h>
 #include "bison.tab.h"
 
+int comentario = 0;
 
 %}
 /* DEFINICIONES */
@@ -122,17 +123,17 @@ SALTO_DE_LINEA (\n)+
 "^="									{return POT_IGUAL;}
 "|="									{return O_IGUAL;}
 ";"|"="|","|"{"|"}"|"("|")"|"["|"]"|"*"|"+"|"-"|"/"|"?"|":"|"&"|"|"|"^"|"!"|"~"|"%"|"<"|">"	{return yytext[0];}
-{IDENTIFICADOR}                                   {yylval.cval = yytext; return IDENTIFICADOR;}
-{LITERAL_CADENA}                                  {return LITERAL_CADENA;}
-{CONST_OCTAL}                                     {return CONST_OCTAL;}
-{CONST_HEXADECIMAL}                               {return CONST_HEXADECIMAL;}
-{CONST_DECIMAL}                                   {return CONST_DECIMAL;}
-{CONST_PTOFLOTANTE}                               {return CONST_PTOFLOTANTE;}
-{CONST_CARACTER}                                  {return CONST_CARACTER;}
-{COMENTARIOS_LINEAL}                              {;}
-{COMENTARIOS_MULTILINEAL}                         {;}
-{ESPACIO_EN_BLANCO}|{TABULACION}|{SALTO_DE_LINEA} {/*return  ¿? ;*/}
+{IDENTIFICADOR}                                   {if(comentario == 0) {yylval.cval = yytext; return IDENTIFICADOR;}}
+{LITERAL_CADENA}                                  {if(comentario == 0) return LITERAL_CADENA;}
+{CONST_OCTAL}                                     {if(comentario == 0) return CONST_OCTAL;}
+{CONST_HEXADECIMAL}                               {if(comentario == 0) return CONST_HEXADECIMAL;}
+{CONST_DECIMAL}                                   {if(comentario == 0) return CONST_DECIMAL;}
+{CONST_PTOFLOTANTE}                               {if(comentario == 0) return CONST_PTOFLOTANTE;}
+{CONST_CARACTER}                                  {if(comentario == 0) return CONST_CARACTER;}
+{COMENTARIOS_LINEAL}                              {if(comentario == 0) comentario=1;}
+{COMENTARIOS_MULTILINEAL}                         {if(comentario == 1) comentario = 0; else comentario = 1;}
+{ESPACIO_EN_BLANCO}|{TABULACION}                  {;}
+{SALTO_DE_LINEA}                                  {comentario=0;}
 .                                                 {printf("ERROR LEXICO: %s, EN LINEA: %d \n",yytext,yylineno);}
 %%
-
 
