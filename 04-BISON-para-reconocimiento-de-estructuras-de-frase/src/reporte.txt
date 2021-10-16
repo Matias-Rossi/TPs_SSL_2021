@@ -1,32 +1,20 @@
 
 
---VARIABLES--
-NOMBRE	OCURRENCIAS		TIPO DE DATO
-i		1				int
-last 		1				int
-m		1				int
-sum 		1				int
-z		1				char
-
-
 --FUNCIONES--
-NOMBRE	OCURRENCIAS		TIPO DE DATO
-hola(int m, char z)		1				int
-main()		1				char
+NOMBRE			TIPO DE DATO
+main()			int
 
 
 --SENTENCIAS--
 TIPO DE SENTENCIA		NUMERO DE LINEA
-Sentencia expresion		12
-Sentencia compuesta		13
-Sentencia de iteracion		13
-Sentencia expresion		15
-Sentencia de salto		18
-Sentencia compuesta		19
-Sentencia de iteracion		19
+Sentencia expresion		5
+Sentencia expresion		8
+Sentencia expresion		9
+Sentencia expresion		10
+Sentencia expresion		13
+Sentencia expresion		14
+Sentencia expresion		17
+Sentencia expresion		18
+Sentencia expresion		19
+Sentencia expresion		23
 Sentencia expresion		26
-Sentencia expresion		27
-Sentencia compuesta		28
-Sentencia expresion		30
-Sentencia de salto		34
-Sentencia expresion		38

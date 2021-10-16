@@ -10,12 +10,12 @@ void crearListadoIdentificadores(FILE* reporte, ListaIdentificadores* identifica
         Identificador* aux = identificadores->pri;
 
         nuevaCategoria(reporte, tListado);
-        fprintf(reporte, "NOMBRE\tOCURRENCIAS\t\tTIPO DE DATO\n");
+        fprintf(reporte, "NOMBRE\t\t\tTIPO DE DATO\n");
         while(aux->sig != NULL) {                                                           //Itera por los nodos
-            fprintf(reporte, "%s\t\t%d\t\t\t\t%s\n" ,aux->nombre, aux->ocurrencias, aux->tipo);              
+            fprintf(reporte, "%s\t\t\t%s\n" ,aux->nombre, aux->tipo);              
             aux = aux->sig;
         }
-        fprintf(reporte, "%s\t\t%d\t\t\t\t%s\n" ,aux->nombre, aux->ocurrencias, aux->tipo);
+        fprintf(reporte, "%s\t\t\t%s\n" ,aux->nombre, aux->tipo);
 
         liberarListaIdentificadores(identificadores);
     }
