@@ -1,20 +1,33 @@
 
 
+--VARIABLES--
+NOMBRE			TIPO DE DATO
+i			int
+last 			int
+m			int
+sum 			int
+z			char
+
+
 --FUNCIONES--
 NOMBRE			TIPO DE DATO
-main()			int
+hola(int m, char z)			int
+main()			char
 
 
 --SENTENCIAS--
 TIPO DE SENTENCIA		NUMERO DE LINEA
-Sentencia expresion		5
-Sentencia expresion		8
-Sentencia expresion		9
-Sentencia expresion		10
-Sentencia expresion		13
-Sentencia expresion		14
-Sentencia expresion		17
-Sentencia expresion		18
-Sentencia expresion		19
-Sentencia expresion		23
+Sentencia expresion		12
+Sentencia compuesta		13
+Sentencia de iteracion		13
+Sentencia expresion		15
+Sentencia de salto		18
+Sentencia compuesta		19
+Sentencia de iteracion		19
+Sentencia expresion		25
 Sentencia expresion		26
+Sentencia expresion		28
+Sentencia compuesta		29
+Sentencia expresion		31
+Sentencia de salto		35
+Sentencia expresion		39

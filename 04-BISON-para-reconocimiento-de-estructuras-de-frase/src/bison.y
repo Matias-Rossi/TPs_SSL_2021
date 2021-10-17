@@ -93,6 +93,7 @@ int analisisCorrecto = 1;
 %left       '('
 %nonassoc IFX
 %nonassoc ELSE
+
 %start unidad_de_programa
 %%
 unidad_de_programa: INCLUDE  unidad_de_programa                           

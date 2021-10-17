@@ -11,12 +11,13 @@ ListaIdentificadores* inicializarListaIdentificadores(ListaIdentificadores* list
 }
 
 void agregarIdentificador(ListaIdentificadores* lista, char* cadena, char* tDato){
+     
     int yaRegistrado = 0;
 
     if(lista->cantElementos > 0)
         yaRegistrado = identificadorIncrementarSiRegistrado(lista->pri, cadena);
 
-    printf("yaRegistrado: %d\n",yaRegistrado);
+    //printf("yaRegistrado: %d\n",yaRegistrado);
 
     if(yaRegistrado == 0) {
         nuevoIdentificador(lista, cadena, tDato);
@@ -29,17 +30,19 @@ int identificadorIncrementarSiRegistrado(Identificador* lista, char* cadena){
     Identificador* aux = lista;
 
     while(aux->sig != NULL) {
+        //printf("!strcmp(%s, %s)\n", aux->nombre, cadena);
         if(!strcmp(aux->nombre, cadena)){
             aux->ocurrencias = aux->ocurrencias + 1;
-            printf("Ocurrencias: %d\n", aux->ocurrencias);
+            //printf("Ocurrencias: %d\n", aux->ocurrencias);
             return 1;
         } else {
             aux = aux -> sig;
         }
     }
+    //printf("!strcmp(%s, %s)\n", aux->nombre, cadena);
     if(!strcmp(aux->nombre, cadena)){
         aux->ocurrencias = aux->ocurrencias + 1;
-        printf("Ocurrencias: %d\n", aux->ocurrencias);
+        //printf("Ocurrencias: %d\n", aux->ocurrencias);
         return 1;
     } else {
         aux = aux -> sig;

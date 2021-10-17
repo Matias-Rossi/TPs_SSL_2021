@@ -22,6 +22,8 @@ int main()
     char a = 2;
     */
 
+   n--;
+    t = 'b';
    {
        i=4;
    }

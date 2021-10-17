@@ -1,5 +1,3 @@
-enum tipo {Int = 1, Char = 2, Long = 3, Double = 4, Short = 5, Signed = 6, Unsigned = 7, Enum = 8, Void = 9, Float = 10};
-
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
