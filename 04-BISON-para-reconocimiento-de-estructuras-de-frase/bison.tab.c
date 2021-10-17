@@ -83,12 +83,11 @@ int yywrap(){
 int idVar = 0;
 
 extern FILE* yyin;
-int analisisCorrecto = 1;
 
 
 
 /* Line 189 of yacc.c  */
-#line 92 "bison.tab.c"
+#line 91 "bison.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -189,7 +188,7 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 19 ".\\bison.y"
+#line 18 ".\\bison.y"
 
    int ival;
    double dval;
@@ -198,7 +197,7 @@ typedef union YYSTYPE
 
 
 /* Line 214 of yacc.c  */
-#line 202 "bison.tab.c"
+#line 201 "bison.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -210,7 +209,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 214 "bison.tab.c"
+#line 213 "bison.tab.c"
 
 #ifdef short
 # undef short
@@ -593,29 +592,29 @@ static const yytype_int16 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    99,    99,   100,   101,   104,   105,   108,   109,   113,
-     114,   115,   116,   120,   121,   124,   125,   128,   129,   130,
-     131,   132,   133,   137,   138,   139,   140,   141,   145,   146,
-     147,   148,   149,   150,   151,   152,   153,   154,   155,   156,
-     159,   160,   163,   164,   165,   168,   169,   172,   173,   177,
-     178,   182,   183,   187,   191,   192,   193,   194,   198,   199,
-     203,   204,   205,   209,   210,   211,   215,   216,   220,   221,
-     224,   225,   228,   229,   230,   231,   232,   233,   234,   238,
-     239,   240,   241,   245,   246,   250,   251,   255,   256,   260,
-     261,   262,   266,   267,   271,   272,   273,   277,   278,   282,
-     283,   287,   288,   289,   292,   293,   294,   295,   296,   298,
-     299,   300,   301,   304,   308,   309,   310,   311,   312,   313,
-     317,   318,   319,   323,   324,   328,   329,   330,   331,   334,
-     335,   338,   339,   340,   343,   344,   345,   346,   347,   348,
-     349,   350,   351,   352,   355,   356,   357,   358,   359,   362,
-     363,   367,   368,   371,   372,   373,   374,   375,   376,   377,
-     378,   379,   380,   381,   385,   386,   389,   393,   394,   398,
-     399,   402,   403,   406,   407,   410,   411,   414,   415,   416,
-     420,   421,   422,   423,   424,   428,   429,   430,   434,   435,
-     436,   439,   440,   441,   442,   446,   447,   451,   452,   453,
-     454,   455,   456,   459,   460,   461,   462,   463,   464,   467,
-     468,   469,   470,   471,   472,   473,   474,   479,   480,   481,
-     482,   486,   487,   490,   491,   492,   493,   494,   495
+       0,    98,    98,    99,   100,   103,   104,   107,   108,   112,
+     113,   114,   115,   119,   120,   123,   124,   127,   128,   129,
+     130,   131,   132,   136,   137,   138,   139,   140,   144,   145,
+     146,   147,   148,   149,   150,   151,   152,   153,   154,   155,
+     158,   159,   162,   163,   164,   167,   168,   171,   172,   176,
+     177,   181,   182,   186,   190,   191,   192,   193,   197,   198,
+     202,   203,   204,   208,   209,   210,   214,   215,   219,   220,
+     223,   224,   227,   228,   229,   230,   231,   232,   233,   237,
+     238,   239,   240,   244,   245,   249,   250,   254,   255,   259,
+     260,   261,   265,   266,   270,   271,   272,   276,   277,   281,
+     282,   286,   287,   288,   291,   292,   293,   294,   295,   297,
+     298,   299,   300,   303,   307,   308,   309,   310,   311,   312,
+     316,   317,   318,   322,   323,   327,   328,   329,   330,   333,
+     334,   337,   338,   339,   342,   343,   344,   345,   346,   347,
+     348,   349,   350,   351,   354,   355,   356,   357,   358,   361,
+     362,   366,   367,   370,   371,   372,   373,   374,   375,   376,
+     377,   378,   379,   380,   384,   385,   388,   392,   393,   397,
+     398,   401,   402,   405,   406,   409,   410,   413,   414,   415,
+     419,   420,   421,   422,   423,   427,   428,   429,   433,   434,
+     435,   438,   439,   440,   441,   445,   446,   450,   451,   452,
+     453,   454,   455,   458,   459,   460,   461,   462,   463,   466,
+     467,   468,   469,   470,   471,   472,   473,   478,   479,   480,
+     481,   485,   486,   489,   490,   491,   492,   493,   494
 };
 #endif
 
@@ -2149,154 +2148,161 @@ yyreduce:
         case 28:
 
 /* Line 1455 of yacc.c  */
-#line 145 ".\\bison.y"
+#line 144 ".\\bison.y"
     {aux_tIdentificador="int";;}
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 146 ".\\bison.y"
+#line 145 ".\\bison.y"
     {aux_tIdentificador="char";;}
     break;
 
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 147 ".\\bison.y"
+#line 146 ".\\bison.y"
     {aux_tIdentificador="float";;}
     break;
 
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 148 ".\\bison.y"
+#line 147 ".\\bison.y"
     {aux_tIdentificador="double";;}
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 149 ".\\bison.y"
+#line 148 ".\\bison.y"
     {aux_tIdentificador="short";;}
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 150 ".\\bison.y"
+#line 149 ".\\bison.y"
     {aux_tIdentificador="void";;}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 151 ".\\bison.y"
+#line 150 ".\\bison.y"
     {aux_tIdentificador="long";;}
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 152 ".\\bison.y"
+#line 151 ".\\bison.y"
     {aux_tIdentificador="signed";;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 153 ".\\bison.y"
+#line 152 ".\\bison.y"
     {aux_tIdentificador="unsigned";;}
     break;
 
   case 72:
 
 /* Line 1455 of yacc.c  */
-#line 228 ".\\bison.y"
+#line 227 ".\\bison.y"
     {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[(1) - (1)].cval)), aux_tIdentificador);;}
     break;
 
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 230 ".\\bison.y"
+#line 229 ".\\bison.y"
     {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[(1) - (4)].cval)), aux_tIdentificador);;}
     break;
 
   case 75:
 
 /* Line 1455 of yacc.c  */
-#line 231 ".\\bison.y"
+#line 230 ".\\bison.y"
     {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[(1) - (3)].cval)), aux_tIdentificador);;}
     break;
 
   case 76:
 
 /* Line 1455 of yacc.c  */
-#line 232 ".\\bison.y"
+#line 231 ".\\bison.y"
     {agregarIdentificador(identificadores_funciones,  (yyvsp[(1) - (4)].cval), aux_tIdentificador);;}
     break;
 
   case 77:
 
 /* Line 1455 of yacc.c  */
-#line 233 ".\\bison.y"
+#line 232 ".\\bison.y"
     {agregarIdentificador(identificadores_funciones,  (yyvsp[(1) - (4)].cval), aux_tIdentificador);;}
     break;
 
   case 78:
 
 /* Line 1455 of yacc.c  */
-#line 234 ".\\bison.y"
+#line 233 ".\\bison.y"
     {agregarIdentificador(identificadores_funciones,  (yyvsp[(1) - (3)].cval), aux_tIdentificador);;}
+    break;
+
+  case 92:
+
+/* Line 1455 of yacc.c  */
+#line 265 ".\\bison.y"
+    {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[(1) - (1)].cval)), aux_tIdentificador);;}
     break;
 
   case 114:
 
 /* Line 1455 of yacc.c  */
-#line 308 ".\\bison.y"
+#line 307 ".\\bison.y"
     {agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   yylineno);;}
     break;
 
   case 115:
 
 /* Line 1455 of yacc.c  */
-#line 309 ".\\bison.y"
+#line 308 ".\\bison.y"
     {agregar_sentencia(lista_sentencias, "Sentencia expresion",    yylineno);;}
     break;
 
   case 116:
 
 /* Line 1455 of yacc.c  */
-#line 310 ".\\bison.y"
+#line 309 ".\\bison.y"
     {agregar_sentencia(lista_sentencias, "Sentencia compuesta",    yylineno);;}
     break;
 
   case 117:
 
 /* Line 1455 of yacc.c  */
-#line 311 ".\\bison.y"
+#line 310 ".\\bison.y"
     {agregar_sentencia(lista_sentencias, "Sentencia de iteracion", yylineno);;}
     break;
 
   case 118:
 
 /* Line 1455 of yacc.c  */
-#line 312 ".\\bison.y"
+#line 311 ".\\bison.y"
     {agregar_sentencia(lista_sentencias, "Sentencia de seleccion", yylineno);;}
     break;
 
   case 119:
 
 /* Line 1455 of yacc.c  */
-#line 313 ".\\bison.y"
+#line 312 ".\\bison.y"
     {agregar_sentencia(lista_sentencias, "Sentencia de salto",     yylineno);;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 2300 "bison.tab.c"
+#line 2306 "bison.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2508,34 +2514,45 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 498 ".\\bison.y"
+#line 497 ".\\bison.y"
 
 int main (int argc, char **argv)
 {
 
-    printf("Abriendo archivos\n");
+    if(argv[1] == NULL){
+        printf("Debe especificar un archivo para analizar\n");
+    }
 
-    yyin = fopen(argv[1], "r");
-    FILE* fpReporte = fopen("reporte.txt", "w+");
+    else{
 
-    printf("Creando estructuras\n");
+        printf("Abriendo archivos\n");
 
-    identificadores_variables = inicializarListaIdentificadores(identificadores_variables);
-    identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
-    lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
+        yyin = fopen(argv[1], "r");
+        FILE* fpReporte = fopen("reporte.txt", "w+");
 
-    printf("Comenzando anlisis lexico y sintactico\n");
+        printf("Creando estructuras\n");
 
-    yyparse();
-    fclose(yyin);
+        analisisCorrecto = 1;
+        identificadores_variables = inicializarListaIdentificadores(identificadores_variables);
+        identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
+        lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
 
-    printf("Imprimiendo reporte\n");
+        printf("Comenzando anlisis lexico y sintactico\n");
 
-    crearListadoIdentificadores(fpReporte, identificadores_variables, "VARIABLES");
-    crearListadoIdentificadores(fpReporte, identificadores_funciones, "FUNCIONES");
-    crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
+        yyparse();
+        fclose(yyin);
 
-    fclose(fpReporte);
+        if(analisisCorrecto){
+
+            printf("Imprimiendo reporte\n");
+
+            crearListadoIdentificadores(fpReporte, identificadores_variables, "VARIABLES DECLARADAS");
+            crearListadoIdentificadores(fpReporte, identificadores_funciones, "FUNCIONES DECLARADAS");
+            crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
+        }
+
+        fclose(fpReporte);
+    }
 
     return 0;
 }

@@ -13,7 +13,6 @@ int yywrap(){
 int idVar = 0;
 
 extern FILE* yyin;
-int analisisCorrecto = 1;
 
 %}
 %union{
@@ -263,8 +262,8 @@ declaracion_parametro:     especificadores_de_declaracion declarador
                          ;
 
 
-lista_de_identificadores:     IDENTIFICADOR
-                            | lista_de_identificadores ',' IDENTIFICADOR 
+lista_de_identificadores:      IDENTIFICADOR                                {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}    
+                            | lista_de_identificadores ',' IDENTIFICADOR
                             ;
 
 
@@ -499,29 +498,40 @@ constante:  CONST_OCTAL
 int main (int argc, char **argv)
 {
 
-    printf("Abriendo archivos\n");
+    if(argv[1] == NULL){
+        printf("Debe especificar un archivo para analizar\n");
+    }
 
-    yyin = fopen(argv[1], "r");
-    FILE* fpReporte = fopen("reporte.txt", "w+");
+    else{
 
-    printf("Creando estructuras\n");
+        printf("Abriendo archivos\n");
 
-    identificadores_variables = inicializarListaIdentificadores(identificadores_variables);
-    identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
-    lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
+        yyin = fopen(argv[1], "r");
+        FILE* fpReporte = fopen("reporte.txt", "w+");
 
-    printf("Comenzando anlisis lexico y sintactico\n");
+        printf("Creando estructuras\n");
 
-    yyparse();
-    fclose(yyin);
+        analisisCorrecto = 1;
+        identificadores_variables = inicializarListaIdentificadores(identificadores_variables);
+        identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
+        lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
 
-    printf("Imprimiendo reporte\n");
+        printf("Comenzando anlisis lexico y sintactico\n");
 
-    crearListadoIdentificadores(fpReporte, identificadores_variables, "VARIABLES");
-    crearListadoIdentificadores(fpReporte, identificadores_funciones, "FUNCIONES");
-    crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
+        yyparse();
+        fclose(yyin);
 
-    fclose(fpReporte);
+        if(analisisCorrecto){
+
+            printf("Imprimiendo reporte\n");
+
+            crearListadoIdentificadores(fpReporte, identificadores_variables, "VARIABLES DECLARADAS");
+            crearListadoIdentificadores(fpReporte, identificadores_funciones, "FUNCIONES DECLARADAS");
+            crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
+        }
+
+        fclose(fpReporte);
+    }
 
     return 0;
 }

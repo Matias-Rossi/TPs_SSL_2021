@@ -1,9 +1,8 @@
 /* add.c
 * a simple C program
 */
-      
 
-      
+
 int main()
 {
     int i, sum = 0, last = 5;
@@ -17,16 +16,17 @@ int main()
     for(i = 1 ; i < 10; i++){
         return 0;
     }
+    
     /*
     int a = 1;
     char a = 2;
     */
 
-   n--;
+    n--;
     t = 'b';
-   {
-       i=4;
-   }
+    {
+        i=4;
+    }
 
     z = hola(3, 'e');
 

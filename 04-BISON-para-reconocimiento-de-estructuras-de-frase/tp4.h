@@ -11,7 +11,6 @@ int yyerror(const char *msg);
 
 typedef struct Identificador{
     char* nombre;
-    int ocurrencias;
     char* tipo;
     struct Identificador* sig;
 } Identificador;
@@ -35,8 +34,6 @@ typedef struct {
 //listas.c
 ListaIdentificadores* inicializarListaIdentificadores      (ListaIdentificadores*);
 void                  agregarIdentificador                 (ListaIdentificadores*, char*, char*);
-int                   identificadorIncrementarSiRegistrado (Identificador* lista, char*);
-void                  nuevoIdentificador                   (ListaIdentificadores*, char*, char*);
 int                   ordenarIdentificadores               (ListaIdentificadores*, int criterio(char*, char*));
 void                  swapId                               (Identificador*, Identificador*);
 void                  intercambiarIdentificadores          (Identificador*, Identificador*);
@@ -54,3 +51,4 @@ ListaIdentificadores* identificadores_variables;
 ListaIdentificadores* identificadores_funciones;
 ListaSentencias*      lista_sentencias;
 char*                 aux_tIdentificador;
+int                   analisisCorrecto;

@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "bison.tab.h"
+#include "tp4.h"
 
 int comentario = 0;
 
@@ -134,6 +135,6 @@ SALTO_DE_LINEA (\n)+
 {COMENTARIOS_MULTILINEAL}                         {if(comentario == 1) comentario = 0; else comentario = 1;}
 {ESPACIO_EN_BLANCO}|{TABULACION}                  {;}
 {SALTO_DE_LINEA}                                  {comentario=0;}
-.                                                 {printf("ERROR LEXICO: %s, EN LINEA: %d \n",yytext,yylineno);}
+.                                                 {analisisCorrecto = 0; printf("ERROR LEXICO: %s, EN LINEA: %d \n",yytext,yylineno);}
 %%
 
