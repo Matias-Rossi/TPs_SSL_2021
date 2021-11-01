@@ -141,15 +141,15 @@ especificador_categoria_almacenamiento:   AUTO
 				                    ;
 
 
-especificador_de_tipo: INT                         {aux_tIdentificador="int";}
-	  		|CHAR                                  {aux_tIdentificador="char";}
-	  		|FLOAT                                 {aux_tIdentificador="float";}
-	  		|DOUBLE                                {aux_tIdentificador="double";}
-          	|SHORT                                 {aux_tIdentificador="short";}
-	  		|VOID                                  {aux_tIdentificador="void";}
-	  		|LONG                                  {aux_tIdentificador="long";}
-	 		|SIGNED                                {aux_tIdentificador="signed";}
-            |UNSIGNED 							   {aux_tIdentificador="unsigned";}
+especificador_de_tipo: INT                         {aux_tIdentificador=1;}
+	  		|CHAR                                  {aux_tIdentificador=2;}
+	  		|FLOAT                                 {aux_tIdentificador=3;}
+	  		|DOUBLE                                {aux_tIdentificador=4;}
+          	|SHORT                                 {aux_tIdentificador=5;}
+	  		|VOID                                  {aux_tIdentificador=6;}
+	  		|LONG                                  {aux_tIdentificador=7;}
+	 		|SIGNED                                {aux_tIdentificador=8;}
+            |UNSIGNED 							   {aux_tIdentificador=9;}
 	        |especificador_estructura_o_union
 	        |especificador_enum 
 	        |nombre_typedef 

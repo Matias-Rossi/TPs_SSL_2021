@@ -9,7 +9,6 @@
 int yylineno;
 int yyerror(const char *msg);
 
-
 typedef struct list
 {
     void* data;
@@ -48,10 +47,6 @@ typedef struct lista_parametros
 
 
 
-
-
-
-
 typedef struct Identificador{
     char* nombre;
     char* tipo;
@@ -74,6 +69,11 @@ typedef struct {
     int cantElementos;
 } ListaSentencias;
 
+
+
+
+
+
 //listas.c
 ListaIdentificadores* inicializarListaIdentificadores      (ListaIdentificadores*);
 void                  agregarIdentificador                 (ListaIdentificadores*, char*, char*);
@@ -84,6 +84,10 @@ void                  liberarListaIdentificadores          (ListaIdentificadores
 ListaSentencias*      inicializarListaSentencias           (ListaSentencias*);
 void                  agregar_sentencia                    (ListaSentencias*, char*, int);
 
+//listasGenercias.c
+list* inicializarLista(list*);
+void agregarElemento(list*, void*, int);
+
 //reporte.c
 void  nuevaCategoria              (FILE*, char*);
 void  crearListadoIdentificadores (FILE*, ListaIdentificadores*, char*);
@@ -93,5 +97,5 @@ char* sacar_ultimo_caracter(char*);
 ListaIdentificadores* identificadores_variables;
 ListaIdentificadores* identificadores_funciones;
 ListaSentencias*      lista_sentencias;
-char*                 aux_tIdentificador;
+int                   aux_tIdentificador;
 int                   analisisCorrecto;

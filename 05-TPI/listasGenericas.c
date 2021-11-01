@@ -11,7 +11,7 @@ list* inicializarLista(list* lista){
 
 void agregarElemento(list* lista, void* data, int data_size){
 
-    list* nuevoElemento = malloc(sData);
+    list* nuevoElemento = malloc(data_size);
     nuevoElemento->data = data;
     nuevoElemento->sgte = NULL;
 
