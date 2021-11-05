@@ -42,10 +42,10 @@ typedef struct lista_parametros
     struct lista_parametros* sgte;
 } lista_parametros;
 
-
-
-
-
+typedef struct NoReconocidos{
+    char* nombre;
+    int cantElementos;    
+} Lista_TokensNoRec;
 
 typedef struct Identificador{
     char* nombre;
@@ -73,6 +73,18 @@ typedef struct {
 
 
 
+typedef struct tokensNoReconocidos{
+    char* token;
+    int linea;
+    struct tokensNoReconocidos* sig;
+} tokensNoReconocidos;
+
+typedef struct {
+    Sentencia* pri;
+    int cantElementos;
+} listaTokensNoReconocidos;
+
+
 
 //listas.c
 ListaIdentificadores* inicializarListaIdentificadores      (ListaIdentificadores*);
@@ -87,6 +99,8 @@ void                  agregar_sentencia                    (ListaSentencias*, ch
 //listasGenercias.c
 list* inicializarLista(list*);
 void agregarElemento(list*, void*, int);
+int variableEstaDeclarada(char*, list*);
+void agregar_token_no_reconocido(listaTokensNoReconocidos*, char*, int);
 
 //reporte.c
 void  nuevaCategoria              (FILE*, char*);

@@ -4,6 +4,23 @@ void nuevaCategoria(FILE* reporte, char* seccion){
     fprintf(reporte,"\n\n--%s--\n", seccion);
 }
 
+void crearListadoTokensNoReconocidos(FILE* reporte, listaTokensNoReconocidos* lTokens, char* tListado){
+    if(lTokens->pri != NULL){
+        tokensNoReconocidos* aux = lTokens->pri;
+
+        nuevaCategoria(reporte, tListado);
+        fprintf(reporte, "TOKEN NO RECONOCIDO\t\tNUMERO DE LINEA\n");
+
+        while(aux->sig != NULL) {
+            fprintf(reporte, "%s\t\t%d\n" ,aux->token, aux->linea);              
+            aux = aux->sig;
+        }                          //Itera por los nodos
+        fprintf(reporte, "%s\t\t%d\n" ,aux->token, aux->linea);
+
+        //liberarLista(lTokens);
+    }
+}
+
 void crearListadoIdentificadores(FILE* reporte, ListaIdentificadores* identificadores, char* tListado){
     if(identificadores->pri != NULL){                                                       //Si la lista no esta vacía
         ordenarIdentificadores(identificadores, strcmp);

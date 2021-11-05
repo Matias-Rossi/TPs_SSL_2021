@@ -16,6 +16,7 @@ extern FILE* yyin;
 
 %}
 %union{
+   int idval;
    int ival;
    double dval;
    char* cval;
@@ -79,13 +80,14 @@ extern FILE* yyin;
 %token  O_IGUAL  
 
 
-%token IDENTIFICADOR
-%token LITERAL_CADENA
+%token   IDENTIFICADOR
+%token   LITERAL_CADENA
 %token   CONST_OCTAL
 %token   CONST_HEXADECIMAL
 %token   CONST_DECIMAL
 %token   CONST_PTOFLOTANTE
 %token   CONST_CARACTER
+%token   NO_RECONOCIDO
 
 %left       '+' '-'
 %left       '*' '/'
@@ -94,15 +96,23 @@ extern FILE* yyin;
 %nonassoc ELSE
 
 %start unidad_de_programa
+
 %%
+no_reconocido:  NO_RECONOCIDO                                         {(lista_no_reconocidos, $<idval>1);}
+                ;
+
 unidad_de_programa: INCLUDE  unidad_de_programa                           
 				  | DEFINE  expresion_primaria   unidad_de_programa                  	
-				  | unidad_de_traduccion 
+				  | no_reconocido unidad_de_traduccion                
+                  | unidad_de_traduccion_no_reconocido
+                  | error unidad_de_traduccion                        {yyerror;}
 	    		  ;
 
 unidad_de_traduccion:     declaracion_externa 
                         | unidad_de_traduccion declaracion_externa 
                         ;
+
+unidad_de_traduccion_no_reconocido: unidad_de_traduccion no_reconocido;
 
 declaracion_externa:      definicion_de_funcion                                         
                         | declaracion                                                   
@@ -159,8 +169,9 @@ calificador_de_tipo: CONST
 	               | VOLATILE 
 	               ;
 
-especificador_estructura_o_union:    estructura_o_union IDENTIFICADOR  '{' lista_declaraciones_struct '}'        
-                                    | estructura_o_union IDENTIFICADOR
+especificador_estructura_o_union:    estructura_o_union tipo_identificador  '{' lista_declaraciones_struct '}'        
+                                    | estructura_o_union tipo_identificador
+
                                     | '{' lista_declaraciones_struct '}'
                                     ;
 
@@ -205,9 +216,9 @@ declarador_struct:    declarador
                     ;
 
 
-especificador_enum:       ENUM IDENTIFICADOR  '{' lista_de_enumerador '}' 
+especificador_enum:       ENUM tipo_identificador  '{' lista_de_enumerador '}' 
                         | '{' lista_de_enumerador '}'
-                        | ENUM IDENTIFICADOR
+                        | ENUM tipo_identificador
                         ;
 
 
@@ -216,21 +227,21 @@ lista_de_enumerador:      enumerador
                         ;
 
 
-enumerador:    IDENTIFICADOR
-             | IDENTIFICADOR '=' expresion_constante
+enumerador:    tipo_identificador
+             | tipo_identificador '=' expresion_constante
              ;
 
 declarador:   apuntador declarador_directo                          
             | declarador_directo                                    
 ;
 
-declarador_directo:       IDENTIFICADOR                                           {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+declarador_directo:      tipo_identificador                                         
                         | '(' declarador ')'
-                        | IDENTIFICADOR  '[' expresion_constante ']'              {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
-                        | IDENTIFICADOR  '[' ']'                                  {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
-                        | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
-                        | IDENTIFICADOR '(' lista_de_identificadores ')'          {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
-                        | IDENTIFICADOR '(' ')'                                   {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
+                        | tipo_identificador  '[' expresion_constante ']'              {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+                        | tipo_identificador  '[' ']'                                  {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+                        | tipo_identificador '(' lista_tipos_de_parametro ')'          {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
+                        | tipo_identificador '(' lista_de_identificadores ')'          {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
+                        | tipo_identificador '(' ')'                                   {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
                         ;
 
 
@@ -262,10 +273,9 @@ declaracion_parametro:     especificadores_de_declaracion declarador
                          ;
 
 
-lista_de_identificadores:      IDENTIFICADOR                                {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}    
-                            | lista_de_identificadores ',' IDENTIFICADOR
+lista_de_identificadores:   tipo_identificador                                 
+                            | lista_de_identificadores ',' tipo_identificador
                             ;
-
 
 inicializador:  expresion_de_asignacion  
                 |'{'   lista_de_inicializadores   '}'
@@ -313,7 +323,7 @@ sentencia:  sentencia_etiquetada        {agregar_sentencia(lista_sentencias, "Se
             ;
 
 
-sentencia_etiquetada:   IDENTIFICADOR ':' sentencia 
+sentencia_etiquetada:   tipo_identificador ':' sentencia 
                         | CASE expresion_constante ':' sentencia
                         | DEFAULT ':' sentencia
                         ;
@@ -351,7 +361,7 @@ sentencia_de_iteracion: WHILE '(' expresion ')' sentencia
 				   | FOR '(' ';' ';' ')' sentencia   
 				   ;
 
-sentencia_de_salto: GOTO IDENTIFICADOR ';'
+sentencia_de_salto: GOTO tipo_identificador ';'
                     | CONTINUE   ';'
                     | BREAK ';'
                     | RETURN expresion   ';'
@@ -467,15 +477,15 @@ expresion_posfija:  expresion_primaria
                     | expresion_posfija   '['   expresion   ']' 
                     | expresion_posfija   '('   lista_expresiones_argumento   ')'
                     | expresion_posfija   '(' ')'
-                    | expresion_posfija    '.'    IDENTIFICADOR
-                    | expresion_posfija   FLECHA   IDENTIFICADOR
+                    | expresion_posfija    '.'    tipo_identificador
+                    | expresion_posfija   FLECHA   tipo_identificador
 					| expresion_posfija   MENOS_MENOS 
 					| expresion_posfija   MAS_MAS 
 					;
 
 
  
-expresion_primaria: IDENTIFICADOR
+expresion_primaria: tipo_identificador
                     | constante
                     | LITERAL_CADENA 
                     | '(' expresion ')'
@@ -485,6 +495,10 @@ expresion_primaria: IDENTIFICADOR
 lista_expresiones_argumento:    expresion_de_asignacion
                                 | lista_expresiones_argumento   ','   expresion_de_asignacion 
                                 ;
+
+tipo_identificador: IDENTIFICADOR                {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+                    | no_reconocido
+                    ;
 
 constante:  CONST_OCTAL
             | CONST_HEXADECIMAL

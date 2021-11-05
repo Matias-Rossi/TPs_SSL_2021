@@ -65,6 +65,7 @@ ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
 SALTO_DE_LINEA (\n)+
 
+%s NO_RECONOCIDO
 
 %%
 {INCLUDE}                               {return INCLUDE;}
@@ -135,6 +136,9 @@ SALTO_DE_LINEA (\n)+
 {COMENTARIOS_MULTILINEAL}                         {if(comentario == 1) comentario = 0; else comentario = 1;}
 {ESPACIO_EN_BLANCO}|{TABULACION}                  {;}
 {SALTO_DE_LINEA}                                  {comentario=0;}
-.                                                 {analisisCorrecto = 0; printf("ERROR LEXICO: %s, EN LINEA: %d \n",yytext,yylineno);}
+.                                                 {analisisCorrecto = 0; BEGIN(NO_RECONOCIDO);}
+<NO_RECONOCIDO>.*"\n"                             {stcrcat(NO_RECONOCIDO, yytext); BEGIN(INITIAL); yylval.idval = strdup(NO_RECONOCIDO); return NO_RECONOCIDO}
 %%
+
+
 
