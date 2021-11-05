@@ -105,7 +105,7 @@ unidad_de_programa: INCLUDE  unidad_de_programa
 				  | DEFINE  expresion_primaria   unidad_de_programa                  	
 				  | no_reconocido unidad_de_traduccion                
                   | unidad_de_traduccion_no_reconocido
-                  | error unidad_de_traduccion                        {yyerror;}
+                  | error unidad_de_traduccion                        {yyerrorok;}
 	    		  ;
 
 unidad_de_traduccion:     declaracion_externa 
