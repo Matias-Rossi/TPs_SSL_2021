@@ -46,6 +46,19 @@ int variableEstaDeclarada(char* id, list* lista){
     return 0;
 }
 
+/*-------------------------------FUNCIONES----------------------------------*/
+
+int funcionEstaDeclarada(char* id, list* lista){
+    list* aux = lista->sgte;
+
+    for(int i=0; i<lista->cantElementos; i++){
+        if(!strcmp(aux->data->nombre_funcion, id)){
+            return 1;
+        }
+        aux = lista->sgte;
+    }
+    return 0;
+}
 
 /*-------------------------------TOKENS NO RECONOCIDOS----------------------------------*/
 
@@ -61,7 +74,6 @@ void agregar_token_no_reconocido(listaTokensNoReconocidos* lista, char* token, i
     nuevo->token = token;
     nuevo->linea = linea;
     nuevo->sig = NULL;
-
     if(lista->pri != NULL){
         tokensNoReconocidos* ultimo = lista->pri;
         while(ultimo->sig != NULL){

@@ -98,15 +98,15 @@ extern FILE* yyin;
 %start unidad_de_programa
 
 %%
-no_reconocido:  NO_RECONOCIDO                                         {(lista_no_reconocidos, $<idval>1);}
-                ;
-
 unidad_de_programa: INCLUDE  unidad_de_programa                           
 				  | DEFINE  expresion_primaria   unidad_de_programa                  	
 				  | no_reconocido unidad_de_traduccion                
                   | unidad_de_traduccion_no_reconocido
                   | error unidad_de_traduccion                        {yyerrorok;}
 	    		  ;
+
+no_reconocido:  NO_RECONOCIDO                                 {agregar_token_no_reconocido(inicializarListaDeTokensNoReconocidos(listaTokensNoReconocidos* lista), $<idval>1, yylineno);}
+               ;
 
 unidad_de_traduccion:     declaracion_externa 
                         | unidad_de_traduccion declaracion_externa 
@@ -237,13 +237,32 @@ declarador:   apuntador declarador_directo
 
 declarador_directo:      tipo_identificador                                         
                         | '(' declarador ')'
-                        | tipo_identificador  '[' expresion_constante ']'              {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
-                        | tipo_identificador  '[' ']'                                  {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
-                        | tipo_identificador '(' lista_tipos_de_parametro ')'          {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
-                        | tipo_identificador '(' lista_de_identificadores ')'          {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
-                        | tipo_identificador '(' ')'                                   {agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
-                        ;
-
+                        | tipo_identificador '[' expresion_constante ']'               {
+                                                                                        variable* var;
+                                                                                        var->nombre_variable = sacar_ultimo_caracter($<cval>1);
+                                                                                        var->tipo=aux_tIdentificador;
+                                                                                        agregarElemento(listaVariables, var, sizeof(variable);       
+                                                                                       }
+                        | tipo_identificador '[' ']'                                   {variable* var; var->nombre_variable = sacar_ultimo_caracter($<cval>1); var->tipo=aux_tIdentificador; agregarElemento(listaVariables, var, sizeof(variable);}
+                        | tipo_identificador '(' lista_tipos_de_parametro ')'          {
+                                                                                        funciones* fun;
+                                                                                        fun->nombre_funcion = $<cval>1;
+                                                                                        fun->tipo_salida=aux_tIdentificador;
+                                                                                        fun->params = auxListaParametros
+                                                                                       }
+                        | tipo_identificador '(' lista_de_identificadores ')'          {
+                                                                                        funciones* fun;
+                                                                                        fun->nombre_funcion = $<cval>1;
+                                                                                        fun->tipo_salida=aux_tIdentificador;
+                                                                                        parametrosFuncion = $<cval>1;
+                                                                                       }
+                        | tipo_identificador '(' ')'                                   {
+                                                                                        funciones* fun;
+                                                                                        fun->nombre_funcion = $<cval>1;
+                                                                                        fun->tipo_salida=aux_tIdentificador;
+                                                                                        parametrosFuncion = $<cval>1;
+                                                                                       }
+                                                                                       ;
 
 apuntador:  '*' lista_calificadores_de_tipo 
             |'*' 
@@ -257,8 +276,18 @@ lista_calificadores_de_tipo:    calificador_de_tipo
                                 ;
 
 
-lista_tipos_de_parametro:      lista_de_parametros
-                             | lista_de_parametros ',' ELIPSIS
+lista_tipos_de_parametro:      lista_de_parametros                     {
+                                                                        variable* var;
+                                                                        var->nombre_variable = sacar_ultimo_caracter($<cval>1);
+                                                                        var->tipo=aux_tIdentificador;
+                                                                        agregarElemento(auxListaParametrosConTipos, var, sizeof($<cval>1));
+                                                                        }
+                             | lista_de_parametros ',' ELIPSIS         {
+                                                                        variable* var;
+                                                                        var->nombre_variable = sacar_ultimo_caracter($<cval>1);
+                                                                        var->tipo=aux_tIdentificador;
+                                                                        agregarElemento(auxListaParametrosConTipos, var, sizeof($<cval>1));
+                                                                        }
                              ;
 
 
@@ -273,9 +302,11 @@ declaracion_parametro:     especificadores_de_declaracion declarador
                          ;
 
 
-lista_de_identificadores:   tipo_identificador                                 
-                            | lista_de_identificadores ',' tipo_identificador
+lista_de_identificadores:     tipo_identificador                                  {variable* var; var->nombre_variable=sacar_ultimo_caracter($<cval>1); agregarElemento(auxListaParametrosSinTipos , var, sizeof($<cval>1));}
+                            | lista_de_identificadores_bucle                    
                             ;
+
+lista_de_identificadores_bucle:  lista_de_identificadores ',' tipo_identificador  {variable* var; var->nombre_variable=sacar_ultimo_caracter($<cval>1); agregarElemento(auxListaParametrosSinTipos , var, sizeof($<cval>1));}
 
 inicializador:  expresion_de_asignacion  
                 |'{'   lista_de_inicializadores   '}'
@@ -314,12 +345,12 @@ nombre_typedef: 't'
               ;
 
 
-sentencia:  sentencia_etiquetada        {agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   yylineno);}
-            | sentencia_expresion       {agregar_sentencia(lista_sentencias, "Sentencia expresion",    yylineno);}
-            | sentencia_compuesta       {agregar_sentencia(lista_sentencias, "Sentencia compuesta",    yylineno);}
-            | sentencia_de_iteracion    {agregar_sentencia(lista_sentencias, "Sentencia de iteracion", yylineno);}
-            | sentencia_de_seleccion    {agregar_sentencia(lista_sentencias, "Sentencia de seleccion", yylineno);}
-            | sentencia_de_salto        {agregar_sentencia(lista_sentencias, "Sentencia de salto",     yylineno);}
+sentencia:  sentencia_etiquetada
+            | sentencia_expresion
+            | sentencia_compuesta
+            | sentencia_de_iteracion
+            | sentencia_de_seleccion
+            | sentencia_de_salto
             ;
 
 
@@ -526,9 +557,9 @@ int main (int argc, char **argv)
         printf("Creando estructuras\n");
 
         analisisCorrecto = 1;
-        identificadores_variables = inicializarListaIdentificadores(identificadores_variables);
-        identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
-        lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
+        parametosFuncion = "";
+        listaVariables = inicializarLista(listaVariables);
+        listaFunciones = inicializarLista(listaFunciones);
 
         printf("Comenzando anlisis lexico y sintactico\n");
 

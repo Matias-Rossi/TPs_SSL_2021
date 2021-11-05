@@ -13,39 +13,29 @@ typedef struct list
 {
     void* data;
     int cantElementos;
-    struct list* sgte
+    struct list* sgte;
 } list;
 
 typedef struct variable
 {
     char* nombre_variable;
     int tipo;
-    int ambito;
     int puntero;
-    struct variable* sgte;
 } variable;
 
 typedef struct funcion
 {
     char* nombre_funcion;
-    lista_parametros* params;
+    list* params;
     int tipo_salida;
     int puntero;
-    struct funcion* sgte;
 } funcion;
-
-typedef struct lista_parametros
-{
-    int tipo;
-    char *nombre;
-    int puntero;
-    struct lista_parametros* sgte;
-} lista_parametros;
 
 typedef struct NoReconocidos{
     char* nombre;
     int cantElementos;    
 } Lista_TokensNoRec;
+
 
 typedef struct Identificador{
     char* nombre;
@@ -57,6 +47,7 @@ typedef struct {
     struct Identificador* pri;
     int cantElementos;
 } ListaIdentificadores;
+
 
 typedef struct Sentencia{
     char* tipo;
@@ -100,16 +91,19 @@ void                  agregar_sentencia                    (ListaSentencias*, ch
 list* inicializarLista(list*);
 void agregarElemento(list*, void*, int);
 int variableEstaDeclarada(char*, list*);
+int funcionEstaDeclarada(char*, list*);
 void agregar_token_no_reconocido(listaTokensNoReconocidos*, char*, int);
 
 //reporte.c
-void  nuevaCategoria              (FILE*, char*);
-void  crearListadoIdentificadores (FILE*, ListaIdentificadores*, char*);
-void  crearListadoSentencias(FILE*, ListaSentencias*, char*);
+void  nuevaCategoria              (char*);
+//TODO: Completar
 char* sacar_ultimo_caracter(char*);
 
-ListaIdentificadores* identificadores_variables;
-ListaIdentificadores* identificadores_funciones;
-ListaSentencias*      lista_sentencias;
-int                   aux_tIdentificador;
-int                   analisisCorrecto;
+//Otros
+list* listaVariables;
+list* listaFunciones;
+list* auxListaParametrosConTipos;
+list* auxListaParametrosSinTipos;
+char* parametrosFuncion;
+int aux_tIdentificador;
+int analisisCorrecto;
