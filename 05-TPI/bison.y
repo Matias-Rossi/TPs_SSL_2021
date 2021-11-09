@@ -105,7 +105,7 @@ unidad_de_programa: INCLUDE  unidad_de_programa
                   | error unidad_de_traduccion                        {yyerrorok;}
 	    		  ;
 
-no_reconocido:  NO_RECONOCIDO                                 {agregar_token_no_reconocido(inicializarListaDeTokensNoReconocidos(listaTokensNoReconocidos* lista), $<idval>1, yylineno);}
+no_reconocido:  NO_RECONOCIDO                                 {agregar_token_no_reconocido(listaTokensNR, yylineno);}
                ;
 
 unidad_de_traduccion:     declaracion_externa 
@@ -241,26 +241,29 @@ declarador_directo:      tipo_identificador
                                                                                         variable* var;
                                                                                         var->nombre_variable = sacar_ultimo_caracter($<cval>1);
                                                                                         var->tipo=aux_tIdentificador;
-                                                                                        agregarElemento(listaVariables, var, sizeof(variable);       
+                                                                                        agregarElemento(listaVariables, var, sizeof(variable));       
                                                                                        }
-                        | tipo_identificador '[' ']'                                   {variable* var; var->nombre_variable = sacar_ultimo_caracter($<cval>1); var->tipo=aux_tIdentificador; agregarElemento(listaVariables, var, sizeof(variable);}
+                        | tipo_identificador '[' ']'                                   {variable* var; 
+                                                                                        var->nombre_variable = sacar_ultimo_caracter($<cval>1); 
+                                                                                        var->tipo= aux_tIdentificador; 
+                                                                                        agregarElemento(listaVariables, var, sizeof(variable));}
                         | tipo_identificador '(' lista_tipos_de_parametro ')'          {
-                                                                                        funciones* fun;
+                                                                                        funcion* fun;
                                                                                         fun->nombre_funcion = $<cval>1;
                                                                                         fun->tipo_salida=aux_tIdentificador;
-                                                                                        fun->params = auxListaParametros
+                                                                                        fun->params = inicializarLista(auxListaParametros)
                                                                                        }
                         | tipo_identificador '(' lista_de_identificadores ')'          {
-                                                                                        funciones* fun;
+                                                                                        funcion* fun;
                                                                                         fun->nombre_funcion = $<cval>1;
                                                                                         fun->tipo_salida=aux_tIdentificador;
-                                                                                        parametrosFuncion = $<cval>1;
+                                                                                        //parametrosFuncion = $<cval>1;
                                                                                        }
                         | tipo_identificador '(' ')'                                   {
-                                                                                        funciones* fun;
+                                                                                        funcion* fun;
                                                                                         fun->nombre_funcion = $<cval>1;
                                                                                         fun->tipo_salida=aux_tIdentificador;
-                                                                                        parametrosFuncion = $<cval>1;
+                                                                                        //parametrosFuncion = $<cval>1;
                                                                                        }
                                                                                        ;
 
@@ -527,7 +530,7 @@ lista_expresiones_argumento:    expresion_de_asignacion
                                 | lista_expresiones_argumento   ','   expresion_de_asignacion 
                                 ;
 
-tipo_identificador: IDENTIFICADOR                {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+tipo_identificador: IDENTIFICADOR                {agregarIdentificador(listaVariables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
                     | no_reconocido
                     ;
 
@@ -551,15 +554,13 @@ int main (int argc, char **argv)
 
         printf("Abriendo archivos\n");
 
-        yyin = fopen(argv[1], "r");
-        FILE* fpReporte = fopen("reporte.txt", "w+");
-
         printf("Creando estructuras\n");
 
         analisisCorrecto = 1;
-        parametosFuncion = "";
+        parametrosFuncion = "";
         listaVariables = inicializarLista(listaVariables);
         listaFunciones = inicializarLista(listaFunciones);
+        listaTokensNR = inicializarListaDeTokensNoReconocidos(listaTokensNR);
 
         printf("Comenzando anlisis lexico y sintactico\n");
 
@@ -570,12 +571,11 @@ int main (int argc, char **argv)
 
             printf("Imprimiendo reporte\n");
 
-            crearListadoIdentificadores(fpReporte, identificadores_variables, "VARIABLES DECLARADAS");
-            crearListadoIdentificadores(fpReporte, identificadores_funciones, "FUNCIONES DECLARADAS");
-            crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
+            imprimirVariables(listaVariables);
+            imprimirFunciones(listaFunciones);
+            imprimirTokensNoReconocidos(listaTokensNR);
         }
 
-        fclose(fpReporte);
     }
 
     return 0;

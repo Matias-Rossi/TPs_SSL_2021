@@ -104,6 +104,7 @@ list* listaVariables;
 list* listaFunciones;
 list* auxListaParametrosConTipos;
 list* auxListaParametrosSinTipos;
+listaTokensNoReconocidos* listaTokensNR; 
 char* parametrosFuncion;
 int aux_tIdentificador;
 int analisisCorrecto;

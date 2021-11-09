@@ -605,22 +605,22 @@ static const yytype_uint16 yyrline[] =
      179,   182,   183,   187,   188,   192,   193,   197,   201,   202,
      203,   204,   208,   209,   213,   214,   215,   219,   220,   221,
      225,   226,   230,   231,   234,   235,   238,   239,   240,   246,
-     247,   253,   259,   267,   268,   269,   270,   274,   275,   279,
-     285,   294,   295,   299,   300,   301,   305,   306,   309,   311,
-     312,   313,   317,   318,   322,   323,   327,   328,   329,   332,
-     333,   334,   335,   336,   338,   339,   340,   341,   344,   348,
-     349,   350,   351,   352,   353,   357,   358,   359,   363,   364,
-     368,   369,   370,   371,   374,   375,   378,   379,   380,   383,
-     384,   385,   386,   387,   388,   389,   390,   391,   392,   395,
-     396,   397,   398,   399,   402,   403,   407,   408,   411,   412,
-     413,   414,   415,   416,   417,   418,   419,   420,   421,   425,
-     426,   429,   433,   434,   438,   439,   442,   443,   446,   447,
-     450,   451,   454,   455,   456,   460,   461,   462,   463,   464,
-     468,   469,   470,   474,   475,   476,   479,   480,   481,   482,
-     486,   487,   491,   492,   493,   494,   495,   496,   499,   500,
-     501,   502,   503,   504,   507,   508,   509,   510,   511,   512,
-     513,   514,   519,   520,   521,   522,   526,   527,   530,   531,
-     534,   535,   536,   537,   538,   539
+     250,   256,   262,   270,   271,   272,   273,   277,   278,   282,
+     288,   297,   298,   302,   303,   304,   308,   309,   312,   314,
+     315,   316,   320,   321,   325,   326,   330,   331,   332,   335,
+     336,   337,   338,   339,   341,   342,   343,   344,   347,   351,
+     352,   353,   354,   355,   356,   360,   361,   362,   366,   367,
+     371,   372,   373,   374,   377,   378,   381,   382,   383,   386,
+     387,   388,   389,   390,   391,   392,   393,   394,   395,   398,
+     399,   400,   401,   402,   405,   406,   410,   411,   414,   415,
+     416,   417,   418,   419,   420,   421,   422,   423,   424,   428,
+     429,   432,   436,   437,   441,   442,   445,   446,   449,   450,
+     453,   454,   457,   458,   459,   463,   464,   465,   466,   467,
+     471,   472,   473,   477,   478,   479,   482,   483,   484,   485,
+     489,   490,   494,   495,   496,   497,   498,   499,   502,   503,
+     504,   505,   506,   507,   510,   511,   512,   513,   514,   515,
+     516,   517,   522,   523,   524,   525,   529,   530,   533,   534,
+     537,   538,   539,   540,   541,   542
 };
 #endif
 
@@ -2195,7 +2195,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 108 "bison.y"
-    {agregar_token_no_reconocido(inicializarListaDeTokensNoReconocidos(listaTokensNoReconocidos* lista), (yyvsp[(1) - (1)].idval), yylineno);;}
+    {agregar_token_no_reconocido(listaTokensNR, (yyvsp[(1) - (1)].idval), yylineno);;}
     break;
 
   case 32:
@@ -2269,7 +2269,7 @@ yyreduce:
                                                                                         variable* var;
                                                                                         var->nombre_variable = sacar_ultimo_caracter((yyvsp[(1) - (4)].cval));
                                                                                         var->tipo=aux_tIdentificador;
-                                                                                        agregarElemento(listaVariables, var, sizeof(variable);       
+                                                                                        agregarElemento(listaVariables, var, sizeof(variable));       
                                                                                        ;}
     break;
 
@@ -2277,49 +2277,52 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 246 "bison.y"
-    {variable* var; var->nombre_variable = sacar_ultimo_caracter((yyvsp[(1) - (3)].cval)); var->tipo=aux_tIdentificador; agregarElemento(listaVariables, var, sizeof(variable);;}
+    {variable* var; 
+                                                                                        var->nombre_variable = sacar_ultimo_caracter((yyvsp[(1) - (3)].cval)); 
+                                                                                        var->tipo= aux_tIdentificador; 
+                                                                                        agregarElemento(listaVariables, var, sizeof(variable));;}
     break;
 
   case 80:
 
 /* Line 1455 of yacc.c  */
-#line 247 "bison.y"
+#line 250 "bison.y"
     {
-                                                                                        funciones* fun;
+                                                                                        funcion* fun;
                                                                                         fun->nombre_funcion = (yyvsp[(1) - (4)].cval);
                                                                                         fun->tipo_salida=aux_tIdentificador;
-                                                                                        fun->params = auxListaParametros
+                                                                                        fun->params = inicializarLista(auxListaParametros)
                                                                                        ;}
     break;
 
   case 81:
 
 /* Line 1455 of yacc.c  */
-#line 253 "bison.y"
+#line 256 "bison.y"
     {
-                                                                                        funciones* fun;
+                                                                                        funcion* fun;
                                                                                         fun->nombre_funcion = (yyvsp[(1) - (4)].cval);
                                                                                         fun->tipo_salida=aux_tIdentificador;
-                                                                                        parametrosFuncion = (yyvsp[(1) - (4)].cval);
+                                                                                        //parametrosFuncion = $<cval>1;
                                                                                        ;}
     break;
 
   case 82:
 
 /* Line 1455 of yacc.c  */
-#line 259 "bison.y"
+#line 262 "bison.y"
     {
-                                                                                        funciones* fun;
+                                                                                        funcion* fun;
                                                                                         fun->nombre_funcion = (yyvsp[(1) - (3)].cval);
                                                                                         fun->tipo_salida=aux_tIdentificador;
-                                                                                        parametrosFuncion = (yyvsp[(1) - (3)].cval);
+                                                                                        //parametrosFuncion = $<cval>1;
                                                                                        ;}
     break;
 
   case 89:
 
 /* Line 1455 of yacc.c  */
-#line 279 "bison.y"
+#line 282 "bison.y"
     {
                                                                         variable* var;
                                                                         var->nombre_variable = sacar_ultimo_caracter((yyvsp[(1) - (1)].cval));
@@ -2331,7 +2334,7 @@ yyreduce:
   case 90:
 
 /* Line 1455 of yacc.c  */
-#line 285 "bison.y"
+#line 288 "bison.y"
     {
                                                                         variable* var;
                                                                         var->nombre_variable = sacar_ultimo_caracter((yyvsp[(1) - (3)].cval));
@@ -2343,28 +2346,28 @@ yyreduce:
   case 96:
 
 /* Line 1455 of yacc.c  */
-#line 305 "bison.y"
+#line 308 "bison.y"
     {variable* var; var->nombre_variable=sacar_ultimo_caracter((yyvsp[(1) - (1)].cval)); agregarElemento(auxListaParametrosSinTipos , var, sizeof((yyvsp[(1) - (1)].cval)));;}
     break;
 
   case 98:
 
 /* Line 1455 of yacc.c  */
-#line 309 "bison.y"
+#line 312 "bison.y"
     {variable* var; var->nombre_variable=sacar_ultimo_caracter((yyvsp[(1) - (3)].cval)); agregarElemento(auxListaParametrosSinTipos , var, sizeof((yyvsp[(1) - (3)].cval)));;}
     break;
 
   case 228:
 
 /* Line 1455 of yacc.c  */
-#line 530 "bison.y"
-    {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[(1) - (1)].cval)), aux_tIdentificador);;}
+#line 533 "bison.y"
+    {agregarIdentificador(listaVariables,  sacar_ultimo_caracter((yyvsp[(1) - (1)].cval)), aux_tIdentificador);;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 2368 "bison.tab.c"
+#line 2371 "bison.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2576,7 +2579,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 542 "bison.y"
+#line 545 "bison.y"
 
 int main (int argc, char **argv)
 {
@@ -2598,6 +2601,7 @@ int main (int argc, char **argv)
         parametosFuncion = "";
         listaVariables = inicializarLista(listaVariables);
         listaFunciones = inicializarLista(listaFunciones);
+        listaTokensNR = inicializarListaDeTokensNoReconocidos(listaTokensNR);
 
         printf("Comenzando anlisis lexico y sintactico\n");
 

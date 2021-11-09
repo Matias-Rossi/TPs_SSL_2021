@@ -74,11 +74,11 @@ void imprimirFunciones(list* listaFunciones) {
 }
 
 //Error léxicos encontrados (si los hay) - (Implementar en Flex, archivo.L)
-void imprimirTokensNoReconocidos(listaTokensNoReconocidos* lTokens,  char* tListado){
+void imprimirTokensNoReconocidos(listaTokensNoReconocidos* lTokens){
     if(lTokens->pri != NULL){
         tokensNoReconocidos* aux = lTokens->pri;
 
-        nuevaCategoria(tListado);
+        nuevaCategoria("TOKENS NO RECONOCIDOS");
         printf("TOKEN NO RECONOCIDO\t\tNUMERO DE LINEA\n");
 
         while(aux->sig != NULL) {
@@ -115,3 +115,38 @@ char * sacar_ultimo_caracter(char* var){
 
     return min_var;
 }
+
+/*
+void crearListadoIdentificadores(FILE* reporte, ListaIdentificadores* identificadores, char* tListado){
+    if(identificadores->pri != NULL){                                                       //Si la lista no esta vacía
+        ordenarIdentificadores(identificadores, strcmp);
+        Identificador* aux = identificadores->pri;
+
+        nuevaCategoria(reporte, tListado);
+        fprintf(reporte, "NOMBRE\t\t\tTIPO DE DATO\n");
+        while(aux->sig != NULL) {                                                           //Itera por los nodos
+            fprintf(reporte, "%s\t\t\t%s\n" ,aux->nombre, aux->tipo);              
+            aux = aux->sig;
+        }
+        fprintf(reporte, "%s\t\t\t%s\n" ,aux->nombre, aux->tipo);
+
+        liberarListaIdentificadores(identificadores);
+    }
+}
+
+void crearListadoSentencias(FILE* reporte, ListaSentencias* lSentencias, char* tListado){
+    if(lSentencias->pri != NULL){                                                       //Si la lista no esta vacía
+        Sentencia* aux = lSentencias->pri;
+
+        nuevaCategoria(reporte, tListado);
+        fprintf(reporte, "TIPO DE SENTENCIA\t\tNUMERO DE LINEA\n");
+        while(aux->sig != NULL) {                                                           //Itera por los nodos
+            fprintf(reporte, "%s\t\t%d\n" ,aux->tipo, aux->linea);              
+            aux = aux->sig;
+        }                          //Itera por los nodos
+        fprintf(reporte, "%s\t\t%d\n" ,aux->tipo, aux->linea);
+
+        //liberarListaIdentificadores(lSentencias);
+    }
+}
+*/

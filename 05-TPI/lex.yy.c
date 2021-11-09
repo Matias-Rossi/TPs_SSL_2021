@@ -1672,7 +1672,7 @@ YY_RULE_SETUP
 case 70:
 YY_RULE_SETUP
 #line 140 "flex.l"
-{stcrcat(NO_RECONOCIDO, yytext); BEGIN(INITIAL); yylval.idval = strdup(NO_RECONOCIDO); return NO_RECONOCIDO}
+{strcat(NO_RECONOCIDO, yytext); BEGIN(INITIAL); yylval.idval = strdup(NO_RECONOCIDO); return NO_RECONOCIDO;}
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
