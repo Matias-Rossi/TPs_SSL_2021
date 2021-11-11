@@ -1,4 +1,3 @@
-
 %{
 #include "tp5.h"
 
@@ -15,6 +14,7 @@ int idVar = 0;
 extern FILE* yyin;
 
 %}
+
 %union{
    int idval;
    int ival;
@@ -102,10 +102,10 @@ unidad_de_programa: INCLUDE  unidad_de_programa
 				  | DEFINE  expresion_primaria   unidad_de_programa                  	
 				  | no_reconocido unidad_de_traduccion                
                   | unidad_de_traduccion_no_reconocido
-                  | error unidad_de_traduccion                        {yyerrorok;}
+                  | error unidad_de_traduccion                        {yyerror;}
 	    		  ;
 
-no_reconocido:  NO_RECONOCIDO                                 {agregar_token_no_reconocido(listaTokensNR, yylineno);}
+no_reconocido:  NO_RECONOCIDO                                 {agregar_token_no_reconocido(listaTokensNR, yychar ,yylineno);}  //TODO: Chequear
                ;
 
 unidad_de_traduccion:     declaracion_externa 
@@ -238,29 +238,29 @@ declarador:   apuntador declarador_directo
 declarador_directo:      tipo_identificador                                         
                         | '(' declarador ')'
                         | tipo_identificador '[' expresion_constante ']'               {
-                                                                                        variable* var;
+                                                                                        variable* var = malloc(sizeof(funcion));
                                                                                         var->nombre_variable = sacar_ultimo_caracter($<cval>1);
                                                                                         var->tipo=aux_tIdentificador;
                                                                                         agregarElemento(listaVariables, var, sizeof(variable));       
                                                                                        }
-                        | tipo_identificador '[' ']'                                   {variable* var; 
+                        | tipo_identificador '[' ']'                                   {variable* var = malloc(sizeof(funcion));
                                                                                         var->nombre_variable = sacar_ultimo_caracter($<cval>1); 
                                                                                         var->tipo= aux_tIdentificador; 
                                                                                         agregarElemento(listaVariables, var, sizeof(variable));}
                         | tipo_identificador '(' lista_tipos_de_parametro ')'          {
-                                                                                        funcion* fun;
+                                                                                        funcion* fun = malloc(sizeof(funcion));
                                                                                         fun->nombre_funcion = $<cval>1;
                                                                                         fun->tipo_salida=aux_tIdentificador;
-                                                                                        fun->params = inicializarLista(auxListaParametros)
+                                                                                        fun->params = inicializarLista(auxListaParametrosConTipos);
                                                                                        }
                         | tipo_identificador '(' lista_de_identificadores ')'          {
-                                                                                        funcion* fun;
+                                                                                        funcion* fun = malloc(sizeof(funcion));
                                                                                         fun->nombre_funcion = $<cval>1;
                                                                                         fun->tipo_salida=aux_tIdentificador;
                                                                                         //parametrosFuncion = $<cval>1;
                                                                                        }
                         | tipo_identificador '(' ')'                                   {
-                                                                                        funcion* fun;
+                                                                                        funcion* fun = malloc(sizeof(funcion));
                                                                                         fun->nombre_funcion = $<cval>1;
                                                                                         fun->tipo_salida=aux_tIdentificador;
                                                                                         //parametrosFuncion = $<cval>1;
@@ -280,13 +280,15 @@ lista_calificadores_de_tipo:    calificador_de_tipo
 
 
 lista_tipos_de_parametro:      lista_de_parametros                     {
-                                                                        variable* var;
+                                                                        variable* var = malloc(sizeof(variable));
                                                                         var->nombre_variable = sacar_ultimo_caracter($<cval>1);
                                                                         var->tipo=aux_tIdentificador;
-                                                                        agregarElemento(auxListaParametrosConTipos, var, sizeof($<cval>1));
+                                                                        printf("\nSeg?\n");
+                                                                        agregarElemento(auxListaParametrosConTipos, var, sizeof(var));
+                                                                        printf("\nSeg\n");
                                                                         }
                              | lista_de_parametros ',' ELIPSIS         {
-                                                                        variable* var;
+                                                                        variable* var = malloc(sizeof(variable));
                                                                         var->nombre_variable = sacar_ultimo_caracter($<cval>1);
                                                                         var->tipo=aux_tIdentificador;
                                                                         agregarElemento(auxListaParametrosConTipos, var, sizeof($<cval>1));
@@ -530,7 +532,7 @@ lista_expresiones_argumento:    expresion_de_asignacion
                                 | lista_expresiones_argumento   ','   expresion_de_asignacion 
                                 ;
 
-tipo_identificador: IDENTIFICADOR                {agregarIdentificador(listaVariables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+tipo_identificador: IDENTIFICADOR                {printf("ACA -> %s, $<cval>1");/*agregarIdentificador(listaVariables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);*/}
                     | no_reconocido
                     ;
 
@@ -545,6 +547,9 @@ constante:  CONST_OCTAL
 %%
 int main (int argc, char **argv)
 {
+    #ifdef YYDEBUG
+        yydebug = 1;
+    #endif
 
     if(argv[1] == NULL){
         printf("Debe especificar un archivo para analizar\n");
@@ -553,6 +558,7 @@ int main (int argc, char **argv)
     else{
 
         printf("Abriendo archivos\n");
+        yyin = fopen(argv[1], "r");
 
         printf("Creando estructuras\n");
 
@@ -563,6 +569,7 @@ int main (int argc, char **argv)
         listaTokensNR = inicializarListaDeTokensNoReconocidos(listaTokensNR);
 
         printf("Comenzando anlisis lexico y sintactico\n");
+
 
         yyparse();
         fclose(yyin);

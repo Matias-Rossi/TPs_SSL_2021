@@ -38,7 +38,8 @@ int variableEstaDeclarada(char* id, list* lista){
     list* aux = lista->sgte;
 
     for(int i=0; i<lista->cantElementos; i++){
-        if(!strcmp(aux->data->nombre_variable, id)){
+        variable* data = aux->data;
+        if(!strcmp(data->nombre_variable, id)){
             return 1;
         }
         aux = lista->sgte;
@@ -52,7 +53,8 @@ int funcionEstaDeclarada(char* id, list* lista){
     list* aux = lista->sgte;
 
     for(int i=0; i<lista->cantElementos; i++){
-        if(!strcmp(aux->data->nombre_funcion, id)){
+        funcion* data = aux->data;
+        if(!strcmp(data->nombre_funcion, id)){
             return 1;
         }
         aux = lista->sgte;
@@ -86,3 +88,5 @@ void agregar_token_no_reconocido(listaTokensNoReconocidos* lista, char* token, i
 
     lista->cantElementos++;
 }
+
+//todo: hacer frees

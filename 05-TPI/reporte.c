@@ -15,10 +15,10 @@ void imprimirVariables(list* listaVariables) {
     do {
         variable* data = listaVariables->data;
         if(data->puntero) {
-            print("%s* %s\n", data->tipo, data->nombre_variable);
+            printf("%s* %s\n", tIdentificador_to_str(data->tipo), data->nombre_variable);
         }
         else {
-            print("%s %s\n", data->tipo, data->nombre_variable);
+            printf("%s %s\n", tIdentificador_to_str(data->tipo), data->nombre_variable);
         }
 
         listaVariables = listaVariables->sgte;
@@ -30,23 +30,23 @@ void imprimirVariables(list* listaVariables) {
 //Lista de funciones declaradas indicando el tipo de parámetro que devuelve y cantidad y tipos de parámetros que recibe. (Utilizar TS)
 void imprimirFunciones(list* listaFunciones) {
     if(listaFunciones->data == NULL) return;        //Salir si la lista está vacía
-    nuevaCategoria('Funciones');
+    nuevaCategoria("Funciones");
     
     list* iterador = listaFunciones;
     do {
         funcion* data = listaFunciones->data;
         char* tipo_funcion;
         if(data->puntero) {
-            sprintf(tipo_funcion, "*%s", data->tipo_salida);
+            sprintf(tipo_funcion, "*%s", tIdentificador_to_str(data->tipo_salida));
         } else {
-            strcpy(tipo_funcion, data->tipo_salida);
+            strcpy(tipo_funcion, tIdentificador_to_str(data->tipo_salida));
         }
 
         printf("Función %s retorna %s y recibe %d parámetros de tipo ", data->nombre_funcion, tipo_funcion, listaFunciones->cantElementos);
         
         //Cortar si no recibe parámetros
         if(data->params != NULL) {
-            printf('<No recibe>\n');
+            printf("<No recibe>\n");
         } else {
 
             //Imprimir parametros uno a uno
@@ -56,9 +56,9 @@ void imprimirFunciones(list* listaFunciones) {
 
                 char* tipo_parametro;
                 if(data_parametro->puntero) {
-                    sprintf(tipo_parametro, "*%s", data_parametro->tipo);
+                    sprintf(tipo_parametro, "*%s", tIdentificador_to_str(data_parametro->tipo));
                 } else {
-                    strcpy(tipo_parametro, data_parametro->tipo);
+                    strcpy(tipo_parametro, tIdentificador_to_str(data_parametro->tipo));
                 }
                 printf("%s, ", tipo_parametro);
 
@@ -96,7 +96,19 @@ void imprimirTokensNoReconocidos(listaTokensNoReconocidos* lTokens){
 //Errores semánticos encontrados (si los hay) (Implementar Rutinas Semánticas con TS)
 
 
-
+char* tIdentificador_to_str(int a) {
+    switch(a) {
+        case 1: return "int"; break;
+        case 2: return "char"; break;
+        case 3: return "float"; break;
+        case 4: return "double"; break;
+        case 5: return "short"; break;
+        case 6: return "void"; break;
+        case 7: return "long"; break;
+        case 8: return "signed"; break;
+        case 9: return "unsigned"; break;
+    }
+}
 
 
 

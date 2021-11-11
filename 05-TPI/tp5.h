@@ -71,13 +71,16 @@ typedef struct tokensNoReconocidos{
 } tokensNoReconocidos;
 
 typedef struct {
-    Sentencia* pri;
+    tokensNoReconocidos* pri;
     int cantElementos;
 } listaTokensNoReconocidos;
 
 
 
 //listas.c
+
+list*                 inicializarLista                     (list* lista);    
+void                  agregarElemento                      (list* lista, void* data, int data_size);
 ListaIdentificadores* inicializarListaIdentificadores      (ListaIdentificadores*);
 void                  agregarIdentificador                 (ListaIdentificadores*, char*, char*);
 int                   ordenarIdentificadores               (ListaIdentificadores*, int criterio(char*, char*));
@@ -93,11 +96,16 @@ void agregarElemento(list*, void*, int);
 int variableEstaDeclarada(char*, list*);
 int funcionEstaDeclarada(char*, list*);
 void agregar_token_no_reconocido(listaTokensNoReconocidos*, char*, int);
+listaTokensNoReconocidos* inicializarListaDeTokensNoReconocidos(listaTokensNoReconocidos* lista);
 
 //reporte.c
 void  nuevaCategoria              (char*);
 //TODO: Completar
 char* sacar_ultimo_caracter(char*);
+char* tIdentificador_to_str(int a);
+void imprimirVariables(list* listaVariables);
+void imprimirFunciones(list* listaFunciones);
+void imprimirTokensNoReconocidos(listaTokensNoReconocidos* lTokens);
 
 //Otros
 list* listaVariables;

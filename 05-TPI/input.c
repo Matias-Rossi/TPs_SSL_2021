@@ -1,8 +1,3 @@
-/* add.c
-* a simple C program
-*/
-
-
 int main()
 {
     int i, sum = 0, last = 5;
