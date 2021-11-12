@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Nov 12 12:55:24 2021
+# Make data base, printed on Fri Nov 12 18:30:06 2021
 
 # Variables
 
@@ -107,7 +107,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 1676
+GIO_LAUNCHED_DESKTOP_FILE_PID = 56307
 # automatic
 %F = $(notdir $%)
 # environment
@@ -157,7 +157,7 @@ SHLVL = 0
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-2b8b270d-1d34-4bbe-a4c8-cdf39120bc31.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-b4221eaf-8f0c-49c7-b608-56aad85f3b66.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -211,7 +211,6 @@ LC_MEASUREMENT = es_AR.UTF-8
 # environment
 LC_ALL = C
 # environment
- 
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # automatic
 ^F = $(notdir $^)
@@ -232,7 +231,7 @@ LC_ADDRESS = es_AR.UTF-8
 # environment
 LANG = C
 # environment
-VSCODE_PID = 1676
+VSCODE_PID = 56307
 # variable set hash-table stats:
 # Load=111/1024=11%, Rehash=0, Collisions=19/139=14%
 
@@ -242,9 +241,9 @@ VSCODE_PID = 1676
 
 # Directories
 
-# . (device 2053, inode 1482780): 17 files, no impossibilities.
+# . (device 2053, inode 1482780): 16 files, no impossibilities.
 
-# 17 files, no impossibilities in 1 directories.
+# 16 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -286,6 +285,7 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 #  recipe to execute (from 'makefile', line 11):
 	rm bison.tab.c
 	rm bison.tab.h
@@ -333,12 +333,12 @@ bison:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 25 / storage = 224 B / avg = 8 B
-# current buf: size = 8162 B / used = 224 B / count = 25 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 24 / storage = 214 B / avg = 8 B
+# current buf: size = 8162 B / used = 214 B / count = 24 / avg = 8 B
 
-# strcache performance: lookups = 37 / hit rate = 32%
+# strcache performance: lookups = 36 / hit rate = 33%
 # hash-table stats:
-# Load=25/8192=0%, Rehash=0, Collisions=1/37=3%
-# Finished Make data base on Fri Nov 12 12:55:24 2021
+# Load=24/8192=0%, Rehash=0, Collisions=1/36=3%
+# Finished Make data base on Fri Nov 12 18:30:06 2021
 
  

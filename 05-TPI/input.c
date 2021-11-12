@@ -8,10 +8,8 @@ void sumar(int a, int b) {
 int main()
 {
     printf("\n\n\t\tStudytonight - Best place to learn\n\n\n");
-    //int choice, num, i;
-    char a;
-    char b;
-    //unsigned long int fact;
+    int choice, num, i;
+    unsigned long int fact;
 
     while(1)
     {
