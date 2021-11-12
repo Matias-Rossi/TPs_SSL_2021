@@ -99,7 +99,8 @@ extern FILE* yyin;
 
 %%
 unidad_de_programa: INCLUDE  unidad_de_programa                           
-				  | DEFINE  expresion_primaria   unidad_de_programa                  	
+				  | DEFINE  expresion_primaria   unidad_de_programa           
+                  | unidad_de_traduccion       	
 				  | no_reconocido unidad_de_traduccion                
                   | unidad_de_traduccion_no_reconocido
                   | error unidad_de_traduccion                        {yyerror;}
@@ -281,11 +282,10 @@ lista_calificadores_de_tipo:    calificador_de_tipo
 
 lista_tipos_de_parametro:      lista_de_parametros                     {
                                                                         variable* var = malloc(sizeof(variable));
+                                                                        var->nombre_variable = calloc(strlen($<cval>1), sizeof(char));
                                                                         var->nombre_variable = sacar_ultimo_caracter($<cval>1);
                                                                         var->tipo=aux_tIdentificador;
-                                                                        printf("\nSeg?\n");
-                                                                        agregarElemento(auxListaParametrosConTipos, var, sizeof(var));
-                                                                        printf("\nSeg\n");
+                                                                        agregarElemento(auxListaParametrosConTipos, var, sizeof(variable));  //TODO: Segfault
                                                                         }
                              | lista_de_parametros ',' ELIPSIS         {
                                                                         variable* var = malloc(sizeof(variable));
@@ -307,11 +307,21 @@ declaracion_parametro:     especificadores_de_declaracion declarador
                          ;
 
 
-lista_de_identificadores:     tipo_identificador                                  {variable* var; var->nombre_variable=sacar_ultimo_caracter($<cval>1); agregarElemento(auxListaParametrosSinTipos , var, sizeof($<cval>1));}
+lista_de_identificadores:     tipo_identificador                                  {
+                                                                                    variable* var = malloc(sizeof(variable)); 
+                                                                                    var->nombre_variable = calloc(strlen($<cval>1), sizeof(char));
+                                                                                    var->nombre_variable = sacar_ultimo_caracter($<cval>1); 
+                                                                                    agregarElemento(auxListaParametrosSinTipos , var, sizeof(variable));
+                                                                                    }
                             | lista_de_identificadores_bucle                    
                             ;
 
-lista_de_identificadores_bucle:  lista_de_identificadores ',' tipo_identificador  {variable* var; var->nombre_variable=sacar_ultimo_caracter($<cval>1); agregarElemento(auxListaParametrosSinTipos , var, sizeof($<cval>1));}
+lista_de_identificadores_bucle:  lista_de_identificadores ',' tipo_identificador  {
+                                                                                    variable* var = malloc(sizeof(variable)); 
+                                                                                    var->nombre_variable = calloc(strlen($<cval>1), sizeof(char));
+                                                                                    var->nombre_variable = sacar_ultimo_caracter($<cval>1); 
+                                                                                    agregarElemento(auxListaParametrosSinTipos , var, sizeof(variable));
+                                                                                   }
 
 inicializador:  expresion_de_asignacion  
                 |'{'   lista_de_inicializadores   '}'
@@ -394,7 +404,7 @@ sentencia_de_iteracion: WHILE '(' expresion ')' sentencia
 				   | FOR '(' ';' expresion ';' expresion ')' sentencia                                           
 				   | FOR '(' ';' expresion ';' ')' sentencia                                           
 				   | FOR '(' ';' ';' expresion ')' sentencia                                           
-				   | FOR '(' ';' ';' ')' sentencia   
+				   | FOR '(' ';' ';' ')' sentencia
 				   ;
 
 sentencia_de_salto: GOTO tipo_identificador ';'
@@ -532,7 +542,7 @@ lista_expresiones_argumento:    expresion_de_asignacion
                                 | lista_expresiones_argumento   ','   expresion_de_asignacion 
                                 ;
 
-tipo_identificador: IDENTIFICADOR                {printf("ACA -> %s, $<cval>1");/*agregarIdentificador(listaVariables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);*/}
+tipo_identificador: IDENTIFICADOR                {/*agregarIdentificador(listaVariables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);*/}
                     | no_reconocido
                     ;
 
@@ -566,6 +576,8 @@ int main (int argc, char **argv)
         parametrosFuncion = "";
         listaVariables = inicializarLista(listaVariables);
         listaFunciones = inicializarLista(listaFunciones);
+        auxListaParametrosConTipos = inicializarLista(auxListaParametrosConTipos);
+        auxListaParametrosSinTipos = inicializarLista(auxListaParametrosSinTipos);
         listaTokensNR = inicializarListaDeTokensNoReconocidos(listaTokensNR);
 
         printf("Comenzando anlisis lexico y sintactico\n");

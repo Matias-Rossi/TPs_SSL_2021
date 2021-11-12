@@ -6,25 +6,41 @@ list* inicializarLista(list* lista){
     lista = (list*) malloc(sizeof(list));
     lista->cantElementos = 0;
     lista->data = NULL;
-    
+
     return lista;
 }
 
 void agregarElemento(list* lista, void* data, int data_size){
+    //printf("\nDir de data que me llego: %p\n", data);
+    
+    
 
-    list* nuevoElemento = malloc(data_size);
-    nuevoElemento->data = data;
-    nuevoElemento->sgte = NULL;
+    //printf("\nDir de data que agregue: %p\n", nuevoElemento->data);
 
-    if(!lista->sgte){
-        lista->sgte = nuevoElemento;
-    }
-    else {
-        list* aux = lista->sgte;
-        while(aux->sgte) {
-            aux=aux->sgte;
+    printf("\nlista->data ahora: %p\n", lista->data);
+
+    if(lista->data == NULL){
+        lista->data = data;
+        printf("\nlista->data despues: %p\n", lista->data);
+        scanf("%d", &lista->cantElementos);
+    } else {
+
+        list* nuevoElemento = malloc(sizeof(list));
+        nuevoElemento->data = malloc(data_size);
+        memcpy(nuevoElemento->data, data, data_size);
+        nuevoElemento->sgte = NULL;
+
+        if(!lista->sgte){
+            lista->sgte = nuevoElemento;
+            
         }
-        aux->sgte = nuevoElemento;
+        else {
+            list* aux = lista->sgte;
+            while(aux->sgte) {
+                aux=aux->sgte;
+            }
+            aux->sgte = nuevoElemento;
+        }
     }
 
     

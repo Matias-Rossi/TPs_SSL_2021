@@ -8,6 +8,7 @@ void nuevaCategoria(char* seccion){
 
 //Lista de variables declaradas indicando el tipo de cada una. (Utilizar TS)
 void imprimirVariables(list* listaVariables) {
+    printf("\n Variables: POINTER_DATA -> %p\n", listaVariables->data);
     if(listaVariables->data == NULL) return;        //Salir si la lista está vacía
     nuevaCategoria('Variables');
     
@@ -29,6 +30,7 @@ void imprimirVariables(list* listaVariables) {
 
 //Lista de funciones declaradas indicando el tipo de parámetro que devuelve y cantidad y tipos de parámetros que recibe. (Utilizar TS)
 void imprimirFunciones(list* listaFunciones) {
+    printf("\n Funciones: POINTER_DATA -> %p\n", listaVariables->data);
     if(listaFunciones->data == NULL) return;        //Salir si la lista está vacía
     nuevaCategoria("Funciones");
     
