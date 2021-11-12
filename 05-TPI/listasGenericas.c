@@ -87,22 +87,22 @@ listaTokensNoReconocidos* inicializarListaDeTokensNoReconocidos(listaTokensNoRec
     return lista;
 }
 
-void agregar_token_no_reconocido(listaTokensNoReconocidos* lista, char* token, int linea){
+void agregar_token_no_reconocido(listaTokensNoReconocidos** lista, char* token, int linea){
     tokensNoReconocidos* nuevo = (tokensNoReconocidos*) malloc(sizeof(tokensNoReconocidos));
     nuevo->token = token;
     nuevo->linea = linea;
     nuevo->sig = NULL;
-    if(lista->pri != NULL){
-        tokensNoReconocidos* ultimo = lista->pri;
+    if((*lista)->pri != NULL){
+        tokensNoReconocidos* ultimo = (*lista)->pri;
         while(ultimo->sig != NULL){
             ultimo = ultimo->sig;
         }
         ultimo->sig = nuevo;
     }
     else 
-    lista->pri = nuevo;
+    (*lista)->pri = nuevo;
 
-    lista->cantElementos++;
+    (*lista)->cantElementos++;
     printf("\nseg\n");
 }
 

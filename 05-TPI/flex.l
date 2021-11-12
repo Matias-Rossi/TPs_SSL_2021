@@ -65,7 +65,7 @@ ESPACIO_EN_BLANCO (" ")+
 TABULACION (\t)+
 SALTO_DE_LINEA (\n)+
 
-%s NO_RECONOCIDO
+%x NO_RECONOCIDO
 
 %%
 {INCLUDE}                               {return INCLUDE;}
@@ -136,9 +136,8 @@ SALTO_DE_LINEA (\n)+
 {COMENTARIOS_MULTILINEAL}                         {if(comentario == 1) comentario = 0; else comentario = 1;}
 {ESPACIO_EN_BLANCO}|{TABULACION}                  {;}
 {SALTO_DE_LINEA}                                  {comentario=0;}
-.                                                 {analisisCorrecto = 0; BEGIN(NO_RECONOCIDO);}
-<NO_RECONOCIDO>.*"\n"                             {printf("\nseg?\n"); strcat(NO_RECONOCIDO, yytext); BEGIN(INITIAL); yylval.idval = strdup(NO_RECONOCIDO); return NO_RECONOCIDO;printf("\nseg\n");}
+.                                                 {printf("ERROR LEXICO - PALABRA NO RECONOCIDA: %s ,EN LA LINEA: %d \n",yytext,yylineno);}
 %%
 
-
+// <NO_RECONOCIDO>.*"\n"                             {printf("\nseg?\n"); strcat(NO_RECONOCIDO, yytext); BEGIN(0); yylval.idval = strdup(NO_RECONOCIDO); return NO_RECONOCIDO;printf("\nseg\n");}
 

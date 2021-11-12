@@ -103,10 +103,10 @@ unidad_de_programa: INCLUDE  unidad_de_programa
                   | unidad_de_traduccion       	
 				  | no_reconocido unidad_de_traduccion                
                   | unidad_de_traduccion_no_reconocido
-                  | error unidad_de_traduccion                        {yyerror;}
+                  | error unidad_de_traduccion                        {yyerrorok;}
 	    		  ;
 
-no_reconocido:  NO_RECONOCIDO                                 {agregar_token_no_reconocido(listaTokensNR, yychar ,yylineno);}  //TODO: Chequear
+no_reconocido:  NO_RECONOCIDO                                 {agregar_token_no_reconocido(listaTokensNR, $<idval>1 ,yylineno);}  //TODO: Chequear
                ;
 
 unidad_de_traduccion:     declaracion_externa 

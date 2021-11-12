@@ -95,7 +95,7 @@ list* inicializarLista(list*);
 void agregarElemento(list*, void*, int);
 int variableEstaDeclarada(char*, list*);
 int funcionEstaDeclarada(char*, list*);
-void agregar_token_no_reconocido(listaTokensNoReconocidos*, char*, int);
+void agregar_token_no_reconocido(listaTokensNoReconocidos**, char*, int);
 listaTokensNoReconocidos* inicializarListaDeTokensNoReconocidos(listaTokensNoReconocidos* lista);
 
 //reporte.c
@@ -112,7 +112,7 @@ list* listaVariables;
 list* listaFunciones;
 list* auxListaParametrosConTipos;
 list* auxListaParametrosSinTipos;
-listaTokensNoReconocidos* listaTokensNR; 
+listaTokensNoReconocidos** listaTokensNR; 
 char* parametrosFuncion;
 int aux_tIdentificador;
 int analisisCorrecto;
