@@ -1,6 +1,6 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory '/home/matias/dev/utn/ssl/21-002-09/05-TPI'
-bison -d bison.y --debug
+bison -d bison.y --debug --report=state
 flex -l flex.l
 gcc bison.tab.c lex.yy.c listas.c reporte.c listasGenericas.c -Iinclude -o "tp5.out"
 make: Leaving directory '/home/matias/dev/utn/ssl/21-002-09/05-TPI'

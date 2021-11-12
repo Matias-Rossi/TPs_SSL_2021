@@ -1848,7 +1848,7 @@ case 70:
 /* rule 70 can match eol */
 YY_RULE_SETUP
 #line 140 "flex.l"
-{strcat(NO_RECONOCIDO, yytext); BEGIN(INITIAL); yylval.idval = strdup(NO_RECONOCIDO); return NO_RECONOCIDO;}
+{printf("\nseg?\n"); strcat(NO_RECONOCIDO, yytext); BEGIN(INITIAL); yylval.idval = strdup(NO_RECONOCIDO); return NO_RECONOCIDO;printf("\nseg\n");}
 	YY_BREAK
 case 71:
 YY_RULE_SETUP

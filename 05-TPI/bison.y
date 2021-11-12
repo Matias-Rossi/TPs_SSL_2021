@@ -95,7 +95,7 @@ extern FILE* yyin;
 %nonassoc IFX
 %nonassoc ELSE
 
-%start unidad_de_programa
+%start unidad_de_traduccion
 
 %%
 unidad_de_programa: INCLUDE  unidad_de_programa                           
@@ -593,6 +593,8 @@ int main (int argc, char **argv)
             imprimirVariables(listaVariables);
             imprimirFunciones(listaFunciones);
             imprimirTokensNoReconocidos(listaTokensNR);
+        } else {
+            printf("Analisis incorrecto\n");
         }
 
     }

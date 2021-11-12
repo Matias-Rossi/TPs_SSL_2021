@@ -137,7 +137,7 @@ SALTO_DE_LINEA (\n)+
 {ESPACIO_EN_BLANCO}|{TABULACION}                  {;}
 {SALTO_DE_LINEA}                                  {comentario=0;}
 .                                                 {analisisCorrecto = 0; BEGIN(NO_RECONOCIDO);}
-<NO_RECONOCIDO>.*"\n"                             {strcat(NO_RECONOCIDO, yytext); BEGIN(INITIAL); yylval.idval = strdup(NO_RECONOCIDO); return NO_RECONOCIDO;}
+<NO_RECONOCIDO>.*"\n"                             {printf("\nseg?\n"); strcat(NO_RECONOCIDO, yytext); BEGIN(INITIAL); yylval.idval = strdup(NO_RECONOCIDO); return NO_RECONOCIDO;printf("\nseg\n");}
 %%
 
 

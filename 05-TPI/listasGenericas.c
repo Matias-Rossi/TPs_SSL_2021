@@ -17,12 +17,12 @@ void agregarElemento(list* lista, void* data, int data_size){
 
     //printf("\nDir de data que agregue: %p\n", nuevoElemento->data);
 
-    printf("\nlista->data ahora: %p\n", lista->data);
-
     if(lista->data == NULL){
-        lista->data = data;
-        printf("\nlista->data despues: %p\n", lista->data);
-        scanf("%d", &lista->cantElementos);
+        printf("\n%p\n", lista->data);
+        lista->data = data;     //Se supone que data ya está alocado en memoria
+        printf("\n%p\n", lista->data);
+        int a;
+        scanf("%d", &a);
     } else {
 
         list* nuevoElemento = malloc(sizeof(list));
@@ -103,6 +103,7 @@ void agregar_token_no_reconocido(listaTokensNoReconocidos* lista, char* token, i
     lista->pri = nuevo;
 
     lista->cantElementos++;
+    printf("\nseg\n");
 }
 
 //todo: hacer frees

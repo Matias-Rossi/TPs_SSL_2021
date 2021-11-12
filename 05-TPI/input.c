@@ -1,10 +1,17 @@
-#include<stdio.h>
+//#include<stdio.h>
+
+
+void sumar(int a, int b) {
+    printf("a + b");
+}
 
 int main()
 {
     printf("\n\n\t\tStudytonight - Best place to learn\n\n\n");
-    int choice, num, i;
-    unsigned long int fact;
+    //int choice, num, i;
+    char a;
+    char b;
+    //unsigned long int fact;
 
     while(1)
     {
@@ -20,7 +27,7 @@ int main()
             case 1:
                 printf("Enter number:\n");
                 scanf("%d", &num);
-                fact = 1;
+                int fact = 1;
                 for(i = 1; i <= num; i++)
                 {
                     fact = fact*i;
@@ -68,6 +75,7 @@ int main()
         }
     }
     printf("\n\n\t\t\tCoding is Fun !\n\n\n");
+    sumar(a,b);
     return 0;
 }
 
