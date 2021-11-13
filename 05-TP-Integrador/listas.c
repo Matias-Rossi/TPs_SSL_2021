@@ -9,6 +9,18 @@ ListaIdentificadores* inicializarListaIdentificadores(ListaIdentificadores* list
     return lista;
 }
 
+int identificadorYaExiste(ListaIdentificadores* lista, char* identificador){
+    Identificador* aux = lista->pri;
+    while(aux != NULL){
+        if(strcmp(aux->nombre, identificador) == 0){
+            printf("Error: esta variable ya ha sido declarada\n");
+            return 1;
+        }
+        aux = aux->sig;
+    }
+    return 0;
+}
+
 void agregarIdentificador(ListaIdentificadores* lista, char* cadena, char* tDato){
 
     Identificador* nuevo = malloc(sizeof(Identificador));

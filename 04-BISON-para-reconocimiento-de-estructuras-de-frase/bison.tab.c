@@ -68,7 +68,7 @@
 /* Copy the first part of user declarations.  */
 
 /* Line 189 of yacc.c  */
-#line 2 ".\\bison.y"
+#line 2 "bison.y"
 
 #include "tp4.h"
 
@@ -188,7 +188,7 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 18 ".\\bison.y"
+#line 18 "bison.y"
 
    int ival;
    double dval;
@@ -2148,154 +2148,154 @@ yyreduce:
         case 28:
 
 /* Line 1455 of yacc.c  */
-#line 144 ".\\bison.y"
+#line 144 "bison.y"
     {aux_tIdentificador="int";;}
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 145 ".\\bison.y"
+#line 145 "bison.y"
     {aux_tIdentificador="char";;}
     break;
 
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 146 ".\\bison.y"
+#line 146 "bison.y"
     {aux_tIdentificador="float";;}
     break;
 
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 147 ".\\bison.y"
+#line 147 "bison.y"
     {aux_tIdentificador="double";;}
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 148 ".\\bison.y"
+#line 148 "bison.y"
     {aux_tIdentificador="short";;}
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 149 ".\\bison.y"
+#line 149 "bison.y"
     {aux_tIdentificador="void";;}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 150 ".\\bison.y"
+#line 150 "bison.y"
     {aux_tIdentificador="long";;}
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 151 ".\\bison.y"
+#line 151 "bison.y"
     {aux_tIdentificador="signed";;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 152 ".\\bison.y"
+#line 152 "bison.y"
     {aux_tIdentificador="unsigned";;}
     break;
 
   case 72:
 
 /* Line 1455 of yacc.c  */
-#line 227 ".\\bison.y"
+#line 227 "bison.y"
     {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[(1) - (1)].cval)), aux_tIdentificador);;}
     break;
 
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 229 ".\\bison.y"
+#line 229 "bison.y"
     {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[(1) - (4)].cval)), aux_tIdentificador);;}
     break;
 
   case 75:
 
 /* Line 1455 of yacc.c  */
-#line 230 ".\\bison.y"
+#line 230 "bison.y"
     {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[(1) - (3)].cval)), aux_tIdentificador);;}
     break;
 
   case 76:
 
 /* Line 1455 of yacc.c  */
-#line 231 ".\\bison.y"
+#line 231 "bison.y"
     {agregarIdentificador(identificadores_funciones,  (yyvsp[(1) - (4)].cval), aux_tIdentificador);;}
     break;
 
   case 77:
 
 /* Line 1455 of yacc.c  */
-#line 232 ".\\bison.y"
+#line 232 "bison.y"
     {agregarIdentificador(identificadores_funciones,  (yyvsp[(1) - (4)].cval), aux_tIdentificador);;}
     break;
 
   case 78:
 
 /* Line 1455 of yacc.c  */
-#line 233 ".\\bison.y"
+#line 233 "bison.y"
     {agregarIdentificador(identificadores_funciones,  (yyvsp[(1) - (3)].cval), aux_tIdentificador);;}
     break;
 
   case 92:
 
 /* Line 1455 of yacc.c  */
-#line 265 ".\\bison.y"
+#line 265 "bison.y"
     {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[(1) - (1)].cval)), aux_tIdentificador);;}
     break;
 
   case 114:
 
 /* Line 1455 of yacc.c  */
-#line 307 ".\\bison.y"
+#line 307 "bison.y"
     {agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   yylineno);;}
     break;
 
   case 115:
 
 /* Line 1455 of yacc.c  */
-#line 308 ".\\bison.y"
+#line 308 "bison.y"
     {agregar_sentencia(lista_sentencias, "Sentencia expresion",    yylineno);;}
     break;
 
   case 116:
 
 /* Line 1455 of yacc.c  */
-#line 309 ".\\bison.y"
+#line 309 "bison.y"
     {agregar_sentencia(lista_sentencias, "Sentencia compuesta",    yylineno);;}
     break;
 
   case 117:
 
 /* Line 1455 of yacc.c  */
-#line 310 ".\\bison.y"
+#line 310 "bison.y"
     {agregar_sentencia(lista_sentencias, "Sentencia de iteracion", yylineno);;}
     break;
 
   case 118:
 
 /* Line 1455 of yacc.c  */
-#line 311 ".\\bison.y"
+#line 311 "bison.y"
     {agregar_sentencia(lista_sentencias, "Sentencia de seleccion", yylineno);;}
     break;
 
   case 119:
 
 /* Line 1455 of yacc.c  */
-#line 312 ".\\bison.y"
+#line 312 "bison.y"
     {agregar_sentencia(lista_sentencias, "Sentencia de salto",     yylineno);;}
     break;
 
@@ -2514,7 +2514,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 497 ".\\bison.y"
+#line 497 "bison.y"
 
 int main (int argc, char **argv)
 {

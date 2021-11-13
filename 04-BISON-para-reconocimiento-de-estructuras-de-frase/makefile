@@ -5,7 +5,7 @@ bison:
 	bison -d bison.y
 
 flex: 
-	flex -l flex.l
+	flex flex.l
 
 clean:
 	rm bison.tab.c

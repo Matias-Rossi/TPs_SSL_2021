@@ -31,8 +31,23 @@ typedef struct {
     int cantElementos;
 } ListaSentencias;
 
+typedef struct Funcion
+{
+    char* nombre;
+    char* tipo;
+    ListaIdentificadores* parametros;
+    struct Funcion* sig;
+} Funcion;
+
+typedef struct {
+    struct Funcion* pri;
+    int cantElementos;
+} ListaFunciones;
+
+
 //listas.c
 ListaIdentificadores* inicializarListaIdentificadores      (ListaIdentificadores*);
+int                   identificadorYaExiste                (ListaIdentificadores*, char*);
 void                  agregarIdentificador                 (ListaIdentificadores*, char*, char*);
 int                   ordenarIdentificadores               (ListaIdentificadores*, int criterio(char*, char*));
 void                  swapId                               (Identificador*, Identificador*);
@@ -42,20 +57,37 @@ ListaSentencias*      inicializarListaSentencias           (ListaSentencias*);
 void                  agregar_sentencia                    (ListaSentencias*, char*, int);
 
 //reporte.c
-void  nuevaCategoria              (FILE*, char*);
-void  crearListadoIdentificadores (FILE*, ListaIdentificadores*, char*);
-void  crearListadoSentencias(FILE*, ListaSentencias*, char*);
+void  nuevaCategoria              (char*);
+void  crearListadoIdentificadores (ListaIdentificadores*, char*);
+void  crearListadoSentencias(ListaSentencias*, char*);
 char* sacar_ultimo_caracter(char*);
 
 ListaIdentificadores* identificadores_variables;
 ListaIdentificadores* identificadores_funciones;
+ListaFunciones*       lista_funciones;
 ListaSentencias*      lista_sentencias;
 char*                 aux_tIdentificador;
+char*                 aux_nombreFuncion;
 int                   analisisCorrecto;
 
 
-
 /************* TP 5 *************/
+
+ListaFunciones* inicializarListaFunciones(ListaFunciones*);
+
+ListaFunciones* agregarFuncion(ListaFunciones*, char*, char*);
+
+void agregarParametro(ListaFunciones*, char*, char*, char*);
+
+
+/* Reporte tp5 */
+void mostrarListadoFunciones(ListaFunciones* lista);
+
+void mostrarFuncion(Funcion* funcion);
+
+void mostrarParametros(ListaIdentificadores* parametros);
+
+
 
 /* Control de doble declaración de variables */
 //Para variables se hace uso de ListaIdentificadores

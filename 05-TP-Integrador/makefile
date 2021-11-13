@@ -1,11 +1,11 @@
 all: bison flex
-	gcc bison.tab.c lex.yy.c listas.c reporte.c -Iinclude
+	gcc bison.tab.c lex.yy.c listas.c reporte.c listasTp5.c -Iinclude
 
 bison: 
-	bison -d bison.y
+	bison -d bison.y --debug
 
 flex: 
-	flex -l flex.l
+	flex flex.l
 
 clean:
 	rm bison.tab.c

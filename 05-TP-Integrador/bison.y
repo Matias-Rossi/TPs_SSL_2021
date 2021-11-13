@@ -98,6 +98,7 @@ extern FILE* yyin;
 unidad_de_programa: INCLUDE  unidad_de_programa                           
 				  | DEFINE  expresion_primaria   unidad_de_programa                  	
 				  | unidad_de_traduccion 
+                  | error unidad_de_traduccion
 	    		  ;
 
 unidad_de_traduccion:     declaracion_externa 
@@ -109,7 +110,7 @@ declaracion_externa:      definicion_de_funcion
                         ;
 
 
-definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declaracion sentencia_compuesta 
+definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declaracion sentencia_compuesta   {/*Aca va a haber que poner cosas de las funciones*/}
 				     | declarador lista_de_declaracion sentencia_compuesta
 				     | especificadores_de_declaracion declarador sentencia_compuesta 			
 				     | declarador sentencia_compuesta 
@@ -224,13 +225,13 @@ declarador:   apuntador declarador_directo
             | declarador_directo                                    
 ;
 
-declarador_directo:       IDENTIFICADOR                                           {printf("\n%s\n", $<cval>1); agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+declarador_directo:       IDENTIFICADOR                                           {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
                         | '(' declarador ')'
-                        | IDENTIFICADOR  '[' expresion_constante ']'              {printf("\n%s\n", $<cval>1); agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
-                        | IDENTIFICADOR  '[' ']'                                  {printf("\n%s\n", $<cval>1); agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
-                        | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {printf("\n%s\n", $<cval>1); agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
-                        | IDENTIFICADOR '(' lista_de_identificadores ')'          {printf("\n%s\n", $<cval>1); agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
-                        | IDENTIFICADOR '(' ')'                                   {printf("\n%s\n", $<cval>1); agregarIdentificador(identificadores_funciones,  $<cval>1, aux_tIdentificador);}
+                        | IDENTIFICADOR  '[' expresion_constante ']'              {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+                        | IDENTIFICADOR  '[' ']'                                  {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+                        | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {aux_nombreFuncion = $<cval>1;}
+                        | IDENTIFICADOR '(' lista_de_identificadores ')'          {aux_nombreFuncion = $<cval>1;}
+                        | IDENTIFICADOR '(' ')'                                   {aux_nombreFuncion = $<cval>1;}
                         ;
 
 
@@ -256,15 +257,19 @@ lista_de_parametros:      declaracion_parametro
                         ;
 
 
-declaracion_parametro:     especificadores_de_declaracion declarador
+declaracion_parametro:     especificadores_de_declaracion IDENTIFICADOR {agregarParametro(lista_funciones, aux_nombreFuncion, sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+                         | especificadores_de_declaracion IDENTIFICADOR '(' lista_tipos_de_parametro ')'  {aux_nombreFuncion = $<cval>2}
+                         | especificadores_de_declaracion IDENTIFICADOR '(' lista_de_identificadores ')'  {aux_nombreFuncion = $<cval>2}
                          | especificadores_de_declaracion declarador_abstracto 
                          | especificadores_de_declaracion 
                          ;
 
 
-lista_de_identificadores:      IDENTIFICADOR                                {agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}    
+lista_de_identificadores:      IDENTIFICADOR                                {/*agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);*/}    
                             | lista_de_identificadores ',' IDENTIFICADOR
                             ;
+
+
 
 
 inicializador:  expresion_de_asignacion  
@@ -475,7 +480,7 @@ expresion_posfija:  expresion_primaria
 
 
  
-expresion_primaria: IDENTIFICADOR
+expresion_primaria: IDENTIFICADOR {/* //TODO: controlVariables(id); controlFuncion(id)*/}
                     | constante
                     | LITERAL_CADENA 
                     | '(' expresion ')'
@@ -497,7 +502,10 @@ constante:  CONST_OCTAL
 %%
 int main (int argc, char **argv)
 {
-
+    #ifdef YYDEBUG
+        yydebug = 1;
+    #endif
+    
     if(argv[1] == NULL){
         printf("Debe especificar un archivo para analizar\n");
     }
@@ -507,12 +515,13 @@ int main (int argc, char **argv)
         printf("Abriendo archivos\n");
 
         yyin = fopen(argv[1], "r");
-        FILE* fpReporte = fopen("reporte.txt", "w+");
 
         printf("Creando estructuras\n");
 
         analisisCorrecto = 1;
         identificadores_variables = inicializarListaIdentificadores(identificadores_variables);
+        lista_funciones = inicializarListaFunciones(lista_funciones);   //especifico tp5
+
         identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
         lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
 
@@ -525,12 +534,12 @@ int main (int argc, char **argv)
 
             printf("Imprimiendo reporte\n");
 
-            crearListadoIdentificadores(fpReporte, identificadores_variables, "VARIABLES DECLARADAS");
-            crearListadoIdentificadores(fpReporte, identificadores_funciones, "FUNCIONES DECLARADAS");
-            crearListadoSentencias     (fpReporte, lista_sentencias,          "SENTENCIAS");
+            crearListadoIdentificadores(identificadores_variables, "VARIABLES DECLARADAS");
+            crearListadoIdentificadores(identificadores_funciones, "FUNCIONES DECLARADAS");
+            mostrarListadoFunciones(lista_funciones);
+            crearListadoSentencias     (lista_sentencias,          "SENTENCIAS");
         }
 
-        fclose(fpReporte);
     }
 
     return 0;

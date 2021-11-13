@@ -5,7 +5,9 @@
 
 int main()
 {
-    int i, sum = 0, last = 5;
+    int i;
+    int i;
+    int sum = 0, last = 5;
     
     for ( i = 1; i <= last; i++ ) {
         sum += i;
@@ -21,7 +23,6 @@ int main()
     int a = 1;
     char a = 2;
     */
-
     n--;
     t = 'b';
     {

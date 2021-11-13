@@ -113,7 +113,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 18 ".\\bison.y"
+#line 18 "bison.y"
 
    int ival;
    double dval;
