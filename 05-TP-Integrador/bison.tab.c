@@ -120,7 +120,7 @@ extern FILE* yyin;
 # define YY_YY_BISON_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -2042,25 +2042,25 @@ yyreduce:
     {
   case 10:
 #line 113 "bison.y"
-                                                                                                            {agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tIdentificador);}
+                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[-3].cval)); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
 #line 2047 "bison.tab.c"
     break;
 
   case 11:
 #line 114 "bison.y"
-                                                                                                                            {agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tIdentificador);}
+                                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[-2].cval)); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
 #line 2053 "bison.tab.c"
     break;
 
   case 12:
 #line 115 "bison.y"
-                                                                                                                                    {agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tIdentificador);}
+                                                                                                                                    {aux_tFuncion = obtenerTipo((yyvsp[-2].cval)); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
 #line 2059 "bison.tab.c"
     break;
 
   case 13:
 #line 116 "bison.y"
-                                                                                                                            {agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tIdentificador);}
+                                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[-1].cval)); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
 #line 2065 "bison.tab.c"
     break;
 
@@ -2458,7 +2458,7 @@ yyreturn:
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        //yydebug = 1;
+        yydebug = 1;
     #endif
     
     if(argv[1] == NULL){

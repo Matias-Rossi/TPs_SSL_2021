@@ -110,10 +110,10 @@ declaracion_externa:      definicion_de_funcion
                         ;
 
 
-definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declaracion sentencia_compuesta   {agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tIdentificador);}
-				     | declarador lista_de_declaracion sentencia_compuesta                                  {agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tIdentificador);}
-				     | especificadores_de_declaracion declarador sentencia_compuesta 			            {agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tIdentificador);}
-				     | declarador sentencia_compuesta                                                       {agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tIdentificador);}
+definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declaracion sentencia_compuesta   {aux_tFuncion = obtenerTipo($<cval>1); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
+				     | declarador lista_de_declaracion sentencia_compuesta                                  {aux_tFuncion = obtenerTipo($<cval>1); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
+				     | especificadores_de_declaracion declarador sentencia_compuesta 			            {aux_tFuncion = obtenerTipo($<cval>1); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
+				     | declarador sentencia_compuesta                                                       {aux_tFuncion = obtenerTipo($<cval>1); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
 				     ;
 
 
@@ -221,8 +221,8 @@ enumerador:    IDENTIFICADOR
              | IDENTIFICADOR '=' expresion_constante
              ;
 
-declarador:   apuntador declarador_directo                          
-            | declarador_directo                                    
+declarador:   apuntador declarador_directo                                                                  
+            | declarador_directo                                                  
 ;
 
 declarador_directo:       IDENTIFICADOR                                           {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
@@ -503,7 +503,7 @@ constante:  CONST_OCTAL
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        //yydebug = 1;
+        yydebug = 1;
     #endif
     
     if(argv[1] == NULL){

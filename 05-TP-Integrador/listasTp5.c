@@ -8,7 +8,6 @@ ListaFunciones* inicializarListaFunciones(ListaFunciones* lista){
 }
 
 ListaFunciones* agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo){
-    printf("Si me estan llamando\n ");
     Funcion* funcion = malloc(sizeof(Funcion));
 
     funcion->nombre = identificador;    //Ira strcpy? :think:
@@ -48,4 +47,22 @@ char* cortarIdentificadorFuncion(char* cadena) {
     }
     identificador[i] = '\0';
     return identificador;
+}
+
+char* obtenerTipo(char* cadena) {
+    char* tipo = (char*)malloc(sizeof(char)*10);
+    int longitud = strlen(cadena);
+    int i = 0;
+    while(cadena[i] != ' ' && i < longitud){
+        tipo[i] = cadena[i];
+        i++;
+    }
+    printf("tratando de obtener asterisco de %p\n", &cadena[i+1]);
+    if(cadena[i + 1] && cadena[i + 1]  == '*'){
+        tipo[i] = '*';
+        tipo[i + 1] = '\0';
+    } else {
+        tipo[i] = '\0';
+    }
+    return tipo;
 }

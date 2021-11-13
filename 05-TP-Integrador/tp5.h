@@ -69,6 +69,7 @@ ListaSentencias*      lista_sentencias;
 char*                 aux_tIdentificador;
 char*                 aux_nombreFuncion;
 int                   analisisCorrecto;
+char*                 aux_tFuncion;
 
 
 /************* TP 5 *************/
@@ -85,6 +86,7 @@ void mostrarListadoFunciones(ListaFunciones* lista);
 void mostrarFuncion(Funcion* funcion);
 void mostrarParametros(ListaIdentificadores* parametros);
 char* cortarIdentificadorFuncion(char* cadena);
+char* obtenerTipo(char* cadena);
 
 
 

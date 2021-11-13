@@ -68,7 +68,7 @@ void mostrarListadoFunciones(ListaFunciones* lista) {
 }
 
 void mostrarFuncion(Funcion* funcion) {
-    printf("%s\t\t\t%s\t\t\t%d", funcion->nombre, funcion->tipo, funcion->parametros->cantElementos);
+    printf("%s\t\t\t%s\t\t\t%d / ", funcion->nombre, funcion->tipo, funcion->parametros->cantElementos);
     mostrarParametros(funcion->parametros);
 }
 
@@ -79,6 +79,6 @@ void mostrarParametros(ListaIdentificadores* parametros) {
             printf("%s, ", aux->tipo);              
             aux = aux->sig;
         }
-        printf("\n");
     }
+    printf("\n");
 }
