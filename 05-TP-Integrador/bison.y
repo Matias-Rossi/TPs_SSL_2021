@@ -252,17 +252,21 @@ lista_tipos_de_parametro:      lista_de_parametros
                              ;
 
 
-lista_de_parametros:      declaracion_parametro
-                        | lista_de_parametros ',' declaracion_parametro 
+lista_de_parametros:      declaracion_parametro                         {printf("\n----\nAca se supone que hay un parametro %s\n----\n", $<cval>1);}
+                        | lista_de_parametros ',' declaracion_parametro {printf("\n----\nAca se supone que hay un parametro %s\n----\n", $<cval>3);}
                         ;
 
 
-declaracion_parametro:     especificadores_de_declaracion IDENTIFICADOR {agregarParametro(lista_funciones, aux_nombreFuncion, sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
-                         | especificadores_de_declaracion IDENTIFICADOR '(' lista_tipos_de_parametro ')'  {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>2);}
-                         | especificadores_de_declaracion IDENTIFICADOR '(' lista_de_identificadores ')'  {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>2);}
-                         | especificadores_de_declaracion declarador_abstracto 
-                         | especificadores_de_declaracion 
+declaracion_parametro:     especificadores_de_declaracion apuntadorOpt IDENTIFICADOR {agregarParametro(lista_funciones, aux_nombreFuncion, sacar_ultimo_caracter($<cval>1), aux_tIdentificador);/*TODO: algo turbio*/}
+                         | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '(' lista_tipos_de_parametro ')'  {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>3);}
+                         | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '(' lista_de_identificadores ')'  {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>3);}
+                         | especificadores_de_declaracion apuntadorOpt declarador_abstracto 
+                         | especificadores_de_declaracion apuntadorOpt 
                          ;
+
+apuntadorOpt:      apuntador
+                |   /* vacio */
+                ;
 
 
 lista_de_identificadores:      IDENTIFICADOR                                {/*agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);*/}    
