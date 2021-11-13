@@ -7,8 +7,10 @@ void sumar(int a, int b) {
 
 int main()
 {
-    printf("\n\n\t\tStudytonight - Best place to learn\n\n\n");
+    //printf("\n\n\t\tStudytonight - Best place to learn\n\n\n");
+
     int choice, num, i;
+    
     unsigned long int fact;
 
     while(1)
@@ -24,8 +26,8 @@ int main()
         {
             case 1:
                 printf("Enter number:\n");
-                scanf("%d", &num);
-                int fact = 1;
+                //scanf("%d", &num);
+                //int fact = 1;
                 for(i = 1; i <= num; i++)
                 {
                     fact = fact*i;
@@ -35,7 +37,7 @@ int main()
         
             case 2:
                 printf("Enter number:\n");
-                scanf("%d", &num);
+                //scanf("%d", &num);
                 if(num == 1)
                 printf("\n1 is neither prime nor composite\n\n");
                 for(i = 2; i < num; i++)
