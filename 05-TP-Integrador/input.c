@@ -39,3 +39,7 @@ int main()
 void hola(int m, char z) {
     printf("hola");
 }
+
+char nada() {
+    return 'a';
+}

@@ -9,7 +9,7 @@ ListaFunciones* inicializarListaFunciones(ListaFunciones* lista){
 
 ListaFunciones* agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo){
     printf("Si me estan llamando\n ");
-    Funcion* funcion;
+    Funcion* funcion = malloc(sizeof(Funcion));
 
     funcion->nombre = identificador;    //Ira strcpy? :think:
     funcion->tipo = tipo;
@@ -37,4 +37,15 @@ void agregarParametro(ListaFunciones* lista, char* nombreFuncion, char* nombrePa
         }
         aux = aux->sig;
     }
+}
+
+char* cortarIdentificadorFuncion(char* cadena) {
+    char* identificador = (char*)malloc(sizeof(char)*100);
+    int i = 0;
+    while(cadena[i] != '(' && cadena[i] != ' '){
+        identificador[i] = cadena[i];
+        i++;
+    }
+    identificador[i] = '\0';
+    return identificador;
 }

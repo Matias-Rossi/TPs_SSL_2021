@@ -120,7 +120,7 @@ extern FILE* yyin;
 # define YY_YY_BISON_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 1
+# define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -2042,168 +2042,186 @@ yyreduce:
     {
   case 10:
 #line 113 "bison.y"
-                                                                                                            {/*Aca va a haber que poner cosas de las funciones*/}
+                                                                                                            {agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tIdentificador);}
 #line 2047 "bison.tab.c"
+    break;
+
+  case 11:
+#line 114 "bison.y"
+                                                                                                                            {agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tIdentificador);}
+#line 2053 "bison.tab.c"
+    break;
+
+  case 12:
+#line 115 "bison.y"
+                                                                                                                                    {agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tIdentificador);}
+#line 2059 "bison.tab.c"
+    break;
+
+  case 13:
+#line 116 "bison.y"
+                                                                                                                            {agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tIdentificador);}
+#line 2065 "bison.tab.c"
     break;
 
   case 29:
 #line 145 "bison.y"
                                                    {aux_tIdentificador="int";}
-#line 2053 "bison.tab.c"
+#line 2071 "bison.tab.c"
     break;
 
   case 30:
 #line 146 "bison.y"
                                                                {aux_tIdentificador="char";}
-#line 2059 "bison.tab.c"
+#line 2077 "bison.tab.c"
     break;
 
   case 31:
 #line 147 "bison.y"
                                                                {aux_tIdentificador="float";}
-#line 2065 "bison.tab.c"
+#line 2083 "bison.tab.c"
     break;
 
   case 32:
 #line 148 "bison.y"
                                                                {aux_tIdentificador="double";}
-#line 2071 "bison.tab.c"
+#line 2089 "bison.tab.c"
     break;
 
   case 33:
 #line 149 "bison.y"
                                                        {aux_tIdentificador="short";}
-#line 2077 "bison.tab.c"
+#line 2095 "bison.tab.c"
     break;
 
   case 34:
 #line 150 "bison.y"
                                                                {aux_tIdentificador="void";}
-#line 2083 "bison.tab.c"
+#line 2101 "bison.tab.c"
     break;
 
   case 35:
 #line 151 "bison.y"
                                                                {aux_tIdentificador="long";}
-#line 2089 "bison.tab.c"
+#line 2107 "bison.tab.c"
     break;
 
   case 36:
 #line 152 "bison.y"
                                                                {aux_tIdentificador="signed";}
-#line 2095 "bison.tab.c"
+#line 2113 "bison.tab.c"
     break;
 
   case 37:
 #line 153 "bison.y"
                                                                            {aux_tIdentificador="unsigned";}
-#line 2101 "bison.tab.c"
+#line 2119 "bison.tab.c"
     break;
 
   case 73:
 #line 228 "bison.y"
                                                                                   {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter((yyvsp[0].cval)))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[0].cval)), aux_tIdentificador);}
-#line 2107 "bison.tab.c"
+#line 2125 "bison.tab.c"
     break;
 
   case 75:
 #line 230 "bison.y"
                                                                                   {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter((yyvsp[-3].cval)))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[-3].cval)), aux_tIdentificador);}
-#line 2113 "bison.tab.c"
+#line 2131 "bison.tab.c"
     break;
 
   case 76:
 #line 231 "bison.y"
                                                                                   {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter((yyvsp[-2].cval)))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[-2].cval)), aux_tIdentificador);}
-#line 2119 "bison.tab.c"
+#line 2137 "bison.tab.c"
     break;
 
   case 77:
 #line 232 "bison.y"
-                                                                                  {aux_nombreFuncion = (yyvsp[-3].cval);}
-#line 2125 "bison.tab.c"
+                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval)); printf("El nombre de la funcion es: %s\nS", aux_nombreFuncion);}
+#line 2143 "bison.tab.c"
     break;
 
   case 78:
 #line 233 "bison.y"
-                                                                                  {aux_nombreFuncion = (yyvsp[-3].cval);}
-#line 2131 "bison.tab.c"
+                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval)); printf("El nombre de la funcion es: %s\nS", aux_nombreFuncion);}
+#line 2149 "bison.tab.c"
     break;
 
   case 79:
 #line 234 "bison.y"
-                                                                                  {aux_nombreFuncion = (yyvsp[-2].cval);}
-#line 2137 "bison.tab.c"
+                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-2].cval)); printf("El nombre de la funcion es: %s\nS", aux_nombreFuncion);}
+#line 2155 "bison.tab.c"
     break;
 
   case 90:
 #line 260 "bison.y"
                                                                         {agregarParametro(lista_funciones, aux_nombreFuncion, sacar_ultimo_caracter((yyvsp[-1].cval)), aux_tIdentificador);}
-#line 2143 "bison.tab.c"
+#line 2161 "bison.tab.c"
     break;
 
   case 91:
 #line 261 "bison.y"
-                                                                                                          {aux_nombreFuncion = (yyvsp[-3].cval);}
-#line 2149 "bison.tab.c"
+                                                                                                          {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval));}
+#line 2167 "bison.tab.c"
     break;
 
   case 92:
 #line 262 "bison.y"
-                                                                                                          {aux_nombreFuncion = (yyvsp[-3].cval);}
-#line 2155 "bison.tab.c"
+                                                                                                          {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval));}
+#line 2173 "bison.tab.c"
     break;
 
   case 95:
 #line 268 "bison.y"
                                                                             {/*agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);*/}
-#line 2161 "bison.tab.c"
+#line 2179 "bison.tab.c"
     break;
 
   case 117:
 #line 312 "bison.y"
                                         {agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   yylineno);}
-#line 2167 "bison.tab.c"
+#line 2185 "bison.tab.c"
     break;
 
   case 118:
 #line 313 "bison.y"
                                         {agregar_sentencia(lista_sentencias, "Sentencia expresion",    yylineno);}
-#line 2173 "bison.tab.c"
+#line 2191 "bison.tab.c"
     break;
 
   case 119:
 #line 314 "bison.y"
                                         {agregar_sentencia(lista_sentencias, "Sentencia compuesta",    yylineno);}
-#line 2179 "bison.tab.c"
+#line 2197 "bison.tab.c"
     break;
 
   case 120:
 #line 315 "bison.y"
                                         {agregar_sentencia(lista_sentencias, "Sentencia de iteracion", yylineno);}
-#line 2185 "bison.tab.c"
+#line 2203 "bison.tab.c"
     break;
 
   case 121:
 #line 316 "bison.y"
                                         {agregar_sentencia(lista_sentencias, "Sentencia de seleccion", yylineno);}
-#line 2191 "bison.tab.c"
+#line 2209 "bison.tab.c"
     break;
 
   case 122:
 #line 317 "bison.y"
                                         {agregar_sentencia(lista_sentencias, "Sentencia de salto",     yylineno);}
-#line 2197 "bison.tab.c"
+#line 2215 "bison.tab.c"
     break;
 
   case 220:
 #line 483 "bison.y"
                                   {/* //TODO: controlVariables(id); controlFuncion(id)*/}
-#line 2203 "bison.tab.c"
+#line 2221 "bison.tab.c"
     break;
 
 
-#line 2207 "bison.tab.c"
+#line 2225 "bison.tab.c"
 
       default: break;
     }
@@ -2440,7 +2458,7 @@ yyreturn:
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        yydebug = 1;
+        //yydebug = 1;
     #endif
     
     if(argv[1] == NULL){

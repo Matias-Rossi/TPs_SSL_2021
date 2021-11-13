@@ -82,10 +82,9 @@ void agregarParametro(ListaFunciones*, char*, char*, char*);
 
 /* Reporte tp5 */
 void mostrarListadoFunciones(ListaFunciones* lista);
-
 void mostrarFuncion(Funcion* funcion);
-
 void mostrarParametros(ListaIdentificadores* parametros);
+char* cortarIdentificadorFuncion(char* cadena);
 
 
 
