@@ -258,8 +258,8 @@ lista_de_parametros:      declaracion_parametro
 
 
 declaracion_parametro:     especificadores_de_declaracion IDENTIFICADOR {agregarParametro(lista_funciones, aux_nombreFuncion, sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
-                         | especificadores_de_declaracion IDENTIFICADOR '(' lista_tipos_de_parametro ')'  {aux_nombreFuncion = $<cval>2}
-                         | especificadores_de_declaracion IDENTIFICADOR '(' lista_de_identificadores ')'  {aux_nombreFuncion = $<cval>2}
+                         | especificadores_de_declaracion IDENTIFICADOR '(' lista_tipos_de_parametro ')'  {aux_nombreFuncion = $<cval>2;}
+                         | especificadores_de_declaracion IDENTIFICADOR '(' lista_de_identificadores ')'  {aux_nombreFuncion = $<cval>2;}
                          | especificadores_de_declaracion declarador_abstracto 
                          | especificadores_de_declaracion 
                          ;
