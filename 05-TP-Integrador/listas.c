@@ -71,6 +71,25 @@ void intercambiarIdentificadores(Identificador* a, Identificador* b) {
 
 }
 
+ListaIdentificadores* trasladarListaIdentificadores(ListaIdentificadores* listaOriginal) {
+    //Copia a nueva
+    ListaIdentificadores* listaNueva = inicializarListaIdentificadores(listaNueva);
+    Identificador* aux = listaOriginal->pri;
+    printf("Aux = %p\n", aux);
+    while(aux) {
+        agregarIdentificador(listaNueva, aux->nombre, aux->tipo);
+        aux = aux->sig;
+    }
+
+    //Limpieza original
+    printf("Intento limpiar\n");
+    liberarListaIdentificadores(listaOriginal);
+    printf("Limpio!\n");
+    listaOriginal = inicializarListaIdentificadores(listaOriginal);
+
+    return listaNueva;
+}
+
 void liberarListaIdentificadores(ListaIdentificadores* lista){
     //Lista vacía
     if(lista->pri == NULL) {    
@@ -92,6 +111,9 @@ void liberarListaIdentificadores(ListaIdentificadores* lista){
         siguiente = borrador->sig;
         free(borrador->nombre);
         free(borrador);
+
+        lista->pri = NULL;
+        free(lista);
     }
 }
 

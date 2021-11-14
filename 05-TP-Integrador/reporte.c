@@ -54,12 +54,11 @@ void mostrarListadoFunciones(ListaFunciones* lista) {
         nuevaCategoria("FUNCIONES");
 
         printf("NOMBRE\t\t\tRETORNA\t\t\tCANT/TIPO PARAMETROS\n");
-        while(aux->sig != NULL) {                                                           //Itera por los nodos
-            mostrarFuncion(aux);
-            //printf("%s\t\t\t%s\n" ,aux->nombre, aux->tipo);              
+        while(aux->sig != NULL){                                                           //Itera por los nodos
+            mostrarFuncion(aux);             
             aux = aux->sig;
         }                          
-        printf("%s\t\t\t%s\n" ,aux->nombre, aux->tipo);
+        mostrarFuncion(aux);
 
         
     } else {
@@ -79,6 +78,7 @@ void mostrarParametros(ListaIdentificadores* parametros) {
             printf("%s, ", aux->tipo);              
             aux = aux->sig;
         }
+        printf("%s", aux->tipo);
     }
     printf("\n");
 }

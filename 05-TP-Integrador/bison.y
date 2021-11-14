@@ -110,10 +110,10 @@ declaracion_externa:      definicion_de_funcion
                         ;
 
 
-definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declaracion sentencia_compuesta   {aux_tFuncion = obtenerTipo($<cval>1); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
-				     | declarador lista_de_declaracion sentencia_compuesta                                  {aux_tFuncion = obtenerTipo($<cval>1); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
-				     | especificadores_de_declaracion declarador sentencia_compuesta 			            {aux_tFuncion = obtenerTipo($<cval>1); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
-				     | declarador sentencia_compuesta                                                       {aux_tFuncion = obtenerTipo($<cval>1); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
+definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declaracion sentencia_compuesta   {aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
+				     | declarador lista_de_declaracion sentencia_compuesta                                  {aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
+				     | especificadores_de_declaracion declarador sentencia_compuesta 			            {aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
+				     | declarador sentencia_compuesta                                                       {aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
 				     ;
 
 
@@ -229,9 +229,9 @@ declarador_directo:       IDENTIFICADOR                                         
                         | '(' declarador ')'
                         | IDENTIFICADOR  '[' expresion_constante ']'              {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
                         | IDENTIFICADOR  '[' ']'                                  {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
-                        | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1); printf("El nombre de la funcion es: %s\nS", aux_nombreFuncion);}
-                        | IDENTIFICADOR '(' lista_de_identificadores ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1); printf("El nombre de la funcion es: %s\nS", aux_nombreFuncion);}
-                        | IDENTIFICADOR '(' ')'                                   {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1); printf("El nombre de la funcion es: %s\nS", aux_nombreFuncion);}
+                        | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
+                        | IDENTIFICADOR '(' lista_de_identificadores ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
+                        | IDENTIFICADOR '(' ')'                                   {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         ;
 
 
@@ -252,20 +252,20 @@ lista_tipos_de_parametro:      lista_de_parametros
                              ;
 
 
-lista_de_parametros:      declaracion_parametro                         {printf("\n----\nAca se supone que hay un parametro %s\n----\n", $<cval>1);}
-                        | lista_de_parametros ',' declaracion_parametro {printf("\n----\nAca se supone que hay un parametro %s\n----\n", $<cval>3);}
+lista_de_parametros:      declaracion_parametro                         {aux_tIdentificador = sacar_ultimo_caracter($<cval>1); agregarParametro(lista_parametros, aux_nParametro, aux_tIdentificador, identificadores_variables);}
+                        | lista_de_parametros ',' declaracion_parametro {aux_tIdentificador = sacar_ultimo_caracter($<cval>3); agregarParametro(lista_parametros, aux_nParametro, aux_tIdentificador, identificadores_variables);}
                         ;
 
 
-declaracion_parametro:     especificadores_de_declaracion apuntadorOpt IDENTIFICADOR {agregarParametro(lista_funciones, aux_nombreFuncion, sacar_ultimo_caracter($<cval>1), aux_tIdentificador);/*TODO: algo turbio*/}
+declaracion_parametro:     especificadores_de_declaracion apuntadorOpt IDENTIFICADOR {aux_nParametro = sacar_ultimo_caracter($<cval>3); printf("\nNombre del parametro: %s\n", aux_nParametro);/*TODO: algo turbio*/}
                          | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '(' lista_tipos_de_parametro ')'  {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>3);}
                          | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '(' lista_de_identificadores ')'  {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>3);}
                          | especificadores_de_declaracion apuntadorOpt declarador_abstracto 
                          | especificadores_de_declaracion apuntadorOpt 
                          ;
 
-apuntadorOpt:      apuntador
-                |   /* vacio */
+apuntadorOpt:      apuntador                                            
+                |   /* vacio */                                         
                 ;
 
 
@@ -507,7 +507,7 @@ constante:  CONST_OCTAL
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        yydebug = 1;
+        //yydebug = 1;
     #endif
     
     if(argv[1] == NULL){
@@ -528,6 +528,7 @@ int main (int argc, char **argv)
 
         identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
         lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
+        lista_parametros          = inicializarListaIdentificadores(lista_parametros);
 
         printf("Comenzando anlisis lexico y sintactico\n");
 
@@ -541,7 +542,7 @@ int main (int argc, char **argv)
             crearListadoIdentificadores(identificadores_variables, "VARIABLES DECLARADAS");
             crearListadoIdentificadores(identificadores_funciones, "FUNCIONES DECLARADAS");
             mostrarListadoFunciones(lista_funciones);
-            crearListadoSentencias     (lista_sentencias,          "SENTENCIAS");
+            //crearListadoSentencias     (lista_sentencias,          "SENTENCIAS");
         }
 
     }

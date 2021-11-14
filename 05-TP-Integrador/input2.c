@@ -1,7 +1,7 @@
 //#include<stdio.h>
 
 
-void sumar(int a, int b) {
+void sumar(int* a, int b) {
     printf("a + b");
 }
 
@@ -85,6 +85,6 @@ int hola()
     return 0;
 }
 
-char prueba(char c, int b, float a) {
-    return c;
+char* prueba(char c, int* z, float a) {
+    return &c;
 }

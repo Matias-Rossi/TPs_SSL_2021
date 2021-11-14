@@ -59,6 +59,7 @@ void                  agregar_sentencia                    (ListaSentencias*, ch
 //reporte.c
 void  nuevaCategoria              (char*);
 void  crearListadoIdentificadores (ListaIdentificadores*, char*);
+ListaIdentificadores* trasladarListaIdentificadores(ListaIdentificadores* listaOriginal);
 void  crearListadoSentencias(ListaSentencias*, char*);
 char* sacar_ultimo_caracter(char*);
 
@@ -70,15 +71,17 @@ char*                 aux_tIdentificador;
 char*                 aux_nombreFuncion;
 int                   analisisCorrecto;
 char*                 aux_tFuncion;
+char*                 aux_nParametro;
+ListaIdentificadores* lista_parametros;
 
 
 /************* TP 5 *************/
 
 ListaFunciones* inicializarListaFunciones(ListaFunciones*);
 
-ListaFunciones* agregarFuncion(ListaFunciones*, char*, char*);
+void agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, ListaIdentificadores* listaParametros);
 
-void agregarParametro(ListaFunciones*, char*, char*, char*);
+void agregarParametro(ListaIdentificadores* listaParametros, char* nombreParametro, char* tipoParametro, ListaIdentificadores* listaVariables);
 
 
 /* Reporte tp5 */

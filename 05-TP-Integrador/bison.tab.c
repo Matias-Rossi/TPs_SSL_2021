@@ -120,7 +120,7 @@ extern FILE* yyin;
 # define YY_YY_BISON_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 1
+# define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -2054,25 +2054,25 @@ yyreduce:
     {
   case 10:
 #line 113 "bison.y"
-                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[-3].cval)); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
+                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[-3].cval)); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
 #line 2059 "bison.tab.c"
     break;
 
   case 11:
 #line 114 "bison.y"
-                                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[-2].cval)); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
+                                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[-2].cval)); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
 #line 2065 "bison.tab.c"
     break;
 
   case 12:
 #line 115 "bison.y"
-                                                                                                                                    {aux_tFuncion = obtenerTipo((yyvsp[-2].cval)); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
+                                                                                                                                    {aux_tFuncion = obtenerTipo((yyvsp[-2].cval)); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
 #line 2071 "bison.tab.c"
     break;
 
   case 13:
 #line 116 "bison.y"
-                                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[-1].cval)); printf("[ACA]: %s\n", aux_tFuncion); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion);}
+                                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[-1].cval)); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
 #line 2077 "bison.tab.c"
     break;
 
@@ -2150,37 +2150,37 @@ yyreduce:
 
   case 77:
 #line 232 "bison.y"
-                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval)); printf("El nombre de la funcion es: %s\nS", aux_nombreFuncion);}
+                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval));}
 #line 2155 "bison.tab.c"
     break;
 
   case 78:
 #line 233 "bison.y"
-                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval)); printf("El nombre de la funcion es: %s\nS", aux_nombreFuncion);}
+                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval));}
 #line 2161 "bison.tab.c"
     break;
 
   case 79:
 #line 234 "bison.y"
-                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-2].cval)); printf("El nombre de la funcion es: %s\nS", aux_nombreFuncion);}
+                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-2].cval));}
 #line 2167 "bison.tab.c"
     break;
 
   case 88:
 #line 255 "bison.y"
-                                                                        {printf("\n----\nAca se supone que hay un parametro %s\n----\n", (yyvsp[0].cval));}
+                                                                        {aux_tIdentificador = sacar_ultimo_caracter((yyvsp[0].cval)); agregarParametro(lista_parametros, aux_nParametro, aux_tIdentificador, identificadores_variables);}
 #line 2173 "bison.tab.c"
     break;
 
   case 89:
 #line 256 "bison.y"
-                                                                        {printf("\n----\nAca se supone que hay un parametro %s\n----\n", (yyvsp[0].cval));}
+                                                                        {aux_tIdentificador = sacar_ultimo_caracter((yyvsp[0].cval)); agregarParametro(lista_parametros, aux_nParametro, aux_tIdentificador, identificadores_variables);}
 #line 2179 "bison.tab.c"
     break;
 
   case 90:
 #line 260 "bison.y"
-                                                                                     {agregarParametro(lista_funciones, aux_nombreFuncion, sacar_ultimo_caracter((yyvsp[-2].cval)), aux_tIdentificador);/*TODO: algo turbio*/}
+                                                                                     {aux_nParametro = sacar_ultimo_caracter((yyvsp[0].cval)); printf("\nNombre del parametro: %s\n", aux_nParametro);/*TODO: algo turbio*/}
 #line 2185 "bison.tab.c"
     break;
 
@@ -2482,7 +2482,7 @@ yyreturn:
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        yydebug = 1;
+        //yydebug = 1;
     #endif
     
     if(argv[1] == NULL){
@@ -2503,6 +2503,7 @@ int main (int argc, char **argv)
 
         identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
         lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
+        lista_parametros          = inicializarListaIdentificadores(lista_parametros);
 
         printf("Comenzando anlisis lexico y sintactico\n");
 
@@ -2516,7 +2517,7 @@ int main (int argc, char **argv)
             crearListadoIdentificadores(identificadores_variables, "VARIABLES DECLARADAS");
             crearListadoIdentificadores(identificadores_funciones, "FUNCIONES DECLARADAS");
             mostrarListadoFunciones(lista_funciones);
-            crearListadoSentencias     (lista_sentencias,          "SENTENCIAS");
+            //crearListadoSentencias     (lista_sentencias,          "SENTENCIAS");
         }
 
     }

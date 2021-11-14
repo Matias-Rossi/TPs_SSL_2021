@@ -7,13 +7,20 @@ ListaFunciones* inicializarListaFunciones(ListaFunciones* lista){
     return lista;
 }
 
-ListaFunciones* agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo){
+void agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, ListaIdentificadores* listaParametros){
+    //printf("Agregada la funcion %s. Parametros en %p\n", identificador, listaParametros);
+    //Crear estructura
+    printf("Seg: 1\n");
     Funcion* funcion = malloc(sizeof(Funcion));
 
-    funcion->nombre = identificador;    //Ira strcpy? :think:
-    funcion->tipo = tipo;
-    funcion->parametros = inicializarListaIdentificadores(funcion->parametros);
-
+    funcion->nombre = calloc(strlen(identificador)+1, sizeof(char));
+    funcion->tipo = calloc(strlen(tipo)+1, sizeof(char));
+    strcpy(funcion->nombre, identificador);
+    strcpy(funcion->tipo, tipo);
+    printf("Seg: 2\n");
+    funcion->parametros = trasladarListaIdentificadores(listaParametros);
+    printf("Seg: 3\n");
+    //Agregar la funcion a la lista
     if(lista->cantElementos == 0){
         lista->pri = funcion;
     } else {
@@ -24,18 +31,49 @@ ListaFunciones* agregarFuncion(ListaFunciones* lista, char* identificador, char*
         aux->sig = funcion;
     }
     lista->cantElementos++;
-}
+    printf("Seg: 4\n");
+    //Reinicializacion de la lista de parametros
+    //listaParametros->pri = NULL;
+    //listaParametros->cantElementos = 0;
+    listaParametros = inicializarListaIdentificadores(listaParametros);
 
+    //printf("listaParametros->Pri ahora es NULL\n");
+    //printf("Nueva lista de parametros en %p\n", listaParametros);
+
+}
+/*
 void agregarParametro(ListaFunciones* lista, char* nombreFuncion, char* nombreParametro, char* tipoParametro){
+    printf("-------\nIntentando agregar parametro %s a la funcion %s\n", nombreParametro, nombreFuncion);
     Funcion* aux = lista->pri;
     while(aux != NULL){
         if(strcmp(aux->nombre, nombreFuncion) == 0){
             agregarIdentificador(aux->parametros, nombreParametro, tipoParametro);
             aux->parametros->cantElementos++;
+            printf("\nParametro agregado correctamente\n");
             break;
         }
         aux = aux->sig;
     }
+}
+*/
+
+void agregarParametro(ListaIdentificadores* listaParametros, char* nombreParametro, char* tipoParametro, ListaIdentificadores* listaVariables){
+
+    printf("1. listaParametros->pri = %p\n", listaParametros->pri);
+    if(listaParametros->pri == NULL) {
+        //listaParametros = inicializarListaIdentificadores(listaParametros);
+        //printf("listaParametros reinicializada\n");
+    }
+
+    //Agrego a lista de parámetros
+    if(!identificadorYaExiste(listaParametros, nombreParametro)) 
+        agregarIdentificador(listaParametros, nombreParametro, tipoParametro);
+    printf("2. listaParametros->pri = %p\n", listaParametros->pri);
+
+    //Agrego a lista de variables declaradas
+    if(!identificadorYaExiste(listaVariables, nombreParametro)) 
+        agregarIdentificador(listaVariables, nombreParametro, obtenerTipo(tipoParametro));
+
 }
 
 char* cortarIdentificadorFuncion(char* cadena) {
@@ -57,7 +95,7 @@ char* obtenerTipo(char* cadena) {
         tipo[i] = cadena[i];
         i++;
     }
-    printf("tratando de obtener asterisco de %p\n", &cadena[i+1]);
+    //printf("tratando de obtener asterisco de %p\n", &cadena[i+1]);
     if(cadena[i + 1] && cadena[i + 1]  == '*'){
         tipo[i] = '*';
         tipo[i + 1] = '\0';
