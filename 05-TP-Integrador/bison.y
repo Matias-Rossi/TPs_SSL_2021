@@ -257,7 +257,7 @@ lista_de_parametros:      declaracion_parametro                         {aux_tId
                         ;
 
 
-declaracion_parametro:     especificadores_de_declaracion apuntadorOpt IDENTIFICADOR {aux_nParametro = sacar_ultimo_caracter($<cval>3); printf("\nNombre del parametro: %s\n", aux_nParametro);/*TODO: algo turbio*/}
+declaracion_parametro:     especificadores_de_declaracion apuntadorOpt IDENTIFICADOR {aux_nParametro = sacar_ultimo_caracter($<cval>3);}
                          | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '(' lista_tipos_de_parametro ')'  {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>3);}
                          | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '(' lista_de_identificadores ')'  {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>3);}
                          | especificadores_de_declaracion apuntadorOpt declarador_abstracto 

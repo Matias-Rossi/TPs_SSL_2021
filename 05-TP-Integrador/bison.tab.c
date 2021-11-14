@@ -2180,7 +2180,7 @@ yyreduce:
 
   case 90:
 #line 260 "bison.y"
-                                                                                     {aux_nParametro = sacar_ultimo_caracter((yyvsp[0].cval)); printf("\nNombre del parametro: %s\n", aux_nParametro);/*TODO: algo turbio*/}
+                                                                                     {aux_nParametro = sacar_ultimo_caracter((yyvsp[0].cval));}
 #line 2185 "bison.tab.c"
     break;
 

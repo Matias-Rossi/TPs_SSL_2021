@@ -10,16 +10,14 @@ ListaFunciones* inicializarListaFunciones(ListaFunciones* lista){
 void agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, ListaIdentificadores* listaParametros){
     //printf("Agregada la funcion %s. Parametros en %p\n", identificador, listaParametros);
     //Crear estructura
-    printf("Seg: 1\n");
     Funcion* funcion = malloc(sizeof(Funcion));
 
     funcion->nombre = calloc(strlen(identificador)+1, sizeof(char));
     funcion->tipo = calloc(strlen(tipo)+1, sizeof(char));
     strcpy(funcion->nombre, identificador);
     strcpy(funcion->tipo, tipo);
-    printf("Seg: 2\n");
     funcion->parametros = trasladarListaIdentificadores(listaParametros);
-    printf("Seg: 3\n");
+
     //Agregar la funcion a la lista
     if(lista->cantElementos == 0){
         lista->pri = funcion;
@@ -31,7 +29,7 @@ void agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, List
         aux->sig = funcion;
     }
     lista->cantElementos++;
-    printf("Seg: 4\n");
+
     //Reinicializacion de la lista de parametros
     //listaParametros->pri = NULL;
     //listaParametros->cantElementos = 0;
@@ -59,7 +57,7 @@ void agregarParametro(ListaFunciones* lista, char* nombreFuncion, char* nombrePa
 
 void agregarParametro(ListaIdentificadores* listaParametros, char* nombreParametro, char* tipoParametro, ListaIdentificadores* listaVariables){
 
-    printf("1. listaParametros->pri = %p\n", listaParametros->pri);
+    //printf("1. listaParametros->pri = %p\n", listaParametros->pri);
     if(listaParametros->pri == NULL) {
         //listaParametros = inicializarListaIdentificadores(listaParametros);
         //printf("listaParametros reinicializada\n");
@@ -68,7 +66,7 @@ void agregarParametro(ListaIdentificadores* listaParametros, char* nombreParamet
     //Agrego a lista de parámetros
     if(!identificadorYaExiste(listaParametros, nombreParametro)) 
         agregarIdentificador(listaParametros, nombreParametro, tipoParametro);
-    printf("2. listaParametros->pri = %p\n", listaParametros->pri);
+    //printf("2. listaParametros->pri = %p\n", listaParametros->pri);
 
     //Agrego a lista de variables declaradas
     if(!identificadorYaExiste(listaVariables, nombreParametro)) 

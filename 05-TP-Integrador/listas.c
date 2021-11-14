@@ -13,7 +13,7 @@ int identificadorYaExiste(ListaIdentificadores* lista, char* identificador){
     Identificador* aux = lista->pri;
     while(aux != NULL){
         if(strcmp(aux->nombre, identificador) == 0){
-            printf("Error: esta variable ya ha sido declarada\n");
+            printf("[ERROR] la variable %s ya ha sido declarada\n", identificador);
             return 1;
         }
         aux = aux->sig;
@@ -75,16 +75,14 @@ ListaIdentificadores* trasladarListaIdentificadores(ListaIdentificadores* listaO
     //Copia a nueva
     ListaIdentificadores* listaNueva = inicializarListaIdentificadores(listaNueva);
     Identificador* aux = listaOriginal->pri;
-    printf("Aux = %p\n", aux);
+
     while(aux) {
         agregarIdentificador(listaNueva, aux->nombre, aux->tipo);
         aux = aux->sig;
     }
 
     //Limpieza original
-    printf("Intento limpiar\n");
     liberarListaIdentificadores(listaOriginal);
-    printf("Limpio!\n");
     listaOriginal = inicializarListaIdentificadores(listaOriginal);
 
     return listaNueva;
