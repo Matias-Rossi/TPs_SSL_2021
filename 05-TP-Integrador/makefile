@@ -2,7 +2,7 @@ all: bison flex
 	gcc bison.tab.c lex.yy.c listas.c reporte.c listasTp5.c -Iinclude
 
 bison: 
-	bison -d bison.y --report=state
+	bison -d bison.y --report=state 
 
 flex: 
 	flex flex.l
