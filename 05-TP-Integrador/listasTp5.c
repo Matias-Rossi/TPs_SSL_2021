@@ -65,7 +65,7 @@ void agregarParametro(ListaIdentificadores* listaParametros, char* nombreParamet
 
     //Agrego a lista de parámetros
     if(!identificadorYaExiste(listaParametros, nombreParametro)) 
-        agregarIdentificador(listaParametros, nombreParametro, tipoParametro);
+        agregarIdentificador(listaParametros, nombreParametro, obtenerTipo(tipoParametro));
     //printf("2. listaParametros->pri = %p\n", listaParametros->pri);
 
     //Agrego a lista de variables declaradas
