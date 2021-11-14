@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include"bison.tab.h"
 
 int yylineno;
 int yyerror(const char *msg);
@@ -52,14 +53,15 @@ void                  agregarIdentificador                 (ListaIdentificadores
 int                   ordenarIdentificadores               (ListaIdentificadores*, int criterio(char*, char*));
 void                  swapId                               (Identificador*, Identificador*);
 void                  intercambiarIdentificadores          (Identificador*, Identificador*);
+ListaIdentificadores* trasladarListaIdentificadores(ListaIdentificadores* listaOriginal);
 void                  liberarListaIdentificadores          (ListaIdentificadores*);
 ListaSentencias*      inicializarListaSentencias           (ListaSentencias*);
 void                  agregar_sentencia                    (ListaSentencias*, char*, int);
+char* obtenerTipoDesdeLista(ListaIdentificadores* lista, char* identificador);
 
 //reporte.c
 void  nuevaCategoria              (char*);
 void  crearListadoIdentificadores (ListaIdentificadores*, char*);
-ListaIdentificadores* trasladarListaIdentificadores(ListaIdentificadores* listaOriginal);
 void  crearListadoSentencias(ListaSentencias*, char*);
 char* sacar_ultimo_caracter(char*);
 
@@ -82,15 +84,24 @@ ListaFunciones* inicializarListaFunciones(ListaFunciones*);
 void agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, ListaIdentificadores* listaParametros);
 
 void agregarParametro(ListaIdentificadores* listaParametros, char* nombreParametro, char* tipoParametro, ListaIdentificadores* listaVariables);
+char* cortarIdentificadorFuncion(char* cadena);
+char* obtenerTipo(char* cadena);
+ListaIdentificadores* existeFuncion(ListaFunciones* lista, char* nombreFuncion);
+char* tipoFlexAString(enum yytokentype tipo);
+char* substringDesde(char* cadena, char caracter);
+char* sacarEspacios(char* cadena);
+ListaIdentificadores* tokenizarParametros(char* cadena);
+int comprobar_tipos_funcion(ListaFunciones* lista, char* linea);
+int invokeFlex(char* str);
+int contieneIgual(char* linea);
+int chequearSuma(char* linea);
+char* substringHastaCaracter(char* cadena, char caracter);
 
 
 /* Reporte tp5 */
 void mostrarListadoFunciones(ListaFunciones* lista);
 void mostrarFuncion(Funcion* funcion);
 void mostrarParametros(ListaIdentificadores* parametros);
-char* cortarIdentificadorFuncion(char* cadena);
-char* obtenerTipo(char* cadena);
-
 
 
 /* Control de doble declaración de variables */

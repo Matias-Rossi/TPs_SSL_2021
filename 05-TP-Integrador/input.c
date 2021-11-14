@@ -3,11 +3,10 @@
 */
 
 
-int main()
-{
+int main() {
     int i;
     int i;
-    int n[30] = {2, 3};
+
     int sum = 0, last = 5;
     
     for ( i = 1; i <= last; i++ ) {
@@ -19,20 +18,13 @@ int main()
     for(i = 1 ; i < 10; i++){
         return 0;
     }
-    {
-        i=4;
-    }
 
-    z = hola(3, 'e');
-
-    //if else hola
-
-    int h = sumar(n);
 
     return 0;
 }
 
 void hola(int m, char z) {
+    int a = sumar(n);
     printf("hola");
 }
 

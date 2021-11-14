@@ -141,3 +141,17 @@ void agregar_sentencia(ListaSentencias* lista, char* tSentencia, int linea){
 
     lista->cantElementos++;
 }
+
+char* obtenerTipoDesdeLista(ListaIdentificadores* lista, char* identificador){
+    //printf("Buscando tipo del identificador >%s<\n", identificador);
+    Identificador* aux = lista->pri;
+    while(aux != NULL){
+        if(strcmp(aux->nombre, identificador) == 0){
+            //printf("Estoy retornando el tipo %s\n",aux->tipo);
+            return aux->tipo;
+        }
+        aux = aux->sig;
+    }
+    //printf("[ERROR] La variable %s no ha sido declarada\n", identificador);   //TODO: implementar en donde es llamada
+    return NULL;
+}

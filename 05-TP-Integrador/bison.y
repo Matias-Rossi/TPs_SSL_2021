@@ -225,10 +225,10 @@ declarador:   apuntador declarador_directo
             | declarador_directo                                                  
 ;
 
-declarador_directo:       IDENTIFICADOR                                           {printf("tst: %s\n", $<cval>1);if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+declarador_directo:       IDENTIFICADOR                                           {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
                         | '(' declarador ')'
-                        | IDENTIFICADOR  '[' expresion_constante ']'              {printf("tst: %s\n", $<cval>1);if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
-                        | IDENTIFICADOR  '[' ']'                                  {printf("tst: %s\n", $<cval>1);if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+                        | IDENTIFICADOR  '[' expresion_constante ']'              {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
+                        | IDENTIFICADOR  '[' ']'                                  {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
                         | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' lista_de_identificadores ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' ')'                                   {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
@@ -258,7 +258,7 @@ lista_de_parametros:      declaracion_parametro                         {aux_tId
 
 
 declaracion_parametro:     especificadores_de_declaracion apuntadorOpt IDENTIFICADOR {aux_nParametro = sacar_ultimo_caracter(obtenerTipo($<cval>3));}
-                         | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR arreglo '[' expresion_constante ']' {aux_nParametro = sacar_ultimo_caracter(obtenerTipo($<cval>3));}
+                         | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '[' expresion_constante ']' {aux_nParametro = sacar_ultimo_caracter(obtenerTipo($<cval>3));}
                          | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '(' lista_tipos_de_parametro ')'  {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>3);}
                          | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '(' lista_de_identificadores ')'  {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>3);}
                          | especificadores_de_declaracion apuntadorOpt declarador_abstracto 
@@ -269,12 +269,10 @@ apuntadorOpt:      apuntador
                 |   /* vacio */                                         
                 ;
 
-arreglo:       '[' expresion_constante ']'                                                                  
-                ;
-
 
 lista_de_identificadores:      IDENTIFICADOR                                {/*agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);*/}    
                             | lista_de_identificadores ',' IDENTIFICADOR
+                            | error
                             ;
 
 
@@ -445,13 +443,13 @@ expresion_de_corrimiento: expresion_aditiva
 
 
 expresion_aditiva: expresion_multiplicativa 
-				| expresion_aditiva '+' expresion_multiplicativa 
+				| expresion_aditiva '+' expresion_multiplicativa        {if(!chequearSuma(sacar_ultimo_caracter($<cval>1))) printf("[ERROR] Suma invalida en %d\n", yylineno);}    
 				| expresion_aditiva '-' expresion_multiplicativa 
 				;
 
 expresion_multiplicativa: expresion_cast 
 					| expresion_multiplicativa '*' expresion_cast 
-					| expresion_multiplicativa '/' expresion_cast 
+					| expresion_multiplicativa '/' expresion_cast       
 					| expresion_multiplicativa '%' expresion_cast 
 					;
 
@@ -479,7 +477,7 @@ operador_unario: '&'
 
 expresion_posfija:  expresion_primaria
                     | expresion_posfija   '['   expresion   ']' 
-                    | expresion_posfija   '('   lista_expresiones_argumento   ')'
+                    | expresion_posfija   '('   lista_expresiones_argumento   ')'   { comprobar_tipos_funcion(lista_funciones, $<cval>1); }
                     | expresion_posfija   '(' ')'
                     | expresion_posfija    '.'    IDENTIFICADOR
                     | expresion_posfija   FLECHA   IDENTIFICADOR
@@ -489,7 +487,7 @@ expresion_posfija:  expresion_primaria
 
 
  
-expresion_primaria: IDENTIFICADOR {/* //TODO: controlVariables(id); controlFuncion(id)*/}
+expresion_primaria: IDENTIFICADOR {/* //TODO: controlVariables(id); controlFuncion(id) */}
                     | constante
                     | LITERAL_CADENA 
                     | '(' expresion ')'
@@ -551,6 +549,8 @@ int main (int argc, char **argv)
         }
 
     }
+
+
 
     return 0;
 }
