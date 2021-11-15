@@ -388,7 +388,7 @@ operador_de_asignacion:    POR_IGUAL
 						|Y_IGUAL 
 						|POT_IGUAL 
 						|O_IGUAL 
-						| '=' 
+						|'=' 
 						;
 
 
@@ -487,8 +487,8 @@ expresion_posfija:  expresion_primaria
 
 
  
-expresion_primaria: IDENTIFICADOR {/* //TODO: controlVariables(id); controlFuncion(id) */}
-                    | constante
+expresion_primaria: IDENTIFICADOR {printf("Encontre indentificador\n");}
+                    | constante     {printf("Encontre constante\n");}
                     | LITERAL_CADENA 
                     | '(' expresion ')'
                     ;
@@ -510,7 +510,7 @@ constante:  CONST_OCTAL
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        //yydebug = 1;
+        yydebug = 1;
     #endif
     
     if(argv[1] == NULL){
@@ -536,7 +536,7 @@ int main (int argc, char **argv)
         printf("Comenzando anlisis lexico y sintactico\n");
 
         yyparse();
-        fclose(yyin);
+        //fclose(yyin);
 
         if(analisisCorrecto){
 

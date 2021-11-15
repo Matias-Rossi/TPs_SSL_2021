@@ -5,16 +5,10 @@ int sumar (int a, int b) {
 
 int main() {
 
-    char salud;
-    
-    char dado;
-
    int c;
-   int d;
 
-   int e = c + d;
+   sumar(c, 5);
 
-   int h = c + 5;
    
 }
 

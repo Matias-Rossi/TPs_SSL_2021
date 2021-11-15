@@ -120,7 +120,7 @@ extern FILE* yyin;
 # define YY_YY_BISON_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -2244,12 +2244,18 @@ yyreduce:
 
   case 224:
 #line 490 "bison.y"
-                                  {/* //TODO: controlVariables(id); controlFuncion(id) */}
+                                  {printf("Encontre indentificador\n";)}
 #line 2249 "bison.tab.c"
     break;
 
+  case 225:
+#line 491 "bison.y"
+                                    {printf("Encontre constante\n";)}
+#line 2255 "bison.tab.c"
+    break;
 
-#line 2253 "bison.tab.c"
+
+#line 2259 "bison.tab.c"
 
       default: break;
     }
@@ -2486,7 +2492,7 @@ yyreturn:
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        //yydebug = 1;
+        yydebug = 1;
     #endif
     
     if(argv[1] == NULL){
@@ -2512,7 +2518,7 @@ int main (int argc, char **argv)
         printf("Comenzando anlisis lexico y sintactico\n");
 
         yyparse();
-        fclose(yyin);
+        //fclose(yyin);
 
         if(analisisCorrecto){
 

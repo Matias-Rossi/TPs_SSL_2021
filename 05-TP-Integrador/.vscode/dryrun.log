@@ -1,0 +1,7 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/matias/dev/utn/ssl/21-002-09/05-TP-Integrador'
+bison -d bison.y --report=state --debug
+flex flex.l
+gcc bison.tab.c lex.yy.c listas.c reporte.c listasTp5.c -Iinclude -Wall -O2 -DNDEBUG -g -O0
+make: Leaving directory '/home/matias/dev/utn/ssl/21-002-09/05-TP-Integrador'
+ 

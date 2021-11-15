@@ -2,6 +2,10 @@
 * a simple C program
 */
 
+void hola(int m, char z) {
+    int a = m + z;
+    printf("hola");
+}
 
 int main() {
     int i;
@@ -19,14 +23,12 @@ int main() {
         return 0;
     }
 
+    hola(4, 'a');
+
 
     return 0;
 }
 
-void hola(int m, char z) {
-    int a = sumar(n);
-    printf("hola");
-}
 
 char nada() {
     return 'a';
