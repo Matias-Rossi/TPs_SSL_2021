@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Nov 16 13:54:16 2021
+# Make data base, printed on Tue Nov 16 16:13:02 2021
 
 # Variables
 
@@ -47,7 +47,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/share/code/code
 # environment
-JOURNAL_STREAM = 8:29441
+JOURNAL_STREAM = 8:28262
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -71,7 +71,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 929
+MANAGERPID = 930
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -87,7 +87,7 @@ GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-SESSION_MANAGER = local/matias-VirtualBox:@/tmp/.ICE-unix/1311,unix/matias-VirtualBox:/tmp/.ICE-unix/1311
+SESSION_MANAGER = local/matias-VirtualBox:@/tmp/.ICE-unix/1275,unix/matias-VirtualBox:/tmp/.ICE-unix/1275
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -97,7 +97,7 @@ VSCODE_LOG_STACK = false
 # environment
 VSCODE_CRASH_REPORTER_START_OPTIONS = {"companyName":"Microsoft","productName":"VSCode","submitURL":"appcenter://code?aid=fba07a4d-84bd-4fc8-a125-9640fc8ce171&uid=cff82e69-9f65-49e0-9378-f8d0df2d24ef&iid=cff82e69-9f65-49e0-9378-f8d0df2d24ef&sid=cff82e69-9f65-49e0-9378-f8d0df2d24ef","uploadToServer":true}
 # environment
-INVOCATION_ID = 4127eb7c71344b399adf76be7e146dda
+INVOCATION_ID = fb1723d99e4f4d14b4aa6fcd8a05850b
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -107,7 +107,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 1717
+GIO_LAUNCHED_DESKTOP_FILE_PID = 1632
 # automatic
 %F = $(notdir $%)
 # environment
@@ -119,7 +119,7 @@ PWD = /home/matias/dev/utn/ssl/21-002-09/05-TP-Integrador
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1238
+SSH_AGENT_PID = 1203
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -157,7 +157,7 @@ SHLVL = 0
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-c779a776-34ca-4339-b58e-e1b631ac28e6.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-6eaefa67-f190-4f41-bba6-eb1deda5f21d.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -231,7 +231,7 @@ LC_ADDRESS = es_AR.UTF-8
 # environment
 LANG = C
 # environment
-VSCODE_PID = 1717
+VSCODE_PID = 1632
 # variable set hash-table stats:
 # Load=111/1024=11%, Rehash=0, Collisions=19/139=14%
 
@@ -277,11 +277,11 @@ makefile:
 
 # Not a target:
 .DEFAULT:
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -339,6 +339,6 @@ bison:
 # strcache performance: lookups = 38 / hit rate = 31%
 # hash-table stats:
 # Load=26/8192=0%, Rehash=0, Collisions=1/38=3%
-# Finished Make data base on Tue Nov 16 13:54:16 2021
+# Finished Make data base on Tue Nov 16 16:13:02 2021
 
  

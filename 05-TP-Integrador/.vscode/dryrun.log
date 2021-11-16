@@ -1,4 +1,4 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/matias/dev/utn/ssl/21-002-09/05-TP-Integrador'
 bison -d bison.y --report=state --debug
 flex flex.l
