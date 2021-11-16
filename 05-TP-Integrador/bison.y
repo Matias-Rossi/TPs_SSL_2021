@@ -448,14 +448,14 @@ expresion_de_corrimiento: expresion_aditiva
 
 
 expresion_aditiva: expresion_multiplicativa 
-				| expresion_aditiva '+' expresion_multiplicativa        {if(!chequearSuma(sacar_ultimo_caracter($<cval>1))) printf("[ERROR] Suma invalida en %d\n", yylineno);}    
-				| expresion_aditiva '-' expresion_multiplicativa 
+				| expresion_aditiva '+' expresion_multiplicativa        {if(!chequearOperador(sacar_ultimo_caracter($<cval>1) , $<cval>2)) printf("[ERROR] Suma invalida en %d\n", yylineno);}    
+				| expresion_aditiva '-' expresion_multiplicativa        {if(!chequearOperador(sacar_ultimo_caracter($<cval>1) , $<cval>2)) printf("[ERROR] Suma invalida en %d\n", yylineno);}
 				;
 
 expresion_multiplicativa: expresion_cast 
-					| expresion_multiplicativa '*' expresion_cast 
-					| expresion_multiplicativa '/' expresion_cast       
-					| expresion_multiplicativa '%' expresion_cast 
+					| expresion_multiplicativa '*' expresion_cast       {if(!chequearOperador(sacar_ultimo_caracter($<cval>1) , $<cval>2)) printf("[ERROR] Suma invalida en %d\n", yylineno);}
+					| expresion_multiplicativa '/' expresion_cast       {if(!chequearOperador(sacar_ultimo_caracter($<cval>1) , $<cval>2)) printf("[ERROR] Suma invalida en %d\n", yylineno);}
+					| expresion_multiplicativa '%' expresion_cast       {if(!chequearOperador(sacar_ultimo_caracter($<cval>1) , $<cval>2)) printf("[ERROR] Suma invalida en %d\n", yylineno);}
 					;
 
 
@@ -482,7 +482,7 @@ operador_unario: '&'
 
 expresion_posfija:  expresion_primaria
                     | expresion_posfija   '['   expresion   ']' 
-                    | expresion_posfija   '('   lista_expresiones_argumento   ')'   { comprobar_tipos_funcion(lista_funciones, $<cval>1); }
+                    | expresion_posfija   '('   lista_expresiones_argumento   ')'   {comprobar_tipos_funcion(lista_funciones, $<cval>1);}
                     | expresion_posfija   '(' ')'
                     | expresion_posfija    '.'    IDENTIFICADOR
                     | expresion_posfija   FLECHA   IDENTIFICADOR
@@ -516,7 +516,7 @@ constante:  CONST_OCTAL
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        yydebug = 1;
+        //yydebug = 1;
     #endif
     
     if(argv[1] == NULL){

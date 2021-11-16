@@ -20,9 +20,11 @@ int main() {
     int a;
     float f;
     int g;
-
-    sumar(f, g);
+    
+    //Comprobacion De Tipo Para Parametros de Funciones 
+    sumar(f, g); 
     sumar(f, f);
+    sumar(f , g , a); 
 
     hola();
     hola(a);
