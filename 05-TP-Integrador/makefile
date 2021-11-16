@@ -1,8 +1,8 @@
 all: bison flex
-	gcc bison.tab.c lex.yy.c listas.c reporte.c listasTp5.c controlarSuma.c -Iinclude -Wall -O2 -DNDEBUG -g -O0
+	gcc bison.tab.c lex.yy.c listas.c reporte.c listasTp5.c -Iinclude -Wall -O2 -DNDEBUG -g -O0
 
 bison: 
-	bison -d bison.y --report=state --debug
+	bison -d bison.y --report=state
 
 flex: 
 	flex flex.l

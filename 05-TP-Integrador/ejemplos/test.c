@@ -1,3 +1,1 @@
-int main(){
-    a = 4 + 3;
-}
+hola(int a)

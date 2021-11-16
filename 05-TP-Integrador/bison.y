@@ -119,8 +119,8 @@ definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declar
 
 declaracion:              especificadores_de_declaracion lista_declaradores_init ';'
                         | especificadores_de_declaracion ';'
-                        | especificadores_de_declaracion lista_declaradores_init error '\n'                      {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
-                        | especificadores_de_declaracion error  '\n'                                            {/*printf("[ERROR] Falta punto y coma\n")*/;yyerrok;yyclearin;}
+                        | especificadores_de_declaracion lista_declaradores_init error                      {printf("[ERROR] Falta punto y coma\n")}
+                        | especificadores_de_declaracion error                                              {printf("[ERROR] Falta punto y coma\n")}
                         ;
 
 lista_de_declaracion:   declaracion
@@ -224,7 +224,6 @@ enumerador:    IDENTIFICADOR
              | IDENTIFICADOR '=' expresion_constante
              ;
 
-
 declarador:   apuntador declarador_directo                                                                  
             | declarador_directo                                                  
 ;
@@ -236,9 +235,9 @@ declarador_directo:       IDENTIFICADOR                                         
                         | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' lista_de_identificadores ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' ')'                                   {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
-                        | IDENTIFICADOR '(' lista_tipos_de_parametro error        {printf("[ERROR] Falta paréntesis de cierre\n"); yyclearin;}
-                        | IDENTIFICADOR '(' lista_de_identificadores error        {printf("[ERROR] Falta paréntesis de cierre\n"); yyclearin;}
-                        | IDENTIFICADOR '(' error                                 {printf("[ERROR] Falta paréntesis de cierre\n"); yyclearin;}
+                        | IDENTIFICADOR '(' lista_tipos_de_parametro error        {printf("[ERROR] Falta paréntesis de cierre\n");}
+                        | IDENTIFICADOR '(' lista_de_identificadores error        {printf("[ERROR] Falta paréntesis de cierre\n");}
+                        | IDENTIFICADOR '(' error        {printf("[ERROR] Falta paréntesis de cierre\n");}
                         ;
 
 
@@ -519,7 +518,7 @@ constante:  CONST_OCTAL
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        yydebug = 1;
+        //yydebug = 1;
     #endif
     
     if(argv[1] == NULL){

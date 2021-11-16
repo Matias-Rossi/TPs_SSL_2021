@@ -3,9 +3,8 @@ void main() {
     int _a = 3;
     int _b = 4;
     float c;
-    int rtdo;
 
-    rtdo = 4 + 3;      //Dos ctes
+    int z = 4 + 3;      //Dos ctes
 
     int y = _a + _b;    //Dos variables
 
