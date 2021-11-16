@@ -2433,7 +2433,35 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 451 "bison.y"
-    {if(!chequearSuma(sacar_ultimo_caracter((yyvsp[(1) - (3)].cval)))) printf("[ERROR] Suma invalida en %d\n", yylineno);;}
+    {if(!chequearOperador(sacar_ultimo_caracter((yyvsp[(1) - (3)].cval)) , (yyvsp[(2) - (3)].cval))) printf("[ERROR] Suma invalida en %d\n", yylineno);;}
+    break;
+
+  case 201:
+
+/* Line 1455 of yacc.c  */
+#line 452 "bison.y"
+    {if(!chequearOperador(sacar_ultimo_caracter((yyvsp[(1) - (3)].cval)) , (yyvsp[(2) - (3)].cval))) printf("[ERROR] Suma invalida en %d\n", yylineno);;}
+    break;
+
+  case 203:
+
+/* Line 1455 of yacc.c  */
+#line 456 "bison.y"
+    {if(!chequearOperador(sacar_ultimo_caracter((yyvsp[(1) - (3)].cval)) , (yyvsp[(2) - (3)].cval))) printf("[ERROR] Suma invalida en %d\n", yylineno);;}
+    break;
+
+  case 204:
+
+/* Line 1455 of yacc.c  */
+#line 457 "bison.y"
+    {if(!chequearOperador(sacar_ultimo_caracter((yyvsp[(1) - (3)].cval)) , (yyvsp[(2) - (3)].cval))) printf("[ERROR] Suma invalida en %d\n", yylineno);;}
+    break;
+
+  case 205:
+
+/* Line 1455 of yacc.c  */
+#line 458 "bison.y"
+    {if(!chequearOperador(sacar_ultimo_caracter((yyvsp[(1) - (3)].cval)) , (yyvsp[(2) - (3)].cval))) printf("[ERROR] Suma invalida en %d\n", yylineno);;}
     break;
 
   case 222:
@@ -2446,7 +2474,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 2450 "bison.tab.c"
+#line 2478 "bison.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2663,7 +2691,7 @@ yyreturn:
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        //yydebug = 1;
+        yydebug = 1;
     #endif
     
     if(argv[1] == NULL){
@@ -2689,7 +2717,7 @@ int main (int argc, char **argv)
         printf("Comenzando anlisis lexico y sintactico\n");
 
         yyparse();
-        //fclose(yyin);
+        fclose(yyin);
 
         if(analisisCorrecto){
 

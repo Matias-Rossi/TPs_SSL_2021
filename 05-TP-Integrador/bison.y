@@ -186,7 +186,8 @@ declarador_init:      declarador
                     ;
 
 
-declaracion_struct:   lista_calificador_especificador  lista_declaradores_struct   ';'
+declaracion_struct:   lista_calificador_especificador  lista_declaradores_struct ';'
+                    | lista_calificador_especificador lista_declaraciones_struct error         {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
                   ;
 
 
@@ -336,13 +337,14 @@ sentencia_etiquetada:   IDENTIFICADOR ':' sentencia
 
  
 sentencia_expresion:    expresion ';'
+                        | expresion error             {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
                         |  ';'
                         ;
  
 
 sentencia_compuesta: '{' lista_de_declaracion  lista_de_sentencias '}' 
                       | '{''}'
-                      | '{' lista_de_declaracion  '}'
+                      | '{' lista_de_declaracion  '}' 
                       | '{' lista_de_sentencias '}'
                       ;
 
@@ -370,7 +372,8 @@ sentencia_de_iteracion: WHILE '(' expresion ')' sentencia
 sentencia_de_salto: GOTO IDENTIFICADOR ';'
                     | CONTINUE   ';'
                     | BREAK ';'
-                    | RETURN expresion   ';'
+                    | RETURN expresion ';'
+                    | RETURN expresion error              {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
                     | RETURN  ';'
                     ;
 
@@ -516,7 +519,7 @@ constante:  CONST_OCTAL
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        //yydebug = 1;
+        yydebug = 1;
     #endif
     
     if(argv[1] == NULL){
@@ -542,7 +545,7 @@ int main (int argc, char **argv)
         printf("Comenzando anlisis lexico y sintactico\n");
 
         yyparse();
-        //fclose(yyin);
+        fclose(yyin);
 
         if(analisisCorrecto){
 
