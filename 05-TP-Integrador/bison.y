@@ -162,10 +162,13 @@ calificador_de_tipo: CONST
 	               | VOLATILE 
 	               ;
 
-especificador_estructura_o_union:    estructura_o_union IDENTIFICADOR  '{' lista_declaraciones_struct '}'        
-                                    | estructura_o_union IDENTIFICADOR
+especificador_estructura_o_union:    estructura_o_union IDENTIFICADOR  especificador_estructura_o_union_SA
                                     | '{' lista_declaraciones_struct '}'
                                     ;
+
+especificador_estructura_o_union_SA:  '{' lista_declaraciones_struct '}'
+                                       | /* empty */
+                                       ;
 
 estructura_o_union: STRUCT 
 	              | UNION  
@@ -209,9 +212,12 @@ declarador_struct:    declarador
                     ;
 
 
-especificador_enum:       ENUM IDENTIFICADOR  '{' lista_de_enumerador '}' 
+especificador_enum:       ENUM IDENTIFICADOR  especificador_enum_SA
                         | '{' lista_de_enumerador '}'
-                        | ENUM IDENTIFICADOR
+                        ;
+
+especificador_enum_SA:  '{' lista_de_enumerador '}'
+                        | /* empty */
                         ;
 
 
@@ -264,8 +270,8 @@ lista_de_parametros:      declaracion_parametro                         {aux_tId
                         ;
 
 
-declaracion_parametro:     especificadores_de_declaracion apuntadorOpt IDENTIFICADOR {aux_nParametro = sacar_ultimo_caracter(obtenerTipo($<cval>3));}
-                         | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '[' expresion_constante ']' {aux_nParametro = sacar_ultimo_caracter(obtenerTipo($<cval>3));}
+declaracion_parametro:     especificadores_de_declaracion apuntadorOpt IDENTIFICADOR                                   {aux_nParametro = sacar_ultimo_caracter(obtenerTipo($<cval>3));}
+                         | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '[' expresion_constante ']'        {aux_nParametro = sacar_ultimo_caracter(obtenerTipo($<cval>3));}
                          | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '(' lista_tipos_de_parametro ')'  {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>3);}
                          | especificadores_de_declaracion apuntadorOpt IDENTIFICADOR '(' lista_de_identificadores ')'  {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>3);}
                          | especificadores_de_declaracion apuntadorOpt declarador_abstracto 
