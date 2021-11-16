@@ -9,7 +9,7 @@ int contieneIgual(char* linea) {
     return 0;
 }
 
-int chequearOperador(char* linea , char* operador) {
+int chequearSuma(char* linea) {
 
     //Obtener operandos
     char* cuenta;
@@ -18,8 +18,8 @@ int chequearOperador(char* linea , char* operador) {
     } else {
         cuenta = sacarEspacios(linea);
     }
-    char* primerOperando = substringHastaCaracter(cuenta, operador);
-    char* segundoOperando = substringDesde(cuenta, operador);
+    char* primerOperando = substringHastaCaracter(cuenta, '+');
+    char* segundoOperando = substringDesde(cuenta, '+');
 
 
     //Validar operandos

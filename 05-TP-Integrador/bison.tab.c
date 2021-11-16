@@ -530,7 +530,7 @@ union yyalloc
 #define YYLAST   2270
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  93
+#define YYNTOKENS  92
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  70
 /* YYNRULES -- Number of rules.  */
@@ -552,18 +552,18 @@ union yyalloc
 static const yytype_int8 yytranslate[] =
 {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      73,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,    91,     2,     2,     2,    89,    86,     2,
-      70,    79,    68,    66,    76,    67,    92,    69,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,    78,    72,
-      87,    77,    88,    83,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,    80,     2,    81,    85,     2,     2,     2,     2,     2,
+       2,     2,     2,    90,     2,     2,     2,    88,    85,     2,
+      70,    78,    68,    66,    75,    67,    91,    69,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,    77,    72,
+      86,    76,    87,    82,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,    82,     2,     2,     2,
-       2,     2,     2,    74,    84,    75,    90,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,    79,     2,    80,    84,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,    81,     2,     2,     2,
+       2,     2,     2,    73,    83,    74,    89,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -634,12 +634,12 @@ static const char *const yytname[] =
   "MOD_IGUAL", "CORR_DER_IGUAL", "CORR_IZQ_IGUAL", "Y_IGUAL", "POT_IGUAL",
   "O_IGUAL", "IDENTIFICADOR", "LITERAL_CADENA", "CONST_OCTAL",
   "CONST_HEXADECIMAL", "CONST_DECIMAL", "CONST_PTOFLOTANTE",
-  "CONST_CARACTER", "'+'", "'-'", "'*'", "'/'", "'('", "IFX", "';'",
-  "'\\n'", "'{'", "'}'", "','", "'='", "':'", "')'", "'['", "']'", "'t'",
-  "'?'", "'|'", "'^'", "'&'", "'<'", "'>'", "'%'", "'~'", "'!'", "'.'",
-  "$accept", "unidad_de_programa", "unidad_de_traduccion",
-  "declaracion_externa", "definicion_de_funcion", "declaracion",
-  "lista_de_declaracion", "especificadores_de_declaracion",
+  "CONST_CARACTER", "'+'", "'-'", "'*'", "'/'", "'('", "IFX", "';'", "'{'",
+  "'}'", "','", "'='", "':'", "')'", "'['", "']'", "'t'", "'?'", "'|'",
+  "'^'", "'&'", "'<'", "'>'", "'%'", "'~'", "'!'", "'.'", "$accept",
+  "unidad_de_programa", "unidad_de_traduccion", "declaracion_externa",
+  "definicion_de_funcion", "declaracion", "lista_de_declaracion",
+  "especificadores_de_declaracion",
   "especificador_categoria_almacenamiento", "especificador_de_tipo",
   "calificador_de_tipo", "especificador_estructura_o_union",
   "especificador_estructura_o_union_SA", "estructura_o_union",
@@ -678,9 +678,9 @@ static const yytype_int16 yytoknum[] =
      295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
      305,   306,   307,   308,   309,   310,   311,   312,   313,   314,
      315,   316,   317,   318,   319,   320,    43,    45,    42,    47,
-      40,   321,    59,    10,   123,   125,    44,    61,    58,    41,
-      91,    93,   116,    63,   124,    94,    38,    60,    62,    37,
-     126,    33,    46
+      40,   321,    59,   123,   125,    44,    61,    58,    41,    91,
+      93,   116,    63,   124,    94,    38,    60,    62,    37,   126,
+      33,    46
 };
 # endif
 
