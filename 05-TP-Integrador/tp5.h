@@ -64,6 +64,7 @@ void  nuevaCategoria              (char*);
 void  crearListadoIdentificadores (ListaIdentificadores*, char*);
 void  crearListadoSentencias(ListaSentencias*, char*);
 char* sacar_ultimo_caracter(char*);
+char* obtenerElementoTipoPosicion(ListaIdentificadores* lista, int posicion);
 
 ListaIdentificadores* identificadores_variables;
 ListaIdentificadores* identificadores_funciones;
@@ -75,6 +76,7 @@ int                   analisisCorrecto;
 char*                 aux_tFuncion;
 char*                 aux_nParametro;
 ListaIdentificadores* lista_parametros;
+ListaIdentificadores* ultimas_constantes;
 
 
 /************* TP 5 *************/
@@ -94,7 +96,7 @@ ListaIdentificadores* tokenizarParametros(char* cadena);
 int comprobar_tipos_funcion(ListaFunciones* lista, char* linea);
 int invokeFlex(char* str);
 int contieneIgual(char* linea);
-int chequearSuma(char* linea);
+int chequearSuma(char* linea, ListaIdentificadores*);
 char* substringHastaCaracter(char* cadena, char caracter);
 
 

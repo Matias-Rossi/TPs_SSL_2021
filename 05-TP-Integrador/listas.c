@@ -25,7 +25,7 @@ void agregarIdentificador(ListaIdentificadores* lista, char* cadena, char* tDato
 
     Identificador* nuevo = malloc(sizeof(Identificador));
     nuevo->nombre = malloc(strlen(cadena)*sizeof(char));
-    strcpy(nuevo->nombre, cadena);
+    strcpy(nuevo->nombre, sacarEspacios(cadena));
     nuevo->sig = NULL;
     nuevo->tipo = tDato;
 
@@ -146,12 +146,22 @@ char* obtenerTipoDesdeLista(ListaIdentificadores* lista, char* identificador){
     //printf("Buscando tipo del identificador >%s<\n", identificador);
     Identificador* aux = lista->pri;
     while(aux != NULL){
+        //printf("Comparando con variable \"%s\" con tipo \"%s\"\n", aux->nombre, aux->tipo);
         if(strcmp(aux->nombre, identificador) == 0){
             //printf("Estoy retornando el tipo %s\n",aux->tipo);
             return aux->tipo;
         }
         aux = aux->sig;
     }
-    //printf("[ERROR] La variable %s no ha sido declarada\n", identificador);   //TODO: implementar en donde es llamada
+    //printf("[ERROR] La variable %s no ha sido declarada\n", identificador);   
     return NULL;
+}
+
+char* obtenerElementoTipoPosicion(ListaIdentificadores* lista, int posicion){
+    Identificador* aux = lista->pri;
+    for(int i=0; i<posicion; i++){
+        aux = aux->sig;
+    }
+
+    return aux->tipo;
 }

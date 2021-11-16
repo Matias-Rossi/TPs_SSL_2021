@@ -138,7 +138,7 @@ char* tipoFlexAString(enum yytokentype tipo) {
         case LITERAL_CADENA: return "char*"; break;
         case CONST_OCTAL: return "int"; break;
         case CONST_HEXADECIMAL: return "int"; break;
-        case CONST_DECIMAL: return "int"; break;
+        case CONST_DECIMAL: printf("[LOG] tipoFlex es int\n"); return "int"; break;
         case CONST_PTOFLOTANTE: return "float"; break;
         case CONST_CARACTER: return "char"; break;
         case IDENTIFICADOR: return "no declarado"; break;
@@ -257,7 +257,7 @@ int contieneIgual(char* linea) {
     return 0;
 }
 
-int chequearSuma(char* linea) {
+int chequearSuma(char* linea, ListaIdentificadores* ultimas_constantes) {
 
     //Obtener operandos
     char* cuenta;
@@ -274,29 +274,39 @@ int chequearSuma(char* linea) {
     int primerOperandoOK = 0;
     int segundoOperandoOK = 0;
 
+    //Buscar en lista de variables
     char* tipoObtenidoDesdeLista =  obtenerTipoDesdeLista(identificadores_variables, sacarEspacios(primerOperando));
     if (tipoObtenidoDesdeLista) {
+
+        //Variable estaba en lista
         if(strcmp(tipoObtenidoDesdeLista, "int") == 0) primerOperandoOK = 1;
+
     } else {
-        enum yytokentype tipoObtenidoDesdeFlex = invokeFlex(sacarEspacios(primerOperando));
-        char* strTipo = tipoFlexAString(tipoObtenidoDesdeFlex);
-        if(strcmp(strTipo, "no declarado") == 0) printf("[ERROR] La variable %s no ha sido declarada\n", primerOperando);
+
+        //Variable es una constante
+        char* strTipo = obtenerElementoTipoPosicion(ultimas_constantes, ultimas_constantes->cantElementos - 2);
+        
+
+        //En el caso que flex diga que se trata de un identificador
+        if(strcmp(strTipo, "identificador") == 0) printf("[ERROR] La variable %s no ha sido declarada\n", primerOperando);
+
         else primerOperandoOK = 1;
     }
 
+    //Se repite el proceso
     tipoObtenidoDesdeLista =  obtenerTipoDesdeLista(identificadores_variables, sacarEspacios(segundoOperando));
     if (tipoObtenidoDesdeLista) {
         if(strcmp(tipoObtenidoDesdeLista, "int") == 0) segundoOperandoOK = 1;
     } else {
-        enum yytokentype tipoObtenidoDesdeFlex = invokeFlex(sacarEspacios(segundoOperando));
-        char* strTipo = tipoFlexAString(tipoObtenidoDesdeFlex);
-        if(strcmp(strTipo, "no declarado") == 0) printf("[ERROR] La variable %s no ha sido declarada\n", segundoOperando);
+        char* strTipo = obtenerElementoTipoPosicion(ultimas_constantes, ultimas_constantes->cantElementos - 1);
+        if(strcmp(strTipo, "identificador") == 0) printf("[ERROR] La variable %s no ha sido declarada\n", segundoOperando);
         else segundoOperandoOK = 1;
     }
 
     if(primerOperandoOK && segundoOperandoOK) {
-        printf("[LOG] Suma valida encontrada: %s + %s\n", primerOperando, segundoOperando);
+        printf("[LOG] Suma válida encontrada: %s + %s\n", primerOperando, segundoOperando);
     }
+
     return primerOperandoOK && segundoOperandoOK;
 }
 

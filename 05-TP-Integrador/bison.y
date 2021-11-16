@@ -119,8 +119,8 @@ definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declar
 
 declaracion:              especificadores_de_declaracion lista_declaradores_init ';'
                         | especificadores_de_declaracion ';'
-                        | especificadores_de_declaracion lista_declaradores_init error                      {printf("[ERROR] Falta punto y coma\n")}
-                        | especificadores_de_declaracion error                                              {printf("[ERROR] Falta punto y coma\n")}
+                        | especificadores_de_declaracion lista_declaradores_init error                      {printf("[ERROR] Falta punto y coma\n");}
+                        | especificadores_de_declaracion error                                              {printf("[ERROR] Falta punto y coma\n");}
                         ;
 
 lista_de_declaracion:   declaracion
@@ -450,7 +450,7 @@ expresion_de_corrimiento: expresion_aditiva
 
 
 expresion_aditiva: expresion_multiplicativa 
-				| expresion_aditiva '+' expresion_multiplicativa        {if(!chequearSuma(sacar_ultimo_caracter($<cval>1))) printf("[ERROR] Suma invalida en %d\n", yylineno);}    
+				| expresion_aditiva '+' expresion_multiplicativa        {;if(!chequearSuma(sacar_ultimo_caracter($<cval>1), ultimas_constantes)) printf("[ERROR] Suma inválida en %d\n", yylineno);}    
 				| expresion_aditiva '-' expresion_multiplicativa 
 				;
 
@@ -494,9 +494,9 @@ expresion_posfija:  expresion_primaria
 
 
  
-expresion_primaria: IDENTIFICADOR 
+expresion_primaria: IDENTIFICADOR           {agregarIdentificador(ultimas_constantes, "", "identificador");}
                     | constante     
-                    | LITERAL_CADENA 
+                    | LITERAL_CADENA        {agregarIdentificador(ultimas_constantes, "", "char*");}
                     | '(' expresion ')'
                     ;
 
@@ -506,12 +506,12 @@ lista_expresiones_argumento:    expresion_de_asignacion
                                 //| /* empty */
                                 ;
 
-constante:  CONST_OCTAL
-            | CONST_HEXADECIMAL
-            | CONST_DECIMAL
-            | CONST_CARACTER
-            | CONST_PTOFLOTANTE
-            | ENUM
+constante:  CONST_OCTAL             {agregarIdentificador(ultimas_constantes, "", "int");}
+            | CONST_HEXADECIMAL     {agregarIdentificador(ultimas_constantes, "", "int");}
+            | CONST_DECIMAL         {agregarIdentificador(ultimas_constantes, "", "int");}
+            | CONST_CARACTER        {agregarIdentificador(ultimas_constantes, "", "char");}
+            | CONST_PTOFLOTANTE     {agregarIdentificador(ultimas_constantes, "", "float");}
+            | ENUM                  
             ;
 
 %%
@@ -521,6 +521,8 @@ int main (int argc, char **argv)
         //yydebug = 1;
     #endif
     
+    system("clear");
+
     if(argv[1] == NULL){
         printf("Debe especificar un archivo para analizar\n");
     }
@@ -540,15 +542,16 @@ int main (int argc, char **argv)
         identificadores_funciones = inicializarListaIdentificadores(identificadores_funciones);
         lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
         lista_parametros          = inicializarListaIdentificadores(lista_parametros);
+        ultimas_constantes        = inicializarListaIdentificadores(ultimas_constantes);
 
-        printf("Comenzando anlisis lexico y sintactico\n");
+        printf(" --- Comenzando anlisis lexico y sintactico ---\n\n");
 
         yyparse();
-        fclose(yyin);
+        //fclose(yyin);
 
         if(analisisCorrecto){
 
-            printf("Imprimiendo reporte\n");
+            printf("\n --- Imprimiendo reporte ---\n");
 
             crearListadoIdentificadores(identificadores_variables, "VARIABLES DECLARADAS");
             crearListadoIdentificadores(identificadores_funciones, "FUNCIONES DECLARADAS");
