@@ -10,8 +10,12 @@ int hola() {
     return 0;
 }
 
-char* prueba(char c, int* d, float e) {
+char prueba(char c, int* d, float e) {
     return c;
+}
+
+void saludar(char* nombre) {
+    printf("Hola %s\n", nombre);
 }
 
 
@@ -26,6 +30,12 @@ int main() {
 
     hola();
     hola(a);
+
+    saludar(485);
+    saludar("Mundo");
+
+
+    prueba(f, g, f);
 
     return 0;
 }

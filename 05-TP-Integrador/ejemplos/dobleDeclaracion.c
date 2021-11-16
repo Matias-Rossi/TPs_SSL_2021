@@ -19,6 +19,11 @@ int main() {
     
     int a, b;
 
+    char c;
+
+    int z;
+
+
     return 0;
 }
 

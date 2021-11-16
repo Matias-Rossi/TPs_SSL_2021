@@ -118,9 +118,10 @@ definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declar
 
 
 declaracion:              especificadores_de_declaracion lista_declaradores_init ';'
+                        | especificadores_de_declaracion error ';'
                         | especificadores_de_declaracion ';'
-                        | especificadores_de_declaracion lista_declaradores_init error                      {printf("[ERROR] Falta punto y coma\n");}
-                        | especificadores_de_declaracion error                                              {printf("[ERROR] Falta punto y coma\n");}
+                        //| especificadores_de_declaracion lista_declaradores_init error                      {printf("[ERROR] Falta punto y coma\n");}
+                        //| especificadores_de_declaracion error                                              {printf("[ERROR] Falta punto y coma\n");}
                         ;
 
 lista_de_declaracion:   declaracion
@@ -183,11 +184,12 @@ lista_declaradores_init:    declarador_init
 
 declarador_init:      declarador
                     | declarador '=' inicializador
+                    | declarador '=' error                  {printf("[ERROR] Falta inicializador\n");yyerrok;}
                     ;
 
 
 declaracion_struct:   lista_calificador_especificador  lista_declaradores_struct ';'
-                    | lista_calificador_especificador lista_declaraciones_struct error         {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
+                    //| lista_calificador_especificador lista_declaraciones_struct error         {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
                   ;
 
 
@@ -222,6 +224,7 @@ lista_de_enumerador:      enumerador
 
 enumerador:    IDENTIFICADOR
              | IDENTIFICADOR '=' expresion_constante
+             //| IDENTIFICADOR '=' error                          {printf("[ERROR] Falta expresion constante\n");yyerrok;yyclearin;}
              ;
 
 declarador:   apuntador declarador_directo                                                                  
@@ -237,7 +240,7 @@ declarador_directo:       IDENTIFICADOR                                         
                         | IDENTIFICADOR '(' ')'                                   {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' lista_tipos_de_parametro error        {printf("[ERROR] Falta paréntesis de cierre\n");}
                         | IDENTIFICADOR '(' lista_de_identificadores error        {printf("[ERROR] Falta paréntesis de cierre\n");}
-                        | IDENTIFICADOR '(' error        {printf("[ERROR] Falta paréntesis de cierre\n");}
+                        | IDENTIFICADOR '(' error                                 {printf("[ERROR] Falta paréntesis de cierre\n");}
                         ;
 
 
@@ -336,7 +339,7 @@ sentencia_etiquetada:   IDENTIFICADOR ':' sentencia
 
  
 sentencia_expresion:    expresion ';'
-                        | expresion error             {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
+                        //| expresion error             {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
                         |  ';'
                         ;
  
@@ -372,7 +375,7 @@ sentencia_de_salto: GOTO IDENTIFICADOR ';'
                     | CONTINUE   ';'
                     | BREAK ';'
                     | RETURN expresion ';'
-                    | RETURN expresion error              {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
+                    //| RETURN expresion error              {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
                     | RETURN  ';'
                     ;
 
@@ -544,14 +547,14 @@ int main (int argc, char **argv)
         lista_parametros          = inicializarListaIdentificadores(lista_parametros);
         ultimas_constantes        = inicializarListaIdentificadores(ultimas_constantes);
 
-        printf(" --- Comenzando anlisis lexico y sintactico ---\n\n");
+        printf("\n --- Comenzando anlisis lexico y sintactico ---\n\n");
 
         yyparse();
         //fclose(yyin);
 
         if(analisisCorrecto){
 
-            printf("\n --- Imprimiendo reporte ---\n");
+            printf("\n\n --- Imprimiendo reporte ---");
 
             crearListadoIdentificadores(identificadores_variables, "VARIABLES DECLARADAS");
             crearListadoIdentificadores(identificadores_funciones, "FUNCIONES DECLARADAS");
