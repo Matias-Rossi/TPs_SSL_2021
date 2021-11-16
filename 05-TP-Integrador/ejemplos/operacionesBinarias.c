@@ -1,13 +1,8 @@
-int sumar (int a, int b) {
-    return a + b;
-}
 
-
-int main() {
-
-    int _a;
-    int _b;
-    char c;
+void main() {
+    int _a = 3;
+    int _b = 4;
+    float c;
 
     int z = 4 + 3;      //Dos ctes
 
@@ -18,5 +13,4 @@ int main() {
     int w = 4 + h;     //Una variable sin declarar
 
     int v = 4 + c;      //Una variable no es de tipo int
-
 }

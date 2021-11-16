@@ -5,12 +5,19 @@ void sumar(int* a, int b) {
     printf("a + b");
 }
 
+
+
 int main()
 {
     //printf("\n\n\t\tStudytonight - Best place to learn\n\n\n");
 
+    char miChar;
+
     int choice, num, i;
-    
+
+    sumar(miChar, choice);
+
+
     unsigned long int fact;
 
     while(1)

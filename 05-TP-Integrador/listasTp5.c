@@ -281,7 +281,7 @@ int chequearSuma(char* linea) {
         enum yytokentype tipoObtenidoDesdeFlex = invokeFlex(sacarEspacios(primerOperando));
         char* strTipo = tipoFlexAString(tipoObtenidoDesdeFlex);
         if(strcmp(strTipo, "no declarado") == 0) printf("[ERROR] La variable %s no ha sido declarada\n", primerOperando);
-        primerOperandoOK = 1;
+        else primerOperandoOK = 1;
     }
 
     tipoObtenidoDesdeLista =  obtenerTipoDesdeLista(identificadores_variables, sacarEspacios(segundoOperando));
@@ -291,7 +291,7 @@ int chequearSuma(char* linea) {
         enum yytokentype tipoObtenidoDesdeFlex = invokeFlex(sacarEspacios(segundoOperando));
         char* strTipo = tipoFlexAString(tipoObtenidoDesdeFlex);
         if(strcmp(strTipo, "no declarado") == 0) printf("[ERROR] La variable %s no ha sido declarada\n", segundoOperando);
-        segundoOperandoOK = 1;
+        else segundoOperandoOK = 1;
     }
 
     if(primerOperandoOK && segundoOperandoOK) {

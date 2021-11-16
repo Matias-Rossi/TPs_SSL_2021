@@ -119,6 +119,8 @@ definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declar
 
 declaracion:              especificadores_de_declaracion lista_declaradores_init ';'
                         | especificadores_de_declaracion ';'
+                        | especificadores_de_declaracion lista_declaradores_init error                      {printf("[ERROR] Falta punto y coma\n")}
+                        | especificadores_de_declaracion error                                              {printf("[ERROR] Falta punto y coma\n")}
                         ;
 
 lista_de_declaracion:   declaracion
@@ -232,6 +234,9 @@ declarador_directo:       IDENTIFICADOR                                         
                         | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' lista_de_identificadores ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' ')'                                   {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
+                        | IDENTIFICADOR '(' lista_tipos_de_parametro error        {printf("[ERROR] Falta paréntesis de cierre\n");}
+                        | IDENTIFICADOR '(' lista_de_identificadores error        {printf("[ERROR] Falta paréntesis de cierre\n");}
+                        | IDENTIFICADOR '(' error        {printf("[ERROR] Falta paréntesis de cierre\n");}
                         ;
 
 
@@ -270,9 +275,8 @@ apuntadorOpt:      apuntador
                 ;
 
 
-lista_de_identificadores:      IDENTIFICADOR                                {/*agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);*/}    
-                            | lista_de_identificadores ',' IDENTIFICADOR
-                            | error
+lista_de_identificadores:      expresion_primaria                                {/*agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);*/}    
+                            | lista_de_identificadores ',' expresion_primaria
                             ;
 
 
@@ -487,8 +491,8 @@ expresion_posfija:  expresion_primaria
 
 
  
-expresion_primaria: IDENTIFICADOR {printf("Encontre indentificador\n");}
-                    | constante     {printf("Encontre constante\n");}
+expresion_primaria: IDENTIFICADOR 
+                    | constante     
                     | LITERAL_CADENA 
                     | '(' expresion ')'
                     ;
@@ -496,6 +500,7 @@ expresion_primaria: IDENTIFICADOR {printf("Encontre indentificador\n");}
 
 lista_expresiones_argumento:    expresion_de_asignacion
                                 | lista_expresiones_argumento   ','   expresion_de_asignacion 
+                                //| /* empty */
                                 ;
 
 constante:  CONST_OCTAL
@@ -510,7 +515,7 @@ constante:  CONST_OCTAL
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        yydebug = 1;
+        //yydebug = 1;
     #endif
     
     if(argv[1] == NULL){
@@ -557,7 +562,7 @@ int main (int argc, char **argv)
 
 int yyerror(const char *msg)
 {
-	printf("\nFallo el analisis en la linea: %d %s\n", yylineno, msg);
+	printf("\n[ERROR] Fallo el analisis en la linea: %d %s\n", yylineno, msg);
 	analisisCorrecto = 0;
 	return 0;
 }
