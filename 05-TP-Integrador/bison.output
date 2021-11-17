@@ -1,4 +1,6 @@
+State 26 conflicts: 1 shift/reduce
 State 57 conflicts: 1 shift/reduce
+State 71 conflicts: 1 shift/reduce
 State 82 conflicts: 1 shift/reduce
 State 122 conflicts: 1 shift/reduce
 State 164 conflicts: 1 shift/reduce, 1 reduce/reduce
@@ -645,9 +647,9 @@ State 0
     STRUCT         shift, and go to state 21
     UNION          shift, and go to state 22
     IDENTIFICADOR  shift, and go to state 23
-    '*'            shift, and go to state 24
+    '{'            shift, and go to state 24
     '('            shift, and go to state 25
-    '{'            shift, and go to state 26
+    '*'            shift, and go to state 26
     't'            shift, and go to state 27
 
     unidad_de_programa                      go to state 28
@@ -692,9 +694,9 @@ State 1
     STRUCT         shift, and go to state 21
     UNION          shift, and go to state 22
     IDENTIFICADOR  shift, and go to state 23
-    '*'            shift, and go to state 24
+    '{'            shift, and go to state 24
     '('            shift, and go to state 25
-    '{'            shift, and go to state 26
+    '*'            shift, and go to state 26
     't'            shift, and go to state 27
 
     unidad_de_traduccion                    go to state 44
@@ -741,9 +743,9 @@ State 2
     STRUCT         shift, and go to state 21
     UNION          shift, and go to state 22
     IDENTIFICADOR  shift, and go to state 23
-    '*'            shift, and go to state 24
+    '{'            shift, and go to state 24
     '('            shift, and go to state 25
-    '{'            shift, and go to state 26
+    '*'            shift, and go to state 26
     't'            shift, and go to state 27
 
     unidad_de_programa                      go to state 45
@@ -936,36 +938,6 @@ State 23
 
 State 24
 
-   84 apuntador: '*' . lista_calificadores_de_tipo
-   85          | '*' .
-   86          | '*' . lista_calificadores_de_tipo apuntador
-   87          | '*' . apuntador
-
-    CONST     shift, and go to state 18
-    VOLATILE  shift, and go to state 19
-
-    $default  reduce using rule 85 (apuntador)
-
-    calificador_de_tipo          go to state 60
-    apuntador                    go to state 61
-    lista_calificadores_de_tipo  go to state 62
-
-
-State 25
-
-   75 declarador_directo: '(' . declarador ')'
-
-    IDENTIFICADOR  shift, and go to state 23
-    '*'            shift, and go to state 24
-    '('            shift, and go to state 25
-
-    declarador          go to state 63
-    declarador_directo  go to state 41
-    apuntador           go to state 42
-
-
-State 26
-
    45 especificador_estructura_o_union: '{' . lista_declaraciones_struct '}'
    66 especificador_enum: '{' . lista_de_enumerador '}'
 
@@ -983,21 +955,53 @@ State 26
     ENUM           shift, and go to state 20
     STRUCT         shift, and go to state 21
     UNION          shift, and go to state 22
-    IDENTIFICADOR  shift, and go to state 64
-    '{'            shift, and go to state 26
+    IDENTIFICADOR  shift, and go to state 60
+    '{'            shift, and go to state 24
     't'            shift, and go to state 27
 
-    especificador_de_tipo             go to state 65
-    calificador_de_tipo               go to state 66
+    especificador_de_tipo             go to state 61
+    calificador_de_tipo               go to state 62
     especificador_estructura_o_union  go to state 37
     estructura_o_union                go to state 38
-    lista_declaraciones_struct        go to state 67
-    declaracion_struct                go to state 68
-    lista_calificador_especificador   go to state 69
+    lista_declaraciones_struct        go to state 63
+    declaracion_struct                go to state 64
+    lista_calificador_especificador   go to state 65
     especificador_enum                go to state 39
-    lista_de_enumerador               go to state 70
-    enumerador                        go to state 71
+    lista_de_enumerador               go to state 66
+    enumerador                        go to state 67
     nombre_typedef                    go to state 43
+
+
+State 25
+
+   75 declarador_directo: '(' . declarador ')'
+
+    IDENTIFICADOR  shift, and go to state 23
+    '('            shift, and go to state 25
+    '*'            shift, and go to state 26
+
+    declarador          go to state 68
+    declarador_directo  go to state 41
+    apuntador           go to state 42
+
+
+State 26
+
+   84 apuntador: '*' . lista_calificadores_de_tipo
+   85          | '*' .
+   86          | '*' . lista_calificadores_de_tipo apuntador
+   87          | '*' . apuntador
+
+    CONST     shift, and go to state 18
+    VOLATILE  shift, and go to state 19
+    '*'       shift, and go to state 26
+
+    '*'       [reduce using rule 85 (apuntador)]
+    $default  reduce using rule 85 (apuntador)
+
+    calificador_de_tipo          go to state 69
+    apuntador                    go to state 70
+    lista_calificadores_de_tipo  go to state 71
 
 
 State 27
@@ -1039,9 +1043,9 @@ State 29
     STRUCT         shift, and go to state 21
     UNION          shift, and go to state 22
     IDENTIFICADOR  shift, and go to state 23
-    '*'            shift, and go to state 24
+    '{'            shift, and go to state 24
     '('            shift, and go to state 25
-    '{'            shift, and go to state 26
+    '*'            shift, and go to state 26
     't'            shift, and go to state 27
 
     $default  reduce using rule 3 (unidad_de_programa)
@@ -1093,9 +1097,9 @@ State 33
 
     error          shift, and go to state 74
     IDENTIFICADOR  shift, and go to state 23
-    '*'            shift, and go to state 24
-    '('            shift, and go to state 25
     ';'            shift, and go to state 75
+    '('            shift, and go to state 25
+    '*'            shift, and go to state 26
 
     lista_declaradores_init  go to state 76
     declarador_init          go to state 77
@@ -1128,7 +1132,7 @@ State 34
     ENUM      shift, and go to state 20
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
-    '{'       shift, and go to state 26
+    '{'       shift, and go to state 24
     't'       shift, and go to state 27
 
     $default  reduce using rule 19 (especificadores_de_declaracion)
@@ -1167,7 +1171,7 @@ State 35
     ENUM      shift, and go to state 20
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
-    '{'       shift, and go to state 26
+    '{'       shift, and go to state 24
     't'       shift, and go to state 27
 
     $default  reduce using rule 21 (especificadores_de_declaracion)
@@ -1206,7 +1210,7 @@ State 36
     ENUM      shift, and go to state 20
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
-    '{'       shift, and go to state 26
+    '{'       shift, and go to state 24
     't'       shift, and go to state 27
 
     $default  reduce using rule 23 (especificadores_de_declaracion)
@@ -1332,9 +1336,9 @@ State 44
     STRUCT         shift, and go to state 21
     UNION          shift, and go to state 22
     IDENTIFICADOR  shift, and go to state 23
-    '*'            shift, and go to state 24
+    '{'            shift, and go to state 24
     '('            shift, and go to state 25
-    '{'            shift, and go to state 26
+    '*'            shift, and go to state 26
     't'            shift, and go to state 27
 
     $default  reduce using rule 4 (unidad_de_programa)
@@ -1433,11 +1437,11 @@ State 54
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -1489,9 +1493,9 @@ State 55
     STRUCT         shift, and go to state 21
     UNION          shift, and go to state 22
     IDENTIFICADOR  shift, and go to state 23
-    '*'            shift, and go to state 24
+    '{'            shift, and go to state 24
     '('            shift, and go to state 25
-    '{'            shift, and go to state 26
+    '*'            shift, and go to state 26
     't'            shift, and go to state 27
 
     unidad_de_programa                      go to state 117
@@ -1566,8 +1570,8 @@ State 58
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
+    '{'                shift, and go to state 24
     '('                shift, and go to state 54
-    '{'                shift, and go to state 26
     ')'                shift, and go to state 121
     't'                shift, and go to state 27
 
@@ -1603,12 +1607,12 @@ State 59
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
+    '('                shift, and go to state 92
     ']'                shift, and go to state 128
-    '&'                shift, and go to state 96
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -1634,51 +1638,15 @@ State 59
 
 State 60
 
-   88 lista_calificadores_de_tipo: calificador_de_tipo .
-
-    $default  reduce using rule 88 (lista_calificadores_de_tipo)
-
-
-State 61
-
-   87 apuntador: '*' apuntador .
-
-    $default  reduce using rule 87 (apuntador)
-
-
-State 62
-
-   84 apuntador: '*' lista_calificadores_de_tipo .
-   86          | '*' lista_calificadores_de_tipo . apuntador
-   89 lista_calificadores_de_tipo: lista_calificadores_de_tipo . calificador_de_tipo
-
-    CONST     shift, and go to state 18
-    VOLATILE  shift, and go to state 19
-
-    $default  reduce using rule 84 (apuntador)
-
-    calificador_de_tipo  go to state 132
-    apuntador            go to state 133
-
-
-State 63
-
-   75 declarador_directo: '(' declarador . ')'
-
-    ')'  shift, and go to state 134
-
-
-State 64
-
    70 enumerador: IDENTIFICADOR .
    71           | IDENTIFICADOR . '=' expresion_constante
 
-    '='  shift, and go to state 135
+    '='  shift, and go to state 132
 
     $default  reduce using rule 70 (enumerador)
 
 
-State 65
+State 61
 
    56 lista_calificador_especificador: especificador_de_tipo . lista_calificador_especificador
    57                                | especificador_de_tipo .
@@ -1697,21 +1665,21 @@ State 65
     ENUM      shift, and go to state 20
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
-    '{'       shift, and go to state 26
+    '{'       shift, and go to state 24
     't'       shift, and go to state 27
 
     $default  reduce using rule 57 (lista_calificador_especificador)
 
-    especificador_de_tipo             go to state 65
-    calificador_de_tipo               go to state 66
+    especificador_de_tipo             go to state 61
+    calificador_de_tipo               go to state 62
     especificador_estructura_o_union  go to state 37
     estructura_o_union                go to state 38
-    lista_calificador_especificador   go to state 136
+    lista_calificador_especificador   go to state 133
     especificador_enum                go to state 39
     nombre_typedef                    go to state 43
 
 
-State 66
+State 62
 
    58 lista_calificador_especificador: calificador_de_tipo . lista_calificador_especificador
    59                                | calificador_de_tipo .
@@ -1730,21 +1698,21 @@ State 66
     ENUM      shift, and go to state 20
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
-    '{'       shift, and go to state 26
+    '{'       shift, and go to state 24
     't'       shift, and go to state 27
 
     $default  reduce using rule 59 (lista_calificador_especificador)
 
-    especificador_de_tipo             go to state 65
-    calificador_de_tipo               go to state 66
+    especificador_de_tipo             go to state 61
+    calificador_de_tipo               go to state 62
     especificador_estructura_o_union  go to state 37
     estructura_o_union                go to state 38
-    lista_calificador_especificador   go to state 137
+    lista_calificador_especificador   go to state 134
     especificador_enum                go to state 39
     nombre_typedef                    go to state 43
 
 
-State 67
+State 63
 
    45 especificador_estructura_o_union: '{' lista_declaraciones_struct . '}'
    49 lista_declaraciones_struct: lista_declaraciones_struct . declaracion_struct
@@ -1763,57 +1731,95 @@ State 67
     ENUM      shift, and go to state 20
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
-    '{'       shift, and go to state 26
-    '}'       shift, and go to state 138
+    '{'       shift, and go to state 24
+    '}'       shift, and go to state 135
     't'       shift, and go to state 27
 
-    especificador_de_tipo             go to state 65
-    calificador_de_tipo               go to state 66
+    especificador_de_tipo             go to state 61
+    calificador_de_tipo               go to state 62
     especificador_estructura_o_union  go to state 37
     estructura_o_union                go to state 38
-    declaracion_struct                go to state 139
-    lista_calificador_especificador   go to state 69
+    declaracion_struct                go to state 136
+    lista_calificador_especificador   go to state 65
     especificador_enum                go to state 39
     nombre_typedef                    go to state 43
 
 
-State 68
+State 64
 
    48 lista_declaraciones_struct: declaracion_struct .
 
     $default  reduce using rule 48 (lista_declaraciones_struct)
 
 
-State 69
+State 65
 
    55 declaracion_struct: lista_calificador_especificador . lista_declaradores_struct ';'
 
     IDENTIFICADOR  shift, and go to state 23
-    '*'            shift, and go to state 24
+    ':'            shift, and go to state 137
     '('            shift, and go to state 25
-    ':'            shift, and go to state 140
+    '*'            shift, and go to state 26
 
-    lista_declaradores_struct  go to state 141
-    declarador_struct          go to state 142
-    declarador                 go to state 143
+    lista_declaradores_struct  go to state 138
+    declarador_struct          go to state 139
+    declarador                 go to state 140
     declarador_directo         go to state 41
     apuntador                  go to state 42
 
 
-State 70
+State 66
 
    66 especificador_enum: '{' lista_de_enumerador . '}'
    69 lista_de_enumerador: lista_de_enumerador . ',' enumerador
 
-    '}'  shift, and go to state 144
-    ','  shift, and go to state 145
+    '}'  shift, and go to state 141
+    ','  shift, and go to state 142
 
 
-State 71
+State 67
 
    68 lista_de_enumerador: enumerador .
 
     $default  reduce using rule 68 (lista_de_enumerador)
+
+
+State 68
+
+   75 declarador_directo: '(' declarador . ')'
+
+    ')'  shift, and go to state 143
+
+
+State 69
+
+   88 lista_calificadores_de_tipo: calificador_de_tipo .
+
+    $default  reduce using rule 88 (lista_calificadores_de_tipo)
+
+
+State 70
+
+   87 apuntador: '*' apuntador .
+
+    $default  reduce using rule 87 (apuntador)
+
+
+State 71
+
+   84 apuntador: '*' lista_calificadores_de_tipo .
+   86          | '*' lista_calificadores_de_tipo . apuntador
+   89 lista_calificadores_de_tipo: lista_calificadores_de_tipo . calificador_de_tipo
+
+    CONST     shift, and go to state 18
+    VOLATILE  shift, and go to state 19
+    '*'       shift, and go to state 26
+
+    '*'       [reduce using rule 84 (apuntador)]
+    $default  reduce using rule 84 (apuntador)
+
+    calificador_de_tipo  go to state 144
+    apuntador            go to state 145
 
 
 State 72
@@ -1987,15 +1993,15 @@ State 83
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 83
     '}'                shift, and go to state 166
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
     't'                shift, and go to state 27
-    '&'                shift, and go to state 96
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -2007,12 +2013,12 @@ State 83
     calificador_de_tipo                     go to state 169
     especificador_estructura_o_union        go to state 37
     estructura_o_union                      go to state 38
-    lista_declaraciones_struct              go to state 67
-    declaracion_struct                      go to state 68
-    lista_calificador_especificador         go to state 69
+    lista_declaraciones_struct              go to state 63
+    declaracion_struct                      go to state 64
+    lista_calificador_especificador         go to state 65
     especificador_enum                      go to state 39
-    lista_de_enumerador                     go to state 70
-    enumerador                              go to state 71
+    lista_de_enumerador                     go to state 66
+    enumerador                              go to state 67
     nombre_typedef                          go to state 43
     sentencia                               go to state 170
     sentencia_etiquetada                    go to state 171
@@ -2097,9 +2103,9 @@ State 86
 
     error          shift, and go to state 74
     IDENTIFICADOR  shift, and go to state 23
-    '*'            shift, and go to state 24
-    '('            shift, and go to state 25
     ';'            shift, and go to state 75
+    '('            shift, and go to state 25
+    '*'            shift, and go to state 26
 
     lista_declaradores_init  go to state 76
     declarador_init          go to state 77
@@ -2138,11 +2144,11 @@ State 89
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
     '('                shift, and go to state 182
-    '&'                shift, and go to state 96
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -2168,11 +2174,11 @@ State 90
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
     '('                shift, and go to state 54
-    '&'                shift, and go to state 96
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -2198,11 +2204,11 @@ State 91
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
     '('                shift, and go to state 54
-    '&'                shift, and go to state 96
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -2214,27 +2220,6 @@ State 91
 
 
 State 92
-
-  215 operador_unario: '+' .
-
-    $default  reduce using rule 215 (operador_unario)
-
-
-State 93
-
-  216 operador_unario: '-' .
-
-    $default  reduce using rule 216 (operador_unario)
-
-
-State 94
-
-  214 operador_unario: '*' .
-
-    $default  reduce using rule 214 (operador_unario)
-
-
-State 95
 
   206 expresion_cast: '(' . nombre_de_tipo ')' expresion_cast
   230 expresion_primaria: '(' . expresion ')'
@@ -2263,18 +2248,18 @@ State 95
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '{'                shift, and go to state 26
+    '{'                shift, and go to state 24
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
     't'                shift, and go to state 27
-    '&'                shift, and go to state 96
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
-    especificador_de_tipo             go to state 65
-    calificador_de_tipo               go to state 66
+    especificador_de_tipo             go to state 61
+    calificador_de_tipo               go to state 62
     especificador_estructura_o_union  go to state 37
     estructura_o_union                go to state 38
     lista_calificador_especificador   go to state 186
@@ -2302,11 +2287,32 @@ State 95
     constante                         go to state 56
 
 
-State 96
+State 93
+
+  214 operador_unario: '*' .
+
+    $default  reduce using rule 214 (operador_unario)
+
+
+State 94
 
   213 operador_unario: '&' .
 
     $default  reduce using rule 213 (operador_unario)
+
+
+State 95
+
+  215 operador_unario: '+' .
+
+    $default  reduce using rule 215 (operador_unario)
+
+
+State 96
+
+  216 operador_unario: '-' .
+
+    $default  reduce using rule 216 (operador_unario)
 
 
 State 97
@@ -2508,11 +2514,11 @@ State 114
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -2563,10 +2569,10 @@ State 118
 
    65 especificador_enum: ENUM IDENTIFICADOR '{' . lista_de_enumerador '}'
 
-    IDENTIFICADOR  shift, and go to state 64
+    IDENTIFICADOR  shift, and go to state 60
 
     lista_de_enumerador  go to state 228
-    enumerador           go to state 71
+    enumerador           go to state 67
 
 
 State 119
@@ -2603,7 +2609,7 @@ State 122
    98                      | especificadores_de_declaracion . apuntadorOpt declarador_abstracto
    99                      | especificadores_de_declaracion . apuntadorOpt
 
-    '*'  shift, and go to state 24
+    '*'  shift, and go to state 26
 
     '*'       [reduce using rule 101 (apuntadorOpt)]
     $default  reduce using rule 101 (apuntadorOpt)
@@ -2687,27 +2693,6 @@ State 131
 
 State 132
 
-   89 lista_calificadores_de_tipo: lista_calificadores_de_tipo calificador_de_tipo .
-
-    $default  reduce using rule 89 (lista_calificadores_de_tipo)
-
-
-State 133
-
-   86 apuntador: '*' lista_calificadores_de_tipo apuntador .
-
-    $default  reduce using rule 86 (apuntador)
-
-
-State 134
-
-   75 declarador_directo: '(' declarador ')' .
-
-    $default  reduce using rule 75 (declarador_directo)
-
-
-State 135
-
    71 enumerador: IDENTIFICADOR '=' . expresion_constante
 
     ENUM               shift, and go to state 46
@@ -2721,11 +2706,11 @@ State 135
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -2749,35 +2734,35 @@ State 135
     constante                 go to state 56
 
 
-State 136
+State 133
 
    56 lista_calificador_especificador: especificador_de_tipo lista_calificador_especificador .
 
     $default  reduce using rule 56 (lista_calificador_especificador)
 
 
-State 137
+State 134
 
    58 lista_calificador_especificador: calificador_de_tipo lista_calificador_especificador .
 
     $default  reduce using rule 58 (lista_calificador_especificador)
 
 
-State 138
+State 135
 
    45 especificador_estructura_o_union: '{' lista_declaraciones_struct '}' .
 
     $default  reduce using rule 45 (especificador_estructura_o_union)
 
 
-State 139
+State 136
 
    49 lista_declaraciones_struct: lista_declaraciones_struct declaracion_struct .
 
     $default  reduce using rule 49 (lista_declaraciones_struct)
 
 
-State 140
+State 137
 
    64 declarador_struct: ':' . expresion_constante
 
@@ -2792,11 +2777,11 @@ State 140
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -2820,7 +2805,7 @@ State 140
     constante                 go to state 56
 
 
-State 141
+State 138
 
    55 declaracion_struct: lista_calificador_especificador lista_declaradores_struct . ';'
    61 lista_declaradores_struct: lista_declaradores_struct . ',' declarador_struct
@@ -2829,14 +2814,14 @@ State 141
     ','  shift, and go to state 241
 
 
-State 142
+State 139
 
    60 lista_declaradores_struct: declarador_struct .
 
     $default  reduce using rule 60 (lista_declaradores_struct)
 
 
-State 143
+State 140
 
    62 declarador_struct: declarador .
    63                  | declarador . ':' expresion_constante
@@ -2846,20 +2831,41 @@ State 143
     $default  reduce using rule 62 (declarador_struct)
 
 
-State 144
+State 141
 
    66 especificador_enum: '{' lista_de_enumerador '}' .
 
     $default  reduce using rule 66 (especificador_enum)
 
 
-State 145
+State 142
 
    69 lista_de_enumerador: lista_de_enumerador ',' . enumerador
 
-    IDENTIFICADOR  shift, and go to state 64
+    IDENTIFICADOR  shift, and go to state 60
 
     enumerador  go to state 243
+
+
+State 143
+
+   75 declarador_directo: '(' declarador ')' .
+
+    $default  reduce using rule 75 (declarador_directo)
+
+
+State 144
+
+   89 lista_calificadores_de_tipo: lista_calificadores_de_tipo calificador_de_tipo .
+
+    $default  reduce using rule 89 (lista_calificadores_de_tipo)
+
+
+State 145
+
+   86 apuntador: '*' lista_calificadores_de_tipo apuntador .
+
+    $default  reduce using rule 86 (apuntador)
 
 
 State 146
@@ -2881,8 +2887,8 @@ State 148
    51 lista_declaradores_init: lista_declaradores_init ',' . declarador_init
 
     IDENTIFICADOR  shift, and go to state 23
-    '*'            shift, and go to state 24
     '('            shift, and go to state 25
+    '*'            shift, and go to state 26
 
     declarador_init     go to state 244
     declarador          go to state 181
@@ -2907,12 +2913,12 @@ State 149
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     '{'                shift, and go to state 246
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -3001,16 +3007,16 @@ State 152
     ENUM      shift, and go to state 20
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
-    '{'       shift, and go to state 26
+    '{'       shift, and go to state 24
     't'       shift, and go to state 27
 
-    especificador_de_tipo             go to state 65
-    calificador_de_tipo               go to state 66
+    especificador_de_tipo             go to state 61
+    calificador_de_tipo               go to state 62
     especificador_estructura_o_union  go to state 37
     estructura_o_union                go to state 38
     lista_declaraciones_struct        go to state 250
-    declaracion_struct                go to state 68
-    lista_calificador_especificador   go to state 69
+    declaracion_struct                go to state 64
+    lista_calificador_especificador   go to state 65
     especificador_enum                go to state 39
     nombre_typedef                    go to state 43
 
@@ -3030,11 +3036,11 @@ State 153
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -3120,13 +3126,13 @@ State 158
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -3202,12 +3208,12 @@ State 163
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 263
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -3239,7 +3245,7 @@ State 164
   130 sentencia_etiquetada: IDENTIFICADOR . ':' sentencia
   227 expresion_primaria: IDENTIFICADOR .
 
-    '='  shift, and go to state 135
+    '='  shift, and go to state 132
     ':'  shift, and go to state 265
 
     '}'       reduce using rule 70 (enumerador)
@@ -3309,15 +3315,15 @@ State 167
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 83
     '}'                shift, and go to state 266
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
     't'                shift, and go to state 27
-    '&'                shift, and go to state 96
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -3385,16 +3391,16 @@ State 168
     ENUM      shift, and go to state 20
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
-    '{'       shift, and go to state 26
+    '{'       shift, and go to state 24
     't'       shift, and go to state 27
 
     IDENTIFICADOR  reduce using rule 21 (especificadores_de_declaracion)
     IDENTIFICADOR  [reduce using rule 57 (lista_calificador_especificador)]
-    '*'            reduce using rule 21 (especificadores_de_declaracion)
-    '*'            [reduce using rule 57 (lista_calificador_especificador)]
+    ':'            reduce using rule 57 (lista_calificador_especificador)
     '('            reduce using rule 21 (especificadores_de_declaracion)
     '('            [reduce using rule 57 (lista_calificador_especificador)]
-    ':'            reduce using rule 57 (lista_calificador_especificador)
+    '*'            reduce using rule 21 (especificadores_de_declaracion)
+    '*'            [reduce using rule 57 (lista_calificador_especificador)]
     $default       reduce using rule 21 (especificadores_de_declaracion)
 
     especificadores_de_declaracion          go to state 80
@@ -3403,7 +3409,7 @@ State 168
     calificador_de_tipo                     go to state 169
     especificador_estructura_o_union        go to state 37
     estructura_o_union                      go to state 38
-    lista_calificador_especificador         go to state 136
+    lista_calificador_especificador         go to state 133
     especificador_enum                      go to state 39
     nombre_typedef                          go to state 43
 
@@ -3434,16 +3440,16 @@ State 169
     ENUM      shift, and go to state 20
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
-    '{'       shift, and go to state 26
+    '{'       shift, and go to state 24
     't'       shift, and go to state 27
 
     IDENTIFICADOR  reduce using rule 23 (especificadores_de_declaracion)
     IDENTIFICADOR  [reduce using rule 59 (lista_calificador_especificador)]
-    '*'            reduce using rule 23 (especificadores_de_declaracion)
-    '*'            [reduce using rule 59 (lista_calificador_especificador)]
+    ':'            reduce using rule 59 (lista_calificador_especificador)
     '('            reduce using rule 23 (especificadores_de_declaracion)
     '('            [reduce using rule 59 (lista_calificador_especificador)]
-    ':'            reduce using rule 59 (lista_calificador_especificador)
+    '*'            reduce using rule 23 (especificadores_de_declaracion)
+    '*'            [reduce using rule 59 (lista_calificador_especificador)]
     $default       reduce using rule 23 (especificadores_de_declaracion)
 
     especificadores_de_declaracion          go to state 81
@@ -3452,7 +3458,7 @@ State 169
     calificador_de_tipo                     go to state 169
     especificador_estructura_o_union        go to state 37
     estructura_o_union                      go to state 38
-    lista_calificador_especificador         go to state 137
+    lista_calificador_especificador         go to state 134
     especificador_enum                      go to state 39
     nombre_typedef                          go to state 43
 
@@ -3512,14 +3518,14 @@ State 174
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
     '}'                shift, and go to state 268
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -3635,18 +3641,18 @@ State 182
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '{'                shift, and go to state 26
+    '{'                shift, and go to state 24
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
     't'                shift, and go to state 27
-    '&'                shift, and go to state 96
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
-    especificador_de_tipo             go to state 65
-    calificador_de_tipo               go to state 66
+    especificador_de_tipo             go to state 61
+    calificador_de_tipo               go to state 62
     especificador_estructura_o_union  go to state 37
     estructura_o_union                go to state 38
     lista_calificador_especificador   go to state 186
@@ -3700,9 +3706,9 @@ State 186
   109 nombre_de_tipo: lista_calificador_especificador . declarador_abstracto
   110               | lista_calificador_especificador .
 
-    '*'  shift, and go to state 24
     '('  shift, and go to state 272
     '['  shift, and go to state 273
+    '*'  shift, and go to state 26
 
     $default  reduce using rule 110 (nombre_de_tipo)
 
@@ -3733,11 +3739,11 @@ State 188
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -3783,11 +3789,11 @@ State 190
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -3823,11 +3829,11 @@ State 191
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -3867,11 +3873,11 @@ State 192
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -3906,11 +3912,11 @@ State 193
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -3944,11 +3950,11 @@ State 194
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -3981,11 +3987,11 @@ State 195
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4017,11 +4023,11 @@ State 196
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4052,11 +4058,11 @@ State 197
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4087,11 +4093,11 @@ State 198
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4121,11 +4127,11 @@ State 199
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4155,11 +4161,11 @@ State 200
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4189,11 +4195,11 @@ State 201
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4223,11 +4229,11 @@ State 202
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4256,11 +4262,11 @@ State 203
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4289,11 +4295,11 @@ State 204
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4321,11 +4327,11 @@ State 205
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4353,11 +4359,11 @@ State 206
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4384,11 +4390,11 @@ State 207
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4415,11 +4421,11 @@ State 208
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4523,11 +4529,11 @@ State 220
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4595,12 +4601,12 @@ State 225
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
+    '('                shift, and go to state 92
     ')'                shift, and go to state 300
-    '&'                shift, and go to state 96
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4640,11 +4646,11 @@ State 226
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4682,7 +4688,7 @@ State 228
    69 lista_de_enumerador: lista_de_enumerador . ',' enumerador
 
     '}'  shift, and go to state 305
-    ','  shift, and go to state 145
+    ','  shift, and go to state 142
 
 
 State 229
@@ -4702,9 +4708,9 @@ State 230
    99                      | especificadores_de_declaracion apuntadorOpt .
 
     IDENTIFICADOR  shift, and go to state 306
-    '*'            shift, and go to state 24
     '('            shift, and go to state 272
     '['            shift, and go to state 273
+    '*'            shift, and go to state 26
 
     $default  reduce using rule 99 (declaracion_parametro)
 
@@ -4752,7 +4758,7 @@ State 233
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
     ELIPSIS   shift, and go to state 308
-    '{'       shift, and go to state 26
+    '{'       shift, and go to state 24
     't'       shift, and go to state 27
 
     especificadores_de_declaracion          go to state 122
@@ -4831,12 +4837,12 @@ State 241
    61 lista_declaradores_struct: lista_declaradores_struct ',' . declarador_struct
 
     IDENTIFICADOR  shift, and go to state 23
-    '*'            shift, and go to state 24
+    ':'            shift, and go to state 137
     '('            shift, and go to state 25
-    ':'            shift, and go to state 140
+    '*'            shift, and go to state 26
 
     declarador_struct   go to state 311
-    declarador          go to state 143
+    declarador          go to state 140
     declarador_directo  go to state 41
     apuntador           go to state 42
 
@@ -4856,11 +4862,11 @@ State 242
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4921,12 +4927,12 @@ State 246
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     '{'                shift, and go to state 246
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -4992,16 +4998,16 @@ State 250
     ENUM      shift, and go to state 20
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
-    '{'       shift, and go to state 26
+    '{'       shift, and go to state 24
     '}'       shift, and go to state 315
     't'       shift, and go to state 27
 
-    especificador_de_tipo             go to state 65
-    calificador_de_tipo               go to state 66
+    especificador_de_tipo             go to state 61
+    calificador_de_tipo               go to state 62
     especificador_estructura_o_union  go to state 37
     estructura_o_union                go to state 38
-    declaracion_struct                go to state 139
-    lista_calificador_especificador   go to state 69
+    declaracion_struct                go to state 136
+    lista_calificador_especificador   go to state 65
     especificador_enum                go to state 39
     nombre_typedef                    go to state 43
 
@@ -5039,13 +5045,13 @@ State 252
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -5093,11 +5099,11 @@ State 253
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -5137,11 +5143,11 @@ State 254
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -5188,12 +5194,12 @@ State 255
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 320
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -5275,15 +5281,15 @@ State 257
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 83
     '}'                shift, and go to state 166
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
     't'                shift, and go to state 27
-    '&'                shift, and go to state 96
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -5348,11 +5354,11 @@ State 259
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -5440,13 +5446,13 @@ State 265
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -5512,14 +5518,14 @@ State 267
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
     '}'                shift, and go to state 327
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -5604,11 +5610,11 @@ State 272
     ENUM      shift, and go to state 20
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
-    '*'       shift, and go to state 24
+    '{'       shift, and go to state 24
     '('       shift, and go to state 272
-    '{'       shift, and go to state 26
     ')'       shift, and go to state 329
     '['       shift, and go to state 273
+    '*'       shift, and go to state 26
     't'       shift, and go to state 27
 
     especificadores_de_declaracion          go to state 122
@@ -5643,12 +5649,12 @@ State 273
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
+    '('                shift, and go to state 92
     ']'                shift, and go to state 332
-    '&'                shift, and go to state 96
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -5721,11 +5727,11 @@ State 277
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6123,13 +6129,13 @@ State 316
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6205,12 +6211,12 @@ State 320
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 349
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6371,7 +6377,7 @@ State 335
     ENUM      shift, and go to state 20
     STRUCT    shift, and go to state 21
     UNION     shift, and go to state 22
-    '{'       shift, and go to state 26
+    '{'       shift, and go to state 24
     ')'       shift, and go to state 357
     't'       shift, and go to state 27
 
@@ -6404,12 +6410,12 @@ State 336
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
+    '('                shift, and go to state 92
     ']'                shift, and go to state 359
-    '&'                shift, and go to state 96
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6455,11 +6461,11 @@ State 338
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6497,11 +6503,11 @@ State 339
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6570,8 +6576,8 @@ State 342
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
+    '{'                shift, and go to state 24
     '('                shift, and go to state 54
-    '{'                shift, and go to state 26
     't'                shift, and go to state 27
 
     especificadores_de_declaracion          go to state 122
@@ -6605,11 +6611,11 @@ State 343
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6656,13 +6662,13 @@ State 345
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     '{'                shift, and go to state 246
     '}'                shift, and go to state 366
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6721,13 +6727,13 @@ State 347
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6785,13 +6791,13 @@ State 348
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6839,12 +6845,12 @@ State 349
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
+    '('                shift, and go to state 92
     ')'                shift, and go to state 370
-    '&'                shift, and go to state 96
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6897,12 +6903,12 @@ State 351
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 373
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6942,11 +6948,11 @@ State 352
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -6997,13 +7003,13 @@ State 353
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -7178,13 +7184,13 @@ State 370
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -7241,12 +7247,12 @@ State 372
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
+    '('                shift, and go to state 92
     ')'                shift, and go to state 385
-    '&'                shift, and go to state 96
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -7287,12 +7293,12 @@ State 373
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
+    '('                shift, and go to state 92
     ')'                shift, and go to state 387
-    '&'                shift, and go to state 96
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -7404,13 +7410,13 @@ State 382
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -7475,13 +7481,13 @@ State 384
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -7539,13 +7545,13 @@ State 385
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -7612,13 +7618,13 @@ State 387
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -7675,12 +7681,12 @@ State 389
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
+    '('                shift, and go to state 92
     ')'                shift, and go to state 397
-    '&'                shift, and go to state 96
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -7759,13 +7765,13 @@ State 394
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -7830,13 +7836,13 @@ State 396
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -7894,13 +7900,13 @@ State 397
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 
@@ -7995,13 +8001,13 @@ State 403
     CONST_DECIMAL      shift, and go to state 51
     CONST_PTOFLOTANTE  shift, and go to state 52
     CONST_CARACTER     shift, and go to state 53
-    '+'                shift, and go to state 92
-    '-'                shift, and go to state 93
-    '*'                shift, and go to state 94
-    '('                shift, and go to state 95
     ';'                shift, and go to state 165
     '{'                shift, and go to state 257
-    '&'                shift, and go to state 96
+    '('                shift, and go to state 92
+    '*'                shift, and go to state 93
+    '&'                shift, and go to state 94
+    '+'                shift, and go to state 95
+    '-'                shift, and go to state 96
     '~'                shift, and go to state 97
     '!'                shift, and go to state 98
 

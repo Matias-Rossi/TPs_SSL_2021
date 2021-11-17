@@ -148,7 +148,7 @@ ListaIdentificadores* tokenizarParametros(char* cadena) {
                 agregarIdentificador(listaParametros, parametro, tipoObtenidoDesdeLista);
             } else {
                 char* strTipo = obtenerElementoTipoPosicion(ultimas_constantes, ultimas_constantes->cantElementos - 1);
-                if(strcmp(strTipo, "identificador") == 0) printf("[ERROR] La variable %s no ha sido declarada\n", parametro);
+                if(strcmp(strTipo, "identificador") == 0) printf("[ERROR] Línea %d: La variable %s no ha sido declarada\n", yylineno, parametro);
                 agregarIdentificador(listaParametros, parametro, strTipo);
             }
             j = 0;
@@ -165,7 +165,7 @@ ListaIdentificadores* tokenizarParametros(char* cadena) {
         agregarIdentificador(listaParametros, parametro, tipoObtenidoDesdeLista);
     } else {
         char* strTipo = obtenerElementoTipoPosicion(ultimas_constantes, ultimas_constantes->cantElementos - 1);
-        if(strcmp(strTipo, "identificador") == 0) printf("[ERROR] La variable %s no ha sido declarada\n", parametro);
+        if(strcmp(strTipo, "identificador") == 0) printf("[ERROR] Línea %d: La variable %s no ha sido declarada\n", yylineno, parametro);
         agregarIdentificador(listaParametros, parametro, strTipo);
     }
     return listaParametros;
@@ -203,7 +203,7 @@ int comprobar_tipos_funcion(ListaFunciones* lista, char* linea) {
                 
                 if(auxParametrosRecibidos->tipo){
                     if(strcmp(auxParametrosFuncion->tipo, auxParametrosRecibidos->tipo) != 0) {
-                        printf("[ERROR] En la funcion %s se esperaba un argumento tipo %s, pero se recibio un argumento tipo %s\n", nombreFuncion, auxParametrosFuncion->tipo, auxParametrosRecibidos->tipo);
+                        printf("[ERROR-Semántico] Línea %d: En la funcion %s se esperaba un argumento tipo %s, pero se recibio un argumento tipo %s\n", yylineno, nombreFuncion, auxParametrosFuncion->tipo, auxParametrosRecibidos->tipo);
                         return 0;
                     }
                     
@@ -214,7 +214,7 @@ int comprobar_tipos_funcion(ListaFunciones* lista, char* linea) {
             
             return 1;
         } else {
-            printf("[ERROR] La cantidad de parametros recibidos no coincide con la cantidad de parametros de la función %s\n", nombreFuncion);
+            printf("[ERROR-Semántico] Línea %d: La cantidad de parametros recibidos no coincide con la cantidad de parametros de la función %s\n", yylineno, nombreFuncion);
             return 0;
         }
 

@@ -13,7 +13,7 @@ int identificadorYaExiste(ListaIdentificadores* lista, char* identificador){
     Identificador* aux = lista->pri;
     while(aux != NULL){
         if(strcmp(aux->nombre, identificador) == 0){
-            printf("[ERROR] la variable %s ya ha sido declarada\n", identificador);
+            printf("[ERROR-Semántico] Línea %d: La variable %s ya ha sido declarada\n", yylineno, identificador);
             return 1;
         }
         aux = aux->sig;

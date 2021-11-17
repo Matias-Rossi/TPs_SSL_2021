@@ -87,9 +87,6 @@ extern FILE* yyin;
 %token   CONST_PTOFLOTANTE
 %token   CONST_CARACTER
 
-%left       '+' '-'
-%left       '*' '/'
-%left       '('
 %nonassoc IFX
 %nonassoc ELSE
 
@@ -120,8 +117,8 @@ definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declar
 declaracion:              especificadores_de_declaracion lista_declaradores_init ';'
                         | especificadores_de_declaracion error ';'
                         | especificadores_de_declaracion ';'
-                        //| especificadores_de_declaracion lista_declaradores_init error                      {printf("[ERROR] Falta punto y coma\n");}
-                        //| especificadores_de_declaracion error                                              {printf("[ERROR] Falta punto y coma\n");}
+                        //| especificadores_de_declaracion lista_declaradores_init error                      {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma en línea\n", yylineno);}
+                        //| especificadores_de_declaracion error                                              {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma en línea\n", yylineno);}
                         ;
 
 lista_de_declaracion:   declaracion
@@ -184,12 +181,12 @@ lista_declaradores_init:    declarador_init
 
 declarador_init:      declarador
                     | declarador '=' inicializador
-                    | declarador '=' error                  {printf("[ERROR] Falta inicializador\n");yyerrok;}
+                    | declarador '=' error                  {printf("[ERROR-Sintáctico] Línea %d: Falta inicializador en linea\n", yylineno);yyerrok;}
                     ;
 
 
 declaracion_struct:   lista_calificador_especificador  lista_declaradores_struct ';'
-                    //| lista_calificador_especificador lista_declaraciones_struct error         {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
+                    //| lista_calificador_especificador lista_declaraciones_struct error         {printf("[ERROR] Línea %d: Falta punto y coma \n", yylineno);yyerrok;yyclearin;}
                   ;
 
 
@@ -224,7 +221,7 @@ lista_de_enumerador:      enumerador
 
 enumerador:    IDENTIFICADOR
              | IDENTIFICADOR '=' expresion_constante
-             //| IDENTIFICADOR '=' error                          {printf("[ERROR] Falta expresion constante\n");yyerrok;yyclearin;}
+             //| IDENTIFICADOR '=' error                          {printf("[ERROR-Sintáctico] Línea %d: Falta expresion constante\n", yylineno);yyerrok;yyclearin;}
              ;
 
 declarador:   apuntador declarador_directo                                                                  
@@ -238,9 +235,9 @@ declarador_directo:       IDENTIFICADOR                                         
                         | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' lista_de_identificadores ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' ')'                                   {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
-                        | IDENTIFICADOR '(' lista_tipos_de_parametro error        {printf("[ERROR] Falta paréntesis de cierre\n");}
-                        | IDENTIFICADOR '(' lista_de_identificadores error        {printf("[ERROR] Falta paréntesis de cierre\n");}
-                        | IDENTIFICADOR '(' error                                 {printf("[ERROR] Falta paréntesis de cierre\n");}
+                        | IDENTIFICADOR '(' lista_tipos_de_parametro error        {printf("[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);}
+                        | IDENTIFICADOR '(' lista_de_identificadores error        {printf("[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);}
+                        | IDENTIFICADOR '(' error                                 {printf("[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);}
                         ;
 
 
@@ -339,7 +336,7 @@ sentencia_etiquetada:   IDENTIFICADOR ':' sentencia
 
  
 sentencia_expresion:    expresion ';'
-                        //| expresion error             {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
+                        //| expresion error             {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);yyerrok;yyclearin;}
                         |  ';'
                         ;
  
@@ -375,7 +372,7 @@ sentencia_de_salto: GOTO IDENTIFICADOR ';'
                     | CONTINUE   ';'
                     | BREAK ';'
                     | RETURN expresion ';'
-                    //| RETURN expresion error              {printf("[ERROR] Falta punto y coma\n");yyerrok;yyclearin;}
+                    //| RETURN expresion error              {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);yyerrok;yyclearin;}
                     | RETURN  ';'
                     ;
 
@@ -453,7 +450,7 @@ expresion_de_corrimiento: expresion_aditiva
 
 
 expresion_aditiva: expresion_multiplicativa 
-				| expresion_aditiva '+' expresion_multiplicativa        {;if(!chequearSuma(sacar_ultimo_caracter($<cval>1), ultimas_constantes)) printf("[ERROR] Suma inválida en %d\n", yylineno);}    
+				| expresion_aditiva '+' expresion_multiplicativa        {;if(!chequearSuma(sacar_ultimo_caracter($<cval>1), ultimas_constantes)) printf("[ERROR] Línea %d: Suma inválida\n", yylineno);}    
 				| expresion_aditiva '-' expresion_multiplicativa 
 				;
 
@@ -571,7 +568,7 @@ int main (int argc, char **argv)
 
 int yyerror(const char *msg)
 {
-	printf("\n[ERROR] Fallo el analisis en la linea: %d %s\n", yylineno, msg);
+	printf("\n[ERROR-Sintáctico] Línea %d, fallo de análisis: %s\n", yylineno, msg);
 	analisisCorrecto = 0;
 	return 0;
 }

@@ -1,12 +1,12 @@
 //#include<stdio.h>
 
-
 void sumar(int* a, int b) {
     printf("a + b");
 }
 
+
 int hola() {
-    printf("\n\n\t\t\tCoding is Fun !\n\n\n");
+    printf("\n\n\t\t\tHola !\n\n\n");
     return 0;
 }
 

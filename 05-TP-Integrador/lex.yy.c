@@ -1394,7 +1394,7 @@ YY_RULE_SETUP
 case 69:
 YY_RULE_SETUP
 #line 138 "flex.l"
-{analisisCorrecto = 0; printf("ERROR LEXICO: %s, EN LINEA: %d \n",yytext,yylineno);}
+{analisisCorrecto = 0; printf("[ERROR-Léxico] Línea %d: Token desconocido %s \n", yylineno, yytext);}
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
