@@ -82,3 +82,16 @@ void mostrarParametros(ListaIdentificadores* parametros) {
     }
     printf("\n");
 }
+
+/********** ERRORES ***************/
+void mostrarErrores(ListaError* errores) {
+    if(errores->pri != NULL){                                                       //Si la lista no esta vacía
+        nuevaCategoria("ERRORES");
+        Error* aux = errores->pri;
+        while(aux->sig != NULL) {                                                           //Itera por los nodos
+            printf("%s\n", aux->mensaje);              
+            aux = aux->sig;
+        }
+        printf("%s\n", aux->mensaje);
+    }
+}

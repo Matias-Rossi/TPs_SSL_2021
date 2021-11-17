@@ -102,23 +102,27 @@ unidad_de_traduccion:     declaracion_externa
                         | unidad_de_traduccion declaracion_externa 
                         ;
 
-declaracion_externa:      definicion_de_funcion                                         
-                        | declaracion                                                   
+declaracion_externa:      definicion_de_funcion                                                             {definirFuncion(lista_funciones, $<cval>1);}                              
+                        | declaracion                                                                       {aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
                         ;
 
 
-definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declaracion sentencia_compuesta   {aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
-				     | declarador lista_de_declaracion sentencia_compuesta                                  {aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
-				     | especificadores_de_declaracion declarador sentencia_compuesta 			            {aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
-				     | declarador sentencia_compuesta                                                       {aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
+definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declaracion sentencia_compuesta   {/*aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);*/}
+				     | declarador lista_de_declaracion sentencia_compuesta                                  {/*aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);*/}
+				     | especificadores_de_declaracion declarador sentencia_compuesta 			            {/*aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);*/}
+				     | declarador sentencia_compuesta                                                       {/*aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);*/}
 				     ;
 
 
 declaracion:              especificadores_de_declaracion lista_declaradores_init ';'
                         | especificadores_de_declaracion error ';'
                         | especificadores_de_declaracion ';'
-                        //| especificadores_de_declaracion lista_declaradores_init error                      {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma en línea\n", yylineno);}
-                        //| especificadores_de_declaracion error                                              {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma en línea\n", yylineno);}
+                        //| especificadores_de_declaracion lista_declaradores_init error                      { char* mensaje = calloc(60, sizeof(char));sprintf(mensaje, "[ERROR-Sintáctico] Línea %d: Falta punto y coma en línea\n", yylineno);agregarError(listaErrores, mensaje);} 
+                                                                                                                
+                                                                                                                
+                                                                                                                
+                        //| especificadores_de_declaracion error                                              {char* mensaje = calloc(60, sizeof(char)); sprintf(mensaje, "[ERROR-Sintáctico] Línea %d: Falta punto y coma en línea\n", yylineno); agregarError(listaErrores, mensaje);}
+                                                                                                                
                         ;
 
 lista_de_declaracion:   declaracion
@@ -529,7 +533,7 @@ int main (int argc, char **argv)
 
     else{
 
-        printf("Abriendo archivos\n");
+        printf("Abriendo archivo %s\n", argv[1]);
 
         yyin = fopen(argv[1], "r");
 
@@ -543,6 +547,7 @@ int main (int argc, char **argv)
         lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
         lista_parametros          = inicializarListaIdentificadores(lista_parametros);
         ultimas_constantes        = inicializarListaIdentificadores(ultimas_constantes);
+        listaErrores             = inicializarListaErrores       (listaErrores); 
 
         printf("\n --- Comenzando anlisis lexico y sintactico ---\n\n");
 
@@ -556,6 +561,7 @@ int main (int argc, char **argv)
             crearListadoIdentificadores(identificadores_variables, "VARIABLES DECLARADAS");
             crearListadoIdentificadores(identificadores_funciones, "FUNCIONES DECLARADAS");
             mostrarListadoFunciones(lista_funciones);
+            mostrarErrores(listaErrores);
             //crearListadoSentencias     (lista_sentencias,          "SENTENCIAS");
         }
 

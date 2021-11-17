@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Nov 16 20:56:00 2021
+# Make data base, printed on Tue Nov 16 22:20:02 2021
 
 # Variables
 
@@ -241,9 +241,9 @@ VSCODE_PID = 1633
 
 # Directories
 
-# . (device 2053, inode 1384466): 19 files, no impossibilities.
+# . (device 2053, inode 1384466): 18 files, no impossibilities.
 
-# 19 files, no impossibilities in 1 directories.
+# 18 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -260,7 +260,7 @@ all: bison flex
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/3=0%
 #  recipe to execute (from 'makefile', line 2):
-	gcc bison.tab.c lex.yy.c listas.c reporte.c parametrosFunciones.c verificarSuma.c -Iinclude -w -O2 -DNDEBUG -g -O0 -o "bin/tpIntegrador.out"
+	gcc bison.tab.c lex.yy.c listas.c reporte.c parametrosFunciones.c verificarSuma.c errores.c -Iinclude -w -O2 -DNDEBUG -g -O0 -o "bin/tpIntegrador.out"
 
 # Not a target:
 .SUFFIXES:
@@ -271,19 +271,19 @@ all: bison flex
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-11-16 19:17:54.00216204
+#  Last modified 2021-11-16 22:19:57.898549245
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 .DEFAULT:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 clean:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 11):
@@ -333,12 +333,12 @@ bison:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 27 / storage = 243 B / avg = 9 B
-# current buf: size = 8162 B / used = 243 B / count = 27 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 26 / storage = 241 B / avg = 9 B
+# current buf: size = 8162 B / used = 241 B / count = 26 / avg = 9 B
 
-# strcache performance: lookups = 39 / hit rate = 30%
+# strcache performance: lookups = 38 / hit rate = 31%
 # hash-table stats:
-# Load=27/8192=0%, Rehash=0, Collisions=1/39=3%
-# Finished Make data base on Tue Nov 16 20:56:00 2021
+# Load=26/8192=0%, Rehash=0, Collisions=1/38=3%
+# Finished Make data base on Tue Nov 16 22:20:02 2021
 
  

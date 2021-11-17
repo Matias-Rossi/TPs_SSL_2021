@@ -1,5 +1,11 @@
 //#include<stdio.h>
 
+int noDefinida(int j);
+
+int noDefinida(int j) {
+    return j;
+}
+
 void sumar(int* a, int b) {
     printf("a + b");
 }

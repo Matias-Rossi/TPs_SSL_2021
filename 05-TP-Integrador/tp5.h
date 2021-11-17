@@ -36,6 +36,8 @@ typedef struct Funcion
 {
     char* nombre;
     char* tipo;
+    int definida;
+    int declarada;
     ListaIdentificadores* parametros;
     struct Funcion* sig;
 } Funcion;
@@ -83,8 +85,8 @@ ListaIdentificadores* ultimas_constantes;
 
 ListaFunciones* inicializarListaFunciones(ListaFunciones*);
 
-void agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, ListaIdentificadores* listaParametros);
-
+Funcion* agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, ListaIdentificadores* listaParametros);
+int definirFuncion(ListaFunciones* lista, char* identificador);    //TODO
 void agregarParametro(ListaIdentificadores* listaParametros, char* nombreParametro, char* tipoParametro, ListaIdentificadores* listaVariables);
 char* cortarIdentificadorFuncion(char* cadena);
 char* obtenerTipo(char* cadena);
@@ -98,12 +100,28 @@ int invokeFlex(char* str);
 int contieneIgual(char* linea);
 int chequearSuma(char* linea, ListaIdentificadores*);
 char* substringHastaCaracter(char* cadena, char caracter);
+ListaIdentificadores* tokenizarParametrosDesdeLinea(char* linea);
 
 
 /* Reporte tp5 */
 void mostrarListadoFunciones(ListaFunciones* lista);
 void mostrarFuncion(Funcion* funcion);
 void mostrarParametros(ListaIdentificadores* parametros);
+
+typedef struct Error {
+    char* mensaje;
+    struct Error* sig;
+} Error;
+
+typedef struct ListaError {
+    struct Error* pri;
+    int cantElementos;
+} ListaError;
+
+void agregarError(struct ListaError*, char* mensaje);
+ListaError* inicializarListaErrores(struct ListaError*);
+struct ListaError* listaErrores;
+void mostrarErrores(struct ListaError*);
 
 
 /* Control de doble declaración de variables */

@@ -591,29 +591,29 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int16 yyrline[] =
 {
        0,    95,    95,    96,    97,    98,   101,   102,   105,   106,
-     110,   111,   112,   113,   117,   118,   119,   124,   125,   128,
-     129,   130,   131,   132,   133,   137,   138,   139,   140,   141,
-     145,   146,   147,   148,   149,   150,   151,   152,   153,   154,
-     155,   156,   159,   160,   163,   164,   165,   168,   169,   172,
-     173,   177,   178,   182,   183,   184,   188,   193,   194,   195,
-     196,   200,   201,   205,   206,   207,   211,   212,   213,   217,
-     218,   222,   223,   227,   228,   231,   232,   233,   234,   235,
-     236,   237,   238,   239,   240,   244,   245,   246,   247,   251,
-     252,   256,   257,   261,   262,   266,   267,   268,   269,   270,
-     271,   274,   275,   279,   280,   286,   287,   288,   292,   293,
-     297,   298,   302,   303,   304,   307,   308,   309,   310,   311,
-     313,   314,   315,   316,   319,   323,   324,   325,   326,   327,
-     328,   332,   333,   334,   338,   340,   344,   345,   346,   347,
-     350,   351,   354,   355,   356,   359,   360,   361,   362,   363,
-     364,   365,   366,   367,   368,   371,   372,   373,   374,   376,
-     379,   380,   384,   385,   388,   389,   390,   391,   392,   393,
-     394,   395,   396,   397,   398,   402,   403,   406,   411,   412,
-     416,   417,   420,   421,   424,   425,   428,   429,   432,   433,
-     434,   438,   439,   440,   441,   442,   446,   447,   448,   452,
-     453,   454,   457,   458,   459,   460,   464,   465,   469,   470,
-     471,   472,   473,   474,   477,   478,   479,   480,   481,   482,
-     485,   486,   487,   488,   489,   490,   491,   492,   497,   498,
-     499,   500,   504,   505,   509,   510,   511,   512,   513,   514
+     110,   111,   112,   113,   117,   118,   119,   128,   129,   132,
+     133,   134,   135,   136,   137,   141,   142,   143,   144,   145,
+     149,   150,   151,   152,   153,   154,   155,   156,   157,   158,
+     159,   160,   163,   164,   167,   168,   169,   172,   173,   176,
+     177,   181,   182,   186,   187,   188,   192,   197,   198,   199,
+     200,   204,   205,   209,   210,   211,   215,   216,   217,   221,
+     222,   226,   227,   231,   232,   235,   236,   237,   238,   239,
+     240,   241,   242,   243,   244,   248,   249,   250,   251,   255,
+     256,   260,   261,   265,   266,   270,   271,   272,   273,   274,
+     275,   278,   279,   283,   284,   290,   291,   292,   296,   297,
+     301,   302,   306,   307,   308,   311,   312,   313,   314,   315,
+     317,   318,   319,   320,   323,   327,   328,   329,   330,   331,
+     332,   336,   337,   338,   342,   344,   348,   349,   350,   351,
+     354,   355,   358,   359,   360,   363,   364,   365,   366,   367,
+     368,   369,   370,   371,   372,   375,   376,   377,   378,   380,
+     383,   384,   388,   389,   392,   393,   394,   395,   396,   397,
+     398,   399,   400,   401,   402,   406,   407,   410,   415,   416,
+     420,   421,   424,   425,   428,   429,   432,   433,   436,   437,
+     438,   442,   443,   444,   445,   446,   450,   451,   452,   456,
+     457,   458,   461,   462,   463,   464,   468,   469,   473,   474,
+     475,   476,   477,   478,   481,   482,   483,   484,   485,   486,
+     489,   490,   491,   492,   493,   494,   495,   496,   501,   502,
+     503,   504,   508,   509,   513,   514,   515,   516,   517,   518
 };
 #endif
 
@@ -2049,278 +2049,290 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 8:
+#line 105 "bison.y"
+                                                                                                            {definirFuncion(lista_funciones, (yyvsp[0].cval));}
+#line 2056 "bison.tab.c"
+    break;
+
+  case 9:
+#line 106 "bison.y"
+                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[0].cval)); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
+#line 2062 "bison.tab.c"
+    break;
+
   case 10:
 #line 110 "bison.y"
-                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[-3].cval)); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
-#line 2056 "bison.tab.c"
+                                                                                                            {/*aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);*/}
+#line 2068 "bison.tab.c"
     break;
 
   case 11:
 #line 111 "bison.y"
-                                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[-2].cval)); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
-#line 2062 "bison.tab.c"
+                                                                                                                            {/*aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);*/}
+#line 2074 "bison.tab.c"
     break;
 
   case 12:
 #line 112 "bison.y"
-                                                                                                                                    {aux_tFuncion = obtenerTipo((yyvsp[-2].cval)); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
-#line 2068 "bison.tab.c"
+                                                                                                                                    {/*aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);*/}
+#line 2080 "bison.tab.c"
     break;
 
   case 13:
 #line 113 "bison.y"
-                                                                                                                            {aux_tFuncion = obtenerTipo((yyvsp[-1].cval)); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);}
-#line 2074 "bison.tab.c"
-    break;
-
-  case 30:
-#line 145 "bison.y"
-                                                   {aux_tIdentificador="int";}
-#line 2080 "bison.tab.c"
-    break;
-
-  case 31:
-#line 146 "bison.y"
-                                                               {aux_tIdentificador="char";}
+                                                                                                                            {/*aux_tFuncion = obtenerTipo($<cval>1); agregarFuncion(lista_funciones, aux_nombreFuncion, aux_tFuncion, lista_parametros);*/}
 #line 2086 "bison.tab.c"
     break;
 
-  case 32:
-#line 147 "bison.y"
-                                                               {aux_tIdentificador="float";}
+  case 30:
+#line 149 "bison.y"
+                                                   {aux_tIdentificador="int";}
 #line 2092 "bison.tab.c"
     break;
 
-  case 33:
-#line 148 "bison.y"
-                                                               {aux_tIdentificador="double";}
+  case 31:
+#line 150 "bison.y"
+                                                               {aux_tIdentificador="char";}
 #line 2098 "bison.tab.c"
     break;
 
-  case 34:
-#line 149 "bison.y"
-                                                       {aux_tIdentificador="short";}
+  case 32:
+#line 151 "bison.y"
+                                                               {aux_tIdentificador="float";}
 #line 2104 "bison.tab.c"
     break;
 
-  case 35:
-#line 150 "bison.y"
-                                                               {aux_tIdentificador="void";}
+  case 33:
+#line 152 "bison.y"
+                                                               {aux_tIdentificador="double";}
 #line 2110 "bison.tab.c"
     break;
 
-  case 36:
-#line 151 "bison.y"
-                                                               {aux_tIdentificador="long";}
+  case 34:
+#line 153 "bison.y"
+                                                       {aux_tIdentificador="short";}
 #line 2116 "bison.tab.c"
     break;
 
-  case 37:
-#line 152 "bison.y"
-                                                               {aux_tIdentificador="signed";}
+  case 35:
+#line 154 "bison.y"
+                                                               {aux_tIdentificador="void";}
 #line 2122 "bison.tab.c"
     break;
 
-  case 38:
-#line 153 "bison.y"
-                                                                           {aux_tIdentificador="unsigned";}
+  case 36:
+#line 155 "bison.y"
+                                                               {aux_tIdentificador="long";}
 #line 2128 "bison.tab.c"
     break;
 
-  case 55:
-#line 184 "bison.y"
-                                                            {printf("[ERROR-Sintáctico] Línea %d: Falta inicializador en linea\n", yylineno);yyerrok;}
+  case 37:
+#line 156 "bison.y"
+                                                               {aux_tIdentificador="signed";}
 #line 2134 "bison.tab.c"
     break;
 
-  case 75:
-#line 231 "bison.y"
-                                                                                  {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter((yyvsp[0].cval)))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[0].cval)), aux_tIdentificador);}
+  case 38:
+#line 157 "bison.y"
+                                                                           {aux_tIdentificador="unsigned";}
 #line 2140 "bison.tab.c"
     break;
 
-  case 77:
-#line 233 "bison.y"
-                                                                                  {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter((yyvsp[-3].cval)))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[-3].cval)), aux_tIdentificador);}
+  case 55:
+#line 188 "bison.y"
+                                                            {printf("[ERROR-Sintáctico] Línea %d: Falta inicializador en linea\n", yylineno);yyerrok;}
 #line 2146 "bison.tab.c"
     break;
 
-  case 78:
-#line 234 "bison.y"
-                                                                                  {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter((yyvsp[-2].cval)))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[-2].cval)), aux_tIdentificador);}
+  case 75:
+#line 235 "bison.y"
+                                                                                  {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter((yyvsp[0].cval)))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[0].cval)), aux_tIdentificador);}
 #line 2152 "bison.tab.c"
     break;
 
-  case 79:
-#line 235 "bison.y"
-                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval));}
+  case 77:
+#line 237 "bison.y"
+                                                                                  {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter((yyvsp[-3].cval)))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[-3].cval)), aux_tIdentificador);}
 #line 2158 "bison.tab.c"
     break;
 
-  case 80:
-#line 236 "bison.y"
-                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval));}
+  case 78:
+#line 238 "bison.y"
+                                                                                  {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter((yyvsp[-2].cval)))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter((yyvsp[-2].cval)), aux_tIdentificador);}
 #line 2164 "bison.tab.c"
     break;
 
-  case 81:
-#line 237 "bison.y"
-                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-2].cval));}
+  case 79:
+#line 239 "bison.y"
+                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval));}
 #line 2170 "bison.tab.c"
     break;
 
-  case 82:
-#line 238 "bison.y"
-                                                                                  {printf("[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);}
+  case 80:
+#line 240 "bison.y"
+                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval));}
 #line 2176 "bison.tab.c"
     break;
 
-  case 83:
-#line 239 "bison.y"
-                                                                                  {printf("[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);}
+  case 81:
+#line 241 "bison.y"
+                                                                                  {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-2].cval));}
 #line 2182 "bison.tab.c"
     break;
 
-  case 84:
-#line 240 "bison.y"
+  case 82:
+#line 242 "bison.y"
                                                                                   {printf("[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);}
 #line 2188 "bison.tab.c"
     break;
 
-  case 93:
-#line 261 "bison.y"
-                                                                        {aux_tIdentificador = sacar_ultimo_caracter((yyvsp[0].cval)); agregarParametro(lista_parametros, aux_nParametro, aux_tIdentificador, identificadores_variables);}
+  case 83:
+#line 243 "bison.y"
+                                                                                  {printf("[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);}
 #line 2194 "bison.tab.c"
     break;
 
-  case 94:
-#line 262 "bison.y"
-                                                                        {aux_tIdentificador = sacar_ultimo_caracter((yyvsp[0].cval)); agregarParametro(lista_parametros, aux_nParametro, aux_tIdentificador, identificadores_variables);}
+  case 84:
+#line 244 "bison.y"
+                                                                                  {printf("[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);}
 #line 2200 "bison.tab.c"
     break;
 
-  case 95:
-#line 266 "bison.y"
-                                                                                     {aux_nParametro = sacar_ultimo_caracter(obtenerTipo((yyvsp[0].cval)));}
+  case 93:
+#line 265 "bison.y"
+                                                                        {aux_tIdentificador = sacar_ultimo_caracter((yyvsp[0].cval)); agregarParametro(lista_parametros, aux_nParametro, aux_tIdentificador, identificadores_variables);}
 #line 2206 "bison.tab.c"
     break;
 
-  case 96:
-#line 267 "bison.y"
-                                                                                                                 {aux_nParametro = sacar_ultimo_caracter(obtenerTipo((yyvsp[-3].cval)));}
+  case 94:
+#line 266 "bison.y"
+                                                                        {aux_tIdentificador = sacar_ultimo_caracter((yyvsp[0].cval)); agregarParametro(lista_parametros, aux_nParametro, aux_tIdentificador, identificadores_variables);}
 #line 2212 "bison.tab.c"
     break;
 
-  case 97:
-#line 268 "bison.y"
-                                                                                                                       {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval));}
+  case 95:
+#line 270 "bison.y"
+                                                                                     {aux_nParametro = sacar_ultimo_caracter(obtenerTipo((yyvsp[0].cval)));}
 #line 2218 "bison.tab.c"
     break;
 
-  case 98:
-#line 269 "bison.y"
-                                                                                                                       {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval));}
+  case 96:
+#line 271 "bison.y"
+                                                                                                                 {aux_nParametro = sacar_ultimo_caracter(obtenerTipo((yyvsp[-3].cval)));}
 #line 2224 "bison.tab.c"
     break;
 
-  case 103:
-#line 279 "bison.y"
-                                                                                 {/*agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);*/}
+  case 97:
+#line 272 "bison.y"
+                                                                                                                       {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval));}
 #line 2230 "bison.tab.c"
     break;
 
-  case 125:
-#line 323 "bison.y"
-                                        {agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   yylineno);}
+  case 98:
+#line 273 "bison.y"
+                                                                                                                       {aux_nombreFuncion = cortarIdentificadorFuncion((yyvsp[-3].cval));}
 #line 2236 "bison.tab.c"
     break;
 
-  case 126:
-#line 324 "bison.y"
-                                        {agregar_sentencia(lista_sentencias, "Sentencia expresion",    yylineno);}
+  case 103:
+#line 283 "bison.y"
+                                                                                 {/*agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);*/}
 #line 2242 "bison.tab.c"
     break;
 
-  case 127:
-#line 325 "bison.y"
-                                        {agregar_sentencia(lista_sentencias, "Sentencia compuesta",    yylineno);}
+  case 125:
+#line 327 "bison.y"
+                                        {agregar_sentencia(lista_sentencias, "Sentencia etiquetada",   yylineno);}
 #line 2248 "bison.tab.c"
     break;
 
-  case 128:
-#line 326 "bison.y"
-                                        {agregar_sentencia(lista_sentencias, "Sentencia de iteracion", yylineno);}
+  case 126:
+#line 328 "bison.y"
+                                        {agregar_sentencia(lista_sentencias, "Sentencia expresion",    yylineno);}
 #line 2254 "bison.tab.c"
     break;
 
-  case 129:
-#line 327 "bison.y"
-                                        {agregar_sentencia(lista_sentencias, "Sentencia de seleccion", yylineno);}
+  case 127:
+#line 329 "bison.y"
+                                        {agregar_sentencia(lista_sentencias, "Sentencia compuesta",    yylineno);}
 #line 2260 "bison.tab.c"
     break;
 
-  case 130:
-#line 328 "bison.y"
-                                        {agregar_sentencia(lista_sentencias, "Sentencia de salto",     yylineno);}
+  case 128:
+#line 330 "bison.y"
+                                        {agregar_sentencia(lista_sentencias, "Sentencia de iteracion", yylineno);}
 #line 2266 "bison.tab.c"
     break;
 
-  case 200:
-#line 453 "bison.y"
-                                                                                        {;if(!chequearSuma(sacar_ultimo_caracter((yyvsp[-2].cval)), ultimas_constantes)) printf("[ERROR] Línea %d: Suma inválida\n", yylineno);}
+  case 129:
+#line 331 "bison.y"
+                                        {agregar_sentencia(lista_sentencias, "Sentencia de seleccion", yylineno);}
 #line 2272 "bison.tab.c"
     break;
 
-  case 222:
-#line 487 "bison.y"
-                                                                                    { comprobar_tipos_funcion(lista_funciones, (yyvsp[-3].cval)); }
+  case 130:
+#line 332 "bison.y"
+                                        {agregar_sentencia(lista_sentencias, "Sentencia de salto",     yylineno);}
 #line 2278 "bison.tab.c"
     break;
 
-  case 228:
-#line 497 "bison.y"
-                                            {agregarIdentificador(ultimas_constantes, "", "identificador");}
+  case 200:
+#line 457 "bison.y"
+                                                                                        {;if(!chequearSuma(sacar_ultimo_caracter((yyvsp[-2].cval)), ultimas_constantes)) printf("[ERROR] Línea %d: Suma inválida\n", yylineno);}
 #line 2284 "bison.tab.c"
     break;
 
-  case 230:
-#line 499 "bison.y"
-                                            {agregarIdentificador(ultimas_constantes, "", "char*");}
+  case 222:
+#line 491 "bison.y"
+                                                                                    { comprobar_tipos_funcion(lista_funciones, (yyvsp[-3].cval)); }
 #line 2290 "bison.tab.c"
     break;
 
-  case 234:
-#line 509 "bison.y"
-                                    {agregarIdentificador(ultimas_constantes, "", "int");}
+  case 228:
+#line 501 "bison.y"
+                                            {agregarIdentificador(ultimas_constantes, "", "identificador");}
 #line 2296 "bison.tab.c"
     break;
 
-  case 235:
-#line 510 "bison.y"
-                                    {agregarIdentificador(ultimas_constantes, "", "int");}
+  case 230:
+#line 503 "bison.y"
+                                            {agregarIdentificador(ultimas_constantes, "", "char*");}
 #line 2302 "bison.tab.c"
     break;
 
-  case 236:
-#line 511 "bison.y"
+  case 234:
+#line 513 "bison.y"
                                     {agregarIdentificador(ultimas_constantes, "", "int");}
 #line 2308 "bison.tab.c"
     break;
 
-  case 237:
-#line 512 "bison.y"
-                                    {agregarIdentificador(ultimas_constantes, "", "char");}
+  case 235:
+#line 514 "bison.y"
+                                    {agregarIdentificador(ultimas_constantes, "", "int");}
 #line 2314 "bison.tab.c"
     break;
 
-  case 238:
-#line 513 "bison.y"
-                                    {agregarIdentificador(ultimas_constantes, "", "float");}
+  case 236:
+#line 515 "bison.y"
+                                    {agregarIdentificador(ultimas_constantes, "", "int");}
 #line 2320 "bison.tab.c"
     break;
 
+  case 237:
+#line 516 "bison.y"
+                                    {agregarIdentificador(ultimas_constantes, "", "char");}
+#line 2326 "bison.tab.c"
+    break;
 
-#line 2324 "bison.tab.c"
+  case 238:
+#line 517 "bison.y"
+                                    {agregarIdentificador(ultimas_constantes, "", "float");}
+#line 2332 "bison.tab.c"
+    break;
+
+
+#line 2336 "bison.tab.c"
 
       default: break;
     }
@@ -2552,7 +2564,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 517 "bison.y"
+#line 521 "bison.y"
 
 int main (int argc, char **argv)
 {
@@ -2568,7 +2580,7 @@ int main (int argc, char **argv)
 
     else{
 
-        printf("Abriendo archivos\n");
+        printf("Abriendo archivo %s\n", argv[1]);
 
         yyin = fopen(argv[1], "r");
 
@@ -2582,6 +2594,7 @@ int main (int argc, char **argv)
         lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
         lista_parametros          = inicializarListaIdentificadores(lista_parametros);
         ultimas_constantes        = inicializarListaIdentificadores(ultimas_constantes);
+        listaErrores             = inicializarListaErrores       (listaErrores); 
 
         printf("\n --- Comenzando anlisis lexico y sintactico ---\n\n");
 
@@ -2595,6 +2608,7 @@ int main (int argc, char **argv)
             crearListadoIdentificadores(identificadores_variables, "VARIABLES DECLARADAS");
             crearListadoIdentificadores(identificadores_funciones, "FUNCIONES DECLARADAS");
             mostrarListadoFunciones(lista_funciones);
+            mostrarErrores(listaErrores);
             //crearListadoSentencias     (lista_sentencias,          "SENTENCIAS");
         }
 
