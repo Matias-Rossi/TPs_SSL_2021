@@ -72,7 +72,8 @@ void mostrarFuncion(Funcion* funcion) {
 }
 
 void mostrarParametros(ListaIdentificadores* parametros) {
-    if(parametros->pri != NULL){                                                       //Si la lista no esta vacía
+    if(parametros->pri != NULL){
+                                                               //Si la lista no esta vacía
         Identificador* aux = parametros->pri;
         while(aux->sig != NULL) {                                                           //Itera por los nodos
             printf("%s, ", aux->tipo);              

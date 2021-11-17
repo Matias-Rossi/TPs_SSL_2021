@@ -525,7 +525,7 @@ int main (int argc, char **argv)
         //yydebug = 1;
     #endif
     
-    system("clear");
+    //system("clear");
 
     if(argv[1] == NULL){
         printf("Debe especificar un archivo para analizar\n");

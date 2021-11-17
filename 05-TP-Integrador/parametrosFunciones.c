@@ -11,6 +11,10 @@ ListaFunciones* inicializarListaFunciones(ListaFunciones* lista){
 }
 
 Funcion* agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, ListaIdentificadores* listaParametros){
+    
+    //TODO: chequear doble declaracion
+    
+    
     //printf("Agregada la funcion %s. Parametros en %p\n", identificador, listaParametros);
     //Crear estructura
     Funcion* funcion = malloc(sizeof(Funcion));
@@ -253,6 +257,7 @@ ListaIdentificadores* tokenizarParametrosDesdeLinea(char* linea) {
 
     int salteando = 0;
     int j = 0;
+
     for(int i = 0;cadenaSinIdentificador[i] != ')'; i++) {
 
         if(cadenaSinIdentificador[i] == ' ' && salteando == 0){
@@ -260,7 +265,7 @@ ListaIdentificadores* tokenizarParametrosDesdeLinea(char* linea) {
             //if parametro only contains spaces, ignore it
             if(strcmp(parametro, "") != 0 && strcmp(parametro, " ") != 0) {
                 printf("[LOG] Agregado token tipo %s\n", parametro);
-                agregarIdentificador(listaParametros, "", parametro);
+                agregarIdentificador(listaParametros, parametro, parametro);
                 salteando = 1;
             }
             j = 0;
@@ -272,17 +277,28 @@ ListaIdentificadores* tokenizarParametrosDesdeLinea(char* linea) {
             salteando = 0;
         }
     }
-    printf("retornando la siguiente lista: \n");
-    mostrarParametros(listaParametros);
+    printf("retornando la siguiente lista: ");mostrarParametros(listaParametros); printf("\n");
     return listaParametros;
 }
 
 int definirFuncion(ListaFunciones* lista, char* linea) {
+    /*
+        declarada:
+            definida:
+                error
+            noDefinida:
+                verificar que estos parámetros sean los mismos
+        noDeclarada:
+            ahora si está declarada
+    */
+
     //Nombre de la funcion
     char* nombreFuncion = cortarIdentificadorFuncion(substringDesde(linea, ' '));
 
     //Obtener tipo de la función
     char* tipo = obtenerTipo(linea);
+
+    printf("Se esta definiendo la funcion %s con el tipo %s\n", nombreFuncion, tipo);
 
     //Tokenizar los parámetros de la línea
     ListaIdentificadores* parametrosRecibidos = tokenizarParametrosDesdeLinea(linea);
@@ -291,16 +307,9 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
     while(aux != NULL){
         if(strcmp(aux->nombre, nombreFuncion) == 0){
 
-            //Verificar parámetros
-            /*
-                declarada:
-                    definida:
-                        error
-                    noDefinida:
-                        verificar que estos parámetros sean los mismos
-                noDeclarada:
-                    ahora si está declarada
-            */
+           printf("La funcion %s ya se encuentra en la lista\n", aux->nombre);
+
+
            //Si está declarada
             if(aux->declarada) {
 
@@ -310,7 +319,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
                     return 0;
 
                 } else {
-                //Si está declarada pero no definida
+                    //Si está declarada pero no definida
                     
                     ListaIdentificadores* parametrosFuncion = existeFuncion(lista, nombreFuncion);
 
@@ -359,7 +368,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
         aux = aux->sig;
     }
     //Si no está declarada
-    printf("Parametros: ");mostrarParametros(parametrosRecibidos); printf("\n");
+    printf("Parametros: "); mostrarParametros(parametrosRecibidos); printf("\n");
     Funcion* f = agregarFuncion(lista, nombreFuncion, tipo, parametrosRecibidos);
     f->definida = 1;
     //printf("[LOG] Funcion %s ahora definida\n", nombreFuncion);

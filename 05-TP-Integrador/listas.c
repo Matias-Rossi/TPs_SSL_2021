@@ -26,8 +26,11 @@ void agregarIdentificador(ListaIdentificadores* lista, char* cadena, char* tDato
     Identificador* nuevo = malloc(sizeof(Identificador));
     nuevo->nombre = malloc(strlen(cadena)*sizeof(char));
     strcpy(nuevo->nombre, sacarEspacios(cadena));
+    
+    nuevo->tipo = malloc(strlen(tDato)*sizeof(char));
+    strcpy(nuevo->tipo, sacarEspacios(tDato));
+    
     nuevo->sig = NULL;
-    nuevo->tipo = tDato;
 
     //Lo posiciona al final de la lista
     if(!lista->pri){
