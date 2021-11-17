@@ -1,5 +1,6 @@
 //#include<stdio.h>
 
+//void sumar(float a, int b);
 
 void sumar(float a, int b) {
     printf("a + b");

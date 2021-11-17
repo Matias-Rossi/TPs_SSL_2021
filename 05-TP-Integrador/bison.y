@@ -117,11 +117,11 @@ definicion_de_funcion: especificadores_de_declaracion declarador lista_de_declar
 declaracion:              especificadores_de_declaracion lista_declaradores_init ';'
                         | especificadores_de_declaracion error ';'
                         | especificadores_de_declaracion ';'
-                        //| especificadores_de_declaracion lista_declaradores_init error                      { char* mensaje = calloc(60, sizeof(char));sprintf(mensaje, "[ERROR-Sintáctico] Línea %d: Falta punto y coma en línea\n", yylineno);agregarError(listaErrores, mensaje);} 
+                        //| especificadores_de_declaracion lista_declaradores_init error                      { char* mensaje = calloc(60, sizeof(char));printf(mensaje, "[ERROR-Sintáctico] Línea %d: Falta punto y coma en línea\n", yylineno);agregarError(listaErrores, mensaje);} 
                                                                                                                 
                                                                                                                 
                                                                                                                 
-                        //| especificadores_de_declaracion error                                              {char* mensaje = calloc(60, sizeof(char)); sprintf(mensaje, "[ERROR-Sintáctico] Línea %d: Falta punto y coma en línea\n", yylineno); agregarError(listaErrores, mensaje);}
+                        //| especificadores_de_declaracion error                                              {char* mensaje = calloc(60, sizeof(char)); printf(mensaje, "[ERROR-Sintáctico] Línea %d: Falta punto y coma en línea\n", yylineno); agregarError(listaErrores, mensaje);}
                                                                                                                 
                         ;
 
