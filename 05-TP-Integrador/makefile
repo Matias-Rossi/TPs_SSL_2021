@@ -1,5 +1,5 @@
 all: bison flex
-	gcc bison.tab.c lex.yy.c listas.c reporte.c parametrosFunciones.c verificarSuma.c errores.c -Iinclude -w  -O2 -DNDEBUG -g -O0 -o "bin/tpIntegrador.out"
+	gcc bison.tab.c lex.yy.c listas.c reporte.c parametrosFunciones.c verificarSuma.c errores.c validarIdentificadores.c -Iinclude -w  -O2 -DNDEBUG -g -O0 -o "bin/tpIntegrador.out"
 
 bison: 
 	bison -d bison.y --report=state -W --debug

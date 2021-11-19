@@ -103,6 +103,10 @@ char* substringHastaCaracter(char* cadena, char caracter);
 ListaIdentificadores* tokenizarParametrosDesdeLinea(char* linea);
 Funcion* buscarFuncion(ListaFunciones* lista, char* identificador);
 
+/* Validar Identificadores */
+void validarIdentificador(char* cadena);
+char ultimo_caracter(char* cadena);
+
 
 /* Reporte tp5 */
 void mostrarListadoFunciones(ListaFunciones* lista);

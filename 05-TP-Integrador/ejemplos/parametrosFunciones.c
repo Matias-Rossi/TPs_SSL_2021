@@ -1,5 +1,11 @@
 //#include<stdio.h>
 
+char prueba(char ab, int* ac, float ad);
+
+char prueba(char c, int* d, float e) {
+    return c;
+}
+
 void sumar(float a, int b);
 
 int hola();
@@ -13,13 +19,6 @@ int hola() {
     return 0;
 }
 
-char prueba(char ab, int* ac, float ad);
-
-char prueba(char c, int* d, float e) {
-    return c;
-}
-
-
 
 void saludar(char* nombre) {
     printf("Hola %s\n", nombre);
@@ -28,7 +27,6 @@ void saludar(char* nombre) {
 void saludar(char* nombre) {
     printf("Hola %s\n", nombre);
 }
-
 
 int main() {
     

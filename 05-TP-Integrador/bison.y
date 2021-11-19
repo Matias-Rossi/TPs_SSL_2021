@@ -498,7 +498,7 @@ expresion_posfija:  expresion_primaria
 
 
  
-expresion_primaria: IDENTIFICADOR           {agregarIdentificador(ultimas_constantes, "-", "identificador");}
+expresion_primaria: IDENTIFICADOR           {agregarIdentificador(ultimas_constantes, "-", "identificador"); /*printf("Identificador: %s\n", $<cval>1);*/ validarIdentificador($<cval>1);}
                     | constante     
                     | LITERAL_CADENA        {agregarIdentificador(ultimas_constantes, "-", "char*");}
                     | '(' expresion ')'

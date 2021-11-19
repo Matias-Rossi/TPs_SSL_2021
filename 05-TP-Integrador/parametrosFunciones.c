@@ -60,6 +60,7 @@ Funcion* agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, 
     listaParametros->cantElementos = 0;
     //listaParametros = inicializarListaIdentificadores(listaParametros);
 
+    printf("Identificador de funcion: %s\n", identificador);
     //printf("listaParametros->Pri ahora es NULL\n");
     //printf("Nueva lista de parametros en %p\n", listaParametros);
 
@@ -355,7 +356,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
     //Obtener tipo de la función
     char* tipo = obtenerTipo(linea);
 
-    //printf("Se esta definiendo la funcion %s con el tipo %s\n", nombreFuncion, tipo);
+    printf("Se esta definiendo la funcion %s con el tipo %s\n", nombreFuncion, tipo);
 
     //Tokenizar los parámetros de la línea
     ListaIdentificadores* parametrosRecibidos = tokenizarParametrosDesdeLinea(linea);
@@ -380,7 +381,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
                 } else {
                     //Si está declarada pero no definida
 
-                    printf("La funcion %s esta declarada pero no definida\n", nombreFuncion);
+                    //printf("La funcion %s esta declarada pero no definida\n", nombreFuncion);
 
                     ListaIdentificadores* parametrosFuncion = existeFuncion(lista, nombreFuncion);
 
@@ -417,7 +418,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
                             }
                             
                             aux->definida = 1;
-                            //printf("[LOG] Línea %d: Funcion %s ahora definida\n", yylineno ,nombreFuncion);
+                            printf("[LOG] Línea %d: Funcion %s ahora definida\n", yylineno ,nombreFuncion);
                             return 1;
                         } else {
                             char* errorMsg = (char*)calloc(sizeof(char), 200);
@@ -436,7 +437,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
     //printf("Parametros: "); mostrarParametros(parametrosRecibidos); printf("\n");
     Funcion* f = agregarFuncion(lista, nombreFuncion, tipo, parametrosRecibidos);
     f->definida = 1;
-    //printf("[LOG] Funcion %s ahora definida\n", nombreFuncion);
+    printf("[LOG] Funcion %s ahora definida\n", nombreFuncion);
             
     return 1;
 }
