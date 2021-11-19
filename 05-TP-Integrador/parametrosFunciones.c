@@ -376,6 +376,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
                     char* errorMsg = (char*)calloc(sizeof(char), 100);
                     sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La función %s ya fue definida\n", yylineno, aux->nombre);
                     agregarError(listaErrores, errorMsg);
+                    lista_parametros = inicializarListaIdentificadores(lista_parametros);
                     return 0;
 
                 } else {
@@ -392,6 +393,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
                             char* errorMsg = (char*)calloc(sizeof(char), 110);
                             sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La función %s no es del tipo %s\n", yylineno, aux->nombre, aux->tipo);
                             agregarError(listaErrores, errorMsg);
+                            lista_parametros = inicializarListaIdentificadores(lista_parametros);
                             return 0;
                         }
 
@@ -409,6 +411,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
                                         char* errorMsg = (char*)calloc(sizeof(char), 160);
                                         sprintf(errorMsg, "[ERROR-Semántico] Línea %d: En la funcion %s no coinciden los tipos de parámetros entre la declaración y la definición\n", yylineno, nombreFuncion);
                                         agregarError(listaErrores, errorMsg);
+                                        lista_parametros = inicializarListaIdentificadores(lista_parametros);
                                         return 0;
                                     }
                                     
@@ -419,11 +422,13 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
                             
                             aux->definida = 1;
                             printf("[LOG] Línea %d: Funcion %s ahora definida\n", yylineno ,nombreFuncion);
+                            lista_parametros = inicializarListaIdentificadores(lista_parametros);
                             return 1;
                         } else {
                             char* errorMsg = (char*)calloc(sizeof(char), 200);
                             sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La cantidad de parametros en la definición no coincide con la cantidad de parametros de la declaración de la función %s\n", yylineno, nombreFuncion);
                             agregarError(listaErrores, errorMsg);
+                            lista_parametros = inicializarListaIdentificadores(lista_parametros);
                             return 0;
                         }
 
@@ -438,6 +443,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
     Funcion* f = agregarFuncion(lista, nombreFuncion, tipo, parametrosRecibidos);
     f->definida = 1;
     printf("[LOG] Funcion %s ahora definida\n", nombreFuncion);
-            
+
+    
     return 1;
 }

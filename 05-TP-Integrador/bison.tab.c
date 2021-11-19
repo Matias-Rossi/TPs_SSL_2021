@@ -2291,7 +2291,7 @@ yyreduce:
 
   case 228:
 #line 501 "bison.y"
-                                            {agregarIdentificador(ultimas_constantes, "-", "identificador"); /*printf("Identificador: %s\n", $<cval>1); validarIdentificador($<cval>1);*/}
+                                            {agregarIdentificador(ultimas_constantes, "-", "identificador"); /*printf("Identificador: %s\n", $<cval>1);*/ validarIdentificador((yyvsp[0].cval));}
 #line 2296 "bison.tab.c"
     break;
 
