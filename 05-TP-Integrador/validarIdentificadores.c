@@ -14,10 +14,10 @@ void validarIdentificador(char* cadena) {
         char* nombreFuncion = sacar_ultimo_caracter(cadena);
         Funcion* f = buscarFuncion(lista_funciones, nombreFuncion);
 
-        printf("Analizando funcion %s \n", nombreFuncion);
+        //printf("Analizando funcion %s \n", nombreFuncion);
 
         if(f) {
-            printf("Encontrada funcion %s\n", f->nombre);
+            //printf("Encontrada funcion %s\n", f->nombre);
             if(f->definida == 0) {
                 char* errorMsg = (char*)calloc(sizeof(char), 120);
                 sprintf(errorMsg, "[ERROR-Semántico] Línea %d: No se encontró una definición para la función %s\n", yylineno, nombreFuncion);

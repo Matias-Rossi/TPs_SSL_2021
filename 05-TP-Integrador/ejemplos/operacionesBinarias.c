@@ -17,4 +17,6 @@ void main() {
 
     int v = 4 + c;      //Una variable no es de tipo int
 
+    int g = 5 /    0  ;
+
 }

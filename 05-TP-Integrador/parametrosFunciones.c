@@ -60,7 +60,7 @@ Funcion* agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, 
     listaParametros->cantElementos = 0;
     //listaParametros = inicializarListaIdentificadores(listaParametros);
 
-    printf("Identificador de funcion: %s\n", identificador);
+    //printf("Identificador de funcion: %s\n", identificador);
     //printf("listaParametros->Pri ahora es NULL\n");
     //printf("Nueva lista de parametros en %p\n", listaParametros);
 
@@ -356,7 +356,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
     //Obtener tipo de la función
     char* tipo = obtenerTipo(linea);
 
-    printf("Se esta definiendo la funcion %s con el tipo %s\n", nombreFuncion, tipo);
+    //printf("Se esta definiendo la funcion %s con el tipo %s\n", nombreFuncion, tipo);
 
     //Tokenizar los parámetros de la línea
     ListaIdentificadores* parametrosRecibidos = tokenizarParametrosDesdeLinea(linea);

@@ -60,7 +60,7 @@ int chequearSuma(char* linea, ListaIdentificadores* ultimas_constantes) {
         char* strTipo = obtenerElementoTipoPosicion(ultimas_constantes, ultimas_constantes->cantElementos - 1);
         if(strcmp(strTipo, "identificador") == 0) {
             char* errorMsg = (char*)calloc(sizeof(char), 110);
-            sprintf(errorMsg, "[ERROR-Semántico] La variable %s no ha sido declarada (línea %d)\n", segundoOperando, yylineno);
+            sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La variable %s no ha sido declarada \n",yylineno, segundoOperando);
             agregarError(listaErrores, errorMsg);
         }    
         else segundoOperandoOK = 1;
@@ -91,4 +91,12 @@ char* substringHastaCaracter(char* cadena, char caracter) {
     return cadenaSinCaracter;
 }
 
+void verificarDivisor(char* str) {
+    char* divisor = sacarEspacios(sacar_ultimo_caracter(substringDesde(str, '/')));
+    if(strcmp(divisor, "0") == 0) {
+        char* errorMsg = (char*)calloc(sizeof(char), 51);
+        sprintf(errorMsg, "[ERROR-Semántico] Línea %d: división por cero\n", yylineno);
+        agregarError(listaErrores, errorMsg);
+    }
 
+}

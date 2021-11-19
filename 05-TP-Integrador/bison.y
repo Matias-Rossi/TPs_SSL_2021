@@ -454,13 +454,13 @@ expresion_de_corrimiento: expresion_aditiva
 
 
 expresion_aditiva: expresion_multiplicativa 
-				| expresion_aditiva '+' expresion_multiplicativa        {;if(!chequearSuma(sacar_ultimo_caracter($<cval>1), ultimas_constantes)) {char* errorMsg = (char*)calloc(sizeof(char), 50);sprintf(errorMsg,"[ERROR] Línea %d: Suma inválida\n", yylineno);agregarError(listaErrores, errorMsg);}}    
+				| expresion_aditiva '+' expresion_multiplicativa        {if(!chequearSuma(sacar_ultimo_caracter($<cval>1), ultimas_constantes)) {char* errorMsg = (char*)calloc(sizeof(char), 50);sprintf(errorMsg,"[ERROR] Línea %d: Suma inválida\n", yylineno);agregarError(listaErrores, errorMsg);}}    
 				| expresion_aditiva '-' expresion_multiplicativa 
 				;
 
 expresion_multiplicativa: expresion_cast 
 					| expresion_multiplicativa '*' expresion_cast 
-					| expresion_multiplicativa '/' expresion_cast       
+					| expresion_multiplicativa '/' expresion_cast       {verificarDivisor($<cval>3);}
 					| expresion_multiplicativa '%' expresion_cast 
 					;
 
