@@ -239,9 +239,9 @@ declarador_directo:       IDENTIFICADOR                                         
                         | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' lista_de_identificadores ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' ')'                                   {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
-                        | IDENTIFICADOR '(' lista_tipos_de_parametro error        {printf("[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);}
-                        | IDENTIFICADOR '(' lista_de_identificadores error        {printf("[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);}
-                        | IDENTIFICADOR '(' error                                 {printf("[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);}
+                        | IDENTIFICADOR '(' lista_tipos_de_parametro error        { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
+                        | IDENTIFICADOR '(' lista_de_identificadores error        { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
+                        | IDENTIFICADOR '(' error                                 { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
                         ;
 
 
@@ -263,7 +263,7 @@ lista_tipos_de_parametro:      lista_de_parametros
 
 
 lista_de_parametros:      declaracion_parametro                         {aux_tIdentificador = sacar_ultimo_caracter($<cval>1); agregarParametro(lista_parametros, aux_nParametro, aux_tIdentificador, identificadores_variables);}
-                        | lista_de_parametros ',' declaracion_parametro {aux_tIdentificador = sacar_ultimo_caracter($<cval>3); agregarParametro(lista_parametros, aux_nParametro, aux_tIdentificador, identificadores_variables);}
+                        | lista_de_parametros ',' declaracion_parametro {aux_tIdentificador = sacar_ultimo_caracter($<cval>3);agregarParametro(lista_parametros, aux_nParametro, aux_tIdentificador, identificadores_variables);}
                         ;
 
 
@@ -454,7 +454,7 @@ expresion_de_corrimiento: expresion_aditiva
 
 
 expresion_aditiva: expresion_multiplicativa 
-				| expresion_aditiva '+' expresion_multiplicativa        {;if(!chequearSuma(sacar_ultimo_caracter($<cval>1), ultimas_constantes)) printf("[ERROR] Línea %d: Suma inválida\n", yylineno);}    
+				| expresion_aditiva '+' expresion_multiplicativa        {;if(!chequearSuma(sacar_ultimo_caracter($<cval>1), ultimas_constantes)) {char* errorMsg = (char*)calloc(sizeof(char), 50);sprintf(errorMsg,"[ERROR] Línea %d: Suma inválida\n", yylineno);agregarError(listaErrores, errorMsg);}}    
 				| expresion_aditiva '-' expresion_multiplicativa 
 				;
 
@@ -498,9 +498,9 @@ expresion_posfija:  expresion_primaria
 
 
  
-expresion_primaria: IDENTIFICADOR           {agregarIdentificador(ultimas_constantes, "", "identificador");}
+expresion_primaria: IDENTIFICADOR           {agregarIdentificador(ultimas_constantes, "-", "identificador");}
                     | constante     
-                    | LITERAL_CADENA        {agregarIdentificador(ultimas_constantes, "", "char*");}
+                    | LITERAL_CADENA        {agregarIdentificador(ultimas_constantes, "-", "char*");}
                     | '(' expresion ')'
                     ;
 
@@ -510,11 +510,11 @@ lista_expresiones_argumento:    expresion_de_asignacion
                                 //| /* empty */
                                 ;
 
-constante:  CONST_OCTAL             {agregarIdentificador(ultimas_constantes, "", "int");}
-            | CONST_HEXADECIMAL     {agregarIdentificador(ultimas_constantes, "", "int");}
-            | CONST_DECIMAL         {agregarIdentificador(ultimas_constantes, "", "int");}
-            | CONST_CARACTER        {agregarIdentificador(ultimas_constantes, "", "char");}
-            | CONST_PTOFLOTANTE     {agregarIdentificador(ultimas_constantes, "", "float");}
+constante:  CONST_OCTAL             {agregarIdentificador(ultimas_constantes, "-", "int");}
+            | CONST_HEXADECIMAL     {agregarIdentificador(ultimas_constantes, "-", "int");}
+            | CONST_DECIMAL         {agregarIdentificador(ultimas_constantes, "-", "int");}
+            | CONST_CARACTER        {agregarIdentificador(ultimas_constantes, "-", "char");}
+            | CONST_PTOFLOTANTE     {agregarIdentificador(ultimas_constantes, "-", "float");}
             | ENUM                  
             ;
 
@@ -522,10 +522,10 @@ constante:  CONST_OCTAL             {agregarIdentificador(ultimas_constantes, ""
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        //yydebug = 1;
+        yydebug = 0;
     #endif
     
-    //system("clear");
+    system("clear");
 
     if(argv[1] == NULL){
         printf("Debe especificar un archivo para analizar\n");

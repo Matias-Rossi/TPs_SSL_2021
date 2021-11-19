@@ -12,10 +12,26 @@ ListaFunciones* inicializarListaFunciones(ListaFunciones* lista){
 
 Funcion* agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, ListaIdentificadores* listaParametros){
     
-    //TODO: chequear doble declaracion
+    
+    Funcion* funcExistente = buscarFuncion(lista, identificador);
+    if(funcExistente != NULL) {
+        //printf("La funcion %s ya existe", identificador );
+        if(funcExistente->definida) {
+            char* errorMsg = (char*)calloc(sizeof(char), 110);
+            sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La función %s ya ha sido definida\n", yylineno, identificador);
+            agregarError(listaErrores, errorMsg);
+            return funcExistente;
+        }
+        if(funcExistente->declarada) {
+            //printf(", y ya se encontraba declarada\ņ");
+            return funcExistente;
+        }
+        
+    }
+    //printf("Agregando la funcion %s a la lista de funciones\n", identificador);
     
     
-    printf("Agregada la funcion %s. Parametros en %p\n", identificador, listaParametros);
+    //printf("Agregada la funcion %s. Parametros en %p\n", identificador, listaParametros);
     //Crear estructura
     Funcion* funcion = malloc(sizeof(Funcion));
 
@@ -24,7 +40,7 @@ Funcion* agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, 
     strcpy(funcion->nombre, identificador);
     strcpy(funcion->tipo, tipo);
     funcion->declarada = 1;
-    printf("[LOG] Función %s ahora declarada\n", identificador);
+    //printf("[LOG] Función %s ahora declarada\n", identificador);
     funcion->parametros = trasladarListaIdentificadores(listaParametros);
 
     //Agregar la funcion a la lista
@@ -40,27 +56,40 @@ Funcion* agregarFuncion(ListaFunciones* lista, char* identificador, char* tipo, 
     lista->cantElementos++;
 
     //Reinicializacion de la lista de parametros
-    //listaParametros->pri = NULL;
-    //listaParametros->cantElementos = 0;
-    listaParametros = inicializarListaIdentificadores(listaParametros);
+    listaParametros->pri = NULL;
+    listaParametros->cantElementos = 0;
+    //listaParametros = inicializarListaIdentificadores(listaParametros);
 
     //printf("listaParametros->Pri ahora es NULL\n");
     //printf("Nueva lista de parametros en %p\n", listaParametros);
 
-    printf("Se declaro la funcion %s\n", identificador);
+    //printf("Se declaro la funcion %s\n", identificador);
 
     return funcion;
 }
 
+Funcion* buscarFuncion(ListaFunciones* lista, char* identificador) {
+    if(lista->pri) {
+        Funcion* aux = lista->pri;
+        while(aux) {
+            if(strcmp(identificador, aux->nombre) == 0) {
+                return aux;
+            }
+            aux = aux->sig;
+        }
+        
+    }
+    return NULL;
+}
+
 
 void agregarParametro(ListaIdentificadores* listaParametros, char* nombreParametro, char* tipoParametro, ListaIdentificadores* listaVariables){
-
     //printf("1. listaParametros->pri = %p\n", listaParametros->pri);
     if(listaParametros->pri == NULL) {
         //listaParametros = inicializarListaIdentificadores(listaParametros);
         //printf("listaParametros reinicializada\n");
     }
-
+    
     //Agrego a lista de parámetros
     if(!identificadorYaExiste(listaParametros, nombreParametro)) 
         agregarIdentificador(listaParametros, nombreParametro, obtenerTipo(tipoParametro));
@@ -70,12 +99,13 @@ void agregarParametro(ListaIdentificadores* listaParametros, char* nombreParamet
     if(!identificadorYaExiste(listaVariables, nombreParametro)) 
         agregarIdentificador(listaVariables, nombreParametro, obtenerTipo(tipoParametro));
 
+    //liberarListaIdentificadores(listaParametros);
+    
 }
 
 char* cortarIdentificadorFuncion(char* cadena) {
 
-
-    printf("Entrando a cortar identificador\n");
+    //printf("Entrando a cortar identificador\n");
 
     char* identificador = (char*)malloc(sizeof(char)*100);
     int i = 0;
@@ -85,7 +115,7 @@ char* cortarIdentificadorFuncion(char* cadena) {
     }
     identificador[i] = '\0';
 
-    printf("Identificador funcion %s\n", identificador);
+    //printf("Identificador funcion %s\n", identificador);
 
     return identificador;
 }
@@ -133,6 +163,7 @@ char* substringDesde(char* cadena, char caracter) {
         }
     }
     printf("[ERROR] Algo salio terriblemente mal en substringDesde\n");
+    return "error";
 }
 
 char* tipoFlexAString(enum yytokentype tipo) {
@@ -152,7 +183,7 @@ ListaIdentificadores* tokenizarParametros(char* cadena) {
 
     char* cadenaSinIdentificador = substringDesde(cadena, '(');
 
-    ListaIdentificadores* listaParametros = inicializarListaIdentificadores(listaParametros);
+    ListaIdentificadores* lista_parametros = inicializarListaIdentificadores(lista_parametros);
     char* parametro = (char*)malloc(sizeof(char)*100);
     int i = 0;
     int j = 0;
@@ -161,11 +192,16 @@ ListaIdentificadores* tokenizarParametros(char* cadena) {
             parametro[j] = '\0';
             char* tipoObtenidoDesdeLista =  obtenerTipoDesdeLista(identificadores_variables, sacarEspacios(parametro));
             if (tipoObtenidoDesdeLista) {
-                agregarIdentificador(listaParametros, parametro, tipoObtenidoDesdeLista);
+                agregarIdentificador(lista_parametros, parametro, tipoObtenidoDesdeLista);
             } else {
                 char* strTipo = obtenerElementoTipoPosicion(ultimas_constantes, ultimas_constantes->cantElementos - 1);
-                if(strcmp(strTipo, "identificador") == 0) printf("[ERROR] Línea %d: La variable %s no ha sido declarada\n", yylineno, parametro);
-                agregarIdentificador(listaParametros, parametro, strTipo);
+                
+                if(strcmp(strTipo, "identificador") == 0) {
+                    char* errorMsg = (char*)calloc(sizeof(char), 110);
+                    sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La variable %s no ha sido declarada\n", yylineno, parametro);
+                    agregarError(listaErrores, errorMsg);
+                }
+                agregarIdentificador(lista_parametros, parametro, strTipo);
             }
             j = 0;
             i++;
@@ -178,13 +214,17 @@ ListaIdentificadores* tokenizarParametros(char* cadena) {
     parametro[j] = '\0';
     char* tipoObtenidoDesdeLista =  obtenerTipoDesdeLista(identificadores_variables, sacarEspacios(parametro));
     if (tipoObtenidoDesdeLista) {
-        agregarIdentificador(listaParametros, parametro, tipoObtenidoDesdeLista);
+        agregarIdentificador(lista_parametros, parametro, tipoObtenidoDesdeLista);
     } else {
         char* strTipo = obtenerElementoTipoPosicion(ultimas_constantes, ultimas_constantes->cantElementos - 1);
-        if(strcmp(strTipo, "identificador") == 0) printf("[ERROR] Línea %d: La variable %s no ha sido declarada\n", yylineno, parametro);
-        agregarIdentificador(listaParametros, parametro, strTipo);
+        if(strcmp(strTipo, "identificador") == 0) {
+            char* errorMsg = (char*)calloc(sizeof(char), 110);
+            sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La variable %s no ha sido declarada\n", yylineno, parametro);
+            agregarError(listaErrores, errorMsg);
+        }
+        agregarIdentificador(lista_parametros, parametro, strTipo);
     }
-    return listaParametros;
+    return lista_parametros;
 }
 
 char* sacarEspacios(char* cadena){
@@ -219,7 +259,9 @@ int comprobar_tipos_funcion(ListaFunciones* lista, char* linea) {
                 
                 if(auxParametrosRecibidos->tipo){
                     if(strcmp(auxParametrosFuncion->tipo, auxParametrosRecibidos->tipo) != 0) {
-                        printf("[ERROR-Semántico] Línea %d: En la funcion %s se esperaba un argumento tipo %s, pero se recibio un argumento tipo %s\n", yylineno, nombreFuncion, auxParametrosFuncion->tipo, auxParametrosRecibidos->tipo);
+                        char* errorMsg = (char*)calloc(sizeof(char), 150);
+                        sprintf(errorMsg, "[ERROR-Semántico] Línea %d: En la funcion %s se esperaba un argumento tipo %s, pero se recibio un argumento tipo %s\n", yylineno, nombreFuncion, auxParametrosFuncion->tipo, auxParametrosRecibidos->tipo);
+                        agregarError(listaErrores, errorMsg);
                         return 0;
                     }
                     
@@ -230,13 +272,16 @@ int comprobar_tipos_funcion(ListaFunciones* lista, char* linea) {
             
             return 1;
         } else {
-            printf("[ERROR-Semántico] Línea %d: La cantidad de parametros recibidos no coincide con la cantidad de parametros de la función %s\n", yylineno, nombreFuncion);
+            char* errorMsg = (char*)calloc(sizeof(char), 170);
+            sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La cantidad de parametros recibidos no coincide con la cantidad de parametros de la función %s\n", yylineno, nombreFuncion);
+            agregarError(listaErrores, errorMsg);
             return 0;
         }
 
     } else {
 
     }
+    return 0;
 }
 
 
@@ -274,8 +319,8 @@ ListaIdentificadores* tokenizarParametrosDesdeLinea(char* linea) {
             parametro[j] = '\0';
             //if parametro only contains spaces, ignore it
             if(strcmp(parametro, "") != 0 && strcmp(parametro, " ") != 0) {
-                printf("[LOG] Agregado token tipo %s\n", parametro);
-                agregarIdentificador(listaParametros, parametro, parametro);
+                //printf("[LOG] Agregado token tipo %s\n", parametro);
+                agregarIdentificador(listaParametros, "-", parametro);
                 salteando = 1;
             }
             j = 0;
@@ -287,7 +332,7 @@ ListaIdentificadores* tokenizarParametrosDesdeLinea(char* linea) {
             salteando = 0;
         }
     }
-    printf("retornando la siguiente lista: ");mostrarParametros(listaParametros); printf("\n");
+    //printf("retornando la siguiente lista: ");mostrarParametros(listaParametros); printf("\n");
     return listaParametros;
 }
 
@@ -302,7 +347,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
             ahora si está declarada
     */
 
-    printf("Entro a definir funcion, linea: %s\n", linea);
+    //printf("Entro a definir funcion, linea: %s\n", linea);
 
     //Nombre de la funcion
     char* nombreFuncion = cortarIdentificadorFuncion(substringDesde(linea, ' '));
@@ -310,7 +355,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
     //Obtener tipo de la función
     char* tipo = obtenerTipo(linea);
 
-    printf("Se esta definiendo la funcion %s con el tipo %s\n", nombreFuncion, tipo);
+    //printf("Se esta definiendo la funcion %s con el tipo %s\n", nombreFuncion, tipo);
 
     //Tokenizar los parámetros de la línea
     ListaIdentificadores* parametrosRecibidos = tokenizarParametrosDesdeLinea(linea);
@@ -319,7 +364,7 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
     while(aux != NULL){
         if(strcmp(aux->nombre, nombreFuncion) == 0){
 
-           printf("La funcion %s ya se encuentra en la lista\n", aux->nombre);
+           //printf("La funcion %s ya se encuentra en la lista\n", aux->nombre);
 
 
            //Si está declarada
@@ -327,13 +372,15 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
 
                 //Si está declarada y definida   
                 if(aux->definida) {
-                    printf("[ERROR-Semántico] Línea %d: La función %s ya fue definida\n", yylineno, aux->nombre);
+                    char* errorMsg = (char*)calloc(sizeof(char), 100);
+                    sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La función %s ya fue definida\n", yylineno, aux->nombre);
+                    agregarError(listaErrores, errorMsg);
                     return 0;
 
                 } else {
                     //Si está declarada pero no definida
 
-                    printf("La funcion esta declarada pero no definida\n");
+                    printf("La funcion %s esta declarada pero no definida\n", nombreFuncion);
 
                     ListaIdentificadores* parametrosFuncion = existeFuncion(lista, nombreFuncion);
 
@@ -341,7 +388,9 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
 
                         //Validación de tipo de función
                         if(strcmp(tipo, aux->tipo) != 0) {
-                            printf("[ERROR-Semántico] Línea %d: La función %s no es del tipo %s\n", yylineno, aux->nombre, aux->tipo);
+                            char* errorMsg = (char*)calloc(sizeof(char), 110);
+                            sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La función %s no es del tipo %s\n", yylineno, aux->nombre, aux->tipo);
+                            agregarError(listaErrores, errorMsg);
                             return 0;
                         }
 
@@ -356,7 +405,9 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
                                 
                                 if(auxParametrosRecibidos->tipo){
                                     if(strcmp(auxParametrosFuncion->tipo, auxParametrosRecibidos->tipo) != 0) {
-                                        printf("[ERROR-Semántico] Línea %d: En la funcion %s no coinciden los tipos de parámetros entre la declaración y la definición\n", yylineno, nombreFuncion);
+                                        char* errorMsg = (char*)calloc(sizeof(char), 160);
+                                        sprintf(errorMsg, "[ERROR-Semántico] Línea %d: En la funcion %s no coinciden los tipos de parámetros entre la declaración y la definición\n", yylineno, nombreFuncion);
+                                        agregarError(listaErrores, errorMsg);
                                         return 0;
                                     }
                                     
@@ -369,7 +420,9 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
                             //printf("[LOG] Línea %d: Funcion %s ahora definida\n", yylineno ,nombreFuncion);
                             return 1;
                         } else {
-                            printf("[ERROR-Semántico] Línea %d: La cantidad de parametros en la definición no coincide con la cantidad de parametros de la declaración de la función %s\n", yylineno, nombreFuncion);
+                            char* errorMsg = (char*)calloc(sizeof(char), 200);
+                            sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La cantidad de parametros en la definición no coincide con la cantidad de parametros de la declaración de la función %s\n", yylineno, nombreFuncion);
+                            agregarError(listaErrores, errorMsg);
                             return 0;
                         }
 
@@ -380,10 +433,10 @@ int definirFuncion(ListaFunciones* lista, char* linea) {
         aux = aux->sig;
     }
     //Si no está declarada
-    printf("Parametros: "); mostrarParametros(parametrosRecibidos); printf("\n");
+    //printf("Parametros: "); mostrarParametros(parametrosRecibidos); printf("\n");
     Funcion* f = agregarFuncion(lista, nombreFuncion, tipo, parametrosRecibidos);
     f->definida = 1;
-    printf("[LOG] Funcion %s ahora definida\n", nombreFuncion);
+    //printf("[LOG] Funcion %s ahora definida\n", nombreFuncion);
             
     return 1;
 }

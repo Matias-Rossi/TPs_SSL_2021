@@ -2,9 +2,14 @@
 
 int noDefinida(int j);
 
-int noDefinida(int j) {
+int noDefinida(int i, char j) {
+    return i;
+}
+
+int noDefinida(int h) {
     return j;
 }
+
 
 void sumar(int* a, int b) {
     printf("a + b");

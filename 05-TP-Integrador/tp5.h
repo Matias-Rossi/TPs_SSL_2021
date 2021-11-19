@@ -101,6 +101,7 @@ int contieneIgual(char* linea);
 int chequearSuma(char* linea, ListaIdentificadores*);
 char* substringHastaCaracter(char* cadena, char caracter);
 ListaIdentificadores* tokenizarParametrosDesdeLinea(char* linea);
+Funcion* buscarFuncion(ListaFunciones* lista, char* identificador);
 
 
 /* Reporte tp5 */

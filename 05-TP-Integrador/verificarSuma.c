@@ -44,7 +44,10 @@ int chequearSuma(char* linea, ListaIdentificadores* ultimas_constantes) {
 
         //En el caso que flex diga que se trata de un identificador
         if(strcmp(strTipo, "identificador") == 0){
-            printf("[ERROR-Semántico] Línea %d: La variable %s no ha sido declarada\n", yylineno, primerOperando);}
+            char* errorMsg = (char*)calloc(sizeof(char), 110);
+            sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La variable %s no ha sido declarada\n", yylineno, primerOperando);
+            agregarError(listaErrores, errorMsg);
+            }
 
         else primerOperandoOK = 1;
     }
@@ -55,7 +58,11 @@ int chequearSuma(char* linea, ListaIdentificadores* ultimas_constantes) {
         if(strcmp(tipoObtenidoDesdeLista, "int") == 0) segundoOperandoOK = 1;
     } else {
         char* strTipo = obtenerElementoTipoPosicion(ultimas_constantes, ultimas_constantes->cantElementos - 1);
-        if(strcmp(strTipo, "identificador") == 0) printf("[ERROR-Semántico] La variable %s no ha sido declarada (línea %d)\n", segundoOperando, yylineno);
+        if(strcmp(strTipo, "identificador") == 0) {
+            char* errorMsg = (char*)calloc(sizeof(char), 110);
+            sprintf(errorMsg, "[ERROR-Semántico] La variable %s no ha sido declarada (línea %d)\n", segundoOperando, yylineno);
+            agregarError(listaErrores, errorMsg);
+        }    
         else segundoOperandoOK = 1;
     }
 

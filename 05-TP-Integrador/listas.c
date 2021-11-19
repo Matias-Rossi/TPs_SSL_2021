@@ -11,9 +11,13 @@ ListaIdentificadores* inicializarListaIdentificadores(ListaIdentificadores* list
 
 int identificadorYaExiste(ListaIdentificadores* lista, char* identificador){
     Identificador* aux = lista->pri;
-    while(aux != NULL){
+    //if(aux) printf("Primer nodo %p, tipo: %s, nombre %s\n", aux, aux->tipo, aux->nombre);
+    while(aux){
+        //printf("aux->nombre: %s\n", aux->nombre);
         if(strcmp(aux->nombre, identificador) == 0){
-            printf("[ERROR-Semántico] Línea %d: La variable %s ya ha sido declarada\n", yylineno, identificador);
+            char* errorMsg = (char*)calloc(sizeof(char), 70);
+            sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La variable %s ya ha sido declarada\n", yylineno, identificador);
+            agregarError(listaErrores, errorMsg);
             return 1;
         }
         aux = aux->sig;
@@ -24,28 +28,34 @@ int identificadorYaExiste(ListaIdentificadores* lista, char* identificador){
 void agregarIdentificador(ListaIdentificadores* lista, char* cadena, char* tDato){
 
     Identificador* nuevo = malloc(sizeof(Identificador));
-    nuevo->nombre = malloc(strlen(cadena)*sizeof(char));
+    nuevo->nombre = malloc(strlen(cadena)*sizeof(char)+1);
     strcpy(nuevo->nombre, sacarEspacios(cadena));
+    //printf("nuevo->nombre: %s\n", nuevo->nombre);
     
-    nuevo->tipo = malloc(strlen(tDato)*sizeof(char));
+    nuevo->tipo = malloc(strlen(tDato)*sizeof(char)+1);
     strcpy(nuevo->tipo, sacarEspacios(tDato));
+    //printf("nuevo->tipo: >%s<\n", nuevo->tipo);
     
     nuevo->sig = NULL;
 
     //Lo posiciona al final de la lista
     if(!lista->pri){
         lista->pri = nuevo;
+        //printf("EL IDENTIFICADOR NUEVO ES: %s\n",lista->pri->nombre);
     }
     else {
         Identificador* aux = lista->pri;
-        while(aux->sig) {
+        //printf("Intentando acceder a aux(%p)\n", aux);
+        //printf("Intentando acceder a aux->sig(%p)\n", aux->sig);
+        while(aux->sig != NULL) {
             aux=aux->sig;
         }
         aux->sig = nuevo;
+        //printf("EL IDENTIFICADOR AGREGADO ES: %s\n",aux->sig->nombre);
     }
 
-    
     lista->cantElementos++;
+
 }
 
 int ordenarIdentificadores(ListaIdentificadores* lista, int criterio(char*, char*)) {
@@ -85,8 +95,8 @@ ListaIdentificadores* trasladarListaIdentificadores(ListaIdentificadores* listaO
     }
 
     //Limpieza original
-    liberarListaIdentificadores(listaOriginal);
-    listaOriginal = inicializarListaIdentificadores(listaOriginal);
+    //liberarListaIdentificadores(listaOriginal);
+    //listaOriginal = inicializarListaIdentificadores(listaOriginal);
 
     return listaNueva;
 }

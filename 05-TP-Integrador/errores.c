@@ -9,7 +9,7 @@ ListaError* inicializarListaErrores(ListaError* listaError) {
 
 
 void agregarError(ListaError* listaError, char* mensaje) {
-    Error* error;
+    Error* error = (Error*)malloc(sizeof(error));
     error->mensaje = calloc(strlen(mensaje) + 1, sizeof(char));
     strcpy(error->mensaje, mensaje);
 

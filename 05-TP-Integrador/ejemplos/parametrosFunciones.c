@@ -1,6 +1,8 @@
 //#include<stdio.h>
 
-//void sumar(float a, int b);
+void sumar(float a, int b);
+
+int hola();
 
 void sumar(float a, int b) {
     printf("a + b");
@@ -11,8 +13,16 @@ int hola() {
     return 0;
 }
 
+char prueba(char ab, int* ac, float ad);
+
 char prueba(char c, int* d, float e) {
     return c;
+}
+
+
+
+void saludar(char* nombre) {
+    printf("Hola %s\n", nombre);
 }
 
 void saludar(char* nombre) {
