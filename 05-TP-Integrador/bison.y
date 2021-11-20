@@ -388,9 +388,9 @@ sentencia_de_salto: GOTO IDENTIFICADOR ';'
                     | CONTINUE   ';'
                     | BREAK ';'
                     | RETURN expresion ';'
-                    | RETURN expresion               {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);yyerrok;}
+                    | RETURN expresion               {char* errorMsg = (char*)calloc(sizeof(char), 60);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);agregarError(erroresSintacticos, errorMsg);yyerrok;}
                     | RETURN  ';'
-                    | RETURN                        {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);yyerrok;}
+                    | RETURN                        {char* errorMsg = (char*)calloc(sizeof(char), 60);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);agregarError(erroresSintacticos, errorMsg);yyerrok;}
                     ;
 
 expresion:  expresion_de_asignacion

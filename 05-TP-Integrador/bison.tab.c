@@ -2349,13 +2349,13 @@ yyreduce:
 
   case 164:
 #line 391 "bison.y"
-                                                     {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);yyerrok;}
+                                                     {char* errorMsg = (char*)calloc(sizeof(char), 60);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);agregarError(erroresSintacticos, errorMsg);yyerrok;}
 #line 2354 "bison.tab.c"
     break;
 
   case 166:
 #line 393 "bison.y"
-                                                    {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);yyerrok;}
+                                                    {char* errorMsg = (char*)calloc(sizeof(char), 60);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);agregarError(erroresSintacticos, errorMsg);yyerrok;}
 #line 2360 "bison.tab.c"
     break;
 
