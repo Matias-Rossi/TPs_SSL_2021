@@ -1,21 +1,25 @@
-char nada() {
-    return 'c';
-}
+void main();
 
+int hola();
 
 int main() {
+    int a = 3;
+    int b = 4;
+    float c;
 
-    int b = 0;
-    char c = 1;
+    //int z = 4 + 3;      //Dos ctes
 
-    //error léxico
-    //int ho$la;
+    int y = a + b;    //Dos variables
 
-    //error sintáctico
-    int a = ;
+    int h = b + a;    //Dos variables
 
-    
+    int x = a + 3;     //Una variable y una cte
 
+    int g = ;
 
-    char d = nada();
+    char invalid;
+
+    hola();
+
+    return 1
 }

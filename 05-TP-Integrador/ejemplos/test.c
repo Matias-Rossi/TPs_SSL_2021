@@ -2,7 +2,7 @@ void main();
 
 int hola();
 
-void main() {
+int main() {
     int a = 3;
     int b = 4;
     float c;
@@ -18,4 +18,6 @@ void main() {
     int g = ;
 
     hola();
+
+    return 1
 }

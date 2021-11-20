@@ -242,7 +242,6 @@ enumerador:    IDENTIFICADOR
 
 declarador:   apuntador declarador_directo                                                                  
             | declarador_directo        
-            | error                                          
 ;
 
 declarador_directo:       IDENTIFICADOR                                           {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
@@ -326,8 +325,7 @@ declarador_abstracto_directo:   '(' declarador_abstracto ')'
                                 |  '[' ']'
                                 | declarador_abstracto_directo '['  ']' 
                                 |  '[' expresion_constante ']'
-
-                                | declarador_abstracto_directo '(' lista_tipos_de_parametro ')'
+                                | declarador_abstracto_directo '(' lista_tipos_de_parametro ')' 
                                 |  '('  ')'
                                 | declarador_abstracto_directo  '('  ')'
                                 | '(' lista_tipos_de_parametro ')'
@@ -390,8 +388,9 @@ sentencia_de_salto: GOTO IDENTIFICADOR ';'
                     | CONTINUE   ';'
                     | BREAK ';'
                     | RETURN expresion ';'
-                    | RETURN expresion               {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);yyerrok;yyclearin;}
+                    | RETURN expresion               {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);yyerrok;}
                     | RETURN  ';'
+                    | RETURN                        {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);yyerrok;}
                     ;
 
 expresion:  expresion_de_asignacion
