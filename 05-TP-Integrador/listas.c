@@ -17,7 +17,7 @@ int identificadorYaExiste(ListaIdentificadores* lista, char* identificador){
         if(strcmp(aux->nombre, identificador) == 0){
             char* errorMsg = (char*)calloc(sizeof(char), 70);
             sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La variable %s ya ha sido declarada\n", yylineno, identificador);
-            agregarError(listaErrores, errorMsg);
+            agregarError(erroresSemanticos, errorMsg);
             return 1;
         }
         aux = aux->sig;

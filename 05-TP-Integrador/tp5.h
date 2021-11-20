@@ -126,8 +126,10 @@ typedef struct ListaError {
 
 void agregarError(struct ListaError*, char* mensaje);
 ListaError* inicializarListaErrores(struct ListaError*);
-struct ListaError* listaErrores;
-void mostrarErrores(struct ListaError*);
+struct ListaError* erroresLexicos;
+struct ListaError* erroresSintacticos;
+struct ListaError* erroresSemanticos;
+void mostrarErrores();
 
 
 /* Control de doble declaración de variables */

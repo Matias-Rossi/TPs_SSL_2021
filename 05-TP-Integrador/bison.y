@@ -104,7 +104,7 @@ noRec: NO_RECONOCIDO
         {
             char* errorMsg = (char*)calloc(sizeof(char), 120);
             sprintf(errorMsg, "[ERROR-Léxico] Línea %d: Cadena %s no reconocida\n", yylineno, $<cval>1);
-            agregarError(listaErrores, errorMsg);
+            agregarError(erroresLexicos, errorMsg);
         }
 
 unidad_de_traduccion:     declaracion_externa 
@@ -195,9 +195,9 @@ lista_declaradores_init:    declarador_init
 
 declarador_init:      declarador
                     | declarador '=' inicializador
-                    | declarador '='                   {
-                                                        printf("[ERROR-Sintáctico] Línea %d: Falta inicializador\n", yylineno);yyerrok;
-                                                        }
+                    | declarador '='                   { char* errorMsg = (char*)malloc(sizeof(char) * 62);
+                                                        sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta inicializador\n", yylineno);yyerrok;
+                                                        agregarError(erroresSintacticos, errorMsg);}
                     ;
 
 
@@ -237,7 +237,7 @@ lista_de_enumerador:      enumerador
 
 enumerador:    IDENTIFICADOR
              | IDENTIFICADOR '=' expresion_constante
-             | IDENTIFICADOR '='                           {yyerrok;printf("[ERROR-Sintáctico] Línea %d: Falta expresion constante\n", yylineno);}
+             | IDENTIFICADOR '='                           {yyerrok;char* errorMsg = (char*)malloc(sizeof(char) * 65);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta expresion constante\n", yylineno);agregarError(erroresSintacticos, errorMsg);}
              ;
 
 declarador:   apuntador declarador_directo                                                                  
@@ -251,9 +251,9 @@ declarador_directo:       IDENTIFICADOR                                         
                         | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' lista_de_identificadores ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' ')'                                   {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
-                        | IDENTIFICADOR '(' lista_tipos_de_parametro         { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
-                        | IDENTIFICADOR '(' lista_de_identificadores         { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
-                        | IDENTIFICADOR '('                                  { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
+                        | IDENTIFICADOR '(' lista_tipos_de_parametro         { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(erroresSintacticos, errorMsg);}
+                        | IDENTIFICADOR '(' lista_de_identificadores         { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(erroresSintacticos, errorMsg);}
+                        | IDENTIFICADOR '('                                  { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(erroresSintacticos, errorMsg);}
                         ;
 
 
@@ -467,7 +467,7 @@ expresion_de_corrimiento: expresion_aditiva
 
 
 expresion_aditiva: expresion_multiplicativa 
-				| expresion_aditiva '+' expresion_multiplicativa        {if(!chequearSuma(sacar_ultimo_caracter($<cval>1), ultimas_constantes)) {char* errorMsg = (char*)calloc(sizeof(char), 50);sprintf(errorMsg,"[ERROR] Línea %d: Suma inválida\n", yylineno);agregarError(listaErrores, errorMsg);}}    
+				| expresion_aditiva '+' expresion_multiplicativa        {if(!chequearSuma(sacar_ultimo_caracter($<cval>1), ultimas_constantes)) {char* errorMsg = (char*)calloc(sizeof(char), 50);sprintf(errorMsg,"[ERROR-Semántico] Línea %d: Suma inválida\n", yylineno);agregarError(erroresSemanticos, errorMsg);}}    
 				| expresion_aditiva '-' expresion_multiplicativa 
 				;
 
@@ -562,7 +562,9 @@ int main (int argc, char **argv)
         lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
         lista_parametros          = inicializarListaIdentificadores(lista_parametros);
         ultimas_constantes        = inicializarListaIdentificadores(ultimas_constantes);
-        listaErrores             = inicializarListaErrores       (listaErrores); 
+        erroresLexicos             = inicializarListaErrores       (erroresLexicos); 
+        erroresSintacticos             = inicializarListaErrores       (erroresSintacticos); 
+        erroresSemanticos             = inicializarListaErrores       (erroresSemanticos); 
 
         printf("\n --- Comenzando anlisis lexico y sintactico ---\n\n");
 
@@ -576,7 +578,7 @@ int main (int argc, char **argv)
             crearListadoIdentificadores(identificadores_variables, "VARIABLES DECLARADAS");
             crearListadoIdentificadores(identificadores_funciones, "FUNCIONES DECLARADAS");
             mostrarListadoFunciones(lista_funciones);
-            mostrarErrores(listaErrores);
+            mostrarErrores();
             //crearListadoSentencias     (lista_sentencias,          "SENTENCIAS");
         }
 

@@ -85,14 +85,28 @@ void mostrarParametros(ListaIdentificadores* parametros) {
 }
 
 /********** ERRORES ***************/
-void mostrarErrores(ListaError* errores) {
-    if(errores->pri != NULL){                                                       //Si la lista no esta vacía
-        nuevaCategoria("ERRORES");
-        Error* aux = errores->pri;
+int ciclarListaErrores(ListaError* lista, char* titulo) {
+    if(lista->pri != NULL){                                                       //Si la lista no esta vacía
+        nuevaCategoria(titulo);
+        Error* aux = lista->pri;
         while(aux->sig != NULL) {                                                           //Itera por los nodos
-            printf("%s\n", aux->mensaje);              
+            printf("%s", aux->mensaje);              
             aux = aux->sig;
         }
         printf("%s\n", aux->mensaje);
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+void mostrarErrores() {
+    int contador = 0;
+    contador += ciclarListaErrores(erroresLexicos, "ERRORES LÉXICOS");
+    contador += ciclarListaErrores(erroresSintacticos, "ERRORES SINTÁCTICOS");
+    contador += ciclarListaErrores(erroresSemanticos, "ERRORES SEMÁNTICOS");
+
+    if(contador == 0) {
+        printf("No se han encontrado errores :)");
     }
 }

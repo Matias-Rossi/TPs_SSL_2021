@@ -46,7 +46,7 @@ int chequearSuma(char* linea, ListaIdentificadores* ultimas_constantes) {
         if(strcmp(strTipo, "identificador") == 0){
             char* errorMsg = (char*)calloc(sizeof(char), 110);
             sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La variable %s no ha sido declarada\n", yylineno, primerOperando);
-            agregarError(listaErrores, errorMsg);
+            agregarError(erroresSemanticos, errorMsg);
             }
 
         else primerOperandoOK = 1;
@@ -61,7 +61,7 @@ int chequearSuma(char* linea, ListaIdentificadores* ultimas_constantes) {
         if(strcmp(strTipo, "identificador") == 0) {
             char* errorMsg = (char*)calloc(sizeof(char), 110);
             sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La variable %s no ha sido declarada \n",yylineno, segundoOperando);
-            agregarError(listaErrores, errorMsg);
+            agregarError(erroresSemanticos, errorMsg);
         }    
         else segundoOperandoOK = 1;
     }
@@ -96,7 +96,7 @@ void verificarDivisor(char* str) {
     if(strcmp(divisor, "0") == 0) {
         char* errorMsg = (char*)calloc(sizeof(char), 51);
         sprintf(errorMsg, "[ERROR-Semántico] Línea %d: división por cero\n", yylineno);
-        agregarError(listaErrores, errorMsg);
+        agregarError(erroresSemanticos, errorMsg);
     }
 
 }

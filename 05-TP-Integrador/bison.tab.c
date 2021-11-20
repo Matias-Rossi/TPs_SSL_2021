@@ -2106,7 +2106,7 @@ yyreduce:
         {
             char* errorMsg = (char*)calloc(sizeof(char), 120);
             sprintf(errorMsg, "[ERROR-Léxico] Línea %d: Cadena %s no reconocida\n", yylineno, (yyvsp[0].cval));
-            agregarError(listaErrores, errorMsg);
+            agregarError(erroresLexicos, errorMsg);
         }
 #line 2112 "bison.tab.c"
     break;
@@ -2203,15 +2203,15 @@ yyreduce:
 
   case 58:
 #line 198 "bison.y"
-                                                       {
-                                                        printf("[ERROR-Sintáctico] Línea %d: Falta inicializador\n", yylineno);yyerrok;
-                                                        }
+                                                       { char* errorMsg = (char*)malloc(sizeof(char) * 62);
+                                                        sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta inicializador\n", yylineno);yyerrok;
+                                                        agregarError(erroresSintacticos, errorMsg);}
 #line 2210 "bison.tab.c"
     break;
 
   case 76:
 #line 240 "bison.y"
-                                                           {yyerrok;printf("[ERROR-Sintáctico] Línea %d: Falta expresion constante\n", yylineno);}
+                                                           {yyerrok;char* errorMsg = (char*)malloc(sizeof(char) * 65);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta expresion constante\n", yylineno);agregarError(erroresSintacticos, errorMsg);}
 #line 2216 "bison.tab.c"
     break;
 
@@ -2253,19 +2253,19 @@ yyreduce:
 
   case 86:
 #line 254 "bison.y"
-                                                                             { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
+                                                                             { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(erroresSintacticos, errorMsg);}
 #line 2258 "bison.tab.c"
     break;
 
   case 87:
 #line 255 "bison.y"
-                                                                             { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
+                                                                             { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(erroresSintacticos, errorMsg);}
 #line 2264 "bison.tab.c"
     break;
 
   case 88:
 #line 256 "bison.y"
-                                                                             { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
+                                                                             { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(erroresSintacticos, errorMsg);}
 #line 2270 "bison.tab.c"
     break;
 
@@ -2361,7 +2361,7 @@ yyreduce:
 
   case 207:
 #line 470 "bison.y"
-                                                                                        {if(!chequearSuma(sacar_ultimo_caracter((yyvsp[-2].cval)), ultimas_constantes)) {char* errorMsg = (char*)calloc(sizeof(char), 50);sprintf(errorMsg,"[ERROR] Línea %d: Suma inválida\n", yylineno);agregarError(listaErrores, errorMsg);}}
+                                                                                        {if(!chequearSuma(sacar_ultimo_caracter((yyvsp[-2].cval)), ultimas_constantes)) {char* errorMsg = (char*)calloc(sizeof(char), 50);sprintf(errorMsg,"[ERROR-Semántico] Línea %d: Suma inválida\n", yylineno);agregarError(erroresSemanticos, errorMsg);}}
 #line 2366 "bison.tab.c"
     break;
 
@@ -2688,7 +2688,9 @@ int main (int argc, char **argv)
         lista_sentencias          = inicializarListaSentencias     (lista_sentencias);
         lista_parametros          = inicializarListaIdentificadores(lista_parametros);
         ultimas_constantes        = inicializarListaIdentificadores(ultimas_constantes);
-        listaErrores             = inicializarListaErrores       (listaErrores); 
+        erroresLexicos             = inicializarListaErrores       (erroresLexicos); 
+        erroresSintacticos             = inicializarListaErrores       (erroresSintacticos); 
+        erroresSemanticos             = inicializarListaErrores       (erroresSemanticos); 
 
         printf("\n --- Comenzando anlisis lexico y sintactico ---\n\n");
 
@@ -2702,7 +2704,7 @@ int main (int argc, char **argv)
             crearListadoIdentificadores(identificadores_variables, "VARIABLES DECLARADAS");
             crearListadoIdentificadores(identificadores_funciones, "FUNCIONES DECLARADAS");
             mostrarListadoFunciones(lista_funciones);
-            mostrarErrores(listaErrores);
+            mostrarErrores();
             //crearListadoSentencias     (lista_sentencias,          "SENTENCIAS");
         }
 

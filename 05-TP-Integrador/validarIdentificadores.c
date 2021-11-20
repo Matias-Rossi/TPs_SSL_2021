@@ -21,14 +21,14 @@ void validarIdentificador(char* cadena) {
             if(f->definida == 0) {
                 char* errorMsg = (char*)calloc(sizeof(char), 120);
                 sprintf(errorMsg, "[ERROR-Semántico] Línea %d: No se encontró una definición para la función %s\n", yylineno, nombreFuncion);
-                agregarError(listaErrores, errorMsg);
+                agregarError(erroresSemanticos, errorMsg);
 
             } 
             return;
         } else {
             char* errorMsg = (char*)calloc(sizeof(char), 120);
             sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La función %s no se encuentra definida\n", yylineno, nombreFuncion);
-            agregarError(listaErrores, errorMsg);
+            agregarError(erroresSemanticos, errorMsg);
         }
         return;
 
@@ -46,6 +46,6 @@ void validarIdentificador(char* cadena) {
         }
         char* errorMsg = (char*)calloc(sizeof(char), 70);
         sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La variable %s no ha sido declarada\n", yylineno, cadena);
-        agregarError(listaErrores, errorMsg);
+        agregarError(erroresSemanticos, errorMsg);
     }
 }
