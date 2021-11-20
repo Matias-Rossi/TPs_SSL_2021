@@ -77,6 +77,7 @@ extern FILE* yyin;
 %token Y_IGUAL  
 %token POT_IGUAL  
 %token  O_IGUAL  
+%token NO_RECONOCIDO
 
 
 %token IDENTIFICADOR
@@ -95,8 +96,16 @@ extern FILE* yyin;
 unidad_de_programa: INCLUDE  unidad_de_programa                           
 				  | DEFINE  expresion_primaria   unidad_de_programa                  	
 				  | unidad_de_traduccion 
-                  | error unidad_de_traduccion
+                  | error unidad_de_traduccion {yyerrok;}
+                  | noRec unidad_de_programa
 	    		  ;
+
+noRec: NO_RECONOCIDO
+        {
+            char* errorMsg = (char*)calloc(sizeof(char), 120);
+            sprintf(errorMsg, "[ERROR-Léxico] Línea %d: Cadena %s no reconocida\n", yylineno, $<cval>1);
+            agregarError(listaErrores, errorMsg);
+        }
 
 unidad_de_traduccion:     declaracion_externa 
                         | unidad_de_traduccion declaracion_externa 
@@ -180,12 +189,15 @@ lista_declaraciones_struct:   declaracion_struct
 
 lista_declaradores_init:    declarador_init
                             | lista_declaradores_init ',' declarador_init
+                            | error
                             ;
 
 
 declarador_init:      declarador
                     | declarador '=' inicializador
-                    | declarador '=' error                  {printf("[ERROR-Sintáctico] Línea %d: Falta inicializador en linea\n", yylineno);yyerrok;}
+                    | declarador '='                   {
+                                                        printf("[ERROR-Sintáctico] Línea %d: Falta inicializador\n", yylineno);yyerrok;
+                                                        }
                     ;
 
 
@@ -225,11 +237,12 @@ lista_de_enumerador:      enumerador
 
 enumerador:    IDENTIFICADOR
              | IDENTIFICADOR '=' expresion_constante
-             //| IDENTIFICADOR '=' error                          {printf("[ERROR-Sintáctico] Línea %d: Falta expresion constante\n", yylineno);yyerrok;yyclearin;}
+             | IDENTIFICADOR '='                           {yyerrok;printf("[ERROR-Sintáctico] Línea %d: Falta expresion constante\n", yylineno);}
              ;
 
 declarador:   apuntador declarador_directo                                                                  
-            | declarador_directo                                                  
+            | declarador_directo        
+            | error                                          
 ;
 
 declarador_directo:       IDENTIFICADOR                                           {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
@@ -239,9 +252,9 @@ declarador_directo:       IDENTIFICADOR                                         
                         | IDENTIFICADOR '(' lista_tipos_de_parametro ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' lista_de_identificadores ')'          {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
                         | IDENTIFICADOR '(' ')'                                   {aux_nombreFuncion = cortarIdentificadorFuncion($<cval>1);}
-                        | IDENTIFICADOR '(' lista_tipos_de_parametro error        { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
-                        | IDENTIFICADOR '(' lista_de_identificadores error        { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
-                        | IDENTIFICADOR '(' error                                 { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
+                        | IDENTIFICADOR '(' lista_tipos_de_parametro         { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
+                        | IDENTIFICADOR '(' lista_de_identificadores         { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
+                        | IDENTIFICADOR '('                                  { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(listaErrores, errorMsg);}
                         ;
 
 
@@ -330,6 +343,7 @@ sentencia:  sentencia_etiquetada        {agregar_sentencia(lista_sentencias, "Se
             | sentencia_de_iteracion    {agregar_sentencia(lista_sentencias, "Sentencia de iteracion", yylineno);}
             | sentencia_de_seleccion    {agregar_sentencia(lista_sentencias, "Sentencia de seleccion", yylineno);}
             | sentencia_de_salto        {agregar_sentencia(lista_sentencias, "Sentencia de salto",     yylineno);}
+            | error
             ;
 
 
@@ -376,7 +390,7 @@ sentencia_de_salto: GOTO IDENTIFICADOR ';'
                     | CONTINUE   ';'
                     | BREAK ';'
                     | RETURN expresion ';'
-                    //| RETURN expresion error              {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);yyerrok;yyclearin;}
+                    | RETURN expresion               {printf("[ERROR-Sintáctico] Línea %d: Falta punto y coma\n", yylineno);yyerrok;yyclearin;}
                     | RETURN  ';'
                     ;
 
@@ -476,6 +490,7 @@ expresion_unaria: expresion_posfija
 				| operador_unario  expresion_cast 
 				| SIZEOF expresion_unaria 
 				| SIZEOF '(' nombre_de_tipo ')'
+                | error
                 ;
 
 operador_unario: '&' 
@@ -489,6 +504,7 @@ operador_unario: '&'
 expresion_posfija:  expresion_primaria
                     | expresion_posfija   '['   expresion   ']' 
                     | expresion_posfija   '('   lista_expresiones_argumento   ')'   { comprobar_tipos_funcion(lista_funciones, $<cval>1); }
+                    | expresion_posfija   '('   lista_expresiones_argumento      { comprobar_tipos_funcion(lista_funciones, $<cval>1); yyerrok;}
                     | expresion_posfija   '(' ')'
                     | expresion_posfija    '.'    IDENTIFICADOR
                     | expresion_posfija   FLECHA   IDENTIFICADOR

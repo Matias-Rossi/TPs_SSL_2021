@@ -135,6 +135,6 @@ SALTO_DE_LINEA (\n)+
 {COMENTARIOS_MULTILINEAL}                         {if(comentario == 1) comentario = 0; else comentario = 1;}
 {ESPACIO_EN_BLANCO}|{TABULACION}                  {;}
 {SALTO_DE_LINEA}                                  {comentario=0;}
-.                                                 {analisisCorrecto = 0; printf("[ERROR-Léxico] Línea %d: Token desconocido %s \n", yylineno, yytext);}
+.                                                 {analisisCorrecto = 0;printf("Error léxico reconocido\n"); return NO_RECONOCIDO;}
 %%
 

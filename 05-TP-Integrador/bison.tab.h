@@ -105,14 +105,15 @@ extern int yydebug;
     Y_IGUAL = 311,
     POT_IGUAL = 312,
     O_IGUAL = 313,
-    IDENTIFICADOR = 314,
-    LITERAL_CADENA = 315,
-    CONST_OCTAL = 316,
-    CONST_HEXADECIMAL = 317,
-    CONST_DECIMAL = 318,
-    CONST_PTOFLOTANTE = 319,
-    CONST_CARACTER = 320,
-    IFX = 321
+    NO_RECONOCIDO = 314,
+    IDENTIFICADOR = 315,
+    LITERAL_CADENA = 316,
+    CONST_OCTAL = 317,
+    CONST_HEXADECIMAL = 318,
+    CONST_DECIMAL = 319,
+    CONST_PTOFLOTANTE = 320,
+    CONST_CARACTER = 321,
+    IFX = 322
   };
 #endif
 
@@ -126,7 +127,7 @@ union YYSTYPE
    double dval;
    char* cval;
 
-#line 130 "bison.tab.h"
+#line 131 "bison.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
