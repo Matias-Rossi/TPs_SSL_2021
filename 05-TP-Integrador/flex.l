@@ -1,6 +1,6 @@
 %option noyywrap
 %option yylineno
-/*%option debug*/
+%option debug
 
 %{
 #include <stdio.h>
@@ -135,6 +135,6 @@ SALTO_DE_LINEA (\n)+
 {COMENTARIOS_MULTILINEAL}                         {if(comentario == 1) comentario = 0; else comentario = 1;}
 {ESPACIO_EN_BLANCO}|{TABULACION}                  {;}
 {SALTO_DE_LINEA}                                  {comentario=0;}
-.                                                 {analisisCorrecto = 0;printf("Error léxico reconocido\n"); return NO_RECONOCIDO;}
+.                                                 {BEGIN(INITIAL);char* errorMsg = (char*)calloc(sizeof(char), 100);sprintf(errorMsg, "[ERROR-Léxico] Línea %d: Token no reconocido '%s'\n", yylineno, yytext);agregarError(erroresLexicos, errorMsg);return NO_RECONOCIDO;}
 %%
 

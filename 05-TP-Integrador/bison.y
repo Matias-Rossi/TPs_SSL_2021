@@ -100,12 +100,14 @@ unidad_de_programa: INCLUDE  unidad_de_programa
                   | noRec unidad_de_programa
 	    		  ;
 
+idNoRec: noRec
+        | idNoRec noRec
+        | idNoRec IDENTIFICADOR
+        | IDENTIFICADOR idNoRec
+        ;
+
 noRec: NO_RECONOCIDO
-        {
-            char* errorMsg = (char*)calloc(sizeof(char), 120);
-            sprintf(errorMsg, "[ERROR-Léxico] Línea %d: Cadena %s no reconocida\n", yylineno, $<cval>1);
-            agregarError(erroresLexicos, errorMsg);
-        }
+        
 
 unidad_de_traduccion:     declaracion_externa 
                         | unidad_de_traduccion declaracion_externa 
@@ -241,7 +243,8 @@ enumerador:    IDENTIFICADOR
              ;
 
 declarador:   apuntador declarador_directo                                                                  
-            | declarador_directo        
+            | declarador_directo      
+            | error
 ;
 
 declarador_directo:       IDENTIFICADOR                                           {if(!identificadorYaExiste(identificadores_variables, sacar_ultimo_caracter($<cval>1))) agregarIdentificador(identificadores_variables,  sacar_ultimo_caracter($<cval>1), aux_tIdentificador);}
@@ -254,6 +257,7 @@ declarador_directo:       IDENTIFICADOR                                         
                         | IDENTIFICADOR '(' lista_tipos_de_parametro         { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(erroresSintacticos, errorMsg);}
                         | IDENTIFICADOR '(' lista_de_identificadores         { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(erroresSintacticos, errorMsg);}
                         | IDENTIFICADOR '('                                  { char* errorMsg = (char*)malloc(sizeof(char) * 62);sprintf(errorMsg, "[ERROR-Sintáctico] Línea %d: Falta paréntesis de cierre\n", yylineno);agregarError(erroresSintacticos, errorMsg);}
+                        | idNoRec
                         ;
 
 
@@ -537,7 +541,7 @@ constante:  CONST_OCTAL             {agregarIdentificador(ultimas_constantes, "-
 int main (int argc, char **argv)
 {
     #ifdef YYDEBUG
-        yydebug = 0;
+        //yydebug = 1;
     #endif
     
     system("clear");
@@ -571,16 +575,16 @@ int main (int argc, char **argv)
         yyparse();
         //fclose(yyin);
 
-        if(analisisCorrecto){
+       
 
-            printf("\n\n --- Imprimiendo reporte ---");
+        printf("\n\n --- Imprimiendo reporte ---");
 
-            crearListadoIdentificadores(identificadores_variables, "VARIABLES DECLARADAS");
-            crearListadoIdentificadores(identificadores_funciones, "FUNCIONES DECLARADAS");
-            mostrarListadoFunciones(lista_funciones);
-            mostrarErrores();
-            //crearListadoSentencias     (lista_sentencias,          "SENTENCIAS");
-        }
+        crearListadoIdentificadores(identificadores_variables, "VARIABLES DECLARADAS");
+        crearListadoIdentificadores(identificadores_funciones, "FUNCIONES DECLARADAS");
+        mostrarListadoFunciones(lista_funciones);
+        mostrarErrores();
+        //crearListadoSentencias     (lista_sentencias,          "SENTENCIAS");
+       
 
     }
 
@@ -592,6 +596,5 @@ int main (int argc, char **argv)
 int yyerror(const char *msg)
 {
 	printf("\n[ERROR-Sintáctico] Línea %d, fallo de análisis: %s\n", yylineno, msg);
-	analisisCorrecto = 0;
 	return 0;
 }

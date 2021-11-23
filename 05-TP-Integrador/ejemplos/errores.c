@@ -17,9 +17,9 @@ int main() {
 
     int g = ;
 
-    char invalid;
-
     hola();
+
+    char inv$alid;
 
     return 1
 }
