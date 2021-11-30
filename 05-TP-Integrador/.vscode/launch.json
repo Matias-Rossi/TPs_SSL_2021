@@ -5,8 +5,8 @@
             "name": "Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/tpIntegrador.out", //TODO: Change program name as needed
-            "args": ["ejemplos/parametrosFunciones.c"],
+            "program": "${workspaceFolder}/bin/tpIntegrador.out", 
+            "args": ["ejemplos/parametrosFunciones.c"],  //Cambiar para ver distintos archivos
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],

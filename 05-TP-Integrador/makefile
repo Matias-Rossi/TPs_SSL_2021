@@ -4,7 +4,7 @@ all: bison flex
 
 # PARA ACTIVAR O DESACTIVAR DEBUG, CAMBIAR ENTRE 1 y 0 LA VARIABLE QUE APARECE EN EL MAIN DE BISON.Y
 bison: 
-	bison -d bison.y --report=state -W --debug
+	bison -d bison.y --report=state  --debug --warnings=none
 
 flex: 
 	flex flex.l

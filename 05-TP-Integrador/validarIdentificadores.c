@@ -1,5 +1,20 @@
 #include "tp5.h"
 
+char* sacarSimbolos(char* cadena) {
+    char* cadenaSinSimbolos = (char*)malloc(sizeof(char)*strlen(cadena));
+    int i = 0;
+    int j = 0;
+    while(cadena[i] != '\0'){
+        if(cadena[i] != '+' && cadena[i] != '-' && cadena[i] != '*' && cadena[i] != '/' && cadena[i] != '=' && cadena[i] != ';'){
+            cadenaSinSimbolos[j] = cadena[i];
+            j++;
+        }
+        i++;
+    }
+    cadenaSinSimbolos[j] = '\0';
+    return cadenaSinSimbolos;
+}
+
 char ultimo_caracter(char* cadena) {
     int i = 0;
     while (cadena[i] != '\0') {
@@ -36,16 +51,18 @@ void validarIdentificador(char* cadena) {
         //No es funcion
 
         Identificador* aux = identificadores_variables->pri;
+        char* nombreVariable = calloc(sizeof(char), strlen(cadena));
+        strcpy(nombreVariable, sacarSimbolos(sacarEspacios(cadena)));
         
         while(aux){
             //printf("aux->nombre: %s\n", aux->nombre);
-            if(strcmp(aux->nombre, cadena) == 0){
+            if(strcmp(aux->nombre, nombreVariable) == 0){
                 return;
             }
             aux = aux->sig;
         }
-        char* errorMsg = (char*)calloc(sizeof(char), 70);
-        sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La variable %s no ha sido declarada\n", yylineno, cadena);
+        char* errorMsg = (char*)calloc(sizeof(char), 100);
+        sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La variable %s no ha sido declarada\n", yylineno, nombreVariable/*, cadena*/);   //agregar %s para debug
         agregarError(erroresSemanticos, errorMsg);
     }
 }

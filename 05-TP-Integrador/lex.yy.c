@@ -738,7 +738,7 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "flex.l"
-/* %option debug */
+/*%option debug*/
 #line 6 "flex.l"
 #include <stdio.h>
 #include <string.h>

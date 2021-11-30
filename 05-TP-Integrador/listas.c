@@ -26,6 +26,7 @@ int identificadorYaExiste(ListaIdentificadores* lista, char* identificador){
 }
 
 void agregarIdentificador(ListaIdentificadores* lista, char* cadena, char* tDato){
+    //printf("[LOG] %d Agregando variable %s de tipo %s a la lista\n", yylineno, cadena, tDato);
 
     Identificador* nuevo = malloc(sizeof(Identificador));
     nuevo->nombre = malloc(strlen(cadena)*sizeof(char)+1);
@@ -156,7 +157,7 @@ void agregar_sentencia(ListaSentencias* lista, char* tSentencia, int linea){
 }
 
 char* obtenerTipoDesdeLista(ListaIdentificadores* lista, char* identificador){
-    //printf("Buscando tipo del identificador >%s<\n", identificador);
+    //("Buscando tipo del identificador >%s<\n", identificador);
     Identificador* aux = lista->pri;
     while(aux != NULL){
         //printf("Comparando con variable \"%s\" con tipo \"%s\"\n", aux->nombre, aux->tipo);

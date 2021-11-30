@@ -143,6 +143,7 @@ ListaIdentificadores* existeFuncion(ListaFunciones* lista, char* nombreFuncion){
     Funcion* aux = lista->pri;
     while(aux != NULL){
         if(strcmp(aux->nombre, nombreFuncion) == 0){
+            //printf("[LOG] Obtenidos los parámetros de la función %s\n", aux->nombre);
             return aux->parametros;
         }
         aux = aux->sig;
@@ -182,7 +183,9 @@ char* tipoFlexAString(enum yytokentype tipo) {
 
 ListaIdentificadores* tokenizarParametros(char* cadena) {
 
+
     char* cadenaSinIdentificador = substringDesde(cadena, '(');
+    //printf("[LOG] Tokenizando cadena %s: ", cadenaSinIdentificador);
 
     ListaIdentificadores* lista_parametros = inicializarListaIdentificadores(lista_parametros);
     char* parametro = (char*)malloc(sizeof(char)*100);
@@ -196,6 +199,7 @@ ListaIdentificadores* tokenizarParametros(char* cadena) {
                 agregarIdentificador(lista_parametros, parametro, tipoObtenidoDesdeLista);
             } else {
                 char* strTipo = obtenerElementoTipoPosicion(ultimas_constantes, ultimas_constantes->cantElementos - 1);
+                //printf("%s, ", strTipo);
                 
                 if(strcmp(strTipo, "identificador") == 0) {
                     char* errorMsg = (char*)calloc(sizeof(char), 110);
@@ -215,9 +219,11 @@ ListaIdentificadores* tokenizarParametros(char* cadena) {
     parametro[j] = '\0';
     char* tipoObtenidoDesdeLista =  obtenerTipoDesdeLista(identificadores_variables, sacarEspacios(parametro));
     if (tipoObtenidoDesdeLista) {
+        //printf("%s, ", tipoObtenidoDesdeLista);
         agregarIdentificador(lista_parametros, parametro, tipoObtenidoDesdeLista);
     } else {
         char* strTipo = obtenerElementoTipoPosicion(ultimas_constantes, ultimas_constantes->cantElementos - 1);
+        //printf("%s, ", strTipo);
         if(strcmp(strTipo, "identificador") == 0) {
             char* errorMsg = (char*)calloc(sizeof(char), 110);
             sprintf(errorMsg, "[ERROR-Semántico] Línea %d: La variable %s no ha sido declarada\n", yylineno, parametro);
@@ -225,6 +231,8 @@ ListaIdentificadores* tokenizarParametros(char* cadena) {
         }
         agregarIdentificador(lista_parametros, parametro, strTipo);
     }
+
+    //printf("\n");
     return lista_parametros;
 }
 
@@ -259,6 +267,7 @@ int comprobar_tipos_funcion(ListaFunciones* lista, char* linea) {
             for(int i = 0; i < parametrosFuncion->cantElementos; i++) {
                 
                 if(auxParametrosRecibidos->tipo){
+                    //printf("Comparando %s con %s\n", auxParametrosFuncion->tipo, auxParametrosRecibidos->tipo);
                     if(strcmp(auxParametrosFuncion->tipo, auxParametrosRecibidos->tipo) != 0) {
                         char* errorMsg = (char*)calloc(sizeof(char), 150);
                         sprintf(errorMsg, "[ERROR-Semántico] Línea %d: En la funcion %s se esperaba un argumento tipo %s, pero se recibio un argumento tipo %s\n", yylineno, nombreFuncion, auxParametrosFuncion->tipo, auxParametrosRecibidos->tipo);

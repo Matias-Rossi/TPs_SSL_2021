@@ -2,16 +2,8 @@
 
 int noDefinida(int j);
 
-int noDefinida(int i, char j) {
-    return i;
-}
 
-int noDefinida(int h) {
-    return j;
-}
-
-
-void sumar(int* a, int b) {
+void sumar(int a, int b) {
     printf("a + b");
 }
 
@@ -29,6 +21,8 @@ char* prueba(char c, int* z, float a) {
 int main() {
     
     int a, b;
+
+    noDefinida(a);
 
     char c;
 

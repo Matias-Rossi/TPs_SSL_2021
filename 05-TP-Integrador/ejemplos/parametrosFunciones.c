@@ -34,17 +34,17 @@ int main() {
     float f;
     int g;
 
-    sumar(f, g);
-    sumar(f, f);
+    sumar(f, g);    //valida
+    sumar(f, f);    //invalida
 
-    hola();
-    hola(a);
+    hola();         //valida
+    hola(a);        //invalida
 
-    saludar(485);
-    saludar("Mundo");
+    saludar(485);   //invalida
+    saludar("Mundo");   //valida
 
 
-    prueba(f, g, f);
+    prueba(f, g, f);    //invalida
 
     return 0;
 }

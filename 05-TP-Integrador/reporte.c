@@ -6,7 +6,7 @@ void nuevaCategoria(char* seccion){
 
 void crearListadoIdentificadores(ListaIdentificadores* identificadores, char* tListado){
     if(identificadores->pri != NULL){                                                       //Si la lista no esta vacía
-        ordenarIdentificadores(identificadores, strcmp);
+        //ordenarIdentificadores(identificadores, strcmp);
         Identificador* aux = identificadores->pri;
 
         nuevaCategoria(tListado);
@@ -107,6 +107,6 @@ void mostrarErrores() {
     contador += ciclarListaErrores(erroresSemanticos, "ERRORES SEMÁNTICOS");
 
     if(contador == 0) {
-        printf("No se han encontrado errores :)");
+        printf("\n\n|---------------------------------|\n| No se han encontrado errores :) |\n|---------------------------------|\n");
     }
 }

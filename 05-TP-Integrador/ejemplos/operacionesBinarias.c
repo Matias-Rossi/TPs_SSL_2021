@@ -13,7 +13,7 @@ void main() {
 
     int x = a + 3;     //Una variable y una cte
 
-    int w = 4 + h;     //Una variable sin declarar
+    int w = 4 + z;     //Una variable sin declarar
 
     int v = 4 + c;      //Una variable no es de tipo int
 

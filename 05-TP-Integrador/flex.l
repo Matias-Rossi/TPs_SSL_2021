@@ -1,6 +1,6 @@
 %option noyywrap
 %option yylineno
-/* %option debug */
+/*%option debug*/
 
 %{
 #include <stdio.h>
