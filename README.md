@@ -1,5 +1,6 @@
-# 21-002-09
-Repositorio del Grupo Mixto 21-002-09.
+# Sintaxis y Semántica de los Lenguajes
+
+Este repositorio almacena los distintos trabajos prácticos que realizamos con mi grupo durante la cursada de la materia Sintáxis y Semántica de los Lenguajes el año 2021 con el profesor Santiago Ferreiros en la Universidad Tecnológica Nacional, Facultad Regional Buenos Aires.
  
 Integrantes : 
 
